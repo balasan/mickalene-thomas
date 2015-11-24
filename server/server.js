@@ -20,13 +20,13 @@ import { fetchCounter } from '../common/api/counter'
 const app = new Express()
 var port = process.env.PORT || 3000
 
-// if (process.env.NODE_ENV == 'production') port = 80;
-// console.log("NODE_ENV", process.env.NODE_ENV)
-// Use this middleware to set up hot module reloading via webpack.
-const compiler = webpack(webpackConfig)
-app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpackConfig.output.publicPath }))
-app.use(webpackHotMiddleware(compiler))
-
+var isDevelopment = (process.env.NODE_ENV !== 'production');
+if (isDevelopment) {
+  // Use this middleware to set up hot module reloading via webpack.
+  const compiler = webpack(webpackConfig)
+  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpackConfig.output.publicPath }))
+  app.use(webpackHotMiddleware(compiler))
+}
 // This is fired every time the server side receives a request
 app.use(handleRender)
 
