@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "description": "An example of a universally-rendered Redux application",
   "scripts": {
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "postinstall": "webpack --config ./webpack.config.js --progress --colors"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,6 @@
     "webpack-hot-middleware": "^2.2.0"
   },
   "devDependencies": {
-
+    "node-env-file": "^0.1.8"
   }
 }

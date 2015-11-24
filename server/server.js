@@ -17,8 +17,15 @@ import configureStore from '../common/store/configureStore'
 import App from '../common/containers/App'
 import { fetchCounter } from '../common/api/counter'
 
+var env = require('node-env-file')
+try {
+  env('./.env')
+}
+catch(err) {
+
+}
+
 const app = new Express()
-var port = process.env.PORT || 3000
 
 var isDevelopment = (process.env.NODE_ENV !== 'production');
 if (isDevelopment) {
@@ -27,7 +34,16 @@ if (isDevelopment) {
   app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpackConfig.output.publicPath }))
   app.use(webpackHotMiddleware(compiler))
 }
+else {
+  app.use(Express.static(__dirname + '/../public'));
+  // app.set('appPath', Express.static(__dirname + '/public'));
+}
+
+var port = process.env.PORT || 3000
+
+
 // This is fired every time the server side receives a request
+// app.get('/', handleRender)
 app.use(handleRender)
 
 function handleRender(req, res) {
@@ -70,7 +86,7 @@ function renderFullPage(html, initialState) {
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
         </script>
-        <script src="/static/bundle.js"></script>
+        <script src="/bundle.js"></script>
       </body>
     </html>
     `
