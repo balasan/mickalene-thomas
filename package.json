@@ -23,9 +23,7 @@
     "react-redux": "^4.0.0",
     "redux": "^3.0.0",
     "redux-thunk": "^0.1.0",
-    "serve-static": "^1.10.0"
-  },
-  "devDependencies": {
+    "serve-static": "^1.10.0",
     "babel-core": "^5.8.22",
     "babel-loader": "^5.3.2",
     "babel-plugin-react-transform": "^1.1.0",
@@ -34,5 +32,8 @@
     "webpack": "^1.11.0",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-hot-middleware": "^2.2.0"
+  },
+  "devDependencies": {
+
   }
 }
