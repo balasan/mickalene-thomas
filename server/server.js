@@ -18,7 +18,7 @@ import App from '../common/containers/App'
 import { fetchCounter } from '../common/api/counter'
 
 const app = new Express()
-const port = 3000
+var port = 3000
 
 if (process.env.NODE_ENV == 'produciton') port = 80;
 
