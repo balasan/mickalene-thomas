@@ -4,8 +4,7 @@
   "description": "An example of a universally-rendered Redux application",
   "scripts": {
     "start": "node server/index.js",
-    "build": "webpack --config ./webpack.config.js --progress --colors",
-    "postinstall": "webpack --config ./webpack.config.js --progress --colors"
+    "build": "webpack --config ./webpack.config.js --progress --colors -p"
   },
   "repository": {
     "type": "git",
