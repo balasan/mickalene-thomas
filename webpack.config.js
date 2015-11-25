@@ -1,6 +1,12 @@
 var path = require('path')
 var webpack = require('webpack')
 
+var precss = require('precss');
+var easings = require('postcss-easings');
+var postcss = require('postcss-loader');
+var postcss = require('autoprefixer');
+
+
 module.exports = {
   devtool: 'inline-source-map',
   entry: [
@@ -8,9 +14,9 @@ module.exports = {
     './client/index.js'
   ],
   output: {
-    path: path.join(__dirname, 'public'),
+    path: path.join(__dirname, '/public'),
     filename: 'bundle.js',
-    publicPath: '/public'
+    publicPath: '/'
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
@@ -18,7 +24,15 @@ module.exports = {
     new webpack.NoErrorsPlugin()
   ],
   module: {
+    postcss: function() {
+      return [easings, autoprefixer, precss];
+    },
     loaders: [
+      {
+        test: /\.css$|\.scss$/,
+        loader: 'style-loader!css-loader!postcss-loader'
+        // loader: 'css?sourceMap!postcss!sass?sourceMap&sourceMapContents',
+      },
       {
         test: /\.js$/,
         loader: 'babel',

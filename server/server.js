@@ -1,5 +1,6 @@
 /* eslint-disable no-console, no-use-before-define */
 
+
 import path from 'path'
 import Express from 'express'
 import qs from 'qs'
@@ -17,34 +18,33 @@ import configureStore from '../common/store/configureStore'
 import App from '../common/containers/App'
 import { fetchCounter } from '../common/api/counter'
 
-var env = require('node-env-file')
-try {
-  env('./.env')
-}
-catch(err) {
 
-}
 
 const app = new Express()
 
+require('dotenv').config({silent: true});
+
+//-------------Dev server watch and hot reload---------------
 var isDevelopment = (process.env.NODE_ENV !== 'production');
 if (isDevelopment) {
   // Use this middleware to set up hot module reloading via webpack.
   const compiler = webpack(webpackConfig)
-  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpackConfig.output.publicPath }))
+  app.use(webpackDevMiddleware(compiler, {
+    noInfo: true,
+    publicPath: webpackConfig.output.publicPath,
+  }))
   app.use(webpackHotMiddleware(compiler))
 }
-else {
-  app.use(Express.static(__dirname + '/../public'));
-  // app.set('appPath', Express.static(__dirname + '/public'));
-}
+
+app.use(Express.static(__dirname + '/../public'));
+// app.set('appPath', Express.static(__dirname + '/public'));
 
 var port = process.env.PORT || 3000
 
 
 // This is fired every time the server side receives a request
-// app.get('/', handleRender)
-app.use(handleRender)
+app.get('/', handleRender)
+// app.use(handleRender)
 
 function handleRender(req, res) {
   // Query our mock API asynchronously
