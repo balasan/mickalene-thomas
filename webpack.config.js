@@ -4,7 +4,7 @@ var webpack = require('webpack')
 var precss = require('precss');
 var easings = require('postcss-easings');
 var postcss = require('postcss-loader');
-var postcss = require('autoprefixer');
+var autoprefixer = require('autoprefixer');
 
 
 module.exports = {
@@ -21,7 +21,12 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      "process.env":{
+        BROWSER: JSON.stringify(true)
+      }
+    })
   ],
   module: {
     postcss: function() {
