@@ -17,9 +17,9 @@ function renderFullPage(html, initialState) {
     <html>
       <head>
         <title>Redux Universal Example</title>
-
+        <link rel="stylesheet" href="styles.css" />
       </head>
-      <body style="display:none">
+      <body>
         <div id="app">${html}</div>
          <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}

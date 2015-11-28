@@ -3,11 +3,13 @@
   box-sizing: border-box;
 }
 
+$pink: pink;
+
 html, body{
   width: 100%;
   height: 100%;
   position: relative;
-  background: pink;
+  background: $pink;
   font-size:40px;
-  display:block !important;
+  transform: translateX(0px);
 }
