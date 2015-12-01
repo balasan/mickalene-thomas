@@ -6,6 +6,7 @@ export default class App extends Component {
 
   componentDidMount() {
     console.log(window.innerWidth);
+    console.log(this.props)
   }
 
   render () {
