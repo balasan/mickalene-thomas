@@ -34,6 +34,9 @@ module.exports = {
     return [precss, easings, autoprefixer, customMedia];
   },
   module: {
+       preLoaders: [
+        { test: /\.json$/, loader: 'json'},
+    ],
     loaders: [
       {
         test: /\.css$|\.scss$/,

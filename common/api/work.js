@@ -26,12 +26,12 @@
      prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
          Api.form('everything')
              .ref(Api.master())
-             .query(prismic.Predicates.at("document.type", "article")).submit(function(err, response) {
+             .query(prismic.Predicates.at("document.type", "image")).submit(function(err, response) {
                  if (err) {
                      console.log(err);
                      done();
                  }
-                 // console.log(response, "response");
+                 console.log(response, "response");
                  callback(null, response)
                  // return response;
              })

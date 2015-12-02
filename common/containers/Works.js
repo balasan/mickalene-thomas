@@ -1,30 +1,39 @@
-// import React, { Component, PropTypes } from 'react';
-
-// const Works = () => {
-//   return (
-//     <div>works</div>
-//   );
-// }
-
-// export default Works
-
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Work from '../components/Work';
 import * as WorkActions from '../actions/work'
+import { fetchWork } from '../api/work';
 
 // @connect(
 //   state => ({counter: state.counter}),
 //   dispatch => { return bindActionCreators(CounterActions, dispatch) }
 // )
-// export default class Counters extends Component {
-//   render () {
-//     return <Counter { ...this.props }/>;
-//   }
-// }
+export default class Works extends Component {
 
-// ----- same as ---
+  // static propTypes = {
+  //   counter:    PropTypes.number.isRequired,
+  //   dispatch: PropTypes.func.isRequired
+  // }
+
+  static fetchData(props) {
+    var { loadWork } = props
+    return Promise.all([
+      loadWork()
+    ])
+  }
+
+  componentDidMount() {
+    if (!this.props.work) {
+      this.constructor.fetchData(this.props);
+    }
+  }
+
+  render () {
+    console.log("got dem props", this.props)
+    return <Work { ...this.props }/>;
+  }
+}
 
 // const mapStateToProps = (state) => {
 //   return {counter: state.counter }
@@ -40,12 +49,19 @@ import * as WorkActions from '../actions/work'
 
 // ----- same as ---
 
-const Works = connect(
+// Counters.propTypes = {
+//   counter:    PropTypes.number.isRequired,
+//   dispatch: PropTypes.func.isRequired
+// }
+
+export default connect(
   state => {
+    console.log(state, "state.work")
     return {work: state.work}
   },
   dispatch => {
     return bindActionCreators(WorkActions, dispatch)
-  })(Work)
+  })(Works)
 
-export default Works
+// export default Counters
+

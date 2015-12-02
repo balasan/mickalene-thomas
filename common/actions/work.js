@@ -3,6 +3,7 @@ import { fetchWork } from '../api/work'
 
 
 export function set(value) {
+  console.log(value, "set value")
   return {
     type: GET_WORK,
     payload: value
@@ -15,6 +16,7 @@ export function loadWork() {
     return new Promise(function(resolve, reject) {
       fetchWork( (err, value) => {
         if (err) return reject
+        console.log(value, "value")
         dispatch(set(value))
         resolve(value)
       })
