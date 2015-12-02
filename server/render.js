@@ -9,13 +9,14 @@ import routes from '../common/routes';
 import configureStore from '../common/store/configureStore';
 import App from '../common/containers/App';
 import { fetchCounter } from '../common/api/counter';
+import { fetchWork } from '../common/api/work';
 
 function renderFullPage(html, initialState) {
   return `
     <!doctype html>
     <html>
       <head>
-        <title>Redux Universal Example</title>
+        <title>Mickalene Thomas</title>
         <link rel="stylesheet" href="styles.css" />
       </head>
       <body>
@@ -97,7 +98,6 @@ export default function handleRender(req, res) {
         }
       }
     )
-  // })
 }
 
 

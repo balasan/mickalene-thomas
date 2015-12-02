@@ -2,6 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 
 var precss = require('precss');
+var customMedia = require("postcss-custom-media");
 var easings = require('postcss-easings');
 var postcss = require('postcss-loader');
 var autoprefixer = require('autoprefixer');
@@ -30,7 +31,7 @@ module.exports = {
     })
   ],
   postcss: function() {
-    return [easings, autoprefixer, precss];
+    return [easings, autoprefixer, customMedia, precss];
   },
   module: {
     loaders: [

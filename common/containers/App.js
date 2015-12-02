@@ -33,20 +33,34 @@ if(process.env.BROWSER)
 // --------- same as (only need above fore more complex objects) --------
 
 const App = (props) => {
+  var location;
+  if(props.children.props.route.path) {
+      location = props.children.props.route.path;
+  } else {
+    location = 'home';
+  }
   return (
     <div>
-      <h1>Redux Universal App</h1>
-      <section>
-        <Link to="/home">Home</Link>
-        { ' - ' }
-        <Link to="/about">About</Link>
-        { ' - ' }
-        <Link to="/counter">Counter</Link>
+
+      <nav>
+      {location}
+      <div className='holdImg'>
+      <img src='images/menu.svg' />
+      </div>
+      </nav>
+
+      <section className='links'>
+        <Link to="/home">home</Link>
+        <Link to="/about">about</Link>
+        <Link to="/works">works</Link>
+        <Link to="/news">news</Link>
+        <Link to="/counter">counter</Link>
       </section>
-      <br />
+
       <section>
         {props.children}
       </section>
+
     </div>
   );
 }
