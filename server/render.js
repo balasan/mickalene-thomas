@@ -16,7 +16,7 @@ function renderFullPage(html, initialState) {
     <!doctype html>
     <html>
       <head>
-        <title>Redux Universal Example</title>
+        <title>Mickalene Thomas</title>
         <link rel="stylesheet" href="styles.css" />
       </head>
       <body>

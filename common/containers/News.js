@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 
-const About = () => {
+const News = () => {
   return (
-    <div>about</div>
+    <div>news</div>
   );
 }
 
-export default About
+export default News

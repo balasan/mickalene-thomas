@@ -3,6 +3,8 @@ import React from 'react';
 import App from './containers/App';
 import Home from './containers/Home';
 import About from './containers/About';
+import News from './containers/News';
+import Works from './containers/Works';
 import Counters from './containers/Counters';
 import NotFound from './containers/NotFound';
 
@@ -12,6 +14,8 @@ var routes = {
   indexRoute: { component: Home },
   childRoutes: [
     { path: 'about', component: About },
+    { path: 'news', component: News },
+    { path: 'works', component: Works },
     { path: 'home', component: Home },
     { path: 'Counter', component: Counters },
     { path: '*', component: NotFound }
