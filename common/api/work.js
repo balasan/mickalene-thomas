@@ -21,7 +21,7 @@
 
  prismic.init(configuration);
 
- export function fetchWork(req, resource, params, config, callback) {
+ export function fetchWork(callback) {
    var data;
      prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
          Api.form('everything')
@@ -32,8 +32,8 @@
                      done();
                  }
                  // console.log(response, "response");
-                 // callback(null, response)
-                 return response;
+                 callback(null, response)
+                 // return response;
              })
      });
  }
