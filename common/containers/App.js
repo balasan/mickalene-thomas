@@ -7,7 +7,7 @@ import Counter from '../components/Counter';
 import * as CounterActions from '../actions/counter'
 
 if(process.env.BROWSER)
-  require('./../../client/css/index.scss');
+  require('./../../client/css/index.css');
 
 // export default class App extends Component {
 //   render () {
