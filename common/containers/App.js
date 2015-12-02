@@ -1,6 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import Counter from '../components/Counter';
+import * as CounterActions from '../actions/counter'
+
 if(process.env.BROWSER)
   require('./../../client/css/index.scss');
 
@@ -45,5 +50,13 @@ const App = (props) => {
     </div>
   );
 }
+
+export default connect(
+  state => {
+    return {counter: state.counter}
+  },
+  dispatch => {
+    return bindActionCreators(CounterActions, dispatch)
+  })(App)
 
 export default App

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 
 
 // const Counter = (props) => {
-export default class App extends Component {
+export default class Counter extends Component {
 
   componentDidMount() {
     console.log(window.innerWidth);
@@ -26,11 +26,11 @@ export default class App extends Component {
     )
   }
 }
-// Counter.propTypes = {
-//   increment: PropTypes.func.isRequired,
-//   incrementIfOdd: PropTypes.func.isRequired,
-//   incrementAsync: PropTypes.func.isRequired,
-//   decrement: PropTypes.func.isRequired,
-//   counter: PropTypes.number.isRequired
-// }
+Counter.propTypes = {
+  increment: PropTypes.func.isRequired,
+  incrementIfOdd: PropTypes.func.isRequired,
+  incrementAsync: PropTypes.func.isRequired,
+  decrement: PropTypes.func.isRequired,
+  counter: PropTypes.number.isRequired
+}
 // export default Counter

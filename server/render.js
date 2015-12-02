@@ -10,7 +10,6 @@ import configureStore from '../common/store/configureStore';
 import App from '../common/containers/App';
 import { fetchCounter } from '../common/api/counter';
 
-
 function renderFullPage(html, initialState) {
   return `
     <!doctype html>
@@ -30,15 +29,33 @@ function renderFullPage(html, initialState) {
     `
 }
 
+
+export default function fetchComponentData(dispatch, components, params) {
+  const promises = components.reduce( (prev, current) => {
+    console.log(params)
+    // console.log(current)
+    return ( current.fetchData ? [current.fetchData(params)] : [])
+      .concat((current.WrappedComponent ? [current.fetchData(params)] : []) || [])
+      .concat(prev);
+  }, []);
+
+  // const promises = needs.map(need => dispatch(need(params)));
+
+  return Promise.all(promises);
+}
+
+
 export default function handleRender(req, res) {
   // Query our mock API asynchronously
-  fetchCounter(apiResult => {
+  // fetchCounter(apiResult => {
     // Read the counter from the request, if provided
+
     const params = qs.parse(req.query);
-    const counter = parseInt(params.counter, 10) || apiResult || 0;
+    // const counter = parseInt(params.counter, 10) || apiResult || 0;
 
     // Compile an initial state
-    const initialState = { counter };
+    // const initialState = { counter };
+    const initialState = {};
 
     // Create a new Redux store instance
     const store = configureStore(initialState);
@@ -54,20 +71,33 @@ export default function handleRender(req, res) {
         } else if (!renderProps) {
           res.status(500);
         } else {
-          const component = (
-            <Provider store={store}>
-              <div>
-                <RoutingContext {...renderProps}/>
-              </div>
-            </Provider>
-          );
-          const html = renderToString(component);
 
-          res.send(renderFullPage(html, store.getState()));
+          // console.log(renderProps)
+
+          var renderHtml = () => {
+            const component = (
+              <Provider store={store}>
+                <div>
+                  <RoutingContext {...renderProps}/>
+                </div>
+              </Provider>
+            );
+            return renderToString(component);
+          }
+
+          // console.log(renderProps)
+
+          // fetchComponentData(store.dispatch, renderProps.components, renderProps.params)
+          //   .then(() => {
+          //     res.send(renderFullPage(renderHtml(), store.getState()))
+          //   })
+          //   .catch(err => res.end(err.message));
+
+          res.send(renderFullPage(renderHtml(), store.getState()));
         }
       }
     )
-  })
+  // })
 }
 
 
