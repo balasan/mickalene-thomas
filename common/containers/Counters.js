@@ -16,8 +16,8 @@ export default class Counters extends Component {
   //   dispatch: PropTypes.func.isRequired
   // }
 
-  static fetchData(props) {
-    var { loadCounter } = props
+  static fetchData(dispatch) {
+    var { loadCounter } = bindActionCreators(CounterActions, dispatch)
     return Promise.all([
       loadCounter()
     ])
@@ -25,7 +25,7 @@ export default class Counters extends Component {
 
   componentDidMount() {
     if (!this.props.counter) {
-      this.constructor.fetchData(this.props);
+      this.constructor.fetchData(this.props.dispatch);
     }
   }
 
@@ -59,7 +59,7 @@ export default connect(
     return {counter: state.counter}
   },
   dispatch => {
-    return bindActionCreators(CounterActions, dispatch)
+    return Object.assign({}, { dispatch },  bindActionCreators(CounterActions, dispatch))
   })(Counters)
 
 // export default Counters

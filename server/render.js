@@ -8,8 +8,7 @@ import qs from 'qs';
 import routes from '../common/routes';
 import configureStore from '../common/store/configureStore';
 import App from '../common/containers/App';
-import { fetchCounter } from '../common/api/counter';
-import { fetchWork } from '../common/api/work';
+// import { fetchCounter } from '../common/api/counter';
 
 function renderFullPage(html, initialState) {
   return `
@@ -33,10 +32,8 @@ function renderFullPage(html, initialState) {
 
 export default function fetchComponentData(dispatch, components, params) {
   const promises = components.reduce( (prev, current) => {
-    console.log(params)
-    // console.log(current)
-    return ( current.fetchData ? [current.fetchData(params)] : [])
-      .concat((current.WrappedComponent ? [current.fetchData(params)] : []) || [])
+    return ( current.fetchData ? [current.fetchData(dispatch)] : [])
+      .concat((current.WrappedComponent ? [current.fetchData(dispatch)] : []) || [])
       .concat(prev);
   }, []);
 
@@ -86,15 +83,14 @@ export default function handleRender(req, res) {
             return renderToString(component);
           }
 
-          // console.log(renderProps)
+          //this code pre-fills the data on the server
+          fetchComponentData(store.dispatch, renderProps.components, renderProps.params)
+            .then(() => {
+              res.send(renderFullPage(renderHtml(), store.getState()))
+            })
+            .catch(err => res.end(err.message));
 
-          // fetchComponentData(store.dispatch, renderProps.components, renderProps.params)
-          //   .then(() => {
-          //     res.send(renderFullPage(renderHtml(), store.getState()))
-          //   })
-          //   .catch(err => res.end(err.message));
-
-          res.send(renderFullPage(renderHtml(), store.getState()));
+          // res.send(renderFullPage(renderHtml(), store.getState()));
         }
       }
     )

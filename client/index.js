@@ -9,9 +9,6 @@ import createHistory from 'history/lib/createBrowserHistory';
 import configureStore from '../common/store/configureStore';
 import App from '../common/containers/App';
 
-// import './css/index.scss'
-
-
 const clientDebug = debug('app:client');
 const rootElement = document.getElementById('app');
 const routes = require('../common/routes');

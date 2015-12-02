@@ -31,7 +31,7 @@ module.exports = {
     })
   ],
   postcss: function() {
-    return [easings, autoprefixer, customMedia, precss];
+    return [precss, easings, autoprefixer, customMedia];
   },
   module: {
     loaders: [

@@ -65,12 +65,12 @@ const App = (props) => {
   );
 }
 
-export default connect(
-  state => {
-    return {counter: state.counter}
-  },
-  dispatch => {
-    return bindActionCreators(CounterActions, dispatch)
-  })(App)
+// export default connect(
+//   state => {
+//     return {counter: state.counter}
+//   },
+//   dispatch => {
+//     return bindActionCreators(CounterActions, dispatch)
+//   })(App)
 
 export default App
