@@ -9,6 +9,7 @@ import routes from '../common/routes';
 import configureStore from '../common/store/configureStore';
 import App from '../common/containers/App';
 import { fetchCounter } from '../common/api/counter';
+import { fetchWork } from '../common/api/work';
 
 
 function renderFullPage(html, initialState) {
@@ -68,6 +69,44 @@ export default function handleRender(req, res) {
       }
     )
   })
+
+// fetchWork(apiResult => {
+//     // Read the counter from the request, if provided
+//     const params = qs.parse(req.query);
+//     // const counter = parseInt(params.counter, 10) || apiResult || 0;
+
+//     // Compile an initial state
+//     const initialState = { work };
+
+//     // Create a new Redux store instance
+//     const store = configureStore(initialState);
+
+//     match(
+//       {routes: routes, location: req.originalUrl},
+//       (error, redirectLocation, renderProps) => {
+//         if (redirectLocation) {
+//           res.redirect(redirectLocation.pathname + redirectLocation.search);
+//         } else if (error) {
+//           console.error('ROUTER ERROR:', error);
+//           res.status(500);
+//         } else if (!renderProps) {
+//           res.status(500);
+//         } else {
+//           const component = (
+//             <Provider store={store}>
+//               <div>
+//                 <RoutingContext {...renderProps}/>
+//               </div>
+//             </Provider>
+//           );
+//           const html = renderToString(component);
+
+//           res.send(renderFullPage(html, store.getState()));
+//         }
+//       }
+//     )
+//   })
+
 }
 
 
