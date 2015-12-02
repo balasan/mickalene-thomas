@@ -16,8 +16,8 @@ export default class Works extends Component {
   //   dispatch: PropTypes.func.isRequired
   // }
 
-  static fetchData(props) {
-    var { loadWork } = props
+  static fetchData(dispatch) {
+    var { loadWork } = bindActionCreators(WorkActions, dispatch)
     return Promise.all([
       loadWork()
     ])
@@ -25,7 +25,7 @@ export default class Works extends Component {
 
   componentDidMount() {
     if (!this.props.work) {
-      this.constructor.fetchData(this.props);
+      this.constructor.fetchData(this.props.dispatch);
     }
   }
 
@@ -60,7 +60,7 @@ export default connect(
     return {work: state.work}
   },
   dispatch => {
-    return bindActionCreators(WorkActions, dispatch)
+    return Object.assign({}, { dispatch },  bindActionCreators(WorkActions, dispatch))
   })(Works)
 
 // export default Counters
