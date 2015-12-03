@@ -1,30 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+// import { bindActionCreators } from 'redux'
+// import { connect } from 'react-redux'
 import Menu from '../components/Menu';
-import * as MenuActions from '../actions/menu'
-import { fetchMenu } from '../api/menu';
+// import * as MenuActions from '../actions/menu'
+// import { fetchMenu } from '../api/menu';
 
 if(process.env.BROWSER) {
     require('./../../client/css/index.css');
 }
 
 export default class App extends Component {
-    static fetchData(dispatch) {
-    var { loadMenu } = bindActionCreators(MenuActions, dispatch)
-    return Promise.all([
-      loadMenu()
-    ])
-  }
-
-  componentDidMount() {
-    if (!this.props.menu) {
-      this.constructor.fetchData(this.props.dispatch);
-      console.log(this.props)
-    }
-  }
-
 
   render () {
     return (
@@ -76,14 +62,14 @@ export default class App extends Component {
 //     return bindActionCreators(MenuActions, dispatch)
 //   })(App)
 
-export default connect(
-  state => {
-    // console.log(state, "state.work")
-    return {togglestate: state.menu}
-  },
-  dispatch => {
-    return Object.assign({}, { dispatch },  bindActionCreators(MenuActions, dispatch))
-  })(App)
+// export default connect(
+//   state => {
+//     // console.log(state, "state.work")
+//     return {togglestate: state.menu}
+//   },
+//   dispatch => {
+//     return Object.assign({}, { dispatch },  bindActionCreators(MenuActions, dispatch))
+//   })(App)
 
 
 // export default App
