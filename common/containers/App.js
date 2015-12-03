@@ -6,8 +6,10 @@ import { connect } from 'react-redux'
 import Counter from '../components/Counter';
 import * as CounterActions from '../actions/counter'
 
-if(process.env.BROWSER)
+if(process.env.BROWSER){
   require('./../../client/css/index.css');
+  require('./../../client/css/links.css');
+}
 
 // export default class App extends Component {
 //   render () {

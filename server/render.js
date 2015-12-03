@@ -36,9 +36,6 @@ export default function fetchComponentData(dispatch, components, params) {
       .concat((current.WrappedComponent ? [current.fetchData(dispatch)] : []) || [])
       .concat(prev);
   }, []);
-
-  // const promises = needs.map(need => dispatch(need(params)));
-
   return Promise.all(promises);
 }
 

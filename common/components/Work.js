@@ -10,9 +10,10 @@ export default class Work extends Component {
   }
   render () {
     const { work } = this.props
+    var url = work ? work.results[0].data["image.image"].value.main.url : ""
     return (
       <div>
-<img src={work.results[0].data["image.image"].value.main.url} />
+        <img src={url} />
       </div>
     )
   }

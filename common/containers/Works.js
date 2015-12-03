@@ -23,7 +23,15 @@ export default class Works extends Component {
     ])
   }
 
+  // static fetchDataClient(dispatch) {
+  //   var { loadWork } = bindActionCreators(WorkActions, dispatch)
+  //   return Promise.all([
+  //     loadWork()
+  //   ])
+  // }
+
   componentDidMount() {
+    console.log(this.props)
     if (!this.props.work) {
       this.constructor.fetchData(this.props.dispatch);
     }

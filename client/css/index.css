@@ -2,7 +2,7 @@
     box-sizing: border-box;
 }
 
-$pink: pink;
+$pink: red;
 
 html, body {
     width: 100%;
@@ -17,4 +17,3 @@ html, body {
 
 @import "customMedia.css";
 @import "navbar.css";
-@import "links.css";

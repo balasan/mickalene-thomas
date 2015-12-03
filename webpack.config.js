@@ -31,7 +31,7 @@ module.exports = {
     })
   ],
   postcss: function() {
-    return [precss, easings, autoprefixer, customMedia];
+    return [easings, autoprefixer, precss];
   },
   module: {
        preLoaders: [
@@ -40,8 +40,8 @@ module.exports = {
     loaders: [
       {
         test: /\.css$|\.scss$/,
-        // loader: 'style-loader!css-loader!postcss-loader'
-        loader: ExtractTextPlugin.extract('style-loader','css-loader!postcss-loader')
+        loader: 'style-loader!css-loader!postcss-loader'
+        // loader: ExtractTextPlugin.extract('style-loader','css-loader!postcss-loader')
         // loader: 'css?sourceMap!postcss!sass?sourceMap&sourceMapContents',
       },
       {
