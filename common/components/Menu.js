@@ -32,10 +32,10 @@ export default class Menu extends Component {
       </nav>
        <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
         { this.props.togglestate ? <section className='links'>
-        <Link to="/home">home</Link>
-        <Link to="/about">about</Link>
-        <Link to="/works">works</Link>
-        <Link to="/news">news</Link>
+        <Link onClick={toggle} to="/home">home</Link>
+        <Link onClick={toggle} to="/about">about</Link>
+        <Link onClick={toggle} to="/works">works</Link>
+        <Link onClick={toggle} to="/news">news</Link>
         </section> : null }
         </ReactCSSTransitionGroup>
       </div>
@@ -45,7 +45,6 @@ export default class Menu extends Component {
 
 export default connect(
   state => {
-    // console.log(state, "state.work")
     return {togglestate: state.menu}
   },
   dispatch => {
