@@ -1,78 +1,75 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+// import { bindActionCreators } from 'redux'
+// import { connect } from 'react-redux'
+import Menu from '../components/Menu';
+// import * as MenuActions from '../actions/menu'
+// import { fetchMenu } from '../api/menu';
 
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import Counter from '../components/Counter';
-import * as CounterActions from '../actions/counter'
 
 if(process.env.BROWSER){
   require('./../../client/css/index.css');
   require('./../../client/css/links.css');
 }
-
-// export default class App extends Component {
-//   render () {
-//     return (
-//       <div>
-//         <h1>Redux Universal App</h1>
-//         <section>
-//           <Link to="/home">Home</Link>
-//           { ' - ' }
-//           <Link to="/about">About</Link>
-//           { ' - ' }
-//           <Link to="/counter">Counter</Link>
-//         </section>
-//         <br />
-//         <section>
-//           {this.props.children}
-//         </section>
-//       </div>
-//     );
-//   }
-// }
-
-// --------- same as (only need above fore more complex objects) --------
-
-const App = (props) => {
-  var location;
-  if(props.children.props.route.path) {
-      location = props.children.props.route.path;
-  } else {
-    location = 'home';
-  }
-  return (
+export default class App extends Component {
+  render () {
+    return (
     <div>
-
-      <nav>
-      {location}
-      <div className='holdImg'>
-      <img src='images/menu.svg' />
-      </div>
-      </nav>
-
-      <section className='links'>
-        <Link to="/home">home</Link>
-        <Link to="/about">about</Link>
-        <Link to="/works">works</Link>
-        <Link to="/news">news</Link>
-        <Link to="/counter">counter</Link>
-      </section>
-
+    <Menu { ...this.props }></Menu>
       <section>
-        {props.children}
+        {this.props.children}
       </section>
 
     </div>
-  );
+    );
+  }
 }
+
+// --------- same as (only need above fore more complex objects) --------
+
+// const App = (props) => {
+
+//   static fetchData(dispatch) {
+//     var { loadMenu } = bindActionCreators(MenuActions, dispatch)
+//     return Promise.all([
+//       loadMenu()
+//     ])
+//   }
+
+//   componentDidMount() {
+//     if (!this.props.menu) {
+//       this.constructor.fetchData(this.props.dispatch);
+//     }
+//   }
+
+//   return (
+//     <div>
+//     <Menu { ...this.props }></Menu>
+//       <section>
+//         {props.children}
+//       </section>
+
+//     </div>
+//   );
+
+// }
 
 // export default connect(
 //   state => {
-//     return {counter: state.counter}
+//     return {togglestate: state.menu}
 //   },
 //   dispatch => {
-//     return bindActionCreators(CounterActions, dispatch)
+//     return bindActionCreators(MenuActions, dispatch)
 //   })(App)
 
-export default App
+// export default connect(
+//   state => {
+//     // console.log(state, "state.work")
+//     return {togglestate: state.menu}
+//   },
+//   dispatch => {
+//     return Object.assign({}, { dispatch },  bindActionCreators(MenuActions, dispatch))
+//   })(App)
+
+
+// export default App

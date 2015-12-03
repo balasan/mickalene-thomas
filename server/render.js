@@ -81,13 +81,13 @@ export default function handleRender(req, res) {
           }
 
           //this code pre-fills the data on the server
-          fetchComponentData(store.dispatch, renderProps.components, renderProps.params)
-            .then(() => {
-              res.send(renderFullPage(renderHtml(), store.getState()))
-            })
-            .catch(err => res.end(err.message));
+          // fetchComponentData(store.dispatch, renderProps.components, renderProps.params)
+          //   .then(() => {
+          //     res.send(renderFullPage(renderHtml(), store.getState()))
+          //   })
+          //   .catch(err => res.end(err.message));
 
-          // res.send(renderFullPage(renderHtml(), store.getState()));
+          res.send(renderFullPage(renderHtml(), store.getState()));
         }
       }
     )

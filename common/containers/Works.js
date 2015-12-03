@@ -5,6 +5,10 @@ import Work from '../components/Work';
 import * as WorkActions from '../actions/work'
 import { fetchWork } from '../api/work';
 
+
+if(process.env.BROWSER){
+  require('./../../client/css/work.css');
+}
 // @connect(
 //   state => ({counter: state.counter}),
 //   dispatch => { return bindActionCreators(CounterActions, dispatch) }
@@ -38,7 +42,7 @@ export default class Works extends Component {
   }
 
   render () {
-    console.log("got dem props", this.props)
+    // console.log("got dem props", this.props)
     return <Work { ...this.props }/>;
   }
 }
@@ -64,7 +68,7 @@ export default class Works extends Component {
 
 export default connect(
   state => {
-    console.log(state, "state.work")
+    // console.log(state, "state.work")
     return {work: state.work}
   },
   dispatch => {

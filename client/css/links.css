@@ -1,12 +1,18 @@
 section {
     &.links {
-      display: flex;
-      flex-direction: column;
+        display: flex;
+        height: 100vh;
+        background-color: black;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
         a {
-          display: inline-block;
-            &:last-of-type {
-              /*display: none;*/
-            }
+            color: white;
+            display: inline-block;
+            font-family: 'FuturaStd-Bold', sans-serif;
+            text-transform: uppercase;
+            font-size: 4em;
         }
     }
 }

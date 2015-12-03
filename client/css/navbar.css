@@ -22,10 +22,9 @@ nav {
         position: absolute;
         right: 10px;
         top: 0;
-
-
         img {
             height: 10px;
+            cursor: pointer;
         }
     }
 }
