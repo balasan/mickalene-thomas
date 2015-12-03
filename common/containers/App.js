@@ -19,7 +19,6 @@ export default class App extends Component {
       <section>
         {this.props.children}
       </section>
-
     </div>
     );
   }

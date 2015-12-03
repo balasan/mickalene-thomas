@@ -5,6 +5,7 @@ import React, { Component, PropTypes } from 'react'
 export default class Work extends Component {
 
   componentDidMount() {
+    //put js stuff here
     console.log(window.innerWidth);
   }
   render () {
