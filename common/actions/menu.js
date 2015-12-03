@@ -1,22 +1,30 @@
-export const GET_WORK = 'GET_WORK';
-import { fetchWork } from '../api/work'
+export const TOGGLE = 'TOGGLE';
+export const GET_MENU = 'GET_MENU';
+
+import { fetchMenu } from '../api/menu'
+
+export function toggle() {
+  console.log("toggle")
+  return {
+    type: TOGGLE
+  };
+}
 
 
 export function set(value) {
   // console.log(value, "set value")
   return {
-    type: GET_WORK,
+    type: GET_MENU,
     payload: value
   };
 }
 
-export function loadWork() {
+
+export function loadMenu() {
   return dispatch => {
     // return Promise(fetchCounter(dispatch(set)))
     return new Promise(function(resolve, reject) {
-      fetchWork( (err, value) => {
-        if (err) return reject
-        // console.log(value, "value")
+      fetchMenu( value => {
         dispatch(set(value))
         resolve(value)
       })

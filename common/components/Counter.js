@@ -6,7 +6,7 @@ export default class Counter extends Component {
 
   componentDidMount() {
     console.log(window.innerWidth);
-    console.log(this.props)
+    // console.log(this.props)
   }
 
   render () {

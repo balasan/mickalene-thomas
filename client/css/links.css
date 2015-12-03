@@ -1,6 +1,10 @@
 section {
     &.links {
+
       display: flex;
+            &.hidden {
+        display: none;
+      }
       flex-direction: column;
         a {
           display: inline-block;
