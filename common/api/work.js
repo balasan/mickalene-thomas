@@ -22,7 +22,6 @@
  prismic.init(configuration);
 
  export function fetchWork(callback) {
-   var data;
      prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
          Api.form('everything')
              .ref(Api.master())

@@ -10,15 +10,16 @@ import Menu from '../components/Menu';
 if(process.env.BROWSER){
   require('./../../client/css/index.css');
   require('./../../client/css/links.css');
+  require('./../../client/css/work.css');
 }
 export default class App extends Component {
   render () {
     return (
     <div>
     <Menu { ...this.props }></Menu>
-      <section>
+      <main>
         {this.props.children}
-      </section>
+      </main>
     </div>
     );
   }
@@ -28,26 +29,12 @@ export default class App extends Component {
 
 // const App = (props) => {
 
-//   static fetchData(dispatch) {
-//     var { loadMenu } = bindActionCreators(MenuActions, dispatch)
-//     return Promise.all([
-//       loadMenu()
-//     ])
-//   }
-
-//   componentDidMount() {
-//     if (!this.props.menu) {
-//       this.constructor.fetchData(this.props.dispatch);
-//     }
-//   }
-
 //   return (
 //     <div>
-//     <Menu { ...this.props }></Menu>
+//     <Menu { ...props.props }></Menu>
 //       <section>
 //         {props.children}
 //       </section>
-
 //     </div>
 //   );
 

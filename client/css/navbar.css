@@ -1,5 +1,12 @@
 nav {
     width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
 
     @media (--desktop) {
         height: 50px;
@@ -9,10 +16,19 @@ nav {
         height: 50px;
     }
 
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    p {
+        color: black;
+        font-family: 'FuturaStd-Bold', sans-serif;
+        text-transform: uppercase;
+
+        @media (--desktop) {
+            font-size: 12px;
+        }
+
+        @media (--mobile) {
+            font-size: 12px;
+        }
+    }
 
     .holdImg {
         height: 50px;
@@ -22,8 +38,16 @@ nav {
         position: absolute;
         right: 10px;
         top: 0;
+
         img {
-            height: 10px;
+            @media (--desktop) {
+                height: 10px;
+            }
+
+            @media (--mobile) {
+                height: 20px;
+            }
+
             cursor: pointer;
         }
     }

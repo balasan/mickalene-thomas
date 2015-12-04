@@ -2,3 +2,9 @@
     font-family: 'FuturaStd-Bold';
     src: url('/fonts/FuturaStd-Bold.otf');
 }
+
+@font-face {
+    font-family: 'AvenirNextLTPro-Regular';
+    src: url('/fonts/AvenirNextLTPro-Regular.otf');
+}
+
