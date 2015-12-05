@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Work from '../components/Work';
 import * as WorkActions from '../actions/work'
 import { fetchWork } from '../api/work';
+import { fetchItem } from '../api/work';
 
 
 if(process.env.BROWSER){
@@ -26,6 +27,13 @@ export default class Works extends Component {
       loadWork()
     ])
   }
+
+  // static fetchItem(dispatch) {
+  //   var { loadItem } = bindActionCreators(WorkActions, dispatch)
+  //   return Promise.all([
+  //     loadItem()
+  //   ])
+  // }
 
   // static fetchDataClient(dispatch) {
   //   var { loadWork } = bindActionCreators(WorkActions, dispatch)
@@ -69,7 +77,7 @@ export default class Works extends Component {
 export default connect(
   state => {
     console.log(state, "state.work")
-    return {work: state.work, currentitem: state.setitem}
+    return {work: state.work}
   },
   dispatch => {
     return Object.assign({}, { dispatch },  bindActionCreators(WorkActions, dispatch))

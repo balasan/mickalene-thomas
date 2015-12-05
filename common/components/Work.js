@@ -12,7 +12,7 @@ export default class Work extends Component {
     // console.log(window.innerWidth);
   }
   render () {
-    const { work, setitem } = this.props
+    const { work, clickitem } = this.props
       // const { work.all, setitem } = this.props
     //TODO maybe it makes sense to simplify the native prismic data structure?
     //so its more like work[i].mainImage work[i].description - this could be done in api section
@@ -22,17 +22,16 @@ export default class Work extends Component {
       <div>
       <section className='showcase'>
       <div className="image">
-      {work ? console.log(work.all.results[0], "check me") : null}
-      {work ? <img src={work.all.results[0].data["image.image"].value.main.url} /> : null }
+      {work ? (work.currentitem ? <img src={work.currentitem.results[0].data["image.image"].value.main.url} /> : <p>nothing seleted</p>) : (null) }
       </div>
       <div className="description">
-
+            {work ? (work.currentitem ? <p>{work.currentitem.results[0].data["image.title"].value[0].text}</p> : <p>nothing selected</p>) : (null) }
       </div>
       </section>
       <seciton className='workGrid'>
        {work ? work.all.results.map(function (item, i) {
                     return (
-                     <img key={i} onClick={setitem.bind(i, item.id)} src={item.data["image.image"].value.main.url} />
+                     <img key={i} onClick={clickitem.bind(i, item.id)} src={item.data["image.image"].value.main.url} />
                     ) }, this) : null}
       </seciton>
       </div>

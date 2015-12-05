@@ -21,12 +21,12 @@
 
  prismic.init(configuration);
 
- export function fetchItem(callback) {
-    // console.log("workItem")
-         prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
-         Api.form('everything')
+ export function fetchItem(id, callback) {
+    console.log(id)
+   prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
+     Api.form('everything')
              .ref(Api.master())
-             .query(prismic.Predicates.at("document.type", "image")).submit(function(err, response) {
+             .query(prismic.Predicates.at("document.id", id)).submit(function(err, response) {
                  if (err) {
                      console.log(err);
                      done();
