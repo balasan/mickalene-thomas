@@ -68,8 +68,8 @@ export default class Works extends Component {
 
 export default connect(
   state => {
-    // console.log(state, "state.work")
-    return {work: state.work}
+    console.log(state, "state.work")
+    return {work: state.work, currentitem: state.setitem}
   },
   dispatch => {
     return Object.assign({}, { dispatch },  bindActionCreators(WorkActions, dispatch))

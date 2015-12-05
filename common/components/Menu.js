@@ -4,7 +4,7 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as MenuActions from '../actions/menu'
-import { fetchMenu } from '../api/menu';
+// import { fetchMenu } from '../api/menu';
 
 export default class Menu extends Component {
 
