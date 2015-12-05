@@ -25,7 +25,7 @@ export default class Work extends Component {
       {work ? (work.currentitem ? <img src={work.currentitem.results[0].data["image.image"].value.main.url} /> : <p>nothing seleted</p>) : (null) }
       </div>
       <div className="description">
-            {work ? (work.currentitem ? <p>{work.currentitem.results[0].data["image.title"].value[0].text}</p> : <p>nothing selected</p>) : (null) }
+            {work ? (work.currentitem ? <div><p>{work.currentitem.results[0].data["image.title"].value[0].text}</p><p>{work.currentitem.results[0].data["image.date"].value.substr(0, 4)}</p></div> : <p>nothing selected</p>) : (null) }
       </div>
       </section>
       <seciton className='workGrid'>
