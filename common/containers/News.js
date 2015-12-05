@@ -2,7 +2,9 @@ import React, { Component, PropTypes } from 'react';
 
 const News = () => {
   return (
-    <div>news</div>
+    <section className='newsTxt'>
+    <h1>news</h1>
+    </section>
   );
 }
 

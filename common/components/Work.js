@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as WorkActions from '../actions/work'
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 // const Counter = (props) => {
 export default class Work extends Component {
@@ -22,10 +23,12 @@ export default class Work extends Component {
       <div>
       <section className='showcase'>
       <div className="image">
-      {work ? (work.currentitem ? <img src={work.currentitem.results[0].data["image.image"].value.main.url} /> : <p>nothing seleted</p>) : (null) }
+
+      {work ? (work.currentitem ? <img src={work.currentitem.results[0].data["image.image"].value.main.url} /> : <img src={work.all.results[0].data["image.image"].value.main.url} />) : (null) }
+
       </div>
       <div className="description">
-            {work ? (work.currentitem ? <div><p>{work.currentitem.results[0].data["image.title"].value[0].text}</p><p>{work.currentitem.results[0].data["image.date"].value.substr(0, 4)}</p></div> : <p>nothing selected</p>) : (null) }
+            {work ? (work.currentitem ? <div><p>{work.currentitem.results[0].data["image.title"].value[0].text}</p><p>{work.currentitem.results[0].data["image.date"].value.substr(0, 4)}</p></div> : <div><p>{work.all.results[0].data["image.title"].value[0].text}</p><p>{work.all.results[0].data["image.date"].value.substr(0, 4)}</p></div>) : (null) }
       </div>
       </section>
       <seciton className='workGrid'>

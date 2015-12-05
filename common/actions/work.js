@@ -15,29 +15,26 @@ export function setitem(value) {
   return {
     type: GET_ITEM,
     payload: value
- };
+  };
 }
 
 export function clickitem(id) {
   return dispatch => {
-      fetchItem(id,  (err, value) => {
-        if (err) return reject
-        dispatch(setitem(value))
-      })
+    fetchItem(id,  (err, value) => {
+      if (err) return reject
+      dispatch(setitem(value))
+    })
   }
 }
 
 export function loadWork() {
   return dispatch => {
-    // return Promise(fetchCounter(dispatch(set)))
     return new Promise(function(resolve, reject) {
       fetchWork( (err, value) => {
         if (err) return reject
-        // console.log(value, "value")
         dispatch(set(value))
         resolve(value)
       })
     });
-
-}
+  }
 }

@@ -49,5 +49,10 @@
         height: 300px;
         object-fit: cover;
         flex-grow: 1;
+        transition: opacity 350ms ease;
+        cursor: pointer;
+        &:hover {
+            opacity: 0.5;
+        }
     }
 }
