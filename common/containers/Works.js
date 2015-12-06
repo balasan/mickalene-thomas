@@ -43,14 +43,13 @@ export default class Works extends Component {
   // }
 
   componentDidMount() {
-    console.log(this.props)
+    // console.log(this.props)
     if (!this.props.work) {
       this.constructor.fetchData(this.props.dispatch);
     }
   }
 
   render () {
-    // console.log("got dem props", this.props)
     return <Work { ...this.props }/>;
   }
 }
@@ -76,7 +75,7 @@ export default class Works extends Component {
 
 export default connect(
   state => {
-    console.log(state, "state.work")
+    // console.log(state, "state.work")
     return {work: state.work}
   },
   dispatch => {

@@ -22,7 +22,7 @@
  prismic.init(configuration);
 
  export function fetchItem(id, callback) {
-    console.log(id)
+    // console.log(id)
    prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
      Api.form('everything')
              .ref(Api.master())

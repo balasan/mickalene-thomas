@@ -27,6 +27,15 @@ export function clickitem(id) {
   }
 }
 
+export function loadItem(id) {
+  return dispatch => {
+    fetchItem(id,  (err, value) => {
+      if (err) return reject
+      dispatch(setitem(value))
+    })
+  }
+}
+
 export function loadWork() {
   return dispatch => {
     return new Promise(function(resolve, reject) {

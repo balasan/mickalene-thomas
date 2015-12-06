@@ -11,14 +11,16 @@ export default class Menu extends Component {
 
 
   render () {
-    const location = this.props.children.props.route.path;
+    // console.log(this.props, "app props")
+    var location = ''
+    {this.props.children.props.route.path != 'works/:itemId' ? location = this.props.children.props.route.path : location = 'works'}
      const { toggle } = this.props
     return (
       <div>
       <nav>
         <p>{location}</p>
         <div className='holdImg'>
-        <img onClick={toggle} src='images/menu.svg'/>
+        <img onClick={toggle} src='../images/menu.svg'/>
         </div>
       </nav>
        <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>

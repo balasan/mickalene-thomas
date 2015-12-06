@@ -15,6 +15,7 @@ if(process.env.BROWSER){
   require('./../../client/css/news.css');
   require('./../../client/css/store.css');
   require('./../../client/css/contact.css');
+  require('./../../client/css/item.css');
 }
 export default class App extends Component {
   render () {

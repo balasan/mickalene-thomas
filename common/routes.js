@@ -18,6 +18,7 @@ var routes = {
     { path: 'about', component: About },
     { path: 'news', component: News },
     { path: 'works', component: Works },
+    { path: 'works/:itemId', component: Works },
     { path: 'contact', component: Contact },
     { path: 'store', component: Store },
     { path: 'home', component: Home },
