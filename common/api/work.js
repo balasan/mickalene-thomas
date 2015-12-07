@@ -31,12 +31,12 @@
                      console.log(err);
                      done();
                  }
-                 var simple = new Array();
+                 var simple = [];
                  response.results.forEach(function(item) {
                     var obj = {}
                     obj.id = item.id;
                     obj.image = item.data["image.image"].value.main.url;
-                    obj.description = item.data["image.title"].value[0].text;
+                    obj.title = item.data["image.title"].value[0].text;
                     obj.date = item.data["image.date"].value;
                     simple.push(obj)
                  });
@@ -54,12 +54,12 @@
                      console.log(err);
                      done();
                  }
-                 var simple = new Array();
+                 var simple = [];
                  response.results.forEach(function(item) {
                     var obj = {}
                     obj.id = item.id;
                     obj.image = item.data["image.image"].value.main.url;
-                    obj.description = item.data["image.title"].value[0].text;
+                    obj.title = item.data["image.title"].value[0].text;
                     obj.date = item.data["image.date"].value;
                     simple.push(obj)
                  });
