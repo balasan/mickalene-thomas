@@ -27,24 +27,26 @@ export default class Work extends Component {
   render () {
 
     const { work, clickitem } = this.props
-      // const { work.all, setitem } = this.props
-    //TODO maybe it makes sense to simplify the native prismic data structure?
-    //so its more like work[i].mainImage work[i].description - this could be done in api section
+
+    // const { work.all, setitem } = this.props
+    // TODO maybe it makes sense to simplify the native prismic data structure?
+    // so its more like work[i].mainImage work[i].description - this could be done in api section
     // var url = work ? work.results[0].data["image.image"].value.main.url : ""
+
     return (
       <div>
       <section className='showcase'>
       <div className="image">
-        {work ? (work.currentitem ? <img src={work.currentitem.results[0].data["image.image"].value.main.url} /> : <img src={work.all.results[0].data["image.image"].value.main.url} />) : (null) }
+        {work ? (work.currentitem ? <img src={work.currentitem[0].image} /> : <img src={work.all[0].image} />) : (null) }
       </div>
       <div className="description">
-        {work ? (work.currentitem ? <div><p>{work.currentitem.results[0].data["image.title"].value[0].text}</p><p>{work.currentitem.results[0].data["image.date"].value.substr(0, 4)}</p></div> : <div><p>{work.all.results[0].data["image.title"].value[0].text}</p><p>{work.all.results[0].data["image.date"].value.substr(0, 4)}</p></div>) : (null) }
+        {work ? (work.currentitem ? <div><p>{work.currentitem[0].title}</p><p>{work.currentitem[0].date.substr(0, 4)}</p></div> : <div><p>{work.all[0].title}</p><p>{work.all[0].date.substr(0, 4)}</p></div>) : (null) }
       </div>
       </section>
       <seciton className='workGrid'>
-          {work ? (work.all ? work.all.results.map(function (item, i) {
+          {work ? (work.all ? work.all.map(function (item, i) {
         return (
-         <Link key={i} to={'/works/' + item.id}><img key={i} onClick={clickitem.bind(i, item.id)} src={item.data["image.image"].value.main.url} /></Link>
+         <Link key={i} to={'/works/' + item.id}><img key={i} onClick={clickitem.bind(i, item.id)} src={item.image} /></Link>
         ) }, this) : null) : (null) }
       </seciton>
 
@@ -54,6 +56,7 @@ export default class Work extends Component {
 }
 export default connect(
   state => {
+    console.log(state.work)
     return {work: state.work}
   },
   dispatch => {

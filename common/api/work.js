@@ -31,7 +31,16 @@
                      console.log(err);
                      done();
                  }
-                 callback(null, response)
+                 var simple = new Array();
+                 response.results.forEach(function(item) {
+                    var obj = {}
+                    obj.id = item.id;
+                    obj.image = item.data["image.image"].value.main.url;
+                    obj.description = item.data["image.title"].value[0].text;
+                    obj.date = item.data["image.date"].value;
+                    simple.push(obj)
+                 });
+                 callback(null, simple)
              })
      });
  }
@@ -45,7 +54,16 @@
                      console.log(err);
                      done();
                  }
-                 callback(null, response)
+                 var simple = new Array();
+                 response.results.forEach(function(item) {
+                    var obj = {}
+                    obj.id = item.id;
+                    obj.image = item.data["image.image"].value.main.url;
+                    obj.description = item.data["image.title"].value[0].text;
+                    obj.date = item.data["image.date"].value;
+                    simple.push(obj)
+                 });
+                 callback(null, simple)
              })
      });
  }
