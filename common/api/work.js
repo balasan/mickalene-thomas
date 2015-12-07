@@ -35,6 +35,7 @@
                  response.results.forEach(function(item) {
                     var obj = {}
                     obj.id = item.id;
+                    obj.tags = item.tags;
                     obj.image = item.data["item.image"].value.main.url;
                     obj.title = item.data["item.title"].value[0].text;
                     obj.date = item.data["item.date"].value;
@@ -58,6 +59,7 @@
                  response.results.forEach(function(item) {
                     var obj = {}
                     obj.id = item.id;
+                    obj.tags = item.tags;
                     obj.image = item.data["item.image"].value.main.url;
                     obj.title = item.data["item.title"].value[0].text;
                     obj.date = item.data["item.date"].value;

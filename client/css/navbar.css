@@ -4,6 +4,7 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     position: fixed;
     top: 0;
     left: 0;
@@ -21,6 +22,8 @@ nav {
         color: black;
         font-family: 'FuturaStd-Bold', sans-serif;
         text-transform: uppercase;
+        margin: 0;
+        padding: 0;
 
         @media (--desktop) {
             font-size: 12px;
@@ -28,6 +31,20 @@ nav {
 
         @media (--mobile) {
             font-size: 12px;
+        }
+    }
+
+    .filterLinks {
+        a {
+            font-family: 'MyriadPro-Regular', sans-serif;
+            text-transform: uppercase;
+            margin: 0;
+            padding: 0 0.5em;
+            font-size: 12px;
+            color: gray;
+            &.selected {
+                color: black;
+            }
         }
     }
 

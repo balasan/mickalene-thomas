@@ -8,19 +8,46 @@ import * as MenuActions from '../actions/menu'
 
 export default class Menu extends Component {
 
-
-
   render () {
-    // console.log(this.props, "app props")
+    var type = this.props.params.type;
+    var path = this.props.children.props.route.path;
+    console.log(type, 'type')
     var location = ''
-    {this.props.children.props.route.path != 'works/:itemId' ? location = this.props.children.props.route.path : location = 'works'}
+    var filters;
+
+    switch(path) {
+      case 'works/i/:itemId':
+        location = <Link to='/works'>works</Link>
+        break;
+      case 'works/type/:type':
+        location = <Link to='/works'>works</Link>
+        filters = <section className='filterLinks'>
+        <Link to="/works" className={!type ? 'selected' : null}>all</Link>
+        <Link to="/works/type/photographs" className={type == 'photographs' ? 'selected' : null}>photographs</Link>
+        <Link to="/works/type/paintings" className={type == 'paintings' ? 'selected' : null}>paintings</Link>
+        </section>
+        break;
+      case 'works':
+      location = <Link to='/works'>works</Link>
+        filters = <section className='filterLinks'>
+        <Link to="/works" className={!type ? 'selected' : null}>all</Link>
+        <Link to="/works/type/photographs" className={type == 'photographs' ? 'selected' : null}>photographs</Link>
+        <Link to="/works/type/paintings" className={type == 'paintings' ? 'selected' : null}>paintings</Link>
+        </section>
+        break;
+      default:
+        location = path
+        filters = null
+    }
+
      const { toggle } = this.props
     return (
       <div>
       <nav>
         <p>{location}</p>
+        {filters}
         <div className='holdImg'>
-        <img onClick={toggle} src='../images/menu.svg'/>
+        <img onClick={toggle} src='../../images/menu.svg'/>
         </div>
       </nav>
        <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
