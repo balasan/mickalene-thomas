@@ -33,32 +33,49 @@ export default class Work extends Component {
     // so its more like work[i].mainImage work[i].description - this could be done in api section
     // var url = work ? work.results[0].data["image.image"].value.main.url : ""
 
+    if( !work ) return null;
+
+    var selectedWork;
+    var all;
+
+    if ( work.currentitem ) {
+      selectedWork = (
+        <section className='showcase'>
+          <div className="image">
+            <img src={work.currentitem[0].image} />
+          </div>
+          <div className="description">
+            <div>
+              <p>{work.currentitem[0].title}</p>
+              <p>{work.currentitem[0].date.substr(0, 4)}</p>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    if (work.all) {
+      all = (
+        <seciton className='workGrid'>
+            {work.all.map(function (item, i) {
+              return (
+               <Link key={i} to={'/works/i/' + item.id}>
+                <img key={i}
+                  onClick={clickitem.bind(i, item.id)}
+                  src={item.image} />
+                </Link>
+              )
+            }, this)}
+        </seciton>
+      )
+    }
+
     return (
       <div>
-      <section className='showcase'>
-      <div className="image">
-        {work ? (work.currentitem ? <img src={work.currentitem[0].image} /> : <img src={work.all[0].image} />) : (null) }
-      </div>
-      <div className="description">
-        {work ? (work.currentitem ? <div><p>{work.currentitem[0].title}</p><p>{work.currentitem[0].date.substr(0, 4)}</p></div> : <div><p>{work.all[0].title}</p><p>{work.all[0].date.substr(0, 4)}</p></div>) : (null) }
-      </div>
-      </section>
-      <seciton className='workGrid'>
-          {work ? (work.all ? work.all.map(function (item, i) {
-        return (
-         <Link key={i} to={'/works/i/' + item.id}><img key={i} onClick={clickitem.bind(i, item.id)} src={item.image} /></Link>
-        ) }, this) : null) : (null) }
-      </seciton>
-
+        {selectedWork}
+        {all}
       </div>
     )
   }
 }
-export default connect(
-  state => {
-    console.log(state.work)
-    return {work: state.work}
-  },
-  dispatch => {
-    return Object.assign({}, { dispatch },  bindActionCreators(WorkActions, dispatch))
-  })(Work)
+

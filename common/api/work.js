@@ -38,7 +38,7 @@
                     obj.tags = item.tags;
                     obj.image = item.data["item.image"].value.main.url;
                     obj.title = item.data["item.title"].value[0].text;
-                    obj.date = item.data["item.date"].value;
+                    obj.date = item.data["item.date"] ? item.data["item.date"].value : '';
                     simple.push(obj)
                  });
                  callback(null, simple)
@@ -62,7 +62,7 @@
                     obj.tags = item.tags;
                     obj.image = item.data["item.image"].value.main.url;
                     obj.title = item.data["item.title"].value[0].text;
-                    obj.date = item.data["item.date"].value;
+                    obj.date = item.data["item.date"] ? item.data["item.date"].value : '';
                     simple.push(obj)
                  });
                  callback(null, simple)
