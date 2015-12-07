@@ -36,9 +36,9 @@
                     var obj = {}
                     obj.id = item.id;
                     obj.tags = item.tags;
-                    obj.image = item.data["item.image"].value.main.url;
-                    obj.title = item.data["item.title"].value[0].text;
-                    obj.date = item.data["item.date"] ? item.data["item.date"].value : '';
+                    obj.image = item.data["work.image"].value.main.url;
+                    obj.title = item.data["work.title"].value[0].text;
+                    obj.date = item.data["work.date"] ? item.data["work.date"].value : '';
                     simple.push(obj)
                  });
                  callback(null, simple)
@@ -50,7 +50,7 @@
      prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
          Api.form('everything')
              .ref(Api.master())
-             .query(prismic.Predicates.at("document.type", "item")).submit(function(err, response) {
+             .query(prismic.Predicates.at("document.type", "work")).submit(function(err, response) {
                  if (err) {
                      console.log(err);
                      done();
@@ -60,9 +60,9 @@
                     var obj = {}
                     obj.id = item.id;
                     obj.tags = item.tags;
-                    obj.image = item.data["item.image"].value.main.url;
-                    obj.title = item.data["item.title"].value[0].text;
-                    obj.date = item.data["item.date"] ? item.data["item.date"].value : '';
+                    obj.image = item.data["work.image"].value.main.url;
+                    obj.title = item.data["work.title"].value[0].text;
+                    obj.date = item.data["work.date"] ? item.data["work.date"].value : '';
                     simple.push(obj)
                  });
                  callback(null, simple)
