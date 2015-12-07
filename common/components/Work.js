@@ -59,10 +59,12 @@ export default class Work extends Component {
         <seciton className='workGrid'>
             {work.all.map(function (item, i) {
               return (
-               <Link key={i} to={'/works/i/' + item.id}>
-                <img key={i}
-                  onClick={clickitem.bind(i, item.id)}
-                  src={item.image} />
+                <Link key={i} to={'/works/i/' + item.id}>
+                  <img
+                    key={i}
+                    onClick={clickitem.bind(i, item.id)}
+                    src={item.image}
+                  />
                 </Link>
               )
             }, this)}
