@@ -1,7 +1,7 @@
 import React from 'react';
 
 import App from './containers/App';
-import Home from './containers/Home';
+import Splash from './containers/Splash';
 import About from './containers/About';
 import Contact from './containers/Contact';
 import News from './containers/News';
@@ -13,7 +13,7 @@ import NotFound from './containers/NotFound';
 var routes = {
   path: '/',
   component: App,
-  indexRoute: { component: Home },
+  indexRoute: { component: Splash },
   childRoutes: [
     { path: 'about', component: About },
     { path: 'news', component: News },
@@ -22,7 +22,7 @@ var routes = {
     { path: 'works/filter/:filter', component: Works },
     { path: 'contact', component: Contact },
     { path: 'store', component: Store },
-    { path: 'home', component: Home },
+    { path: 'splash', component: Splash },
     { path: 'Counter', component: Counters },
     { path: '*', component: NotFound }
   ]

@@ -18,6 +18,7 @@ if(process.env.BROWSER){
   require('./../../client/css/item.css');
 }
 export default class App extends Component {
+
   render () {
     return (
     <div>
