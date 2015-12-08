@@ -37,29 +37,55 @@
                      var obj = {}
                      obj.id = item.id;
                      obj.tags = item.tags;
+                     obj.title = item.data["work.title"].value[0].text;
+                     obj.date = item.data["work.date"] ? item.data["work.date"].value : '';
+
                      obj.image = {};
-                     obj.image.main = item.data["work.image"].value.main.url;
+
+                     obj.image.main = {};
+                     obj.image.main.dimensions = {}
+                     obj.image.small = {};
+                     obj.image.small.dimensions = {};
+                     obj.image.medium = {};
+                     obj.image.medium.dimensions = {};
+                     obj.image.large = {};
+                     obj.image.large.dimensions = {};
+
+                     obj.image.main.url = item.data["work.image"].value.main.url;
+                     obj.image.main.dimensions.height = item.data["work.image"].value.main.dimensions.height;
+                     obj.image.main.dimensions.width = item.data["work.image"].value.main.dimensions.width;
+
 
                      if (item.data["work.image"].value.main.dimensions.width < 1000) {
-                         obj.image.small = item.data["work.image"].value.main.url;
+                         obj.image.small.url = item.data["work.image"].value.main.url;
+                        obj.image.small.dimensions.height = item.data["work.image"].value.main.dimensions.height;
+                        obj.image.small.dimensions.width = item.data["work.image"].value.main.dimensions.width;
                      } else {
-                         obj.image.small = item.data["work.image"].value.views.small.url;
+                         obj.image.small.url = item.data["work.image"].value.views.small.url;
+                        obj.image.small.dimensions.height = item.data["work.image"].value.views.small.dimensions.height;
+                        obj.image.small.dimensions.width = item.data["work.image"].value.views.small.dimensions.width;
                      }
 
                      if (item.data["work.image"].value.main.dimensions.width < 1920) {
-                        obj.image.medium = item.data["work.image"].value.main.url;
+                        obj.image.medium.url = item.data["work.image"].value.main.url;
+                        obj.image.medium.dimensions.height = item.data["work.image"].value.main.dimensions.height;
+                        obj.image.medium.dimensions.width = item.data["work.image"].value.main.dimensions.width;
                      } else {
-                        obj.image.medium = item.data["work.image"].value.views.medium.url;
+                        obj.image.medium.url = item.data["work.image"].value.views.medium.url;
+                        obj.image.medium.dimensions.height = item.data["work.image"].value.views.medium.dimensions.height;
+                        obj.image.medium.dimensions.width = item.data["work.image"].value.views.medium.dimensions.width;
                      }
 
                      if (item.data["work.image"].value.main.dimensions.width < 3840) {
-                        obj.image.large = item.data["work.image"].value.main.url;
+                        obj.image.large.url = item.data["work.image"].value.main.url;
+                        obj.image.large.dimensions.height = item.data["work.image"].value.main.dimensions.height;
+                        obj.image.large.dimensions.width = item.data["work.image"].value.main.dimensions.width;
                      } else {
-                        obj.image.large = item.data["work.image"].value.views.large.url;
+                         obj.image.large.url = item.data["work.image"].value.views.large.url;
+                        obj.image.large.dimensions.height = item.data["work.image"].value.views.large.dimensions.height;
+                        obj.image.large.dimensions.width = item.data["work.image"].value.views.large.dimensions.width;
                      }
 
-                     obj.title = item.data["work.title"].value[0].text;
-                     obj.date = item.data["work.date"] ? item.data["work.date"].value : '';
                      simple.push(obj)
                  });
                  callback(null, simple)
@@ -82,31 +108,58 @@
                      var obj = {}
                      obj.id = item.id;
                      obj.tags = item.tags;
+                     obj.title = item.data["work.title"].value[0].text;
+                     obj.date = item.data["work.date"] ? item.data["work.date"].value : '';
+
                      obj.image = {};
-                     obj.image.main = item.data["work.image"].value.main.url;
+
+                     obj.image.main = {};
+                     obj.image.main.dimensions = {}
+                     obj.image.small = {};
+                     obj.image.small.dimensions = {};
+                     obj.image.medium = {};
+                     obj.image.medium.dimensions = {};
+                     obj.image.large = {};
+                     obj.image.large.dimensions = {};
+
+                     obj.image.main.url = item.data["work.image"].value.main.url;
+                     obj.image.main.dimensions.height = item.data["work.image"].value.main.dimensions.height;
+                     obj.image.main.dimensions.width = item.data["work.image"].value.main.dimensions.width;
+
 
                      if (item.data["work.image"].value.main.dimensions.width < 1000) {
-                         obj.image.small = item.data["work.image"].value.main.url;
+                         obj.image.small.url = item.data["work.image"].value.main.url;
+                        obj.image.small.dimensions.height = item.data["work.image"].value.main.dimensions.height;
+                        obj.image.small.dimensions.width = item.data["work.image"].value.main.dimensions.width;
                      } else {
-                         obj.image.small = item.data["work.image"].value.views.small.url;
+                         obj.image.small.url = item.data["work.image"].value.views.small.url;
+                        obj.image.small.dimensions.height = item.data["work.image"].value.views.small.dimensions.height;
+                        obj.image.small.dimensions.width = item.data["work.image"].value.views.small.dimensions.width;
                      }
 
                      if (item.data["work.image"].value.main.dimensions.width < 1920) {
-                        obj.image.medium = item.data["work.image"].value.main.url;
+                        obj.image.medium.url = item.data["work.image"].value.main.url;
+                        obj.image.medium.dimensions.height = item.data["work.image"].value.main.dimensions.height;
+                        obj.image.medium.dimensions.width = item.data["work.image"].value.main.dimensions.width;
                      } else {
-                        obj.image.medium = item.data["work.image"].value.views.medium.url;
+                        obj.image.medium.url = item.data["work.image"].value.views.medium.url;
+                        obj.image.medium.dimensions.height = item.data["work.image"].value.views.medium.dimensions.height;
+                        obj.image.medium.dimensions.width = item.data["work.image"].value.views.medium.dimensions.width;
                      }
 
                      if (item.data["work.image"].value.main.dimensions.width < 3840) {
-                        obj.image.large = item.data["work.image"].value.main.url;
+                        obj.image.large.url = item.data["work.image"].value.main.url;
+                        obj.image.large.dimensions.height = item.data["work.image"].value.main.dimensions.height;
+                        obj.image.large.dimensions.width = item.data["work.image"].value.main.dimensions.width;
                      } else {
-                        obj.image.large = item.data["work.image"].value.views.large.url;
+                         obj.image.large.url = item.data["work.image"].value.views.large.url;
+                        obj.image.large.dimensions.height = item.data["work.image"].value.views.large.dimensions.height;
+                        obj.image.large.dimensions.width = item.data["work.image"].value.views.large.dimensions.width;
                      }
 
-                     obj.title = item.data["work.title"].value[0].text;
-                     obj.date = item.data["work.date"] ? item.data["work.date"].value : '';
                      simple.push(obj)
                  });
+                console.log(simple, 'simple')
                  callback(null, simple)
              })
      });

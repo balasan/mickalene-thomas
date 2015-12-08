@@ -99,7 +99,7 @@ static fetchMenu(dispatch) {
 
 export default connect(
   state => {
-    console.log(state, 'menu.state')
+    // console.log(state, 'menu.state')
     return {state: state}
   },
   dispatch => {
