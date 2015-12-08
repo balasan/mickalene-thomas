@@ -1,12 +1,16 @@
 import { TOGGLE } from '../actions/menu'
 import { GET_MENU } from '../actions/menu'
 
-export default function counter(state = false, action) {
+export default function menu(state = null, action) {
   switch (action.type) {
     case GET_MENU:
-      return state
+      return Object.assign({}, state, {
+        toggle: false
+      })
     case TOGGLE:
-      return state = !state
+      return Object.assign({}, state, {
+        toggle: state.toggle =! state.toggle
+      })
     default:
       return state
   }

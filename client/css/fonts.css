@@ -4,6 +4,11 @@
 }
 
 @font-face {
+    font-family: 'FuturaStd-Heavy';
+    src: url('/fonts/FuturaStd-Heavy.otf');
+}
+
+@font-face {
     font-family: 'AvenirNextLTPro-Regular';
     src: url('/fonts/AvenirNextLTPro-Regular.otf');
 }

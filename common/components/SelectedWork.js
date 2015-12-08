@@ -36,7 +36,7 @@ export default class SelectedWork extends Component {
       selectedWork = (
         <section className='showcase'>
           <div className="image">
-            <img src={work.currentitem[0].image} />
+            <img src={work.currentitem[0].image.main} />
           </div>
           <div className="description">
             <div>
