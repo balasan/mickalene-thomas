@@ -4,10 +4,13 @@ import { fetchWork } from '../api/work'
 import { fetchItem } from '../api/work'
 
 
-export function set(value) {
+export function set(value, filter) {
   return {
     type: GET_WORK,
-    payload: value
+    payload: {
+      results: value,
+      filter: filter
+    }
   };
 }
 
@@ -36,12 +39,13 @@ export function loadItem(id) {
   }
 }
 
-export function loadWork() {
+export function loadWork(filter) {
+  console.log(filter, 'loadwork filter')
   return dispatch => {
     return new Promise(function(resolve, reject) {
       fetchWork( (err, value) => {
         if (err) return reject
-        dispatch(set(value))
+        dispatch(set(value, filter))
         resolve(value)
       })
     });

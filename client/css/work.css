@@ -2,13 +2,13 @@
     display: flex;
     width: 100vw;
     flex-direction: column;
-    height: calc(100vh - 50px);
+    height: calc(100vh - 75px);
     justify-content: center;
     align-items: center;
 
     .image {
         padding: 1em;
-        height: calc(100% - 50px);
+        height: calc(100% - 75px);
         display: flex;
         align-items: center;
 
@@ -20,7 +20,7 @@
     }
 
     .description {
-        height: 50px;
+        height: 75px;
         width: 100%;
         background-color: white;
         display: flex;

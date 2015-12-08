@@ -4,21 +4,18 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as MenuActions from '../actions/menu'
-import * as WorkActions from '../actions/work'
 
 export default class Menu extends Component {
 
-  static fetchData(dispatch) {
-    var { loadWork } = bindActionCreators(WorkActions, dispatch)
+static fetchMenu(dispatch) {
+    var { loadMenu } = bindActionCreators(MenuActions, dispatch)
     return Promise.all([
-      loadWork()
+      loadMenu()
     ])
   }
 
   componentDidMount() {
-    if (!this.props.work) {
-      this.constructor.fetchData(this.props.dispatch);
-    }
+      this.constructor.fetchMenu(this.props.dispatch);
   }
 
   render () {
@@ -27,25 +24,16 @@ export default class Menu extends Component {
     var location = ''
     var filters;
 
-    switch(path) {
-      case 'works/filter/:filter':
-        location = <Link to='/works'>works</Link>
-        break;
-      case 'works/i/:itemId':
-      location = <Link to='/works'>works</Link>
-        break;
-      case 'works':
-      location = <Link to='/works'>works</Link>
-        break;
-      default:
-        location = path
+    if (path == 'works/filter/:filter' || 'works/i/:itemId' || 'works') {
+      location = <Link onClick={this.props.initFilter.bind(0, 'all')} to='/works'>works</Link>
     }
 
-    const { toggle, work } = this.props
+    const { initFilter, toggle } = this.props
 
     var tags = [];
+
     if (this.props.state.work) {
-      this.props.state.work.all.forEach(function(one) {
+      this.props.state.work.store.forEach(function(one) {
         one.tags.forEach(function(tag) {
           tags.push(tag);
         })
@@ -60,39 +48,49 @@ export default class Menu extends Component {
       }
     })
 
-    if (uniqueTags) {
+    if (path == 'works/filter/:filter' || path == 'works/i/:itemId' || path == 'works') {
       filters = (
-        <div>
-        <Link className={!filterType ? 'selected' : null} to='/works'>all</Link>
+        <section className='filterLinks'>
+        <span>
+        <Link onClick={initFilter.bind(0, 'all')} className={!filterType ? 'selected' : null} to='/works'>all</Link>
+        <p>/</p>
+        </span>
           {uniqueTags.map(function (filter, i) {
             return (
-              <Link key={i} className={filterType == filter ? 'selected' : null} to={'/works/filter/' + filter}>
+              <span key={i}>
+                <Link key={i} onClick={initFilter.bind(i, filter)} className={filterType == filter ? 'selected' : null} to={'/works/filter/' + filter}>
               {filter}
               </Link>
+              {i != uniqueTags.length - 1 ? <p>/</p> : null}
+              </span>
             )}, this)}
-        </div>
+         </section>
       )
+    }
+
+    if (this.props.state.menu) {
+      if (this.props.state.menu.toggle) {
+        var links = <section className='links'>
+        <Link onClick={toggle} to="/works">works</Link>
+        <Link onClick={toggle} to="/about">about</Link>
+        <Link onClick={toggle} to="/news">news</Link>
+        <Link onClick={toggle} to="/store">store</Link>
+        <Link onClick={toggle} to="/contact">contact</Link>
+        </section>
+      }
     }
 
     return (
       <div>
       <nav>
         <p>{location}</p>
-        <section className='filterLinks'>
-      {filters}
-      </section>
+        {filters}
         <div className='holdImg'>
         <img onClick={toggle} src='../../images/menu.svg'/>
         </div>
       </nav>
        <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
-        { this.props.state.menu ? <section className='links'>
-        <Link onClick={toggle} to="/works">works</Link>
-        <Link onClick={toggle} to="/about">about</Link>
-        <Link onClick={toggle} to="/news">news</Link>
-        <Link onClick={toggle} to="/store">store</Link>
-        <Link onClick={toggle} to="/contact">contact</Link>
-        </section> : null }
+        {links}
         </ReactCSSTransitionGroup>
       </div>
     )
@@ -101,6 +99,7 @@ export default class Menu extends Component {
 
 export default connect(
   state => {
+    console.log(state, 'menu.state')
     return {state: state}
   },
   dispatch => {

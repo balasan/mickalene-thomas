@@ -13,23 +13,25 @@ if(process.env.BROWSER){
 
 export default class Works extends Component {
 
-  static fetchData(dispatch) {
-    var { loadWork } = bindActionCreators(WorkActions, dispatch)
+  static fetchData(dispatch, filter) {
+     console.log(filter, 'function filter')
+    var { loadWork } = bindActionCreators(WorkActions, dispatch, filter)
     return Promise.all([
-      loadWork()
+      loadWork(filter)
     ])
   }
 
+
   componentDidMount() {
     if (!this.props.work) {
-      this.constructor.fetchData(this.props.dispatch);
+      this.constructor.fetchData(this.props.dispatch, this.props.params.filter);
     }
   }
 
   render () {
     return (
       <div>
-        <SelectedWork { ...this.props }/>
+       {/*  <SelectedWork { ...this.props }/> */}
         <Work { ...this.props }/>
       </div>
       )
@@ -38,6 +40,7 @@ export default class Works extends Component {
 
 export default connect(
   state => {
+    // console.log(state, 'work state')
     return {work: state.work}
   },
   dispatch => {

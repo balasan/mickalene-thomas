@@ -1,6 +1,6 @@
 .aboutImg {
   margin-top:50px;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 75px);
   background-color: white;
   background-image: url('/images/about.png');
   background-size: cover;
@@ -15,7 +15,7 @@
   }
 }
 .aboutTxt {
-  height: calc(100vh - 50px);
+  height: calc(100vh - 75px);
   background-color: black;
   width: 100%;
   display: flex;

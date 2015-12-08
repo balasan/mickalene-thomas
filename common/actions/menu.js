@@ -1,6 +1,6 @@
 export const TOGGLE = 'TOGGLE';
 export const GET_MENU = 'GET_MENU';
-
+export const SET_FILTER = 'SET_FILTER';
 import { fetchMenu } from '../api/menu'
 
 export function toggle() {
@@ -10,19 +10,22 @@ export function toggle() {
   };
 }
 
-
 export function set(value) {
-  // console.log(value, "set value")
   return {
     type: GET_MENU,
     payload: value
   };
 }
 
+export function initFilter(filter, i) {
+  return {
+    type: SET_FILTER,
+    payload: filter
+  }
+}
 
 export function loadMenu() {
   return dispatch => {
-    // return Promise(fetchCounter(dispatch(set)))
     return new Promise(function(resolve, reject) {
       fetchMenu( value => {
         dispatch(set(value))
