@@ -9,29 +9,17 @@ nav {
     top: 0;
     left: 0;
     z-index: 999;
-
-    @media (--desktop) {
-        height: 75px;
-    }
-
-    @media (--mobile) {
-        height: 75px;
-    }
+    height: 75px;
 
     p {
         color: black;
-        font-family: 'FuturaStd-Bold', sans-serif;
+        font-family: 'Futura', sans-serif;
+        font-weight: bold;
         text-transform: uppercase;
-        margin: 0;
+        margin: 0 0 4px 0;
         padding: 0;
-
-        @media (--desktop) {
-            font-size: 12px;
-        }
-
-        @media (--mobile) {
-            font-size: 12px;
-        }
+        font-size: 9px;
+        letter-spacing: 1.5px;
     }
 
     .filterLinks {
@@ -40,22 +28,21 @@ nav {
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
+        font-family: 'Futura', sans-serif;
+        font-weight: normal;
+        letter-spacing: 1px;
 
         span, p, a {
             display: inline-block;
         }
-        p {
-            font-family: 'MyriadPro-Regular', sans-serif;
-            font-size: 10px;
-            color: gray;
-        }
+
         a {
-            font-family: 'MyriadPro-Regular', sans-serif;
             text-transform: uppercase;
             margin: 0;
-            padding: 0 0.5em;
-            font-size: 10px;
+            padding: 0.25em 0.5em;
+            font-size: 9px;
             color: gray;
+
             &.selected {
                 color: black;
             }
@@ -72,14 +59,7 @@ nav {
         top: 0;
 
         img {
-            @media (--desktop) {
-                height: 15px;
-            }
-
-            @media (--mobile) {
-                height: 20px;
-            }
-
+            height: 15px;
             cursor: pointer;
         }
     }

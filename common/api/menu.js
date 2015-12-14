@@ -1,3 +1,3 @@
-export function fetchMenu(callback) {
-    callback(null, false)
+export function fetchMenu(callback, id) {
+    callback(null, false, id)
 }

@@ -7,15 +7,17 @@ import * as MenuActions from '../actions/menu'
 
 export default class Menu extends Component {
 
-static fetchMenu(dispatch) {
-    var { loadMenu } = bindActionCreators(MenuActions, dispatch)
+static fetchMenu(dispatch, length) {
+    var { loadMenu } = bindActionCreators(MenuActions, dispatch, length)
+
     return Promise.all([
-      loadMenu()
+      loadMenu(length)
     ])
   }
 
   componentDidMount() {
-      this.constructor.fetchMenu(this.props.dispatch);
+      this.constructor.fetchMenu(this.props.dispatch, this.props.location.pathname.length);
+
   }
 
   render () {
@@ -24,11 +26,7 @@ static fetchMenu(dispatch) {
     var location = ''
     var filters;
 
-    if (path == 'works/filter/:filter' || 'works/i/:itemId' || 'works') {
-      location = <Link onClick={this.props.initFilter.bind(0, 'all')} to='/works'>works</Link>
-    }
-
-    const { initFilter, toggle } = this.props
+    const { toggle, toggleLinks } = this.props
 
     var tags = [];
 
@@ -48,48 +46,64 @@ static fetchMenu(dispatch) {
       }
     })
 
-    if (path == 'works/filter/:filter' || path == 'works/i/:itemId' || path == 'works') {
+    if (path == 'works/filter/:filter' || path == 'works') {
       filters = (
         <section className='filterLinks'>
-        <span>
-        <Link onClick={initFilter.bind(0, 'all')} className={!filterType ? 'selected' : null} to='/works'>all</Link>
-        <p>/</p>
-        </span>
+        <Link className={!filterType ? 'selected' : null} to='/works'>all</Link>
           {uniqueTags.map(function (filter, i) {
             return (
-              <span key={i}>
-                <Link key={i} onClick={initFilter.bind(i, filter)} className={filterType == filter ? 'selected' : null} to={'/works/filter/' + filter}>
+                <Link key={i} className={filterType == filter ? 'selected' : null} to={'/works/filter/' + filter}>
               {filter}
               </Link>
-              {i != uniqueTags.length - 1 ? <p>/</p> : null}
-              </span>
             )}, this)}
          </section>
       )
     }
 
-    if (this.props.state.menu) {
-      if (this.props.state.menu.toggle) {
-        var links = <section className='links'>
-        <Link onClick={toggle} to="/works">works</Link>
-        <Link onClick={toggle} to="/about">about</Link>
-        <Link onClick={toggle} to="/news">news</Link>
-        <Link onClick={toggle} to="/store">store</Link>
-        <Link onClick={toggle} to="/contact">contact</Link>
+    if (path == 'works/i/:itemId' && this.props.state.work) {
+      if (this.props.state.work.currentitem) {
+              var tag = this.props.state.work.currentitem[0].tags[0];
+      filters = (
+        <section className='filterLinks'>
+         <Link to={'/works/filter/' + tag}>{'back to ' + tag}</Link>
         </section>
+        )
+      }
+
+    }
+
+    if (this.props.state.menu) {
+      if (this.props.state.menu.toggleLinks) {
+        var links = <section className='links'>
+        <Link onClick={toggleLinks} to="/works">works</Link>
+        <Link onClick={toggleLinks} to="/about">about</Link>
+        <Link onClick={toggleLinks} to="/news">news</Link>
+        <Link onClick={toggleLinks} to="/store">store</Link>
+        <Link onClick={toggleLinks} to="/contact">contact</Link>
+        </section>
+      }
+
+      if (this.props.state.menu.toggleNav) {
+        if (this.props.location.pathname.length > 5) {
+          location = <Link to='/works'>works</Link>;
+        } else {
+          location = path;
+        }
+
+        var nav = <nav>
+          <p>{location}</p>
+          {filters}
+          <div className='holdImg'>
+            <img onClick={toggleLinks} src='../../images/menu.svg'/>
+          </div>
+        </nav>
       }
     }
 
     return (
       <div>
-      <nav>
-        <p>{location}</p>
-        {filters}
-        <div className='holdImg'>
-        <img onClick={toggle} src='../../images/menu.svg'/>
-        </div>
-      </nav>
        <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+       {nav}
         {links}
         </ReactCSSTransitionGroup>
       </div>

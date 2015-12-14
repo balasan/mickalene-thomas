@@ -5,23 +5,9 @@ import { connect } from 'react-redux'
 import * as WorkActions from '../actions/work'
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
-// const Counter = (props) => {
-export default class SelectedWork extends Component {
-
-  static fetchItem(dispatch, id) {
-    var { loadItem } = bindActionCreators(WorkActions, dispatch, id)
-    return Promise.all([
-      loadItem(id)
-    ])
-  }
+export default class SelectedComponent extends Component {
 
   componentDidMount() {
-      if (this.props.routeParams.itemId) {
-         var id = this.props.routeParams.itemId;
-        this.constructor.fetchItem(this.props.dispatch, id);
-      } else {
-        console.log("no id")
-      }
   }
 
   render () {
@@ -36,7 +22,7 @@ export default class SelectedWork extends Component {
       selectedWork = (
         <section className='showcase'>
           <div className="image">
-            <img src={work.currentitem[0].image.main} />
+            <img src={work.currentitem[0].image.main.url} />
           </div>
           <div className="description">
             <div>
@@ -49,7 +35,7 @@ export default class SelectedWork extends Component {
     }
 
     return (
-      <div>
+      <div className='selectedWork'>
         {selectedWork}
         </div>
     )

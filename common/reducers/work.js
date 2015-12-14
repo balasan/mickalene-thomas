@@ -35,25 +35,30 @@ export default function getwork(state = null, action) {
         currentitem: action.payload
       })
 
-    case SET_FILTER:
-      if (action.payload != 'all') {
+    case UPDATE_PATH:
+      var simplePath = action.path.substr(0, 8);
+      var filter = action.path.substr(14, action.path.length)
+
+      if (simplePath != '/works/i' && simplePath != '/works' && state) {
 
         var filtered = [];
 
         state.store.forEach(function(item) {
-          if (item.tags.indexOf(action.payload) > -1) {
+          if (item.tags.indexOf(filter) > -1) {
             filtered.push(item)
           }
         })
 
         return Object.assign({}, state, {
-          filter: action.payload,
+          filter: filter,
           all: filtered
         })
 
-      } else {
+      }
+
+      if (simplePath == '/works' && state) {
         return Object.assign({}, state, {
-          filter: action.payload,
+          filter: filter,
           all: state.store
         })
       }
