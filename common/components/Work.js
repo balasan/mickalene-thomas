@@ -37,7 +37,7 @@ export default class Work extends Component {
     if (work.all) {
       all = (
         <div className='flex-images'>
-        <ReactCSSTransitionGroup transitionName="grid" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+        <ReactCSSTransitionGroup transitionName="grid" transitionEnterTimeout={500} transitionLeaveTimeout={2000}>
             {work.all.map(function (item, i) {
               return (
                   <Link style={{transition: 'opacity 300ms ' + i*0.1 + 's cubic-bezier(0.175, 0.665, 0.320, 1)'}} className='item' data-w={item.image.small.dimensions.width} data-h={item.image.small.dimensions.height} key={i} to={'/works/i/' + item.id}>

@@ -21,7 +21,10 @@ function GLView() {
   var uniforms;
 
   var delta;
+  var scene;
+  var object;
   var time;
+  var objectVar;
   var oldTime;
 
   var loadedItems = 0;
@@ -216,7 +219,10 @@ function GLView() {
       object.position.y = 5;
       var s = .4;
       object.scale.set(s, s, s);
-      scene.add(object);
+      // console.log(object, 'object')
+      objectVar = object;
+      scene.add(objectVar);
+      console.log(scene, "scene here")
     });
 
   }
@@ -231,6 +237,8 @@ function GLView() {
     camera.updateProjectionMatrix();
 
   }
+
+
 
   function onMouseMove(event) {
 
@@ -298,6 +306,10 @@ function GLView() {
   }
   this.stop = function(){
     stop = true;
+  }
+  this.remove = function() {
+    console.log(scene, 'scene')
+    scene.remove(objectVar)
   }
   this.dom = renderer.domElement
 
