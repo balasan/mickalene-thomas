@@ -37,7 +37,7 @@ export default class Work extends Component {
             <div className='flex-images'>
               {work.all.map(function (item, i) {
                 return (
-                  <Link style={{transition: 'opacity 300ms ' + i*0.1 + 's cubic-bezier(0.175, 0.665, 0.320, 1)'}} className='item' data-w={item.image.small.dimensions.width} data-h={item.image.small.dimensions.height} key={i} to={'/works/i/' + item.id}>
+                  <Link data-w={item.image.small.dimensions.width} data-h={item.image.small.dimensions.height} key={i} to={'/works/i/' + item.id}>
                     <img
                       key={i}
                       onClick={clickitem.bind(i, item.id)}
@@ -54,14 +54,13 @@ export default class Work extends Component {
               defaultStyles={work.all}
               styles={prevStyles => prevStyles.map((_, i) => {
               return i === 0
-              ? {x: spring(1, [10, 17])}
+              ? {x: spring(1, [200, 17])}
               : prevStyles[i - 1];
             })}>
                 {interpolatedStyles =>
                   <div>
                     {interpolatedStyles.map((item, i) =>
                       <article style={{opacity: item.x}}>
-                        {all}
                       </article>
                     )}
                   </div>
@@ -72,7 +71,7 @@ export default class Work extends Component {
     }
 
     return (
-      <div>
+      <div class="flex-images">
         {transition}
       </div>
     )
