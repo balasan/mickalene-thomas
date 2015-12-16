@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import * as WorkActions from '../actions/work'
 import flexImages from './flex-full'
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
-import {Motion, spring, StaggeredMotion} from 'react-motion';
+import {Motion, spring, TransitionMotion, StaggeredMotion} from 'react-motion';
 
 export default class Work extends Component {
 
@@ -13,9 +13,9 @@ export default class Work extends Component {
     if (!this.props.work) {
       setTimeout(function() {
         new flexImages({ selector: '.flex-images', rowHeight: 250 })
-      }, 250);
+      }, 500);
     } else {
-       new flexImages({ selector: '.flex-images', rowHeight: 250 })
+        new flexImages({ selector: '.flex-images', rowHeight: 250 })
     }
   }
 
@@ -27,51 +27,53 @@ export default class Work extends Component {
     new flexImages({ selector: '.flex-images', rowHeight: 250 })
   }
 
+  getStyles(prevStyles) {
+      console.log(prevStyles, 'prev')
+    // `prevStyles` is the interpolated value of the last tick
+    const endValue = prevStyles.map((_, i) => {
+      return i === 0
+        ? this.props.work
+        : {
+            x: spring(prevStyles[i - 1].x),
+            y: spring(prevStyles[i - 1].y),
+          };
+    });
+    console.log(endValue, 'endvalue')
+    return endValue;
+  }
+
   render () {
 
     const { work, clickitem } = this.props
 
     if (work) {
       if (work.all) {
-          var all = (
-            <div className='flex-images'>
-              {work.all.map(function (item, i) {
-                return (
-                  <Link data-w={item.image.small.dimensions.width} data-h={item.image.small.dimensions.height} key={i} to={'/works/i/' + item.id}>
-                    <img
-                      key={i}
-                      onClick={clickitem.bind(i, item.id)}
-                      src={item.image.small.url}
-                    />
-                  </Link>
-                )
-              }, this)}
-            </div>
-          )
-
           var transition = (
-            <StaggeredMotion
-              defaultStyles={work.all}
-              styles={prevStyles => prevStyles.map((_, i) => {
-              return i === 0
-              ? {x: spring(1, [200, 17])}
-              : prevStyles[i - 1];
-            })}>
-                {interpolatedStyles =>
-                  <div>
-                    {interpolatedStyles.map((item, i) =>
-                      <article style={{opacity: item.x}}>
-                      </article>
-                    )}
-                  </div>
-                }
-            </StaggeredMotion>
+                <StaggeredMotion
+                  defaultStyles={work.all.map((one) => ({x: 0, y: 0, data: one}))}
+                  styles={this.getStyles}>
+                  {items =>
+                    <div className='flex-images'>
+                      {items.map(({x, y, data}, i) =>
+                        <Link
+                          key={i}
+                          to={'/works/i/' + data.id}
+                          data-h={data.image.small.dimensions.height}
+                          data-w={data.image.small.dimensions.width}
+                          className='item'
+                          >
+                          <img src={data.image.small.url} />
+                          </Link>
+                      )}
+                    </div>
+                  }
+              </StaggeredMotion>
           )
       }
     }
 
     return (
-      <div class="flex-images">
+      <div>
         {transition}
       </div>
     )
