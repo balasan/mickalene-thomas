@@ -35,9 +35,13 @@ export default function getwork(state = null, action) {
 
     case UPDATE_PATH:
       var simplePath = action.path.substr(0, 8);
-      var filter = action.path.substr(14, action.path.length)
+
+      console.log(action, 'action')
+      // var id =
 
       if (simplePath != '/works/i' && simplePath != '/works' && state) {
+
+        var filter = action.path.substr(14, action.path.length)
 
         var filtered = [];
 
@@ -51,6 +55,23 @@ export default function getwork(state = null, action) {
           filter: filter,
           all: filtered
         })
+
+      }
+
+      if (simplePath == '/works/i' && state) {
+        var id = action.path.substr(9, action.path.length);
+        console.log(id, 'id')
+        var selected = [];
+
+        state.store.forEach(function(item) {
+          if (item.id == id) {
+            selected.push(item)
+          }
+        })
+
+      return Object.assign({}, state, {
+        currentitem: selected
+      })
 
       }
 
