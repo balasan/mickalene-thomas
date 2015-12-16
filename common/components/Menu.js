@@ -26,7 +26,7 @@ static fetchMenu(dispatch, length) {
     var location = ''
     var filters;
 
-    const { toggle, toggleLinks } = this.props
+    const { toggle, toggleLinks, toggleNav } = this.props
 
     var tags = [];
 
@@ -93,7 +93,7 @@ static fetchMenu(dispatch, length) {
 
         var nav = <nav>
         <section className='left'>
-        <Link to="../../">mickalene thomas</Link>
+        <Link to="/" onClick={toggleNav}>mickalene thomas</Link>
         </section>
         <section className='middle'>
           <p>{location}</p>

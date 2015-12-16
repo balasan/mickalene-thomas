@@ -7,11 +7,15 @@ import { bindActionCreators } from 'redux'
 class Splash extends Component {
 
   static glView;
+
   componentDidMount() {
+
     var GLView = require('../../client/glView')
     if(!window.glView)
+      console.log("glview mount")
       window.glView = new GLView()
-    window.glView.start()
+      window.glView.add()
+      window.glView.start()
     window.glView.dom.addEventListener('click', () => {
       this.props.toggleNav()
       window.glView.remove();

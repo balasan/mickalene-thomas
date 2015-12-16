@@ -304,6 +304,9 @@ function GLView() {
     stop = false;
     animate();
   }
+  this.add = function(){
+    scene.add(objectVar);
+  }
   this.stop = function(){
     stop = true;
   }
