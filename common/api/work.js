@@ -37,6 +37,7 @@
                      var obj = {}
                      obj.id = item.id;
                      obj.tags = item.tags;
+                     obj.x = 0;
                      obj.title = item.data["work.title"].value[0].text;
                      obj.date = item.data["work.date"] ? item.data["work.date"].value : '';
 
@@ -107,6 +108,7 @@
                  response.results.forEach(function(item) {
                      var obj = {}
                      obj.id = item.id;
+                     obj.x = 0;
                      obj.tags = item.tags;
                      obj.title = item.data["work.title"].value[0].text;
                      obj.date = item.data["work.date"] ? item.data["work.date"].value : '';

@@ -32,34 +32,48 @@ export default class Work extends Component {
     const { work, clickitem } = this.props
 
     if (work) {
-      console.log(work.all, 'work all now')
-      var all = (
-        <StaggeredMotion defaultStyles={work.all}
-          styles={prevStyles => prevStyles.map((_, i) => {
-          return i === 0
-          ? {x: spring(this.state.mouseX)} // first item follows mouse's x position
-          : prevStyles[i - 1]; // item i follow the position of the item before it, creating a natural staggering spring
-        })}>
-        {interpolatedStyles =>
-          <div>
-            {interpolatedStyles.map((item, i) =>
-              <Link className='item' data-w={item.image.small.dimensions.width} data-h={item.image.small.dimensions.height} key={item.id} to={'/works/i/' + item.id}>
-                  <img
-                    key={item.id + 1}
-                    onClick={clickitem.bind(i, item.id)}
-                    src={item.image.small.url}
-                  />
-                </Link>
-              )}
+      if (work.all) {
+          var all = (
+            <div className='flex-images'>
+              {work.all.map(function (item, i) {
+                return (
+                  <Link style={{transition: 'opacity 300ms ' + i*0.1 + 's cubic-bezier(0.175, 0.665, 0.320, 1)'}} className='item' data-w={item.image.small.dimensions.width} data-h={item.image.small.dimensions.height} key={i} to={'/works/i/' + item.id}>
+                    <img
+                      key={i}
+                      onClick={clickitem.bind(i, item.id)}
+                      src={item.image.small.url}
+                    />
+                  </Link>
+                )
+              }, this)}
             </div>
-          }
-        </StaggeredMotion>
-        )
+          )
+
+          var transition = (
+            <StaggeredMotion
+              defaultStyles={work.all}
+              styles={prevStyles => prevStyles.map((_, i) => {
+              return i === 0
+              ? {x: spring(1, [10, 17])}
+              : prevStyles[i - 1];
+            })}>
+                {interpolatedStyles =>
+                  <div>
+                    {interpolatedStyles.map((item, i) =>
+                      <article style={{opacity: item.x}}>
+                        {all}
+                      </article>
+                    )}
+                  </div>
+                }
+            </StaggeredMotion>
+          )
+      }
     }
 
     return (
-      <div className='flex-images'>
-        {all}
+      <div>
+        {transition}
       </div>
     )
   }
