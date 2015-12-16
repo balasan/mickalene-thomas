@@ -4,12 +4,44 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 999;
     height: 75px;
+
+    .left {
+        width: 20%;
+        display: inline-flex;
+        a {
+            color: black;
+            font-family: 'Rockwell Bold', serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+    }
+
+    .right {
+        width: 20%;
+        display: inline-flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        img {
+            height: 15px;
+            cursor: pointer;
+            padding: 0 1em 0 0;
+        }
+    }
+
+    .middle {
+        width: 60%;
+        display: inline-flex;
+        flex-direction: column;
+            justify-content: center;
+    align-items: center;
+    }
 
     p {
         color: black;
@@ -49,20 +81,7 @@ nav {
         }
     }
 
-    .holdImg {
-        height: 75px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        right: 10px;
-        top: 0;
 
-        img {
-            height: 15px;
-            cursor: pointer;
-        }
-    }
 }
 
 a {

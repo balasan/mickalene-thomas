@@ -29,21 +29,21 @@ export default class Work extends Component {
     new flexImages({ selector: '.flex-images', rowHeight: 250 })
   }
 
-  getStyles(prevStyles) {
+  // getStyles(prevStyles) {
 
-    const endValue = prevStyles.map((_, i) => {
-      console.log(this, 'dis')
-      return i === 0
-        ? this.props.work.all
-        : {
-            data: _,
-            x: spring(prevStyles[i - 1].x),
-            y: spring(prevStyles[i - 1].y),
-          };
-    });
-    return endValue;
+  //   const endValue = prevStyles.map((_, i) => {
+  //     console.log(this, 'dis')
+  //     return i === 0
+  //       ? this.props.work.all
+  //       : {
+  //           data: _,
+  //           x: spring(prevStyles[i - 1].x),
+  //           y: spring(prevStyles[i - 1].y),
+  //         };
+  //   });
+  //   return endValue;
 
-  }
+  // }
 
 
   render () {

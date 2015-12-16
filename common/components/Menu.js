@@ -92,11 +92,16 @@ static fetchMenu(dispatch, length) {
         }
 
         var nav = <nav>
+        <section className='left'>
+        <Link to="../../">mickalene thomas</Link>
+        </section>
+        <section className='middle'>
           <p>{location}</p>
           {filters}
-          <div className='holdImg'>
+          </section>
+          <section className='right'>
             <img onClick={toggleLinks} src='../../images/menu.svg'/>
-          </div>
+          </section>
         </nav>
       }
     }

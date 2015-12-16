@@ -20,6 +20,13 @@
     src: url('/fonts/MyriadPro-Regular.otf');
 }
 
+@font-face {
+    font-family: 'Rockwell Bold';
+    src: url('/fonts/rockwell-bold.ttf');
+}
+
+
+
 
 
 
