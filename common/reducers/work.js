@@ -3,7 +3,7 @@ import { GET_ITEM } from '../actions/work'
 import { SET_FILTER } from '../actions/menu'
 import { UPDATE_PATH } from 'redux-simple-router'
 
-export default function getwork(state = {filtered: null, all: null, store: null}, action) {
+export default function getwork(state = null, action) {
   switch (action.type) {
 
     case GET_WORK:
