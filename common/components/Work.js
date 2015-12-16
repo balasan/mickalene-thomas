@@ -52,28 +52,33 @@ export default class Work extends Component {
 
     if (work) {
       if (work.all) {
-          var transition = (
-                <StaggeredMotion
-                  defaultStyles={work.all.map((one, i) => ({x: spring(1), y: 0, data: one}))}
-                  styles={this.getStyles(work.all)}>
-                  {items =>
-                    <div className='flex-images'>
-                      {items.map(({x, y, data}, i) =>
-                        <Link
+var transition = (
+            <StaggeredMotion
+              defaultStyles={work.all}
+              styles={prevStyles => prevStyles.map((_, i) => {
+              return i === 0
+              ? {x: spring(1, [10, 17])}
+              : prevStyles[i - 1];
+            })}>
+                {interpolatedStyles =>
+                  <div className="flex-images">
+                    {interpolatedStyles.map((item, i) =>
+                      <Link
                           key={i}
-                          to={'/works/i/' + data.id}
-                          style={{opacity: x}}
-                          data-h={data.image.small.dimensions.height}
-                          data-w={data.image.small.dimensions.width}
+                          to={'/works/i/' + work.all[i].id}
+                          style={{opacity: item.x}}
+                          data-h={work.all[i].image.small.dimensions.height}
+                          data-w={work.all[i].image.small.dimensions.width}
                           className='item'
                           >
-                          <img src={data.image.small.url} />
+                          <img src={work.all[i].image.small.url} />
                           </Link>
-                      )}
-                    </div>
-                  }
-              </StaggeredMotion>
+                    )}
+                  </div>
+                }
+            </StaggeredMotion>
           )
+
       }
     }
 
