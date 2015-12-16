@@ -93,7 +93,7 @@ static fetchMenu(dispatch, length) {
 
         var nav = <nav>
         <section className='left'>
-        <Link to="/" onClick={toggleNav}>mickalene thomas</Link>
+        <Link to="/">mickalene thomas</Link>
         </section>
         <section className='middle'>
           <p>{location}</p>
@@ -119,7 +119,6 @@ static fetchMenu(dispatch, length) {
 
 export default connect(
   state => {
-    // console.log(state, 'menu.state')
     return {state: state}
   },
   dispatch => {
