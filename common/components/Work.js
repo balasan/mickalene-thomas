@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as WorkActions from '../actions/work'
 import flexImages from './flex-full'
+import range from 'lodash.range';
+import presets from '../presets';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import {Motion, spring, TransitionMotion, StaggeredMotion} from 'react-motion';
 
@@ -54,7 +56,7 @@ export default class Work extends Component {
       if (work.all) {
 var transition = (
             <StaggeredMotion
-              defaultStyles={work.all}
+              defaultStyles={range(work.all.length).map(() => ({x: 0}))}
               styles={prevStyles => prevStyles.map((_, i) => {
               return i === 0
               ? {x: spring(1, [10, 17])}
@@ -62,11 +64,11 @@ var transition = (
             })}>
                 {interpolatedStyles =>
                   <div className="flex-images">
-                    {interpolatedStyles.map((item, i) =>
+                    {interpolatedStyles.map((style, i) =>
                       <Link
                           key={i}
                           to={'/works/i/' + work.all[i].id}
-                          style={{opacity: item.x}}
+                          style={{opacity: style.x}}
                           data-h={work.all[i].image.small.dimensions.height}
                           data-w={work.all[i].image.small.dimensions.width}
                           className='item'
