@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import * as WorkActions from '../actions/work'
 import flexImages from './flex-full'
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+import {Motion, spring, StaggeredMotion} from 'react-motion';
 
 export default class Work extends Component {
 
@@ -30,32 +31,34 @@ export default class Work extends Component {
 
     const { work, clickitem } = this.props
 
-    if( !work ) return null;
-
-    var all;
-
-    if (work.all) {
-      all = (
-        <div className='flex-images'>
-        <ReactCSSTransitionGroup transitionName="grid" transitionEnterTimeout={500} transitionLeaveTimeout={2000}>
-            {work.all.map(function (item, i) {
-              return (
-                  <Link style={{transition: 'opacity 300ms ' + i*0.1 + 's cubic-bezier(0.175, 0.665, 0.320, 1)'}} className='item' data-w={item.image.small.dimensions.width} data-h={item.image.small.dimensions.height} key={i} to={'/works/i/' + item.id}>
-                    <img
-                      key={i}
-                      onClick={clickitem.bind(i, item.id)}
-                      src={item.image.small.url}
-                    />
-                  </Link>
-              )
-            }, this)}
-            </ReactCSSTransitionGroup>
-        </div>
-      )
+    if (work) {
+      console.log(work.all, 'work all now')
+      var all = (
+        <StaggeredMotion defaultStyles={work.all}
+          styles={prevStyles => prevStyles.map((_, i) => {
+          return i === 0
+          ? {x: spring(this.state.mouseX)} // first item follows mouse's x position
+          : prevStyles[i - 1]; // item i follow the position of the item before it, creating a natural staggering spring
+        })}>
+        {interpolatedStyles =>
+          <div>
+            {interpolatedStyles.map((item, i) =>
+              <Link className='item' data-w={item.image.small.dimensions.width} data-h={item.image.small.dimensions.height} key={item.id} to={'/works/i/' + item.id}>
+                  <img
+                    key={item.id + 1}
+                    onClick={clickitem.bind(i, item.id)}
+                    src={item.image.small.url}
+                  />
+                </Link>
+              )}
+            </div>
+          }
+        </StaggeredMotion>
+        )
     }
 
     return (
-      <div>
+      <div className='flex-images'>
         {all}
       </div>
     )
