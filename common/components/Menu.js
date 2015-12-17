@@ -19,13 +19,18 @@ static fetchMenu(dispatch, length) {
       this.constructor.fetchMenu(this.props.dispatch, this.props.location.pathname.length);
   }
 
+  // goToWork(){
+  //     this.props.toggleLinks();
+  //     this.props.showAllX();
+  //  }
+
   render () {
     var filterType = this.props.params.filter;
     var path = this.props.children.props.route.path;
     var location = ''
     var filters;
 
-    const { toggle, toggleLinks, toggleNav, hideX} = this.props
+    const { toggle, toggleLinks, toggleNav, hideX, showAllX} = this.props
 
     console.log(this.props, 'fades')
 
@@ -76,11 +81,11 @@ static fetchMenu(dispatch, length) {
     if (this.props.state.menu) {
       if (this.props.state.menu.toggleLinks) {
         var links = <section className='links'>
-        <Link onClick={toggleLinks} to="/works">works</Link>
-        <Link onClick={toggleLinks} to="/about">about</Link>
-        <Link onClick={toggleLinks} to="/news">news</Link>
-        <Link onClick={toggleLinks} to="/store">store</Link>
-        <Link onClick={toggleLinks} to="/contact">contact</Link>
+        <Link onClick={showAllX} to="/works">works</Link>
+        <Link to="/about">about</Link>
+        <Link to="/news">news</Link>
+        <Link to="/store">store</Link>
+        <Link to="/contact">contact</Link>
         </section>
       }
 

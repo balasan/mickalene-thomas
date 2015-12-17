@@ -17,6 +17,10 @@ html, body {
 
 main {
   margin: 75px 0 0 0;
+  transition: opacity 300ms ease;
+  &.hideMe {
+    opacity: 0;
+  }
 }
 
 article {

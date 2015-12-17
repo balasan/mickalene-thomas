@@ -1,11 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-// import { bindActionCreators } from 'redux'
-// import { connect } from 'react-redux'
 import Menu from '../components/Menu';
-// import * as MenuActions from '../actions/menu'
-// import { fetchMenu } from '../api/menu';
-
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as MenuActions from '../actions/menu';
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 if(process.env.BROWSER){
   require('./../../client/css/index.css');
@@ -19,14 +18,26 @@ if(process.env.BROWSER){
   require('./../../client/css/navbar.css');
 }
 export default class App extends Component {
+  static fetchMenu(dispatch, length) {
+    var { loadMenu } = bindActionCreators(MenuActions, dispatch, length)
+
+    return Promise.all([
+      loadMenu(length)
+    ])
+  }
+
+  componentDidMount() {
+      this.constructor.fetchMenu(this.props.dispatch, this.props.location.pathname.length);
+  }
 
   render () {
+    console.log(this.props, 'app props')
     return (
     <div>
-    <Menu { ...this.props }></Menu>
-      <main>
-        {this.props.children}
-      </main>
+        <Menu { ...this.props }></Menu>
+        <main className={this.props.menu.toggleLinks ? 'hideMe' : null}>
+          {this.props.children}
+        </main>
     </div>
     );
   }
@@ -55,14 +66,14 @@ export default class App extends Component {
 //     return bindActionCreators(MenuActions, dispatch)
 //   })(App)
 
-// export default connect(
-//   state => {
-//     // console.log(state, "state.work")
-//     return {togglestate: state.menu}
-//   },
-//   dispatch => {
-//     return Object.assign({}, { dispatch },  bindActionCreators(MenuActions, dispatch))
-//   })(App)
+export default connect(
+  state => {
+    // console.log(state, "state.menu on app")
+    return {menu: state.menu}
+  },
+  dispatch => {
+    return Object.assign({}, { dispatch },  bindActionCreators(MenuActions, dispatch))
+  })(App)
 
 
 // export default App

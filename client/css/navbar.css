@@ -11,19 +11,19 @@ nav {
     height: 75px;
 
     .left {
-        width: 20%;
+        width: 30%;
         display: inline-flex;
+
         a {
             color: black;
             font-family: 'Rockwell Bold', serif;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
-
     }
 
     .right {
-        width: 20%;
+        width: 30%;
         display: inline-flex;
         justify-content: flex-end;
         align-items: center;
@@ -36,11 +36,11 @@ nav {
     }
 
     .middle {
-        width: 60%;
+        width: 40%;
         display: inline-flex;
         flex-direction: column;
-            justify-content: center;
-    align-items: center;
+        justify-content: center;
+        align-items: center;
     }
 
     p {
@@ -71,7 +71,7 @@ nav {
         a {
             text-transform: uppercase;
             margin: 0;
-            padding: 0.25em 0.5em;
+            padding: 0.25em 1em;
             font-size: 9px;
             color: gray;
 
@@ -80,8 +80,6 @@ nav {
             }
         }
     }
-
-
 }
 
 a {

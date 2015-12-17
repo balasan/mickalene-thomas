@@ -33,7 +33,7 @@ export default class Work extends Component {
   }
 
   render () {
-
+    console.log(this.props, 'work props')
     const { work, clickitem } = this.props
 
     console.log(work, 'work now')

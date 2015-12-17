@@ -36,7 +36,9 @@ export default class SelectedComponent extends Component {
 
     return (
       <div className='selectedWork'>
+              <ReactCSSTransitionGroup transitionName="example" transitionAppear={true} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
         {selectedWork}
+        </ReactCSSTransitionGroup>
         </div>
     )
   }
