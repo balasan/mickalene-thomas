@@ -19,6 +19,7 @@ class Splash extends Component {
     window.glView.dom.addEventListener('click', () => {
       window.glView.remove();
       this.props.dispatch(updatePath('/works'))
+      this.props.showAllX()
       console.log(this.props, 'click this props')
     })
   }
