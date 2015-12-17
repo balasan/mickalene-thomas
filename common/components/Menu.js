@@ -17,7 +17,6 @@ static fetchMenu(dispatch, length) {
 
   componentDidMount() {
       this.constructor.fetchMenu(this.props.dispatch, this.props.location.pathname.length);
-
   }
 
   render () {
@@ -26,7 +25,9 @@ static fetchMenu(dispatch, length) {
     var location = ''
     var filters;
 
-    const { toggle, toggleLinks, toggleNav } = this.props
+    const { toggle, toggleLinks, toggleNav, hideX} = this.props
+
+    console.log(this.props, 'fades')
 
     var tags = [];
 
@@ -49,10 +50,10 @@ static fetchMenu(dispatch, length) {
     if (path == 'works/filter/:filter' || path == 'works') {
       filters = (
         <section className='filterLinks'>
-        <Link className={!filterType ? 'selected' : null} to='/works'>all</Link>
+        <Link onClick={this.props.showAllX} className={!filterType ? 'selected' : null} to='/works'>all</Link>
           {uniqueTags.map(function (filter, i) {
             return (
-                <Link key={i} className={filterType == filter ? 'selected' : null} to={'/works/filter/' + filter}>
+                <Link key={i} onClick={this.props.showFilteredX} className={filterType == filter ? 'selected' : null} to={'/works/filter/' + filter}>
               {filter}
               </Link>
             )}, this)}
@@ -65,7 +66,7 @@ static fetchMenu(dispatch, length) {
               var tag = this.props.state.work.currentitem[0].tags[0];
       filters = (
         <section className='filterLinks'>
-         <Link to={'/works/filter/' + tag}>{'back to ' + tag}</Link>
+         <Link onClick={this.props.showFilteredX} to={'/works/filter/' + tag}>{'back to ' + tag}</Link>
         </section>
         )
       }
@@ -84,7 +85,6 @@ static fetchMenu(dispatch, length) {
       }
 
       if (this.props.state.menu.toggleNav) {
-        console.log(this.props.location.pathname, "pathname")
         if (this.props.location.pathname.substr(0,8) == '/works/i' || this.props.location.pathname.substr(0,13) == '/works/filter') {
           location = <Link to='/works'>works</Link>;
         } else {

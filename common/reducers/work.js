@@ -1,9 +1,12 @@
 import { GET_WORK } from '../actions/work'
 import { GET_ITEM } from '../actions/work'
-import { SET_FILTER } from '../actions/menu'
+import { GET_NEW } from '../actions/work'
+import { SHOW_FILTERED } from '../actions/menu'
+import { SHOW_ALL } from '../actions/menu'
 import { UPDATE_PATH } from 'redux-simple-router'
 
 export default function getwork(state = null, action) {
+  console.log(action, 'action')
   switch (action.type) {
 
     case GET_WORK:
@@ -33,14 +36,24 @@ export default function getwork(state = null, action) {
         currentitem: action.payload
       })
 
+    case SHOW_FILTERED:
+      console.log("show filtered")
+      console.log(state, 'show FILTERED state')
+      return Object.assign({}, state, {
+          all: state.filtered
+        })
+
+    case SHOW_ALL:
+      console.log("show all")
+      console.log(state, 'show all state')
+      return Object.assign({}, state, {
+          all: state.store
+        })
+
     case UPDATE_PATH:
       var simplePath = action.path.substr(0, 8);
 
-      console.log(action, 'action')
-      // var id =
-
       if (simplePath != '/works/i' && simplePath != '/works' && state) {
-
         var filter = action.path.substr(14, action.path.length)
 
         var filtered = [];
@@ -53,9 +66,9 @@ export default function getwork(state = null, action) {
 
         return Object.assign({}, state, {
           filter: filter,
-          all: filtered
+          all: [],
+          filtered: filtered
         })
-
       }
 
       if (simplePath == '/works/i' && state) {
@@ -77,9 +90,9 @@ export default function getwork(state = null, action) {
 
       if (simplePath == '/works' && state) {
         return Object.assign({}, state, {
-          filter: filter,
-          all: state.store
+          all: []
         })
+
       }
 
     default:

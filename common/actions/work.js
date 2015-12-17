@@ -1,5 +1,8 @@
 export const GET_WORK = 'GET_WORK';
 export const GET_ITEM = 'GET_ITEM';
+export const GET_NEW = 'GET_NEW';
+// export const HIDE_ALL = 'HIDE_ALL';
+// export const SHOW_ALL = 'SHOW_ALL';
 import { fetchWork } from '../api/work'
 import { fetchItem } from '../api/work'
 
