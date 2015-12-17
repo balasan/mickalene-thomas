@@ -86,7 +86,7 @@ static fetchMenu(dispatch, length) {
 
       if (this.props.state.menu.toggleNav) {
         if (this.props.location.pathname.substr(0,8) == '/works/i' || this.props.location.pathname.substr(0,13) == '/works/filter') {
-          location = <Link to='/works'>works</Link>;
+          location = <Link onClick={this.props.showAllX} to='/works'>works</Link>;
         } else {
           location = path;
         }
