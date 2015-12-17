@@ -1,6 +1,7 @@
 import { GET_WORK } from '../actions/work'
 import { GET_ITEM } from '../actions/work'
 import { GET_NEW } from '../actions/work'
+import { SET_FLEX } from '../actions/work'
 import { SHOW_FILTERED } from '../actions/menu'
 import { SHOW_ALL } from '../actions/menu'
 import { UPDATE_PATH } from 'redux-simple-router'
@@ -27,7 +28,8 @@ export default function getwork(state = null, action) {
       } else {
         return Object.assign({}, state, {
           all: action.payload.results,
-          store: action.payload.results
+          store: action.payload.results,
+          flex: false
         })
       }
 
@@ -48,6 +50,11 @@ export default function getwork(state = null, action) {
       console.log(state, 'show all state')
       return Object.assign({}, state, {
           all: state.store
+        })
+
+    case SET_FLEX:
+      return Object.assign({}, state, {
+          flex: action.payload
         })
 
     case UPDATE_PATH:
@@ -83,7 +90,8 @@ export default function getwork(state = null, action) {
         })
 
       return Object.assign({}, state, {
-        currentitem: selected
+        currentitem: selected,
+        flex: false
       })
 
       }

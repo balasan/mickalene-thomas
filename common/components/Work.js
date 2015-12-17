@@ -12,24 +12,23 @@ import {Motion, spring, TransitionMotion, StaggeredMotion} from 'react-motion';
 export default class Work extends Component {
 
   componentDidMount() {
-    // if (!this.props.work) {
-      setTimeout(function() {
-        new flexImages({ selector: '.flex-images', rowHeight: 250 })
-      }, 100);
-    // } else {
-    //     new flexImages({ selector: '.flex-images', rowHeight: 250 })
-    // }
-
   }
 
   componentWillUpdate() {
-    // delete flexImages({ selector: '.flex-images', rowHeight: 250 })
   }
 
   componentDidUpdate() {
-    setTimeout(function() {
-      new flexImages({ selector: '.flex-images', rowHeight: 250 })
-    }, 75);
+      if (!this.props.work.flex){
+        new flexImages({ selector: '.flex-images', rowHeight: 250 })
+           console.log(this.props.work.flex, 'flex?')
+           this.props.setFlex(true);
+      } else {
+        console.log(this.props.work.flex, 'flex?')
+        setTimeout(function() {
+          new flexImages({ selector: '.flex-images', rowHeight: 250 })
+
+        }, 500);
+      }
   }
 
   render () {
@@ -41,7 +40,7 @@ export default class Work extends Component {
     if (work) {
         var all = (
         <div>
-    <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+          <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
            {work.all.map(function (item, i) {
               return (
                   <Link className='item' data-w={item.image.small.dimensions.width} data-h={item.image.small.dimensions.height} key={item.id} to={'/works/i/' + item.id}>
@@ -52,7 +51,7 @@ export default class Work extends Component {
                   </Link>
               )
             }, this)}
-</ReactCSSTransitionGroup>
+          </ReactCSSTransitionGroup>
         </div>)
 
     }

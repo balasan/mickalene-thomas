@@ -1,8 +1,7 @@
 export const GET_WORK = 'GET_WORK';
 export const GET_ITEM = 'GET_ITEM';
 export const GET_NEW = 'GET_NEW';
-// export const HIDE_ALL = 'HIDE_ALL';
-// export const SHOW_ALL = 'SHOW_ALL';
+export const SET_FLEX = 'SET_FLEX';
 import { fetchWork } from '../api/work'
 import { fetchItem } from '../api/work'
 
@@ -14,6 +13,13 @@ export function set(value, filter) {
       results: value,
       filter: filter
     }
+  };
+}
+
+export function setFlex(value) {
+  return {
+    type: SET_FLEX,
+    payload: value
   };
 }
 

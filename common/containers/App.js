@@ -32,12 +32,19 @@ export default class App extends Component {
 
   render () {
     console.log(this.props, 'app props')
-    return (
-    <div>
-        <Menu { ...this.props }></Menu>
+
+    if (this.props.menu) {
+      var main = (
         <main className={this.props.menu.toggleLinks ? 'hideMe' : null}>
           {this.props.children}
         </main>
+      )
+    }
+
+    return (
+    <div>
+        <Menu { ...this.props }></Menu>
+        {main}
     </div>
     );
   }
