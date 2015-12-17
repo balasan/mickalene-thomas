@@ -13,12 +13,13 @@ export default class Work extends Component {
 
   componentDidMount() {
     // if (!this.props.work) {
-    //   setTimeout(function() {
-    //     new flexImages({ selector: '.flex-images', rowHeight: 250 })
-    //   }, 500);
+      setTimeout(function() {
+        new flexImages({ selector: '.flex-images', rowHeight: 250 })
+      }, 100);
     // } else {
     //     new flexImages({ selector: '.flex-images', rowHeight: 250 })
     // }
+
   }
 
   componentWillUpdate() {
@@ -26,7 +27,9 @@ export default class Work extends Component {
   }
 
   componentDidUpdate() {
+    setTimeout(function() {
       new flexImages({ selector: '.flex-images', rowHeight: 250 })
+    }, 75);
   }
 
   render () {
@@ -38,10 +41,10 @@ export default class Work extends Component {
     if (work) {
         var all = (
         <div>
-        <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={2000}>
+    <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
            {work.all.map(function (item, i) {
               return (
-                  <Link className='item' style={{transition: 'opacity 300ms ' + i*0.1 + 's cubic-bezier(0.175, 0.665, 0.320, 1)'}} data-w={item.image.small.dimensions.width} data-h={item.image.small.dimensions.height} key={item.id} to={'/works/i/' + item.id}>
+                  <Link className='item' data-w={item.image.small.dimensions.width} data-h={item.image.small.dimensions.height} key={item.id} to={'/works/i/' + item.id}>
                     <img
                       key={item.id}
                       src={item.image.small.url}
@@ -49,10 +52,7 @@ export default class Work extends Component {
                   </Link>
               )
             }, this)}
-
-
-
-            </ReactCSSTransitionGroup>
+</ReactCSSTransitionGroup>
         </div>)
 
     }
