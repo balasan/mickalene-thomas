@@ -60,6 +60,12 @@ export default function getwork(state = null, action) {
     case UPDATE_PATH:
       var simplePath = action.path.substr(0, 8);
 
+      if (simplePath != '/works/i' && simplePath != '/works' && simplePath != '/works/f') {
+          return Object.assign({}, state, {
+            flex: false
+          })
+      }
+
       if (simplePath != '/works/i' && simplePath != '/works' && state) {
         var filter = action.path.substr(14, action.path.length)
 

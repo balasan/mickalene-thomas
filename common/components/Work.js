@@ -20,13 +20,10 @@ export default class Work extends Component {
   componentDidUpdate() {
       if (!this.props.work.flex){
         new flexImages({ selector: '.flex-images', rowHeight: 250 })
-           console.log(this.props.work.flex, 'flex?')
            this.props.setFlex(true);
       } else {
-        console.log(this.props.work.flex, 'flex?')
         setTimeout(function() {
           new flexImages({ selector: '.flex-images', rowHeight: 250 })
-
         }, 500);
       }
   }

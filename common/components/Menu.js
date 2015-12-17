@@ -94,9 +94,9 @@ static fetchMenu(dispatch, length) {
           location = <Link onClick={this.props.showAllX} to='/works'>works</Link>;
         } else {
           location = path;
-        }
+      }
 
-        var nav = <nav>
+        var nav = (<nav>
         <section className='left'>
         <Link to="/">mickalene thomas</Link>
         </section>
@@ -107,14 +107,14 @@ static fetchMenu(dispatch, length) {
           <section className='right'>
             <img onClick={toggleLinks} src='../../images/menu.svg'/>
           </section>
-        </nav>
+        </nav> )
       }
     }
 
     return (
       <div>
        <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
-       {nav}
+        {nav}
         {links}
         </ReactCSSTransitionGroup>
       </div>
