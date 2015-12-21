@@ -19,11 +19,6 @@ static fetchMenu(dispatch, length) {
       this.constructor.fetchMenu(this.props.dispatch, this.props.location.pathname.length);
   }
 
-  // goToWork(){
-  //     this.props.toggleLinks();
-  //     this.props.showAllX();
-  //  }
-
   render () {
     var filterType = this.props.params.filter;
     var path = this.props.children.props.route.path;
@@ -31,8 +26,6 @@ static fetchMenu(dispatch, length) {
     var filters;
 
     const { toggle, toggleLinks, toggleNav, hideX, showAllX} = this.props
-
-    console.log(this.props, 'fades')
 
     var tags = [];
 

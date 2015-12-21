@@ -31,8 +31,6 @@ export default class App extends Component {
   }
 
   render () {
-    console.log(this.props, 'app props')
-
     if (this.props.menu) {
       var main = (
         <main className={this.props.menu.toggleLinks ? 'hideMe' : null}>
@@ -50,32 +48,9 @@ export default class App extends Component {
   }
 }
 
-// --------- same as (only need above fore more complex objects) --------
-
-// const App = (props) => {
-
-//   return (
-//     <div>
-//     <Menu { ...props.props }></Menu>
-//       <section>
-//         {props.children}
-//       </section>
-//     </div>
-//   );
-
-// }
-
-// export default connect(
-//   state => {
-//     return {togglestate: state.menu}
-//   },
-//   dispatch => {
-//     return bindActionCreators(MenuActions, dispatch)
-//   })(App)
-
 export default connect(
   state => {
-    // console.log(state, "state.menu on app")
+
     return {menu: state.menu}
   },
   dispatch => {

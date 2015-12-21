@@ -13,8 +13,7 @@ if(process.env.BROWSER){
 
 export default class Selected extends Component {
 
-    static fetchData(dispatch, filter) {
-     console.log(filter, 'function filter')
+  static fetchData(dispatch, filter) {
     var { loadWork } = bindActionCreators(WorkActions, dispatch, filter)
     return Promise.all([
       loadWork(filter)
@@ -22,7 +21,6 @@ export default class Selected extends Component {
   }
 
   static fetchItem(dispatch, id) {
-     console.log(id, 'function filter')
     var { loadItem } = bindActionCreators(WorkActions, dispatch, id)
     return Promise.all([
       loadItem(id)
@@ -40,7 +38,6 @@ export default class Selected extends Component {
   render () {
     return (
       <div>
-       {/*  <SelectedWork { ...this.props }/> */}
         <SelectedComponent { ...this.props }/>
       </div>
       )
@@ -49,19 +46,8 @@ export default class Selected extends Component {
 
 export default connect(
   state => {
-    // console.log(state, 'work state')
     return {work: state.work}
   },
   dispatch => {
     return Object.assign({}, { dispatch },  bindActionCreators(WorkActions, dispatch))
   })(Selected)
-
-// export default connect(
-//   state => {
-//     // console.log(state, 'work state')
-//     return {work: state.work}
-//   },
-//   dispatch => {
-//     return Object.assign({}, { dispatch },  bindActionCreators(WorkActions, dispatch))
-//   })(Works)
-

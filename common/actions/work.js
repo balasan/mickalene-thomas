@@ -49,7 +49,6 @@ export function loadItem(id) {
 }
 
 export function loadWork(filter) {
-  // console.log(filter, 'loadwork filter')
   return dispatch => {
     return new Promise(function(resolve, reject) {
       fetchWork( (err, value) => {

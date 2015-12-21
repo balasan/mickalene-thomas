@@ -18,6 +18,7 @@ export default class Work extends Component {
   }
 
   componentDidUpdate() {
+    if (this.props.work) {
       if (!this.props.work.flex){
         new flexImages({ selector: '.flex-images', rowHeight: 250 })
            this.props.setFlex(true);
@@ -26,13 +27,12 @@ export default class Work extends Component {
           new flexImages({ selector: '.flex-images', rowHeight: 250 })
         }, 500);
       }
+    }
   }
 
   render () {
-    console.log(this.props, 'work props')
     const { work, clickitem } = this.props
-
-    console.log(work, 'work now')
+    // console.log(work, 'work now')
 
     if (work) {
         var all = (
@@ -50,7 +50,6 @@ export default class Work extends Component {
             }, this)}
           </ReactCSSTransitionGroup>
         </div>)
-
     }
 
     return (

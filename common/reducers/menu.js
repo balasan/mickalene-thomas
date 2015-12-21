@@ -7,7 +7,6 @@ import { UPDATE_PATH } from 'redux-simple-router'
 export default function menu(state = null, action) {
   switch (action.type) {
     case GET_MENU:
-      console.log(action, 'get menu path')
       if (action.length > 1) {
         return Object.assign({}, state, {
         toggleNav: true,

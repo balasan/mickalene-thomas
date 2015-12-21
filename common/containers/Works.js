@@ -14,7 +14,6 @@ if(process.env.BROWSER){
 export default class Works extends Component {
 
   static fetchData(dispatch, filter) {
-     console.log(filter, 'function filter')
     var { loadWork } = bindActionCreators(WorkActions, dispatch, filter)
     return Promise.all([
       loadWork(filter)
@@ -39,7 +38,6 @@ export default class Works extends Component {
 
 export default connect(
   state => {
-    // console.log(state, 'work state')
     return {work: state.work}
   },
   dispatch => {

@@ -161,7 +161,6 @@
 
                      simple.push(obj)
                  });
-                console.log(simple, 'simple')
                  callback(null, simple)
              })
      });

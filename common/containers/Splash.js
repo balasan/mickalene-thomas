@@ -29,26 +29,14 @@ class Splash extends Component {
   }
 
   render () {
-    // const { toggle } = this.props
-    // console.log("splash page props", this.props)
     return (
       <div></div>
     )
   }
 }
 
-// export default connect(
-//   state => {
-//     console.log(state)
-//     return {state: state}
-//   },
-//   dispatch => {
-//     return {dispatch}
-//   })(Splash)
-
 export default connect(
   state => {
-    console.log(state, 'splash.state')
     return {state: state}
   },
   dispatch => {

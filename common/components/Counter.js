@@ -5,7 +5,7 @@ import React, { Component, PropTypes } from 'react'
 export default class Counter extends Component {
 
   componentDidMount() {
-    console.log(window.innerWidth);
+    // console.log(window.innerWidth);
     // console.log(this.props)
   }
 

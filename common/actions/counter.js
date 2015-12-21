@@ -45,7 +45,6 @@ export function incrementAsync(delay = 1000) {
 
 export function loadCounter() {
   return dispatch => {
-    // return Promise(fetchCounter(dispatch(set)))
     return new Promise(function(resolve, reject) {
       fetchCounter( value => {
         dispatch(set(value))
