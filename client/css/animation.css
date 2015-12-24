@@ -1,5 +1,5 @@
 .example-enter {
-  opacity: 0.01;
+  opacity: 0;
 }
 
 .example-enter.example-enter-active {
@@ -12,11 +12,13 @@
 }
 
 .example-leave.example-leave-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in;
+  opacity: 0;
+  transition: all 300ms easeOutQuart;
+  transform:   translateY(100%);
 }
+
 .example-appear {
-  opacity: 0.01;
+  opacity: 0;
   transition: opacity .5s ease-in;
 }
 
@@ -24,7 +26,7 @@
   opacity: 1;
 }
 
-.grid-enter {
+.grid-enter{
     opacity: 0;
     transform:   translate(0,0);
     transform: translate3d(0,0,0);
@@ -44,4 +46,12 @@
   opacity: 0;
   transform:   translate(0,0);
   transform: translate3d(0,0,0);
+}
+
+/*we'll need to adjust this for when we are loading content dynamically*/
+@for $i from 1 through 100 {
+  .item:nth-of-type($i)
+    {
+      transition-delay: calc(0.1s * $i);
+    }
 }

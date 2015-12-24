@@ -7,6 +7,9 @@ import * as MenuActions from '../actions/menu';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 if(process.env.BROWSER){
+  require('./../../client/css/animation.css');
+  require('./../../client/css/flex-images.css');
+
   require('./../../client/css/index.css');
   require('./../../client/css/links.css');
   require('./../../client/css/work.css');
