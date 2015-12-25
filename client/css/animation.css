@@ -48,10 +48,13 @@
   transform: translate3d(0,0,0);
 }
 
-/*we'll need to adjust this for when we are loading content dynamically*/
-@for $i from 1 through 100 {
-  .item:nth-of-type($i)
-    {
-      transition-delay: calc(0.1s * $i);
-    }
-}
+/*need to tweak this to start iteration over on each row*/
+/*@for $j from 1 through 100 {
+  $i : 0;
+  @for $i from 1 through 10 {
+    .rowId-$j:nth-of-type($i)
+      {
+        transition-delay: calc(0.1s * $i);
+      }
+  }
+}*/

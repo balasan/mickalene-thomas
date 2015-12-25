@@ -29,10 +29,15 @@ var flexImages = (function(){
                         if (exact_w > max_w) new_w -= exact_w - max_w;
                         _helper();
                     }
+                    //adds a class to the row "rowID-i"
+                    setTransitionDelay(row,rows);
+
                     // reset for next row
                     row = [], row_width = 0;
                     rows++;
                 }
+                //adds a class to the row "rowID-i"
+                setTransitionDelay(row,rows);
             }
             // layout last row - match height of last row to previous row
             for (x=0; x<row.length; x++) {
@@ -43,6 +48,25 @@ var flexImages = (function(){
             // scroll bars added or removed during rendering new layout?
             if (!noresize && max_w != grid.clientWidth) makeGrid(grid, items, o, true);
         }
+
+        function setTransitionDelay(row,rows){
+            row.forEach(function(itm,i){
+                var el = itm[0];
+                // clearClass(el, 'rowId-');
+                el.className += " rowId-"+rows;
+                var tDelay = .1 * i + .05 * rows + 's';
+                el.style.transitionDelay = tDelay;
+                el.style.WebkitTransitionDelay = tDelay;
+
+            })
+        }
+
+        // function clearClass(el, prefix){
+        //     var classes = el.className.split(" ").filter(function(c) {
+        //         return c.lastIndexOf(prefix, 0) !== 0;
+        //     });
+        //     el.className = classes.join(" ").trim();
+        // }
 
         var o = { selector: 0, container: '.item', object: 'img', rowHeight: 180, maxRows: 0, truncate: 0 };
         for (var k in options) { if (options.hasOwnProperty(k)) o[k] = options[k]; }
