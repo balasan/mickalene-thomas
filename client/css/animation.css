@@ -1,32 +1,50 @@
+.example-enter:not(.example-enter-active),
+.example-leave:not(.example-leave-active ){
+  transition-delay:0s !important;
+  transition-duration: 0s !important;
+}
+
 .example-enter {
   opacity: 0;
+  transform: translate3d(0,0%,0) rotateX(-90deg);
+  /*img{*/
+  transform-origin: 50% 0%;
+  /*};*/
 }
 
 .example-enter.example-enter-active {
   opacity: 1;
-  transition: opacity 500ms ease-in;
+  /*img{*/
+    /*transform:rotateX(0deg);*/
+    transform-origin: 50% 0%;
+    /*transition: opacity 1.8s easeOutQuart, transform 2.6s easeOutQuart;*/
+  /*}*/
+  transform:   translate3d(0,0%,0) rotateX(0deg);
+  transition: opacity .6s easeOutQuart, transform .7s easeOutQuart;
+
 }
 
-.example-leave {
+.example-leave{
   opacity: 1;
+  transform:   translate3d(0,0%,0);
 }
 
 .example-leave.example-leave-active {
   opacity: 0;
-  transition: all 300ms easeOutQuart;
-  transform:   translateY(100%);
+  transition: opacity .2s easeOutQuart, transform .2s easeOutQuart;
+  transform: translate3d(-100px,0,0);
 }
 
 .example-appear {
   opacity: 0;
-  transition: opacity .5s ease-in;
+  transition: opacity .5s easeOutQuart;
 }
 
 .example-appear.example-appear-active {
   opacity: 1;
 }
 
-.grid-enter{
+/*.grid-enter{
     opacity: 0;
     transform:   translate(0,0);
     transform: translate3d(0,0,0);
@@ -46,7 +64,7 @@
   opacity: 0;
   transform:   translate(0,0);
   transform: translate3d(0,0,0);
-}
+}*/
 
 /*need to tweak this to start iteration over on each row*/
 /*@for $j from 1 through 100 {

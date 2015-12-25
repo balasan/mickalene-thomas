@@ -23,7 +23,7 @@ var routes = {
     { path: 'works/filter/:filter', component: Works },
     { path: 'contact', component: Contact },
     { path: 'store', component: Store },
-    { path: 'splash', component: Splash },
+    // { path: 'splash', component: Splash },
     { path: 'Counter', component: Counters },
     { path: '*', component: NotFound }
   ]

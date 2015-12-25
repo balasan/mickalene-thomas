@@ -7,16 +7,15 @@ import * as MenuActions from '../actions/menu'
 
 export default class Menu extends Component {
 
-static fetchMenu(dispatch, length) {
+  static fetchMenu(dispatch, length) {
     var { loadMenu } = bindActionCreators(MenuActions, dispatch, length)
-
     return Promise.all([
       loadMenu(length)
     ])
   }
 
   componentDidMount() {
-      this.constructor.fetchMenu(this.props.dispatch, this.props.location.pathname.length);
+    this.constructor.fetchMenu(this.props.dispatch, this.props.location.pathname.length);
   }
 
   render () {
@@ -29,7 +28,7 @@ static fetchMenu(dispatch, length) {
 
     var tags = [];
 
-    if (this.props.state.work) {
+    if (this.props.state.work && this.props.state.work.store) {
       this.props.state.work.store.forEach(function(one) {
         one.tags.forEach(function(tag) {
           tags.push(tag);

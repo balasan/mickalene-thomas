@@ -11,17 +11,22 @@ class Splash extends Component {
   componentDidMount() {
 
     var GLView = require('../../client/glView')
-    if(!window.glView)
+    if(!window.glView){
       console.log("glview mount")
       window.glView = new GLView()
       window.glView.start()
-          window.glView.add()
-    window.glView.dom.addEventListener('click', () => {
-      window.glView.remove();
-      this.props.dispatch(updatePath('/works'))
-      this.props.showAllX()
-      console.log(this.props, 'click this props')
-    })
+      window.glView.add()
+      window.glView.dom.addEventListener('click', () => {
+        window.glView.remove();
+        this.props.dispatch(updatePath('/works'))
+        this.props.showAllX()
+        console.log(this.props, 'click this props')
+      })
+    }
+    else{
+      window.glView.start()
+      window.glView.add()
+    }
   }
 
   componentWillUnmount() {

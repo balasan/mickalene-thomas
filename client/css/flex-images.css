@@ -1,3 +1,26 @@
-.flex-images { overflow: visible; }
-.flex-images .item { float: left; margin: 2px; border: 1px solid transparent; box-sizing: content-box; overflow: hidden; position: relative;  }
-.flex-images .item img { display: block; width: auto; height: 100%; }
+.flex-images {
+  overflow: visible;
+  perspective:600px;
+  transform-style:preserve-3d;
+  position:relative;
+  /*top:50%;*/
+  /*left:50%;*/
+  /*width:0px;*/
+  /*height:0px;*/
+}
+.flex-images .item {
+  /*float: left;*/
+  margin: 2px;
+  border: 1px solid transparent;
+  box-sizing: content-box;
+  overflow: hidden;
+  position: relative;
+  display:inline-block;
+  vertical-align: middle;
+  backface-visibility:hidden;
+}
+.flex-images .item img {
+  display: block;
+  width: auto;
+  height: 100%;
+}

@@ -4,6 +4,7 @@ import Menu from '../components/Menu';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as MenuActions from '../actions/menu';
+import Splash from './Splash';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 if(process.env.BROWSER){
@@ -45,6 +46,7 @@ export default class App extends Component {
     return (
     <div>
         <Menu { ...this.props }></Menu>
+        <Splash></Splash>
         {main}
     </div>
     );

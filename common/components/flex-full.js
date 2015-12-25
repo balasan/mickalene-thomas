@@ -3,17 +3,22 @@ var flexImages = (function(){
     function flexImages(options){
         if (!document.querySelector) return;
 
+        var self = this;
+
         function makeGrid(grid, items, o, noresize){
             var x, new_w, exact_w, ratio = 1, rows = 1, max_w = grid.clientWidth-2, row = [], row_width = 0, h, row_h = o.rowHeight;
 
             // define inside makeGrid to access variables in scope
             function _helper(lastRow){
-                if (o.maxRows && rows > o.maxRows || o.truncate && lastRow && rows > 1) row[x][0].style.display = 'none';
+                if (o.maxRows && rows > o.maxRows || o.truncate && lastRow && rows > 1)
+                    row[x][0].style.display = 'none';
                 else {
-                    if (row[x][4]) { row[x][3].setAttribute('src', row[x][4]); row[x][4] = ''; }
+                    if (row[x][4]) {
+                        row[x][3].setAttribute('src', row[x][4]); row[x][4] = '';
+                    }
                     row[x][0].style.width = new_w+'px';
                     row[x][0].style.height = row_h+'px';
-                    row[x][0].style.display = 'block';
+                    // row[x][0].style.display = 'block';
                 }
             }
 
@@ -27,7 +32,8 @@ var flexImages = (function(){
                         new_w = Math.ceil(row[x][2]*ratio);
                         exact_w += new_w + o.margin;
                         if (exact_w > max_w) new_w -= exact_w - max_w;
-                        _helper();
+                        if(!options.noRender)
+                            _helper();
                     }
                     //adds a class to the row "rowID-i"
                     setTransitionDelay(row,rows);
@@ -41,7 +47,7 @@ var flexImages = (function(){
             }
             // layout last row - match height of last row to previous row
             for (x=0; x<row.length; x++) {
-                new_w = Math.floor(row[x][2]*ratio), h = Math.floor(o.rowHeight*ratio);
+                new_w = Math.round(row[x][2]*ratio), h = Math.round(o.rowHeight*ratio);
                 _helper(true);
             }
 
@@ -50,14 +56,15 @@ var flexImages = (function(){
         }
 
         function setTransitionDelay(row,rows){
+            self.maxDelay = 0;
             row.forEach(function(itm,i){
                 var el = itm[0];
-                // clearClass(el, 'rowId-');
-                el.className += " rowId-"+rows;
-                var tDelay = .1 * i + .05 * rows + 's';
-                el.style.transitionDelay = tDelay;
-                el.style.WebkitTransitionDelay = tDelay;
-
+                // clearClass(el, 'example-enter');
+                // el.className += " example-enter";
+                var tDelay = .1 * i + .033 * ((rows-1)%3);
+                el.style.transitionDelay = tDelay + 's';
+                el.style.WebkitTransitionDelay = tDelay + 's';
+                self.maxDelay = Math.max(self.maxDelay,tDelay)
             })
         }
 
@@ -73,7 +80,10 @@ var flexImages = (function(){
         var grids = typeof o.selector == 'object' ? [o.selector] : document.querySelectorAll(o.selector);
 
         for (var i=0;i<grids.length;i++) {
-            var grid = grids[i], containers = grid.querySelectorAll(o.container), items = [], t = new Date().getTime();
+            var grid = grids[i],
+                containers = grid.querySelectorAll(o.container),
+                items = [],
+                t = new Date().getTime();
             if (!containers.length) continue;
             var s = window.getComputedStyle ? getComputedStyle(containers[0], null) : containers[0].currentStyle;
             o.margin = (parseInt(s.marginLeft) || 0) + (parseInt(s.marginRight) || 0) + (Math.round(parseFloat(s.borderLeftWidth)) || 0) + (Math.round(parseFloat(s.borderRightWidth)) || 0);
