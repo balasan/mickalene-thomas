@@ -61,7 +61,7 @@ var flexImages = (function(){
                 var el = itm[0];
                 // clearClass(el, 'example-enter');
                 // el.className += " example-enter";
-                var tDelay = .1 * i + .033 * ((rows-1)%3);
+                var tDelay = .066 * i + .033 * ((rows-1)%3);
                 el.style.transitionDelay = tDelay + 's';
                 el.style.WebkitTransitionDelay = tDelay + 's';
                 self.maxDelay = Math.max(self.maxDelay,tDelay)
