@@ -24,7 +24,9 @@ function GLView() {
   var scene;
   var object;
   var time;
-  var objectVar;
+  var M;
+  var text;
+  var logo;
   var oldTime;
 
   var loadedItems = 0;
@@ -105,8 +107,8 @@ function GLView() {
     var aLight = new THREE.AmbientLight(new THREE.Color("hsl(0, 0%, 50%)"));
     scene.add(aLight);
 
-    var pLight = new THREE.PointLight(new THREE.Color(1, 1, 1), .6, 2000);
-    pLight.position.set(-100, -10, 700);
+    var pLight = new THREE.PointLight(new THREE.Color(1, 1, 1), .7, 2000);
+    pLight.position.set(-100, -10, 900);
     scene.add(pLight);
 
     var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
@@ -184,16 +186,23 @@ function GLView() {
     var texture3 = greyMaterial.clone()
     texture3.map = bg2;
     texture3.normalMap = bg2N;
-    texture3.shininess = 10;
+    texture3.shininess = 20;
     texture3.normalScale = new THREE.Vector2(0, 1);
 
 
     var transMaterial = greyMaterial.clone()
     transMaterial.map = trans;
     transMaterial.normalMap = transN;
-    transMaterial.metal = false;
+    // transMaterial.metal = true;
     transMaterial.specular = new THREE.Color("hsl(0, 0%, 30%)");
 
+    var textMaterial = greyMaterial.clone()
+    textMaterial.map = null;
+    textMaterial.normalMap = null;
+    // textMaterial.metal = true;
+    textMaterial.transparent = false;
+    textMaterial.color = new THREE.Color("hsl(0, 0%, 50%)");
+    textMaterial.specular = new THREE.Color("hsl(0, 0%, 30%)");
 
     var plane = new THREE.Mesh(planeGeometry, greyMaterial);
     plane.position.y = -100;
@@ -208,6 +217,11 @@ function GLView() {
     scene.add(plane);
 
 
+    logo = new THREE.Object3D();
+    scene.add(logo)
+    logo.position.y = 10;
+    var s = .4;
+    logo.scale.set(s, s, s);
 
     var loader = new THREE.OBJLoader();
     loader.load('/3d/M.obj', function(object) {
@@ -216,14 +230,23 @@ function GLView() {
           child.material = transMaterial;
         }
       });
-      object.position.y = 5;
-      var s = .4;
-      object.scale.set(s, s, s);
       // console.log(object, 'object')
-      objectVar = object;
-      scene.add(objectVar);
-      console.log(scene, "scene here")
+      M = object;
+      logo.add(M);
     });
+
+    loader.load('/3d/text.obj', function(object) {
+      object.traverse(function(child) {
+        if (child instanceof THREE.Mesh) {
+          child.material = textMaterial;
+          console.log(child)
+        }
+      });
+      // console.log(object, 'object')
+      text = object;
+      logo.add(text);
+    });
+
 
   }
 
@@ -305,14 +328,14 @@ function GLView() {
     animate();
   }
   this.add = function(){
-    scene.add(objectVar);
+    scene.add(logo);
   }
   this.stop = function(){
     stop = true;
   }
   this.remove = function() {
     console.log(scene, 'scene')
-    scene.remove(objectVar)
+    scene.remove(logo)
   }
   this.dom = renderer.domElement
 
