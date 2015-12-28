@@ -37,7 +37,7 @@ export default class App extends Component {
   render () {
     if (this.props.menu) {
       var main = (
-        <main className={this.props.menu.toggleLinks ? 'hideMe' : null}>
+        <main className={this.props.menu.toggleLinks ? 'hide' : null}>
           {this.props.children}
         </main>
       )

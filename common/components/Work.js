@@ -23,7 +23,7 @@ export default class Work extends Component {
 
   componentDidUpdate() {
 
-    // var tempFlex = new flexImages({ 
+    // var tempFlex = new flexImages({
     //   selector: '.flex-images',
     //   container: '.item:not(.example-leave)',
     //   rowHeight: 250,
@@ -38,7 +38,7 @@ export default class Work extends Component {
       var timeout = this.timeout || 0;
       this.flex = new flexImages({
         selector: '.flex-images',
-        container: '.item:not(.example-leave)',
+        container: '.item:not(.work-leave)',
         rowHeight: 250,
       })
       // window.timeout = this.flex.maxDelay * 1000 || 0;
@@ -68,19 +68,15 @@ export default class Work extends Component {
 
   render () {
     const { work } = this.props
-    // console.log(work, 'work now')
-    // const timeout = Math.floor(this.timeout);
-    // console.log("RENDER TIMEOUT", timeout)
-    // if(!this.flex || !process.env.BROWSER) return null;
-
 
     var all = null;
 
     if (work) {
-        var all = (
+      if (work.all) {
+                var all = (
         <div>
           <ReactCSSTransitionGroup
-            transitionName="example"
+            transitionName="work"
             transitionAppear={true}
             transitionAppearTimeout={0}
             transitionEnterTimeout={0}
@@ -98,6 +94,7 @@ export default class Work extends Component {
             }, this)}
           </ReactCSSTransitionGroup>
         </div>)
+              }
     }
 
     return (

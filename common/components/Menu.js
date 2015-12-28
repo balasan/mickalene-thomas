@@ -72,12 +72,15 @@ export default class Menu extends Component {
 
     if (this.props.state.menu) {
       if (this.props.state.menu.toggleLinks) {
-        var links = <section className='links'>
-        <Link onClick={showAllX} to="/works">works</Link>
-        <Link to="/about">about</Link>
-        <Link to="/news">news</Link>
-        <Link to="/store">store</Link>
-        <Link to="/contact">contact</Link>
+        var links = <section className='linksParent'>
+          <div onClick={toggleLinks} className="linksBackground"></div>
+          <div className="links">
+          <Link onClick={showAllX} to="/works">works</Link>
+          <Link to="/about">about</Link>
+          <Link to="/news">news</Link>
+          <Link to="/store">store</Link>
+          <Link to="/contact">contact</Link>
+          </div>
         </section>
       }
 
@@ -105,7 +108,7 @@ export default class Menu extends Component {
 
     return (
       <div>
-       <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+       <ReactCSSTransitionGroup transitionName="menu" transitionEnterTimeout={100} transitionLeaveTimeout={100}>
         {nav}
         {links}
         </ReactCSSTransitionGroup>

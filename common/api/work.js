@@ -99,7 +99,7 @@
      prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
          Api.form('everything')
              .ref(Api.master())
-             .query(prismic.Predicates.at("document.type", "work")).submit(function(err, response) {
+             .query(prismic.Predicates.at("document.type", "work")).pageSize(100).submit(function(err, response) {
                  if (err) {
                      console.log(err);
                      done();
@@ -161,7 +161,26 @@
 
                      simple.push(obj)
                  });
-                 callback(null, simple)
+
+                function shuffle(array) {
+                  var currentIndex = array.length, temporaryValue, randomIndex;
+
+                  while (0 !== currentIndex) {
+
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex -= 1;
+
+                    temporaryValue = array[currentIndex];
+                    array[currentIndex] = array[randomIndex];
+                    array[randomIndex] = temporaryValue;
+                  }
+
+                  return array;
+                }
+
+                shuffle(simple)
+
+                callback(null, simple)
              })
      });
  }

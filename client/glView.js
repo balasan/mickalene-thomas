@@ -21,6 +21,7 @@ function GLView() {
   var uniforms;
 
   var delta;
+  var transMaterial;
   var scene;
   var object;
   var time;
@@ -100,7 +101,7 @@ function GLView() {
 
 
     // tree
-    loader = new THREE.JSONLoader();
+    var loader = new THREE.JSONLoader();
     // loader.load( "tree.js", treeLoaded );
     // loader.load( "butterfly.js", butterflyLoaded );
 
@@ -190,7 +191,7 @@ function GLView() {
     texture3.normalScale = new THREE.Vector2(0, 1);
 
 
-    var transMaterial = greyMaterial.clone()
+   transMaterial = greyMaterial.clone()
     transMaterial.map = trans;
     transMaterial.normalMap = transN;
     // transMaterial.metal = true;
@@ -224,6 +225,7 @@ function GLView() {
     logo.scale.set(s, s, s);
 
     var loader = new THREE.OBJLoader();
+<<<<<<< HEAD
     loader.load('/3d/M.obj', function(object) {
       object.traverse(function(child) {
         if (child instanceof THREE.Mesh) {
@@ -234,6 +236,22 @@ function GLView() {
       M = object;
       logo.add(M);
     });
+=======
+    // loader.load('/3d/M.obj', function(object) {
+    //   object.traverse(function(child) {
+    //     if (child instanceof THREE.Mesh) {
+    //       child.material = transMaterial;
+    //     }
+    //   });
+    //   object.position.y = 5;
+    //   var s = .4;
+    //   object.scale.set(s, s, s);
+    //   // console.log(object, 'object')
+    //   objectVar = object;
+    //   scene.add(objectVar);
+    //   console.log(scene, "scene here")
+    // });
+>>>>>>> 4ff697052ad90f665a126c9d803228e79a020896
 
     loader.load('/3d/text.obj', function(object) {
       object.traverse(function(child) {
