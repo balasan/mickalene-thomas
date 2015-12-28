@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as WorkActions from '../actions/work'
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+import ReactTransitionGroup from 'react-addons-transition-group';
 
 export default class SelectedComponent extends Component {
 
@@ -21,9 +22,16 @@ export default class SelectedComponent extends Component {
     if ( work.currentitem ) {
       selectedWork = (
         <section className='showcase'>
-          <div className="image">
-            <img src={work.currentitem[0].image.main.url} />
-          </div>
+            <ReactCSSTransitionGroup
+              transitionName="single"
+              transitionAppear={true}
+              transitionAppearTimeout={0}
+              transitionEnterTimeout={0}
+              transitionLeaveTimeout={400}>
+              <div className="image">
+                  <img src={work.currentitem[0].image.main.url} />
+              </div>
+           </ReactCSSTransitionGroup>
           <div className="description">
             <div>
               <p>{work.currentitem[0].title}</p>
@@ -36,9 +44,7 @@ export default class SelectedComponent extends Component {
 
     return (
       <div className='selectedWork'>
-              <ReactCSSTransitionGroup transitionName="example" transitionAppear={true} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
-        {selectedWork}
-        </ReactCSSTransitionGroup>
+            {selectedWork}
         </div>
     )
   }

@@ -6,6 +6,7 @@ import { UPDATE_PATH } from 'redux-simple-router'
 
 export default function menu(state = null, action) {
   switch (action.type) {
+
     case GET_MENU:
       if (action.length > 1) {
         return Object.assign({}, state, {
@@ -35,6 +36,7 @@ export default function menu(state = null, action) {
 
     case TOGGLE_LINKS:
       return Object.assign({}, state, {
+        toggleNav: state.toggleNav = !state.toggleNav,
         toggleLinks: state.toggleLinks = !state.toggleLinks
       })
 

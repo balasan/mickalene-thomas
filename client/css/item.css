@@ -1,10 +1,9 @@
 .singleItem {
   height: calc(100vh - 75px);
 }
-.item{
+.item {
   backface-visibility:hidden;
   display:inline-block;
-  /*transform: translate3d(0,0%,0);*/
   transform-origin: 50% 0%;
   perspective: 600px;
   transform-style: preserve-3d;

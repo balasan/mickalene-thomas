@@ -21,6 +21,7 @@ function GLView() {
   var uniforms;
 
   var delta;
+  var transMaterial;
   var scene;
   var object;
   var time;
@@ -98,7 +99,7 @@ function GLView() {
 
 
     // tree
-    loader = new THREE.JSONLoader();
+    var loader = new THREE.JSONLoader();
     // loader.load( "tree.js", treeLoaded );
     // loader.load( "butterfly.js", butterflyLoaded );
 
@@ -188,7 +189,7 @@ function GLView() {
     texture3.normalScale = new THREE.Vector2(0, 1);
 
 
-    var transMaterial = greyMaterial.clone()
+   transMaterial = greyMaterial.clone()
     transMaterial.map = trans;
     transMaterial.normalMap = transN;
     transMaterial.metal = false;
@@ -210,20 +211,20 @@ function GLView() {
 
 
     var loader = new THREE.OBJLoader();
-    loader.load('/3d/M.obj', function(object) {
-      object.traverse(function(child) {
-        if (child instanceof THREE.Mesh) {
-          child.material = transMaterial;
-        }
-      });
-      object.position.y = 5;
-      var s = .4;
-      object.scale.set(s, s, s);
-      // console.log(object, 'object')
-      objectVar = object;
-      scene.add(objectVar);
-      console.log(scene, "scene here")
-    });
+    // loader.load('/3d/M.obj', function(object) {
+    //   object.traverse(function(child) {
+    //     if (child instanceof THREE.Mesh) {
+    //       child.material = transMaterial;
+    //     }
+    //   });
+    //   object.position.y = 5;
+    //   var s = .4;
+    //   object.scale.set(s, s, s);
+    //   // console.log(object, 'object')
+    //   objectVar = object;
+    //   scene.add(objectVar);
+    //   console.log(scene, "scene here")
+    // });
 
   }
 
@@ -305,7 +306,21 @@ function GLView() {
     animate();
   }
   this.add = function(){
-    scene.add(objectVar);
+    var loader = new THREE.OBJLoader();
+        loader.load('/3d/M.obj', function(object) {
+        object.traverse(function(child) {
+        if (child instanceof THREE.Mesh) {
+          child.material = transMaterial;
+        }
+      });
+      object.position.y = 5;
+      var s = .4;
+      object.scale.set(s, s, s);
+      // console.log(object, 'object')
+      objectVar = object;
+      scene.add(objectVar);
+      console.log("adding")
+    });
   }
   this.stop = function(){
     stop = true;
