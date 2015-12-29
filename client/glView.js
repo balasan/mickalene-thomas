@@ -109,7 +109,7 @@ function GLView() {
     scene.add(aLight);
 
     var pLight = new THREE.PointLight(new THREE.Color(1, 1, 1), .7, 2000);
-    pLight.position.set(-100, -10, 900);
+    pLight.position.set(-100, -10, 800);
     scene.add(pLight);
 
     var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
@@ -165,7 +165,7 @@ function GLView() {
 
     var shininess = 40,
       // diffuse = new THREE.Color(.6, .6, .6),
-      specular = new THREE.Color("hsl(0, 0%, 50%)"),
+      specular = new THREE.Color("hsl(0, 0%, 70%)"),
       normalScale = new THREE.Vector2(0, 1),
       shading = THREE.SmoothShading;
 
@@ -192,7 +192,7 @@ function GLView() {
     texture3.normalScale = new THREE.Vector2(0, 1);
 
 
-   transMaterial = greyMaterial.clone()
+    transMaterial = greyMaterial.clone()
     transMaterial.map = trans;
     transMaterial.normalMap = transN;
     // transMaterial.metal = true;
@@ -248,8 +248,6 @@ function GLView() {
       text = object;
       logo.add(text);
     });
-
-
 
     render();
   }
