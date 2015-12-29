@@ -11,6 +11,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware'
 import webpackConfig from '../webpack.config'
 
 import handleRender from './render';
+var router = Express.Router();
 
 
 
@@ -31,15 +32,24 @@ if (isDevelopment) {
 }
 app.use(morgan('dev'));
 
+// This is fired every time the server side receives a request
+// app.get('/', handleRender)
+// app.use(handleRender)
+// app.route('/*').get(handleRender)
+
+//public folder
 app.use(Express.static(__dirname + '/../public'));
+
+var index = router.get('/*', handleRender)
+app.use('/', index);
+
+
 // app.set('appPath', Express.static(__dirname + '/public'));
 
 var port = process.env.PORT || 3000
 
 
-// This is fired every time the server side receives a request
-// app.get('/', handleRender)
-app.use(handleRender)
+
 
 app.listen(port, (error) => {
   if (error) {

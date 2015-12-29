@@ -34,7 +34,7 @@ function renderFullPage(html, initialState) {
 export default function fetchComponentData(dispatch, components, params) {
   const promises = components.reduce( (prev, current) => {
     return ( current.fetchData ? [current.fetchData(dispatch)] : [])
-      .concat((current.WrappedComponent ? [current.fetchData(dispatch)] : []) || [])
+      .concat((current.WrappedComponent && current.fetchData ? [current.fetchData(dispatch)] : []) || [])
       .concat(prev);
   }, []);
   return Promise.all(promises);
@@ -51,7 +51,7 @@ export default function handleRender(req, res) {
 
     // Compile an initial state
     // const initialState = { counter };
-    const initialState = {};
+    const initialState = {routing : {path: req.originalUrl}};
 
     // Create a new Redux store instance
     const store = configureStore(initialState);
@@ -68,7 +68,7 @@ export default function handleRender(req, res) {
           res.status(500);
         } else {
 
-          // console.log(renderProps)
+          console.log("RENDERING", req.originalUrl)
 
           var renderHtml = () => {
             const component = (
@@ -81,14 +81,14 @@ export default function handleRender(req, res) {
             return renderToString(component);
           }
 
-          //this code pre-fills the data on the server
-          // fetchComponentData(store.dispatch, renderProps.components, renderProps.params)
-          //   .then(() => {
-          //     res.send(renderFullPage(renderHtml(), store.getState()))
-          //   })
-          //   .catch(err => res.end(err.message));
+          // this code pre-fills the data on the server
+          fetchComponentData(store.dispatch, renderProps.components, renderProps.params)
+            .then(() => {
+              res.send(renderFullPage(renderHtml(), store.getState()))
+            })
+            .catch(err => res.end(err.message));
 
-          res.send(renderFullPage(renderHtml(), store.getState()));
+          // res.send(renderFullPage(renderHtml(), store.getState()));
         }
       }
     )

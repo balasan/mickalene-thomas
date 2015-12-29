@@ -146,17 +146,17 @@ function GLView() {
     }
 
 
-    var bg2 = THREE.ImageUtils.loadTexture("/images/t4.jpg");
+    var bg2 = THREE.ImageUtils.loadTexture("/images/t4.jpg",render);
     bg2.wrapS = bg2.wrapT = THREE.RepeatWrapping;
     bg2.repeat.set(5, 5);
-    var bg2N = THREE.ImageUtils.loadTexture("/images/bg2_NRM.jpg");
+    var bg2N = THREE.ImageUtils.loadTexture("/images/bg2_NRM.jpg",render);
     bg2N.wrapS = bg2N.wrapT = THREE.RepeatWrapping;
     bg2N.repeat.set(5, 5);
 
 
-    var trans = THREE.ImageUtils.loadTexture("/images/transparent1.png");
+    var trans = THREE.ImageUtils.loadTexture("/images/transparent1.png",render);
     trans.wrapS = trans.wrapT = THREE.RepeatWrapping;
-    var transN = THREE.ImageUtils.loadTexture("/images/transparent_NRM.png");
+    var transN = THREE.ImageUtils.loadTexture("/images/transparent_NRM.png",render);
     transN.wrapS = transN.wrapT = THREE.RepeatWrapping;
     trans.repeat.set(1, 1);
 
@@ -219,13 +219,12 @@ function GLView() {
 
 
     logo = new THREE.Object3D();
-    scene.add(logo)
+    // scene.add(logo)
     logo.position.y = 10;
     var s = .4;
     logo.scale.set(s, s, s);
 
     var loader = new THREE.OBJLoader();
-<<<<<<< HEAD
     loader.load('/3d/M.obj', function(object) {
       object.traverse(function(child) {
         if (child instanceof THREE.Mesh) {
@@ -236,22 +235,6 @@ function GLView() {
       M = object;
       logo.add(M);
     });
-=======
-    // loader.load('/3d/M.obj', function(object) {
-    //   object.traverse(function(child) {
-    //     if (child instanceof THREE.Mesh) {
-    //       child.material = transMaterial;
-    //     }
-    //   });
-    //   object.position.y = 5;
-    //   var s = .4;
-    //   object.scale.set(s, s, s);
-    //   // console.log(object, 'object')
-    //   objectVar = object;
-    //   scene.add(objectVar);
-    //   console.log(scene, "scene here")
-    // });
->>>>>>> 4ff697052ad90f665a126c9d803228e79a020896
 
     loader.load('/3d/text.obj', function(object) {
       object.traverse(function(child) {
@@ -266,6 +249,8 @@ function GLView() {
     });
 
 
+
+    render();
   }
 
   function onWindowResize(event) {

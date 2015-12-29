@@ -7,24 +7,25 @@ import * as MenuActions from '../actions/menu'
 
 export default class Menu extends Component {
 
-  static fetchMenu(dispatch, length) {
-    var { loadMenu } = bindActionCreators(MenuActions, dispatch, length)
-    return Promise.all([
-      loadMenu(length)
-    ])
-  }
-
-  componentDidMount() {
-    this.constructor.fetchMenu(this.props.dispatch, this.props.location.pathname.length);
-  }
-
   render () {
+
+    // this.props.loadMenu( this.props.route.path )
+
     var filterType = this.props.params.filter;
     var path = this.props.children.props.route.path;
+
     var location = ''
     var filters;
 
-    const { toggle, toggleLinks, toggleNav, hideX, showAllX} = this.props
+    const { toggle, toggleLinks, hideX, showAllX} = this.props
+
+    var showMenu = this.props.menu.showMenu
+
+    var location = this.props.state.routing.path
+
+    var showHeader = true;
+    if(location == '/' || showMenu)
+      showHeader = false
 
     var tags = [];
 
@@ -67,50 +68,53 @@ export default class Menu extends Component {
         </section>
         )
       }
-
     }
 
-    if (this.props.state.menu) {
-      if (this.props.state.menu.toggleLinks) {
-        var links = <section className='linksParent'>
+    var links = '';
+
+    if (showMenu) {
+      links =
+        <section className='linksParent'>
           <div onClick={toggleLinks} className="linksBackground"></div>
           <div className="links">
-          <Link onClick={showAllX} to="/works">works</Link>
-          <Link to="/about">about</Link>
-          <Link to="/news">news</Link>
-          <Link to="/store">store</Link>
-          <Link to="/contact">contact</Link>
+            <Link onClick={showAllX} to="/works">works</Link>
+            <Link to="/about">about</Link>
+            <Link to="/news">news</Link>
+            <Link to="/store">store</Link>
+            <Link to="/contact">contact</Link>
           </div>
         </section>
+    }
+
+
+    if (showHeader) {
+      if (this.props.location.pathname.substr(0,8) == '/works/i' || this.props.location.pathname.substr(0,13) == '/works/filter') {
+        location = <Link onClick={this.props.showAllX} to='/works'>works</Link>;
+      } else {
+        location = path;
       }
 
-      if (this.props.state.menu.toggleNav) {
-        if (this.props.location.pathname.substr(0,8) == '/works/i' || this.props.location.pathname.substr(0,13) == '/works/filter') {
-          location = <Link onClick={this.props.showAllX} to='/works'>works</Link>;
-        } else {
-          location = path;
-      }
-
-        var nav = (<nav>
+      var nav = (
+      <nav>
         <section className='left'>
-        <Link to="/">mickalene thomas</Link>
+          <Link to="/">mickalene thomas</Link>
         </section>
         <section className='middle'>
           <p>{location}</p>
           {filters}
-          </section>
-          <section className='right'>
-            <img onClick={toggleLinks} src='../../images/menu.svg'/>
-          </section>
-        </nav> )
-      }
+        </section>
+        <section className='right'>
+          <img onClick={toggleLinks} src='../../images/menu.svg'/>
+        </section>
+      </nav>)
     }
+
 
     return (
       <div>
-       <ReactCSSTransitionGroup transitionName="menu" transitionEnterTimeout={100} transitionLeaveTimeout={100}>
-        {nav}
-        {links}
+        <ReactCSSTransitionGroup transitionName="menu" transitionEnterTimeout={100} transitionLeaveTimeout={100}>
+          {nav}
+          {links}
         </ReactCSSTransitionGroup>
       </div>
     )

@@ -13,7 +13,7 @@ if(process.env.BROWSER){
 
 export default class Works extends Component {
 
-  static fetchData(dispatch, filter) {
+  static fetchDataOnClient(dispatch, filter) {
     var { loadWork } = bindActionCreators(WorkActions, dispatch, filter)
     return Promise.all([
       loadWork(filter)
@@ -23,7 +23,7 @@ export default class Works extends Component {
 
   componentDidMount() {
     if (!this.props.work) {
-      this.constructor.fetchData(this.props.dispatch, this.props.params.filter);
+      this.constructor.fetchDataOnClient(this.props.dispatch, this.props.params.filter);
     }
   }
 

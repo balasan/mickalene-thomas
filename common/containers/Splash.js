@@ -12,14 +12,17 @@ class Splash extends Component {
     var GLView = require('../../client/glView')
     if (!window.glView) {
       window.glView = new GLView()
-      window.glView.start();
+      if(this.props.state.routing.path == '/')
+        window.glView.start();
+        window.glView.add();
 
-      if (this.props.state.routing.path != '/') {
-        setTimeout(function() {
-          window.glView.stop()
-        }, 500);
+      // if (this.props.state.routing.path != '/') {
+      //   setTimeout(function() {
+      //     window.glView.remove();
+      //     window.glView.stop()
+      //   }, 500);
 
-      }
+      // }
 
       window.glView.dom.addEventListener('click', () => {
         window.glView.remove();
@@ -36,6 +39,7 @@ class Splash extends Component {
   }
 
   componentWillUnmount() {
+    window.glView.remove();
     window.glView.stop()
   }
 

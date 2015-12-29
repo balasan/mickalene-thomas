@@ -6,7 +6,7 @@ export const SET_FILTER = 'SET_FILTER';
 // export const HIDE_ALL = 'HIDE_ALL';
 export const SHOW_ALL = 'SHOW_ALL';
 export const SHOW_FILTERED = 'SHOW_FILTERED';
-import { fetchMenu } from '../api/menu'
+// import { fetchMenu } from '../api/menu'
 
 export function toggle() {
   console.log("toggle")
@@ -66,13 +66,10 @@ export function set(value, length) {
   };
 }
 
-export function loadMenu(length) {
-  return dispatch => {
-    return new Promise(function(resolve, reject) {
-      fetchMenu(value => {
-        dispatch(set(value, length))
-        resolve(value)
-      })
-    });
-  }
+export function loadMenu(path) {
+  return {
+    type: GET_MENU,
+    payload: null,
+    length: path
+  };
 }

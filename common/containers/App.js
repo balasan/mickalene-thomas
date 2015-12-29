@@ -22,26 +22,27 @@ if(process.env.BROWSER){
   require('./../../client/css/navbar.css');
 }
 export default class App extends Component {
-  static fetchMenu(dispatch, length) {
-    var { loadMenu } = bindActionCreators(MenuActions, dispatch, length)
+  // static fetchMenu(dispatch, length) {
+  //   var { loadMenu } = bindActionCreators(MenuActions, dispatch, length)
 
-    return Promise.all([
-      loadMenu(length)
-    ])
-  }
+  //   return Promise.all([
+  //     loadMenu(length)
+  //   ])
+  // }
 
-  componentDidMount() {
-      this.constructor.fetchMenu(this.props.dispatch, this.props.location.pathname.length);
-  }
+  // componentDidMount() {
+  //     this.constructor.fetchMenu(this.props.dispatch, this.props.location.pathname.length);
+  // }
 
   render () {
     if (this.props.menu) {
       var main = (
-        <main className={this.props.menu.toggleLinks ? 'hide' : null}>
+        <main className={this.props.menu.showMenu ? 'hide' : null}>
           {this.props.children}
         </main>
       )
     }
+
 
     return (
     <div>
@@ -55,7 +56,6 @@ export default class App extends Component {
 
 export default connect(
   state => {
-
     return {menu: state.menu}
   },
   dispatch => {
