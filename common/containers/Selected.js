@@ -13,12 +13,12 @@ if(process.env.BROWSER){
 
 export default class Selected extends Component {
 
-  // static fetchData(dispatch, filter) {
-  //   var { loadWork } = bindActionCreators(WorkActions, dispatch, filter)
-  //   return Promise.all([
-  //     loadWork(filter)
-  //   ])
-  // }
+  static fetchWork(dispatch, filter) {
+    var { loadWork } = bindActionCreators(WorkActions, dispatch, filter)
+    return Promise.all([
+      loadWork(filter)
+    ])
+  }
 
   static fetchItem(dispatch, id) {
     var { loadItem } = bindActionCreators(WorkActions, dispatch, id)
@@ -27,12 +27,11 @@ export default class Selected extends Component {
     ])
   }
 
-
   componentDidMount() {
     if (!this.props.work || !this.props.work.currentitem) {
-      // this.constructor.fetchData(this.props.dispatch, this.props.params.filter);
       this.constructor.fetchItem(this.props.dispatch, this.props.params.itemId);
     }
+    // this.constructor.fetchWork(this.props.dispatch, '');
   }
 
   render () {
@@ -46,6 +45,7 @@ export default class Selected extends Component {
 
 export default connect(
   state => {
+    console.log(state, 'state')
     return {work: state.work}
   },
   dispatch => {

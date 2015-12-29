@@ -12,7 +12,7 @@ export default class Menu extends Component {
     var path = this.props.children.props.route.path;
     var location = '';
     var filters;
-    const { toggle, toggleLinks, hideX, showAllX, hideLinks, showAllMenu} = this.props;
+    const { toggleLinks} = this.props;
     var showMenu = this.props.menu.showMenu;
     var location = this.props.state.routing.path;
 
@@ -42,12 +42,10 @@ export default class Menu extends Component {
       filters = (
         <section className='filterLinks'>
         <Link
-          //onClick={this.props.showAllX}
           className={!filterType ? 'selected' : null} to='/works'>all</Link>
           {uniqueTags.map(function (filter, i) {
             return (
                 <Link key={i}
-                  // onClick={this.props.showFilteredX}
                   className={filterType == filter ? 'selected' : null}
                   to={'/works/filter/' + filter}>
               {filter}
@@ -59,11 +57,10 @@ export default class Menu extends Component {
 
     if (path == 'works/i/:itemId' && this.props.state.work) {
       if (this.props.state.work.currentitem) {
-              var tag = this.props.state.work.currentitem[0].tags[0];
+      var tag = this.props.state.work.currentitem[0].tags[0];
       filters = (
         <section className='filterLinks'>
          <Link
-          // onClick={this.props.showFilteredX}
           to={'/works/filter/' + tag}>{'back to ' + tag}</Link>
         </section>
         )
@@ -93,7 +90,7 @@ export default class Menu extends Component {
 
     if (showHeader) {
       if (this.props.location.pathname.substr(0,8) == '/works/i' || this.props.location.pathname.substr(0,13) == '/works/filter') {
-        location = <Link onClick={this.props.showAllX} to='/works'>works</Link>;
+        location = <Link to='/works'>works</Link>;
       } else {
         location = path;
       }
