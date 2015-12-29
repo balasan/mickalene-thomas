@@ -1,5 +1,5 @@
 .aboutImg {
-  margin-top:50px;
+  /*margin-top:50px;*/
   height: calc(100vh - 75px);
   background-color: white;
   background-image: url('/images/about.png');

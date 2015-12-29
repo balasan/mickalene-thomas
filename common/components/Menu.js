@@ -41,10 +41,15 @@ export default class Menu extends Component {
     if (path == 'works/filter/:filter' || path == 'works') {
       filters = (
         <section className='filterLinks'>
-        <Link onClick={this.props.showAllX} className={!filterType ? 'selected' : null} to='/works'>all</Link>
+        <Link 
+          //onClick={this.props.showAllX} 
+          className={!filterType ? 'selected' : null} to='/works'>all</Link>
           {uniqueTags.map(function (filter, i) {
             return (
-                <Link key={i} onClick={this.props.showFilteredX} className={filterType == filter ? 'selected' : null} to={'/works/filter/' + filter}>
+                <Link key={i}
+                  // onClick={this.props.showFilteredX}
+                  className={filterType == filter ? 'selected' : null}
+                  to={'/works/filter/' + filter}>
               {filter}
               </Link>
             )}, this)}
@@ -57,7 +62,9 @@ export default class Menu extends Component {
               var tag = this.props.state.work.currentitem[0].tags[0];
       filters = (
         <section className='filterLinks'>
-         <Link onClick={this.props.showFilteredX} to={'/works/filter/' + tag}>{'back to ' + tag}</Link>
+         <Link
+          // onClick={this.props.showFilteredX}
+          to={'/works/filter/' + tag}>{'back to ' + tag}</Link>
         </section>
         )
       }
@@ -71,11 +78,11 @@ export default class Menu extends Component {
           <div onClick={toggleLinks} className="linksBackground"></div>
             <ReactCSSTransitionGroup className="links" transitionName="xxx" transitionAppear={true}
             transitionAppearTimeout={0} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
-              <Link style={{transitionDelay: '0s'}} onClick={showAllMenu} to="/works">work</Link>
-              <Link style={{transitionDelay: '0.1s'}} onClick={toggleLinks} to="/about">about</Link>
-              <Link style={{transitionDelay: '0.2s'}} onClick={toggleLinks} to="/news">news</Link>
-              <Link style={{transitionDelay: '0.3s'}} onClick={toggleLinks} to="/store">store</Link>
-              <Link style={{transitionDelay: '0.4s'}} onClick={toggleLinks} to="/contact">contact</Link>
+              <Link style={{transitionDelay: '0s'}} onClick={toggleLinks} to="/works">work</Link>
+              <Link style={{transitionDelay: '0.05s'}} onClick={toggleLinks} to="/about">about</Link>
+              <Link style={{transitionDelay: '0.1s'}} onClick={toggleLinks} to="/news">news</Link>
+              <Link style={{transitionDelay: '0.15s'}} onClick={toggleLinks} to="/store">store</Link>
+              <Link style={{transitionDelay: '0.2s'}} onClick={toggleLinks} to="/contact">contact</Link>
             </ReactCSSTransitionGroup>
         </section>
           );

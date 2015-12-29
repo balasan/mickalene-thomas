@@ -20,6 +20,7 @@ function renderFullPage(html, initialState) {
         <link rel="stylesheet" href="styles.css" />
       </head>
       <body>
+        <canvas id="webGL"></canvas>
         <div id="app">${html}</div>
          <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}

@@ -45,7 +45,7 @@ function GLView() {
     stats.domElement.style.position = 'absolute';
     stats.domElement.style.left = '0px';
     stats.domElement.style.top = '0px';
-    document.body.appendChild(stats.domElement);
+    document.body.prependChild(stats.domElement);
   }
 
   init();
@@ -70,7 +70,7 @@ function GLView() {
 
   function init() {
 
-    container = document.body;
+    // container = document.body;
 
     // container = document.createElement('div');
     // document.body.appendChild(container);
@@ -119,8 +119,9 @@ function GLView() {
     try {
       // renderer
       renderer = new THREE.WebGLRenderer({
+        canvas: document.getElementById('webGL'),
         antialias: true,
-        alpha: true
+        alpha: true,
       });
       renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1);
 
@@ -131,7 +132,7 @@ function GLView() {
       renderer.sortObjects = false;
       renderer.domElement.id = 'webGLView'
 
-      container.appendChild(renderer.domElement);
+      // container.appendChild(renderer.domElement);
       has_gl = true;
 
       document.addEventListener('mousemove', onMouseMove, false);
@@ -146,10 +147,10 @@ function GLView() {
     }
 
 
-    var bg2 = THREE.ImageUtils.loadTexture("/images/t4.jpg",render);
+    var bg2 = THREE.ImageUtils.loadTexture("/images/t4.jpg",null, render);
     bg2.wrapS = bg2.wrapT = THREE.RepeatWrapping;
     bg2.repeat.set(5, 5);
-    var bg2N = THREE.ImageUtils.loadTexture("/images/bg2_NRM.jpg",render);
+    var bg2N = THREE.ImageUtils.loadTexture("/images/bg2_NRM.jpg",null,render);
     bg2N.wrapS = bg2N.wrapT = THREE.RepeatWrapping;
     bg2N.repeat.set(5, 5);
 

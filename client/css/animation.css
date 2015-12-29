@@ -15,7 +15,6 @@
   transform-origin: 50% 0%;
   transform:   translate3d(0,0%,0) rotateX(0deg);
   transition: opacity .6s easeOutQuart, transform .7s easeOutQuart;
-
 }
 
 .work-leave{
@@ -25,8 +24,8 @@
 
 .work-leave.work-leave-active {
   opacity: 0;
-  transition: opacity .2s easeOutQuart, transform .2s easeOutQuart;
-  transform: translate3d(-100px,0,0);
+  transition: opacity .3s easeOutQuart, transform .3s easeOutQuart;
+  transform: translate3d(0,100%,0);
 }
 
 .work-appear {

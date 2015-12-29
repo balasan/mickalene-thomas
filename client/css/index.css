@@ -13,10 +13,15 @@ html, body {
     padding: 0;
     color: white;
     font-family: sans-serif;
+    height: 100%;
+}
+
+body{
+
 }
 
 main {
-  margin: 75px 0 0 0;
+  padding: 75px 0 0 0;
   transition: opacity 300ms ease;
   &.hide {
     opacity: 0;
@@ -39,10 +44,11 @@ article {
     position:fixed;
     top:0;
     left:0;
+    /*z-index: -1;*/
 }
 
 #app{
-    z-index: 1;
+    /*z-index: 1;*/
     position:relative;
 }
 

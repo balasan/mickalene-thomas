@@ -73,7 +73,7 @@ export default function work(state = null, action) {
 
         return Object.assign({}, state, {
           filter: filter,
-          all: [],
+          all: filtered,
           filtered: filtered
         })
       }
@@ -96,7 +96,7 @@ export default function work(state = null, action) {
 
       if (simplePath == '/works' && state) {
         return Object.assign({}, state, {
-          all: []
+          all: state.store
         })
 
       }
