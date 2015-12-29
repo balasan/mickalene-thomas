@@ -18,6 +18,7 @@ var router = Express.Router();
 const app = new Express()
 
 require('dotenv').config({silent: true});
+console.log(process.env.NODE_ENV)
 
 //-------------Dev server watch and hot reload---------------
 var isDevelopment = (process.env.NODE_ENV !== 'production');
