@@ -47,6 +47,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel',
+        exclude: /node_modules/,
         include: __dirname,
         query: {
           optional: [ 'runtime' ],
