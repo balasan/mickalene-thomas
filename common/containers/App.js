@@ -36,19 +36,24 @@ export default class App extends Component {
 
   render () {
     if (this.props.menu) {
-      var main = (
-        <main className={this.props.menu.showMenu ? 'hide' : null}>
-          {this.props.children}
-        </main>
-      )
+      if (!this.props.menu.showMenu) {
+        var main = (
+          <main>
+           <ReactCSSTransitionGroup component='div' transitionName="main" transitionAppear={true}
+              transitionAppearTimeout={500} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+              {this.props.children}
+       </ReactCSSTransitionGroup>
+          </main>)
+      } else {
+        var main = null;
+      }
     }
-
 
     return (
     <div>
-        <Menu { ...this.props }></Menu>
-        <Splash></Splash>
-        {main}
+      <Menu { ...this.props }></Menu>
+      <Splash></Splash>
+      {main}
     </div>
     );
   }

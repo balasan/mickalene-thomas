@@ -41,8 +41,8 @@ export default class Menu extends Component {
     if (path == 'works/filter/:filter' || path == 'works') {
       filters = (
         <section className='filterLinks'>
-        <Link 
-          //onClick={this.props.showAllX} 
+        <Link
+          //onClick={this.props.showAllX}
           className={!filterType ? 'selected' : null} to='/works'>all</Link>
           {uniqueTags.map(function (filter, i) {
             return (
@@ -76,13 +76,13 @@ export default class Menu extends Component {
       links = (
         <section className='linksParent'>
           <div onClick={toggleLinks} className="linksBackground"></div>
-            <ReactCSSTransitionGroup className="links" transitionName="xxx" transitionAppear={true}
+            <ReactCSSTransitionGroup className="links" transitionName="links" transitionAppear={true}
             transitionAppearTimeout={0} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
-              <Link style={{transitionDelay: '0s'}} onClick={toggleLinks} to="/works">work</Link>
-              <Link style={{transitionDelay: '0.05s'}} onClick={toggleLinks} to="/about">about</Link>
-              <Link style={{transitionDelay: '0.1s'}} onClick={toggleLinks} to="/news">news</Link>
-              <Link style={{transitionDelay: '0.15s'}} onClick={toggleLinks} to="/store">store</Link>
-              <Link style={{transitionDelay: '0.2s'}} onClick={toggleLinks} to="/contact">contact</Link>
+              <Link className='menuLink' onClick={toggleLinks} to="/works">work</Link>
+              <Link className='menuLink' onClick={toggleLinks} to="/about">about</Link>
+              <Link className='menuLink' onClick={toggleLinks} to="/news">news</Link>
+              <Link className='menuLink' onClick={toggleLinks} to="/store">store</Link>
+              <Link className='menuLink' onClick={toggleLinks} to="/contact">contact</Link>
             </ReactCSSTransitionGroup>
         </section>
           );

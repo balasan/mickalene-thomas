@@ -59,6 +59,9 @@ export default class Work extends Component {
               key=${item.id}
               src=${item.image.small.url}
             />
+            <div class="text">
+              <p>${item.title}</p>
+            </div>
         </a>`
       var span = document.createElement("span");
       span.innerHTML = el;
