@@ -5,10 +5,7 @@ import path from 'path'
 import Express from 'express'
 import qs from 'qs'
 import morgan from 'morgan'
-import webpack from 'webpack'
-import webpackDevMiddleware from 'webpack-dev-middleware'
-import webpackHotMiddleware from 'webpack-hot-middleware'
-import webpackConfig from '../webpack.config'
+
 
 import handleRender from './render';
 var router = Express.Router();
@@ -23,6 +20,10 @@ console.log(process.env.NODE_ENV)
 //-------------Dev server watch and hot reload---------------
 var isDevelopment = (process.env.NODE_ENV !== 'production');
 if (isDevelopment) {
+  var webpack = require('webpack');
+  var webpackDevMiddleware = require('webpack-dev-middleware');
+  var webpackHotMiddleware = require('webpack-hot-middleware');
+  var webpackConfig = require('../webpack.config');
   // Use this middleware to set up hot module reloading via webpack.
   const compiler = webpack(webpackConfig)
   app.use(webpackDevMiddleware(compiler, {
