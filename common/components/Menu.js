@@ -8,20 +8,13 @@ import * as MenuActions from '../actions/menu'
 export default class Menu extends Component {
 
   render () {
-
-    // this.props.loadMenu( this.props.route.path )
-
     var filterType = this.props.params.filter;
     var path = this.props.children.props.route.path;
-
-    var location = ''
+    var location = '';
     var filters;
-
-    const { toggle, toggleLinks, hideX, showAllX} = this.props
-
-    var showMenu = this.props.menu.showMenu
-
-    var location = this.props.state.routing.path
+    const { toggle, toggleLinks, hideX, showAllX, hideLinks, showAllMenu} = this.props;
+    var showMenu = this.props.menu.showMenu;
+    var location = this.props.state.routing.path;
 
     var showHeader = true;
     if(location == '/' || showMenu)
@@ -70,20 +63,24 @@ export default class Menu extends Component {
       }
     }
 
-    var links = '';
+    var links = null;
 
     if (showMenu) {
-      links =
+      links = (
         <section className='linksParent'>
           <div onClick={toggleLinks} className="linksBackground"></div>
-          <div className="links">
-            <Link onClick={showAllX} to="/works">works</Link>
-            <Link to="/about">about</Link>
-            <Link to="/news">news</Link>
-            <Link to="/store">store</Link>
-            <Link to="/contact">contact</Link>
-          </div>
+            <ReactCSSTransitionGroup className="links" transitionName="xxx" transitionAppear={true}
+            transitionAppearTimeout={0} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+              <Link style={{transitionDelay: '0s'}} onClick={showAllMenu} to="/works">work</Link>
+              <Link style={{transitionDelay: '0.1s'}} onClick={toggleLinks} to="/about">about</Link>
+              <Link style={{transitionDelay: '0.2s'}} onClick={toggleLinks} to="/news">news</Link>
+              <Link style={{transitionDelay: '0.3s'}} onClick={toggleLinks} to="/store">store</Link>
+              <Link style={{transitionDelay: '0.4s'}} onClick={toggleLinks} to="/contact">contact</Link>
+            </ReactCSSTransitionGroup>
         </section>
+          );
+    } else {
+      null
     }
 
 
@@ -109,13 +106,12 @@ export default class Menu extends Component {
       </nav>)
     }
 
-
     return (
       <div>
-        <ReactCSSTransitionGroup transitionName="menu" transitionEnterTimeout={100} transitionLeaveTimeout={100}>
+        <ReactCSSTransitionGroup transitionName="nav" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
           {nav}
-          {links}
         </ReactCSSTransitionGroup>
+          {links}
       </div>
     )
   }

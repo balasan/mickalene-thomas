@@ -3,10 +3,9 @@ export const TOGGLE_LINKS = 'TOGGLE_LINKS';
 export const TOGGLE_NAV = 'TOGGLE_NAV';
 export const GET_MENU = 'GET_MENU';
 export const SET_FILTER = 'SET_FILTER';
-// export const HIDE_ALL = 'HIDE_ALL';
+export const HIDE_MENU = 'HIDE_MENU';
 export const SHOW_ALL = 'SHOW_ALL';
 export const SHOW_FILTERED = 'SHOW_FILTERED';
-// import { fetchMenu } from '../api/menu'
 
 export function toggle() {
   console.log("toggle")
@@ -42,6 +41,12 @@ function showAll() {
   };
 }
 
+function hideMenu() {
+  return {
+    type: HIDE_MENU
+  };
+}
+
 export function showFilteredX() {
   return dispatch => {
     setTimeout(() => {
@@ -57,6 +62,17 @@ export function showAllX() {
     }, 500);
   };
 }
+
+export function showAllMenu() {
+  return dispatch => {
+    setTimeout(() => {
+      dispatch(showAll());
+      dispatch(hideMenu());
+    }, 500);
+  };
+}
+
+
 
 export function set(value, length) {
   return {
