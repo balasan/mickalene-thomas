@@ -20,6 +20,7 @@ console.log(process.env.NODE_ENV)
 //-------------Dev server watch and hot reload---------------
 var isDevelopment = (process.env.NODE_ENV !== 'production');
 if (isDevelopment) {
+  console.log("DEV ENV!?!?");
   var webpack = require('webpack');
   var webpackDevMiddleware = require('webpack-dev-middleware');
   var webpackHotMiddleware = require('webpack-hot-middleware');
