@@ -9,7 +9,7 @@ var autoprefixer = require('autoprefixer');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-  devtool: 'inline-source-map',
+  // devtool: 'inline-source-map',
   entry: [
     'webpack-hot-middleware/client',
     './client/index.js'
@@ -40,8 +40,8 @@ module.exports = {
     loaders: [
       {
         test: /\.css$|\.scss$/,
-        loader: 'style-loader!css-loader!postcss-loader'
-        // loader: ExtractTextPlugin.extract('style-loader','css-loader!postcss-loader')
+        // loader: 'style-loader!css-loader!postcss-loader'
+        loader: ExtractTextPlugin.extract('style-loader','css-loader!postcss-loader')
         // loader: 'css?sourceMap!postcss!sass?sourceMap&sourceMapContents',
       },
       {
