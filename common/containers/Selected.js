@@ -29,7 +29,7 @@ export default class Selected extends Component {
 
 
   componentDidMount() {
-    if (!this.props.work.currentitem) {
+    if (!this.props.work || !this.props.work.currentitem) {
       // this.constructor.fetchData(this.props.dispatch, this.props.params.filter);
       this.constructor.fetchItem(this.props.dispatch, this.props.params.itemId);
     }

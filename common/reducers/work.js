@@ -64,6 +64,7 @@ export default function work(state = null, action) {
       if (simplePath != '/works/i' && simplePath != '/works' && state) {
         var filter = action.path.substr(14, action.path.length)
         var filtered = [];
+        if(!state.store) state.store = [];
 
         state.store.forEach(function(item) {
           if (item.tags.indexOf(filter) > -1) {
@@ -81,6 +82,7 @@ export default function work(state = null, action) {
       if (simplePath == '/works/i' && state) {
         var id = action.path.substr(9, action.path.length);
         var selected = [];
+        if(!state.store) state.store = [];
 
         state.store.forEach(function(item) {
           if (item.id == id) {

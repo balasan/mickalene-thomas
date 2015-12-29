@@ -20,7 +20,7 @@ export default class Works extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.work) {
+    if (!this.props.work || !this.props.work.store || !this.props.work.store.length) {
       this.constructor.fetchDataOnClient(this.props.dispatch, this.props.params.filter);
     }
   }
