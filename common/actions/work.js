@@ -1,7 +1,5 @@
 export const GET_WORK = 'GET_WORK';
 export const GET_ITEM = 'GET_ITEM';
-export const GET_NEW = 'GET_NEW';
-export const SET_FLEX = 'SET_FLEX';
 import { fetchWork } from '../api/work'
 import { fetchItem } from '../api/work'
 
@@ -14,29 +12,6 @@ export function set(value, filter) {
       filter: filter
     }
   };
-}
-
-export function setFlex(value) {
-  return {
-    type: SET_FLEX,
-    payload: value
-  };
-}
-
-export function setitem(value) {
-  return {
-    type: GET_ITEM,
-    payload: value
-  };
-}
-
-export function clickitem(id) {
-  return dispatch => {
-    fetchItem(id,  (err, value) => {
-      if (err) return reject
-      dispatch(setitem(value))
-    })
-  }
 }
 
 export function loadItem(id) {
