@@ -7,7 +7,6 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import ReactTransitionGroup from 'react-addons-transition-group';
 
 export default class SelectedComponent extends Component {
-
   componentDidMount() {
   }
 

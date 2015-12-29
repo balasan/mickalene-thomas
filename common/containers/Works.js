@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Work from '../components/Work';
-// import SelectedWork from '../components/SelectedWork';
 import * as WorkActions from '../actions/work'
 import { fetchWork } from '../api/work';
 import { fetchItem } from '../api/work';
@@ -19,7 +18,6 @@ export default class Works extends Component {
       loadWork(filter)
     ])
   }
-
 
   componentDidMount() {
     if (!this.props.work) {

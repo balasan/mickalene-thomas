@@ -128,45 +128,91 @@
   transition: opacity .9s easeOutQuart, transform .7s easeOutQuart;
 }
 
-.xxx-leave:not(.xxx-leave-active ){
+.links-leave:not(.links-leave-active ){
 /*  transition-delay:0s !important;
   transition-duration: 0s !important;*/
 }
 
-.xxx-enter {
+.links-enter {
   opacity: 0;
   transform: scale(1);
   transform-origin: 50% 0%;
 }
 
-.xxx-enter.xxx-enter-active {
+.links-enter.links-enter-active {
   opacity: 1;
   transform-origin: 50% 0%;
   transform: scale(1);
   transition: opacity .6s easeOutQuart, transform .7s easeOutQuart;
 }
 
-.xxx-leave{
+.links-leave{
   opacity: 1;
   transform: scale(1);
 }
 
-.xxx-leave.xxx-leave-active {
+.links-leave.links-leave-active {
   opacity: 0;
   transition: opacity .2s easeOutQuart, transform .2s easeOutQuart;
   transform: scale(0.8);
 }
 
-.xxx-appear {
+.links-appear {
   opacity: 0;
   transform: scale(0.8);
   transform-origin: 50% 0%;
 }
 
-.xxx-appear.xxx-appear-active {
+.links-appear.links-appear-active {
   opacity: 1;
   transform-origin: 50% 0%;
   transform: scale(1);
+  transition: opacity .9s easeOutQuart, transform .7s easeOutQuart;
+}
+
+  $i : 0;
+  @for $i from 1 through 10 {
+    .menuLink:nth-of-type($i)
+      {
+        transition-delay: calc(0.1s * $i);
+      }
+  }
+
+.main-leave:not(.main-leave-active ){
+/*  transition-delay:0s !important;
+  transition-duration: 0s !important;*/
+}
+
+.main-enter {
+  opacity: 0;
+  transform: translateY(-75px);
+}
+
+.main-enter.main-enter-active {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: opacity .6s easeOutQuart, transform .7s easeOutQuart;
+}
+
+.main-leave{
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.main-leave.main-leave-active {
+  opacity: 0;
+  transition: opacity .2s easeOutQuart, transform .2s easeOutQuart;
+  transform: translateY(-75px);
+}
+
+.main-appear {
+  opacity: 0;
+  transform: translateY(-75px);
+}
+
+.main-appear.main-appear-active {
+  opacity: 1;
+  transform: translateY(0px);
   transition: opacity .9s easeOutQuart, transform .7s easeOutQuart;
 }
 
