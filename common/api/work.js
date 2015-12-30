@@ -23,16 +23,15 @@
 
  export
  function fetchItem(id, callback) {
-     // console.log(id)
      prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
          Api.form('everything')
              .ref(Api.master())
              .query(prismic.Predicates.at("document.id", id)).submit(function(err, response) {
                  if (err) {
                      console.log(err);
-                     done();
+                     callback();
                  }
-                 var simple = [];
+                 var simple;
                  response.results.forEach(function(item) {
                      var obj = {}
                      obj.id = item.id;
@@ -87,7 +86,7 @@
                         obj.image.large.dimensions.width = item.data["work.image"].value.views.large.dimensions.width;
                      }
 
-                     simple.push(obj)
+                     simple=obj
                  });
                  callback(null, simple)
              })
@@ -102,7 +101,7 @@
              .query(prismic.Predicates.at("document.type", "work")).pageSize(100).submit(function(err, response) {
                  if (err) {
                      console.log(err);
-                     done();
+                     callback();
                  }
                  var simple = [];
                  response.results.forEach(function(item) {

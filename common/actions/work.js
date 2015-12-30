@@ -1,7 +1,6 @@
 export const GET_WORK = 'GET_WORK';
-export const GET_ITEM = 'GET_ITEM';
-import { fetchWork } from '../api/work'
-import { fetchItem } from '../api/work'
+export const GET_WORK_ITEM = 'GET_WORK_ITEM';
+import { fetchWork, fetchItem } from '../api/work'
 
 
 export function set(value, filter) {
@@ -14,12 +13,23 @@ export function set(value, filter) {
   };
 }
 
-export function loadItem(id) {
+export function setWorkItem(value) {
+  return {
+    type: GET_WORK_ITEM,
+    payload: value
+  };
+}
+
+export function loadWorkItem(id) {
+  console.log("load work action")
   return dispatch => {
-    fetchItem(id,  (err, value) => {
-      if (err) return reject
-      dispatch(setitem(value))
-    })
+    return new Promise(function(resolve, reject) {
+      fetchItem(id,  (err, value) => {
+        if (err) return reject
+        dispatch(setWorkItem(value))
+        resolve(value);
+      })
+    });
   }
 }
 

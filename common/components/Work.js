@@ -18,6 +18,7 @@ export default class Work extends Component {
 
   componentDidMount() {
     var self = this;
+    this.filterWorks();
     this.container = document.getElementById("flex-container2")
     this.lastContainer = document.getElementById("flex-container1")
     this.c1 = document.getElementById("flex-container1");
@@ -26,11 +27,10 @@ export default class Work extends Component {
     self.flex = new flexImages({ selector: self.container, rowHeight: 250 })
   }
 
-  componentWillUpdate(){
-  }
 
   componentDidUpdate() {
     var self = this;
+    this.filterWorks();
     self.animateOut()
     self.animateIn()
     self.flex = new flexImages({
@@ -40,14 +40,27 @@ export default class Work extends Component {
     })
   }
 
+  filterWorks() {
+    var self = this;
+    this.works = [];
+    const { works, params } = this.props;
+    if(params.filter)
+    works.forEach(function(item) {
+      if (item.tags.indexOf(params.filter) > -1) {
+        self.works.push(item)
+      }
+    })
+    else this.works = works.slice();
+  }
 
   animateIn () {
-    const { work, dispatch } = this.props;
-    var self = this;
-    if(!work || !work.all) return;
 
-    self.container.innerHTML = "";
-    work.all.forEach(function(item,i){
+    const {works, dispatch } = this.props;
+    var self = this;
+
+    this.container.innerHTML = "";
+
+    this.works.forEach(function(item,i){
       var el =
         `<a
             class='item work-enter'

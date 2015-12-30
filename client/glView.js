@@ -223,6 +223,7 @@ function GLView() {
     // scene.add(logo)
     logo.position.y = 10;
     var s = .4;
+    // var s = .1;
     logo.scale.set(s, s, s);
 
     var loader = new THREE.OBJLoader();
@@ -248,6 +249,17 @@ function GLView() {
       text = object;
       logo.add(text);
     });
+
+    // loader.load('/3d/09_m-n.obj', function(object) {
+    //   object.traverse(function(child) {
+    //     if (child instanceof THREE.Mesh) {
+    //       child.material = transMaterial;
+    //       // child.material = new THREE.MultiMaterial(transMaterial,textMaterial,transMaterial,transMaterial);
+    //     }
+    //   });
+    //   text = object;
+    //   logo.add(text);
+    // });
 
     render();
   }

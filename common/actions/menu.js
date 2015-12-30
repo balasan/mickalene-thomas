@@ -1,8 +1,8 @@
-export const TOGGLE_LINKS = 'TOGGLE_LINKS';
+export const TOGGLE_MENU = 'TOGGLE_MENU';
 
-export function toggleLinks() {
-  console.log("toggleLinks")
+export function toggleMenu() {
+  console.log("toggleMenu")
   return {
-    type: TOGGLE_LINKS
+    type: TOGGLE_MENU
   };
 }

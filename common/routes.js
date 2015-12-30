@@ -7,8 +7,7 @@ import Contact from './containers/Contact';
 import News from './containers/News';
 import Works from './containers/Works';
 import Store from './containers/Store';
-import Selected from './containers/Selected';
-import Counters from './containers/Counters';
+import WorkItem from './containers/WorkItem';
 import NotFound from './containers/NotFound';
 
 var routes = {
@@ -19,12 +18,11 @@ var routes = {
     { path: 'about', component: About },
     { path: 'news', component: News },
     { path: 'works', component: Works },
-    { path: 'works/i/:itemId', component: Selected },
+    { path: 'works/i/:itemId', component: WorkItem },
     { path: 'works/filter/:filter', component: Works },
     { path: 'contact', component: Contact },
     { path: 'store', component: Store },
     // { path: 'splash', component: Splash },
-    { path: 'Counter', component: Counters },
     { path: '*', component: NotFound }
   ]
 };

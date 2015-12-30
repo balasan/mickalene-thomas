@@ -39,10 +39,10 @@ export default class App extends Component {
       if (!this.props.menu.showMenu) {
         var main = (
           <main>
-           <ReactCSSTransitionGroup component='div' transitionName="main" transitionAppear={true}
+            <ReactCSSTransitionGroup component='div' transitionName="main" transitionAppear={true}
               transitionAppearTimeout={500} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
               {this.props.children}
-       </ReactCSSTransitionGroup>
+            </ReactCSSTransitionGroup>
           </main>)
       } else {
         var main = null;

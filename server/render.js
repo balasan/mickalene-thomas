@@ -31,13 +31,19 @@ function renderFullPage(html, initialState) {
     `
 }
 
-
+//fetch data on server
 export default function fetchComponentData(dispatch, components, params) {
   const promises = components.reduce( (prev, current) => {
-    return ( current.fetchData ? [current.fetchData(dispatch)] : [])
-      .concat((current.WrappedComponent && current.fetchData ? [current.fetchData(dispatch)] : []) || [])
+
+    // var currentFetch = current.fetchData ? [current.fetchData(dispatch, params)] : [];
+    // .concat(prev)
+    return ( current.fetchData ? [current.fetchData(dispatch, params)] : [])
+      // .concat((current.WrappedComponent && current.fetchData ? [current.fetchData(dispatch, params)] : []) || [])
       .concat(prev);
   }, []);
+
+
+  console.log(promises);
   return Promise.all(promises);
 }
 
@@ -69,7 +75,8 @@ export default function handleRender(req, res) {
           res.status(500);
         } else {
 
-          console.log("RENDERING", req.originalUrl)
+
+          // console.log("RENDERING", req.originalUrl)
 
           var renderHtml = () => {
             const component = (
@@ -85,6 +92,7 @@ export default function handleRender(req, res) {
           // this code pre-fills the data on the server
           fetchComponentData(store.dispatch, renderProps.components, renderProps.params)
             .then(() => {
+              console.log("GOT DATA, RENDERING COMPONENTS")
               res.send(renderFullPage(renderHtml(), store.getState()))
             })
             .catch(err => res.end(err.message));

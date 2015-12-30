@@ -1,83 +1,26 @@
 import { GET_WORK } from '../actions/work'
-import { GET_ITEM } from '../actions/work'
+import { GET_WORK_ITEM } from '../actions/work'
 import { UPDATE_PATH } from 'redux-simple-router'
 
-export default function work(state = null, action) {
-  console.log(action, 'action')
-  switch (action.type) {
-
+const works = (state = [], action) => {
+  switch(action.type){
     case GET_WORK:
-      if (action.payload.filter) {
-          var filtered = [];
-          action.payload.results.forEach(function(item) {
-            if (item.tags.indexOf(action.payload.filter) > -1) {
-              filtered.push(item)
-            }
-          })
-
-          return Object.assign({}, state, {
-            filter: action.payload.filter,
-            all: filtered,
-            store: action.payload.results
-          })
-
-      } else {
-        return Object.assign({}, state, {
-          all: action.payload.results,
-          store: action.payload.results
-        })
-      }
-
-    case GET_ITEM:
-      return Object.assign({}, state, {
-        currentitem: action.payload
-      })
-
-    case UPDATE_PATH:
-      var simplePath = action.path.substr(0, 8);
-
-      if (simplePath != '/works/i' && simplePath != '/works' && state) {
-        var filter = action.path.substr(14, action.path.length)
-        var filtered = [];
-        if(!state.store) state.store = [];
-
-        state.store.forEach(function(item) {
-          if (item.tags.indexOf(filter) > -1) {
-            filtered.push(item)
-          }
-        })
-
-        return Object.assign({}, state, {
-          filter: filter,
-          all: filtered,
-          filtered: filtered
-        })
-      }
-
-      if (simplePath == '/works/i' && state) {
-        var id = action.path.substr(9, action.path.length);
-        var selected = [];
-        if(!state.store) state.store = [];
-
-        state.store.forEach(function(item) {
-          if (item.id == id) {
-            selected.push(item)
-          }
-        })
-
-        return Object.assign({}, state, {
-          currentitem: selected
-        })
-      }
-
-      if (simplePath == '/works' && state) {
-        return Object.assign({}, state, {
-          all: state.store
-        })
-
-      }
-
-    default:
-      return state
+      return action.payload.results;
+    default: return state;
   }
+}
+
+
+const workItem = (state = null, action) => {
+  console.log("ACTION GET_WORK_ITEM")
+  switch(action.type){
+    case GET_WORK_ITEM:
+      return  action.payload;
+    default: return state;
+  }
+}
+
+module.exports = {
+  workItem: workItem,
+  works: works
 }

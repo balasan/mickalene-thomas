@@ -8,11 +8,13 @@ import * as MenuActions from '../actions/menu'
 export default class Menu extends Component {
 
   render () {
+
+    console.log("PROPS", this.props.params)
     var filterType = this.props.params.filter;
     var path = this.props.children.props.route.path;
     var location = '';
     var filters;
-    const { toggleLinks} = this.props;
+    const { toggleMenu} = this.props;
     var showMenu = this.props.menu.showMenu;
     var location = this.props.state.routing.path;
 
@@ -22,8 +24,8 @@ export default class Menu extends Component {
 
     var tags = [];
 
-    if (this.props.state.work && this.props.state.work.store) {
-      this.props.state.work.store.forEach(function(one) {
+    if (this.props.state.works) {
+      this.props.state.works.forEach(function(one) {
         one.tags.forEach(function(tag) {
           tags.push(tag);
         })
@@ -72,14 +74,14 @@ export default class Menu extends Component {
     if (showMenu) {
       links = (
         <section className='linksParent'>
-          <div onClick={toggleLinks} className="linksBackground"></div>
+          <div onClick={toggleMenu} className="linksBackground"></div>
             <ReactCSSTransitionGroup className="links" transitionName="links" transitionAppear={true}
             transitionAppearTimeout={0} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
-              <Link className='menuLink' onClick={toggleLinks} to="/works">work</Link>
-              <Link className='menuLink' onClick={toggleLinks} to="/about">about</Link>
-              <Link className='menuLink' onClick={toggleLinks} to="/news">news</Link>
-              <Link className='menuLink' onClick={toggleLinks} to="/store">store</Link>
-              <Link className='menuLink' onClick={toggleLinks} to="/contact">contact</Link>
+              <Link className='menuLink' onClick={toggleMenu} to="/works">work</Link>
+              <Link className='menuLink' onClick={toggleMenu} to="/about">about</Link>
+              <Link className='menuLink' onClick={toggleMenu} to="/news">news</Link>
+              <Link className='menuLink' onClick={toggleMenu} to="/store">store</Link>
+              <Link className='menuLink' onClick={toggleMenu} to="/contact">contact</Link>
             </ReactCSSTransitionGroup>
         </section>
           );
@@ -105,7 +107,7 @@ export default class Menu extends Component {
           {filters}
         </section>
         <section className='right'>
-          <img onClick={toggleLinks} src='../../images/menu.svg'/>
+          <img onClick={toggleMenu} src='../../images/menu.svg'/>
         </section>
       </nav>)
     }

@@ -1,16 +1,15 @@
 import { combineReducers } from 'redux'
 import { routeReducer } from 'redux-simple-router';
 
-import counter from './counter'
-import work from './work'
+import { works, workItem } from './work'
 import currentitem from './work'
 import menu from './menu'
 
 const rootReducer = combineReducers({
   routing: routeReducer,
-  counter,
-  work,
-  menu
+  works,
+  menu,
+  workItem
 })
 
 export default rootReducer

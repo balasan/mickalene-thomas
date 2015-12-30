@@ -6,35 +6,34 @@ import * as WorkActions from '../actions/work'
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import ReactTransitionGroup from 'react-addons-transition-group';
 
-export default class SelectedComponent extends Component {
+export default class WorkItem extends Component {
   componentDidMount() {
+    this.render();
   }
 
   render () {
 
-    const { work, clickitem } = this.props
-
-    if( !work ) return null;
+    const { workItem, clickitem } = this.props
 
     var selectedWork;
 
-    if ( work.currentitem ) {
+    if ( workItem ) {
       selectedWork = (
         <section className='showcase'>
             <ReactCSSTransitionGroup
               transitionName="single"
-              transitionAppear={true}
+              transitionAppear={false}
               transitionAppearTimeout={0}
               transitionEnterTimeout={0}
               transitionLeaveTimeout={400}>
               <div className="image">
-                  <img src={work.currentitem[0].image.main.url} />
+                  <img src={workItem.image.main.url} />
               </div>
            </ReactCSSTransitionGroup>
           <div className="description">
             <div>
-              <p>{work.currentitem[0].title}</p>
-              <p>{work.currentitem[0].date.substr(0, 4)}</p>
+              <p>{workItem.title}</p>
+              <p>{workItem.date.substr(0, 4)}</p>
             </div>
           </div>
         </section>
@@ -44,7 +43,7 @@ export default class SelectedComponent extends Component {
     return (
       <div className='selectedWork'>
             {selectedWork}
-        </div>
+       </div>
     )
   }
 }
