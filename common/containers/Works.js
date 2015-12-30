@@ -3,8 +3,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Work from '../components/Work';
 import * as WorkActions from '../actions/work'
-import { fetchWork } from '../api/work';
-import { fetchItem } from '../api/work';
 
 if(process.env.BROWSER){
   require('./../../client/css/work.css');

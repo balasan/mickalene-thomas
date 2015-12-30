@@ -11,7 +11,6 @@ export default class SelectedComponent extends Component {
   }
 
   render () {
-
     const { work, clickitem } = this.props
 
     if( !work ) return null;
@@ -19,7 +18,8 @@ export default class SelectedComponent extends Component {
     var selectedWork;
 
     if ( work.currentitem ) {
-      selectedWork = (
+      if (work.currentitem[0]) {
+              selectedWork = (
         <section className='showcase'>
             <ReactCSSTransitionGroup
               transitionName="single"
@@ -34,11 +34,12 @@ export default class SelectedComponent extends Component {
           <div className="description">
             <div>
               <p>{work.currentitem[0].title}</p>
-              <p>{work.currentitem[0].date.substr(0, 4)}</p>
+              <p>{work.currentitem[0].date.substr(0, 4)}{work.currentitem[0].medium ? ', ' + work.currentitem[0].medium : null}</p>
             </div>
           </div>
         </section>
       )
+      }
     }
 
     return (

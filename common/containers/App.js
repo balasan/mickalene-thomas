@@ -1,16 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import Menu from '../components/Menu';
+import Nav from '../components/Nav';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as MenuActions from '../actions/menu';
 import Splash from './Splash';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
-if(process.env.BROWSER){
+if (process.env.BROWSER) {
   require('./../../client/css/animation.css');
   require('./../../client/css/flex-images.css');
-
   require('./../../client/css/index.css');
   require('./../../client/css/links.css');
   require('./../../client/css/work.css');
@@ -21,29 +21,16 @@ if(process.env.BROWSER){
   require('./../../client/css/item.css');
   require('./../../client/css/navbar.css');
 }
+
 export default class App extends Component {
-  // static fetchMenu(dispatch, length) {
-  //   var { loadMenu } = bindActionCreators(MenuActions, dispatch, length)
-
-  //   return Promise.all([
-  //     loadMenu(length)
-  //   ])
-  // }
-
-  // componentDidMount() {
-  //     this.constructor.fetchMenu(this.props.dispatch, this.props.location.pathname.length);
-  // }
-
   render () {
     if (this.props.menu) {
       if (!this.props.menu.showMenu) {
         var main = (
-          <main>
-           <ReactCSSTransitionGroup component='div' transitionName="main" transitionAppear={true}
+           <ReactCSSTransitionGroup component='main' transitionName="main" transitionAppear={true}
               transitionAppearTimeout={500} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
               {this.props.children}
-       </ReactCSSTransitionGroup>
-          </main>)
+            </ReactCSSTransitionGroup>)
       } else {
         var main = null;
       }
@@ -51,6 +38,7 @@ export default class App extends Component {
 
     return (
     <div>
+      <Nav { ...this.props }></Nav>
       <Menu { ...this.props }></Menu>
       <Splash></Splash>
       {main}

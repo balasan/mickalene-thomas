@@ -20,101 +20,50 @@ export default class Menu extends Component {
     if(location == '/' || showMenu)
       showHeader = false
 
-    var tags = [];
-
-    if (this.props.state.work && this.props.state.work.store) {
-      this.props.state.work.store.forEach(function(one) {
-        one.tags.forEach(function(tag) {
-          tags.push(tag);
-        })
-      })
-    }
-
-    var uniqueTags = [];
-
-    tags.forEach(function(tag) {
-      if(uniqueTags.indexOf(tag) < 0) {
-        uniqueTags.push(tag)
-      }
-    })
-
-    if (path == 'works/filter/:filter' || path == 'works') {
-      filters = (
-        <section className='filterLinks'>
-        <Link
-          className={!filterType ? 'selected' : null} to='/works'>all</Link>
-          {uniqueTags.map(function (filter, i) {
-            return (
-                <Link key={i}
-                  className={filterType == filter ? 'selected' : null}
-                  to={'/works/filter/' + filter}>
-              {filter}
-              </Link>
-            )}, this)}
-         </section>
-      )
-    }
-
-    if (path == 'works/i/:itemId' && this.props.state.work) {
-      if (this.props.state.work.currentitem) {
-      var tag = this.props.state.work.currentitem[0].tags[0];
-      filters = (
-        <section className='filterLinks'>
-         <Link
-          to={'/works/filter/' + tag}>{'back to ' + tag}</Link>
-        </section>
-        )
-      }
-    }
-
     var links = null;
 
     if (showMenu) {
       links = (
         <section className='linksParent'>
+
           <div onClick={toggleLinks} className="linksBackground"></div>
-            <ReactCSSTransitionGroup className="links" transitionName="links" transitionAppear={true}
-            transitionAppearTimeout={0} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
-              <Link className='menuLink' onClick={toggleLinks} to="/works">work</Link>
-              <Link className='menuLink' onClick={toggleLinks} to="/about">about</Link>
-              <Link className='menuLink' onClick={toggleLinks} to="/news">news</Link>
-              <Link className='menuLink' onClick={toggleLinks} to="/store">store</Link>
-              <Link className='menuLink' onClick={toggleLinks} to="/contact">contact</Link>
-            </ReactCSSTransitionGroup>
+
+          <header>
+            <section className='left'></section>
+            <section className='right'>
+              <img onClick={toggleLinks} src='../../images/close.svg' />
+            </section>
+          </header>
+
+          <ReactCSSTransitionGroup className="links" transitionName="links" transitionAppear={true} transitionAppearTimeout={0} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+            <Link className='menuLink' onClick={toggleLinks} to="/works">works</Link>
+            <Link className='menuLink' onClick={toggleLinks} to="/about">about</Link>
+            <Link className='menuLink' onClick={toggleLinks} to="/news">news</Link>
+            <Link className='menuLink' onClick={toggleLinks} to="/store">store</Link>
+          </ReactCSSTransitionGroup>
+
+          <footer>
+            <section className='left'>
+              <Link className='footerLink' onClick={toggleLinks} to='https://www.instagram.com/'>
+                <img src='../../images/insta-w.svg' />
+              </Link>
+              <Link className='footerLink' onClick={toggleLinks} to='https://www.facebook.com/'>
+                <img src='../../images/fb-w-f.svg' />
+              </Link>
+            </section>
+            <section className='right'>
+              <Link className='footerLink' onClick={toggleLinks} to='/contact'>Contact</Link>
+            </section>
+          </footer>
+
         </section>
-          );
+          )
     } else {
       null
     }
 
-
-    if (showHeader) {
-      if (this.props.location.pathname.substr(0,8) == '/works/i' || this.props.location.pathname.substr(0,13) == '/works/filter') {
-        location = <Link to='/works'>works</Link>;
-      } else {
-        location = path;
-      }
-
-      var nav = (
-      <nav>
-        <section className='left'>
-          <Link to="/">mickalene thomas</Link>
-        </section>
-        <section className='middle'>
-          <p>{location}</p>
-          {filters}
-        </section>
-        <section className='right'>
-          <img onClick={toggleLinks} src='../../images/menu.svg'/>
-        </section>
-      </nav>)
-    }
-
     return (
       <div>
-        <ReactCSSTransitionGroup transitionName="nav" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
-          {nav}
-        </ReactCSSTransitionGroup>
           {links}
       </div>
     )

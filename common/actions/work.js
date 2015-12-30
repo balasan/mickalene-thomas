@@ -14,6 +14,23 @@ export function set(value, filter) {
   };
 }
 
+export function set(value, filter) {
+  return {
+    type: GET_WORK,
+    payload: {
+      results: value,
+      filter: filter
+    }
+  };
+}
+
+export function setitem(value) {
+  return {
+    type: GET_ITEM,
+    payload: value
+  };
+}
+
 export function loadItem(id) {
   return dispatch => {
     fetchItem(id,  (err, value) => {

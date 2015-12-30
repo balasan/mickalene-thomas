@@ -3,7 +3,7 @@ import { GET_ITEM } from '../actions/work'
 import { UPDATE_PATH } from 'redux-simple-router'
 
 export default function work(state = null, action) {
-  console.log(action, 'action')
+  // console.log(action, 'action')
   switch (action.type) {
 
     case GET_WORK:
