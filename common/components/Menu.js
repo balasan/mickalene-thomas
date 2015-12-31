@@ -8,13 +8,11 @@ import * as MenuActions from '../actions/menu'
 export default class Menu extends Component {
 
   render () {
-
-    console.log("PROPS", this.props.params)
     var filterType = this.props.params.filter;
     var path = this.props.children.props.route.path;
     var location = '';
     var filters;
-    const { toggleMenu} = this.props;
+    const { toggleMenu } = this.props;
     var showMenu = this.props.menu.showMenu;
     var location = this.props.state.routing.path;
 
@@ -22,101 +20,50 @@ export default class Menu extends Component {
     if(location == '/' || showMenu)
       showHeader = false
 
-    var tags = [];
-
-    if (this.props.state.works) {
-      this.props.state.works.forEach(function(one) {
-        one.tags.forEach(function(tag) {
-          tags.push(tag);
-        })
-      })
-    }
-
-    var uniqueTags = [];
-
-    tags.forEach(function(tag) {
-      if(uniqueTags.indexOf(tag) < 0) {
-        uniqueTags.push(tag)
-      }
-    })
-
-    if (path == 'works/filter/:filter' || path == 'works') {
-      filters = (
-        <section className='filterLinks'>
-        <Link
-          className={!filterType ? 'selected' : null} to='/works'>all</Link>
-          {uniqueTags.map(function (filter, i) {
-            return (
-                <Link key={i}
-                  className={filterType == filter ? 'selected' : null}
-                  to={'/works/filter/' + filter}>
-              {filter}
-              </Link>
-            )}, this)}
-         </section>
-      )
-    }
-
-    if (path == 'works/i/:itemId' && this.props.state.work) {
-      if (this.props.state.work.currentitem) {
-      var tag = this.props.state.work.currentitem[0].tags[0];
-      filters = (
-        <section className='filterLinks'>
-         <Link
-          to={'/works/filter/' + tag}>{'back to ' + tag}</Link>
-        </section>
-        )
-      }
-    }
-
     var links = null;
 
     if (showMenu) {
       links = (
         <section className='linksParent'>
+
           <div onClick={toggleMenu} className="linksBackground"></div>
-            <ReactCSSTransitionGroup className="links" transitionName="links" transitionAppear={true}
-            transitionAppearTimeout={0} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
-              <Link className='menuLink' onClick={toggleMenu} to="/works">work</Link>
-              <Link className='menuLink' onClick={toggleMenu} to="/about">about</Link>
-              <Link className='menuLink' onClick={toggleMenu} to="/news">news</Link>
-              <Link className='menuLink' onClick={toggleMenu} to="/store">store</Link>
-              <Link className='menuLink' onClick={toggleMenu} to="/contact">contact</Link>
-            </ReactCSSTransitionGroup>
+
+          <header>
+            <section className='left'></section>
+            <section className='right'>
+              <img onClick={toggleMenu} src='../../images/close.svg' />
+            </section>
+          </header>
+
+          <ReactCSSTransitionGroup className="links" transitionName="links" transitionAppear={true} transitionAppearTimeout={0} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+            <Link className='menuLink' onClick={toggleMenu} to="/works">works</Link>
+            <Link className='menuLink' onClick={toggleMenu} to="/about">about</Link>
+            <Link className='menuLink' onClick={toggleMenu} to="/news">news</Link>
+            <Link className='menuLink' onClick={toggleMenu} to="/store">store</Link>
+          </ReactCSSTransitionGroup>
+
+          <footer>
+            <section className='left'>
+              <Link className='footerLink' onClick={toggleMenu} to='https://www.instagram.com/'>
+                <img src='../../images/insta-w.svg' />
+              </Link>
+              <Link className='footerLink' onClick={toggleMenu} to='https://www.facebook.com/'>
+                <img src='../../images/fb-w-f.svg' />
+              </Link>
+            </section>
+            <section className='right'>
+              <Link className='footerLink' onClick={toggleMenu} to='/contact'>Contact</Link>
+            </section>
+          </footer>
+
         </section>
-          );
+          )
     } else {
       null
     }
 
-
-    if (showHeader) {
-      if (this.props.location.pathname.substr(0,8) == '/works/i' || this.props.location.pathname.substr(0,13) == '/works/filter') {
-        location = <Link to='/works'>works</Link>;
-      } else {
-        location = path;
-      }
-
-      var nav = (
-      <nav>
-        <section className='left'>
-          <Link to="/">mickalene thomas</Link>
-        </section>
-        <section className='middle'>
-          <p>{location}</p>
-          {filters}
-        </section>
-        <section className='right'>
-          <img onClick={toggleMenu} src='../../images/menu.svg'/>
-        </section>
-      </nav>)
-    }
-
     return (
       <div>
-        <ReactCSSTransitionGroup transitionName="nav" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
-          {nav}
-        </ReactCSSTransitionGroup>
           {links}
       </div>
     )

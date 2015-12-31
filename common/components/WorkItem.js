@@ -19,6 +19,7 @@ export default class WorkItem extends Component {
 
     if ( workItem ) {
       selectedWork = (
+
         <section className='showcase'>
             <ReactCSSTransitionGroup
               transitionName="single"
@@ -40,10 +41,11 @@ export default class WorkItem extends Component {
       )
     }
 
+
     return (
       <div className='selectedWork'>
-            {selectedWork}
-       </div>
+        {selectedWork}
+      </div>
     )
   }
 }

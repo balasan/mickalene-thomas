@@ -1,12 +1,15 @@
 @font-face {
-    font-family: 'Futura';
-    font-weight: bold;
+    font-family: 'Futura Bold';
     src: url('/fonts/FuturaStd-Bold.otf');
 }
 
 @font-face {
-    font-family: 'Futura';
-    font-weight: normal;
+    font-family: 'Futura Heavy';
+    src: url('/fonts/FuturaStd-Heavy.otf');
+}
+
+@font-face {
+    font-family: 'Futura Medium';
     src: url('/fonts/FuturaStd-Medium.otf');
 }
 

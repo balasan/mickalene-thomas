@@ -9,6 +9,16 @@ nav {
     left: 0;
     z-index: 999;
     height: 75px;
+    padding: 1.5em;
+
+    &.transparent {
+        background-color: transparent;
+        .left {
+            a {
+                color: white;
+            }
+        }
+    }
 
     .left {
         width: 30%;
@@ -19,6 +29,7 @@ nav {
             font-family: 'Rockwell Bold', serif;
             text-transform: uppercase;
             letter-spacing: 2px;
+            margin: 0;
         }
     }
 
@@ -30,8 +41,15 @@ nav {
 
         img {
             height: 15px;
+            opacity: 1;
+            transition: opacity 250ms easeOutQuart;
+            &.close {
+                height: 30px;
+                &:hover {
+                    opacity: 0.5;
+                }
+            }
             cursor: pointer;
-            padding: 0 1em 0 0;
         }
     }
 
@@ -45,10 +63,9 @@ nav {
 
     p {
         color: black;
-        font-family: 'Futura', sans-serif;
-        font-weight: bold;
+        font-family: 'Futura Bold', sans-serif;
         text-transform: uppercase;
-        margin: 0 0 4px 0;
+        margin: 0;
         padding: 0;
         font-size: 9px;
         letter-spacing: 1.5px;
@@ -60,9 +77,9 @@ nav {
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-        font-family: 'Futura', sans-serif;
-        font-weight: normal;
+        font-family: 'Futura Medium', sans-serif;
         letter-spacing: 1px;
+        margin: 4px 0 0 0;
 
         span, p, a {
             display: inline-block;

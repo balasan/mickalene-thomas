@@ -44,16 +44,11 @@ article {
     position:fixed;
     top:0;
     left:0;
-    /*z-index: -1;*/
 }
 
 #app{
-    /*z-index: 1;*/
     position:relative;
 }
 
 @import "customMedia.css";
 @import "fonts.css";
-/*@import "animation.css";
-*/
-/*@import "flex-images.css";*/

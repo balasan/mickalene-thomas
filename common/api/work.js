@@ -24,6 +24,7 @@
  export
  function fetchItem(id, callback) {
      prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
+
          Api.form('everything')
              .ref(Api.master())
              .query(prismic.Predicates.at("document.id", id)).submit(function(err, response) {
@@ -32,13 +33,14 @@
                      callback();
                  }
                  var simple;
+
                  response.results.forEach(function(item) {
                      var obj = {}
                      obj.id = item.id;
                      obj.tags = item.tags;
-                     obj.x = 0;
                      obj.title = item.data["work.title"].value[0].text;
                      obj.date = item.data["work.date"] ? item.data["work.date"].value : '';
+                     obj.medium = item.data["work.medium"] ? item.data["work.medium"].value[0].text : null;
 
                      obj.image = {};
 
@@ -88,6 +90,7 @@
 
                      simple=obj
                  });
+                 console.log(simple, 'item')
                  callback(null, simple)
              })
      });
@@ -98,7 +101,7 @@
      prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
          Api.form('everything')
              .ref(Api.master())
-             .query(prismic.Predicates.at("document.type", "work")).pageSize(100).submit(function(err, response) {
+             .query(prismic.Predicates.at("document.type", "work")).pageSize(200).submit(function(err, response) {
                  if (err) {
                      console.log(err);
                      callback();
@@ -107,10 +110,10 @@
                  response.results.forEach(function(item) {
                      var obj = {}
                      obj.id = item.id;
-                     obj.x = 0;
                      obj.tags = item.tags;
                      obj.title = item.data["work.title"].value[0].text;
                      obj.date = item.data["work.date"] ? item.data["work.date"].value : '';
+                     obj.medium = item.data["work.medium"] ? item.data["work.medium"].value[0].text : null;
 
                      obj.image = {};
 
@@ -183,3 +186,48 @@
              })
      });
  }
+
+ export
+ function fetchTags(callback) {
+     prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
+         Api.form('everything')
+             .ref(Api.master())
+             .query(prismic.Predicates.at("document.type", "work")).pageSize(200).submit(function(err, response) {
+                 if (err) {
+                     console.log(err);
+                     done();
+                 }
+                 var tags = [];
+                 response.results.forEach(function(item) {
+                    item.tags.forEach(function(tag){
+                        tags.push(tag)
+                    })
+                 });
+
+                  var uniqueTags = [];
+
+                    tags.forEach(function(tag) {
+                      if(uniqueTags.indexOf(tag) < 0) {
+                        uniqueTags.push(tag)
+                      }
+                    })
+
+                callback(null, uniqueTags)
+             })
+     });
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

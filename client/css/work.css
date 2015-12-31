@@ -34,16 +34,24 @@
     .description {
         height: 75px;
         width: 100%;
-        background-color: white;
+        background-color: transparent;
         display: flex;
+        padding: 1.5em;
         align-items: center;
+
         p {
-            display: inline-block;
-            color: black;
+            &:first-of-type {
+                letter-spacing: 3px;
+                font-family: 'Futura Heavy', sans-serif;
+            }
+            &:nth-of-type(2) {
+                letter-spacing: 3px;
+                font-family: 'Futura Medium', sans-serif;
+            }
+            margin: 0;
+            color: white;
             text-transform: uppercase;
-            padding: 0 0 0 1em;
             font-size: 10px;
-            font-family: 'AvenirNextLTPro-Regular', sans-serif;
         }
     }
 }
