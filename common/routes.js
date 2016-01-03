@@ -20,6 +20,7 @@ var routes = {
     { path: 'works', component: Works },
     { path: 'works/i/:itemId', component: WorkItem },
     { path: 'works/filter/:filter', component: Works },
+    { path: 'news/filter/:filter', component: NewsParent },
     { path: 'contact', component: Contact },
     { path: 'store', component: Store },
     { path: '*', component: NotFound }

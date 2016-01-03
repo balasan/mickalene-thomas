@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as WorkActions from '../actions/work'
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
-import ReactTransitionGroup from 'react-addons-transition-group';
 
 export default class WorkItem extends Component {
   componentDidMount() {
@@ -23,10 +22,10 @@ export default class WorkItem extends Component {
         <section className='showcase'>
             <ReactCSSTransitionGroup
               transitionName="single"
-              transitionAppear={false}
+              transitionAppear={true}
               transitionAppearTimeout={0}
               transitionEnterTimeout={0}
-              transitionLeaveTimeout={400}>
+              transitionLeaveTimeout={0}>
               <div className="image">
                   <img src={workItem.image.main.url} />
               </div>
@@ -34,7 +33,7 @@ export default class WorkItem extends Component {
           <div className="description">
             <div>
               <p>{workItem.title}</p>
-              <p>{workItem.date.substr(0, 4)}</p>
+              <p>{workItem.date.substr(0, 4)}{workItem.medium ? ', ' + workItem.medium : null}</p>
             </div>
           </div>
         </section>

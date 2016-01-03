@@ -20,10 +20,10 @@ export default class News extends Component {
   render () {
     const { news } = this.props
 
-    var all = null;
+    var newsList = null;
     if (this.props.news) {
       if (this.props.news.all) {
-        var all = (
+        var newsList = (
           <ReactCSSTransitionGroup
             transitionName="work"
             transitionAppear={true}
@@ -33,7 +33,19 @@ export default class News extends Component {
           >
            {news.all.map(function (item, i) {
               return (
-                  <h1 key={i}>{item.title}</h1>
+                <div key={i}>
+                  <section className='left'>
+                    <img src={item.image.main.url} />
+                  </section>
+                  <section className='middle'>
+                    <h1>{item.title}</h1>
+                    <p className='location'>{item.location}</p>
+                    <p className='description'>{item.description}</p>
+                  </section>
+                  <section className='right'>
+                  <a href={item.link}></a>
+                  </section>
+                </div>
               )
             }, this)}
           </ReactCSSTransitionGroup>)
@@ -42,7 +54,7 @@ export default class News extends Component {
 
     return (
       <div className='newsParent'>
-        {all}
+        {newsList}
       </div>
     )
   }

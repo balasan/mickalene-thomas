@@ -14,7 +14,7 @@
 }
 
 @font-face {
-    font-family: 'AvenirNextLTPro-Regular';
+    font-family: 'Avenir Next';
     src: url('/fonts/AvenirNextLTPro-Regular.otf');
 }
 
@@ -28,8 +28,10 @@
     src: url('/fonts/rockwell-bold.ttf');
 }
 
-
-
+@font-face {
+    font-family: 'Minion Pro';
+    src: url('/fonts/MinionPro-Regular.otf');
+}
 
 
 

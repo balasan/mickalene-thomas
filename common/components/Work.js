@@ -4,15 +4,10 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as WorkActions from '../actions/work'
 import flexImages from './flex-full'
-import range from 'lodash.range';
-import presets from '../presets';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import ReactTransitionGroup from 'react-addons-transition-group';
 import { updatePath } from 'redux-simple-router';
 // var rsr=require('redux-simple-router')
 // console.log(rsr);
-
-// import {Motion, spring, TransitionMotion, StaggeredMotion} from 'react-motion';
 
 export default class Work extends Component {
 
@@ -148,38 +143,14 @@ export default class Work extends Component {
   }
 
   render () {
-    // const { work } = this.props
 
     var all = null;
-
-    // if (work) {
-      // if (work.all) {
-                var all = (
+    var all = (
         <div>
         <div id="flex-container1"></div>
         <div id="flex-container2"></div>
-{/*           <ReactCSSTransitionGroup
-            transitionName="work"
-            transitionAppear={true}
-            transitionAppearTimeout={0}
-            transitionEnterTimeout={0}
-            transitionLeaveTimeout={400}
-          >
-           {work.all.map(function (item, i) {
-              return (
-                  <Link className='item' data-w={item.image.small.dimensions.width} data-h={item.image.small.dimensions.height} key={item.id} to={'/works/i/' + item.id}>
-                    <img
-                      key={item.id}
-                      src={item.image.small.url}
-                    />
-                  </Link>
-              )
-            }, this)}
-          </ReactCSSTransitionGroup> */}
 
         </div>)
-              // }
-    // }
 
     return (
       <div className='flex-images'>

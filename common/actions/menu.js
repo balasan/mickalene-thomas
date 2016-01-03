@@ -1,6 +1,8 @@
 export const TOGGLE_MENU = 'TOGGLE_MENU';
-export const SET_TAGS = 'SET_TAGS';
-import { fetchTags } from '../api/work'
+export const SET_WORK_TAGS = 'SET_WORK_TAGS';
+export const SET_NEWS_TAGS = 'SET_NEWS_TAGS';
+import { fetchWorkTags } from '../api/work'
+import { fetchNewsTags } from '../api/work'
 
 export function toggleMenu() {
   console.log("toggleMenu")
@@ -9,18 +11,34 @@ export function toggleMenu() {
   };
 }
 
-export function setTags(value) {
+export function setWorkTags(value) {
   return {
-    type: SET_TAGS,
+    type: SET_WORK_TAGS,
     payload: value
   };
 }
 
-export function loadTags() {
+export function setNewsTags(value) {
+  return {
+    type: SET_NEWS_TAGS,
+    payload: value
+  };
+}
+
+export function loadWorkTags() {
   return dispatch => {
-    fetchTags((err, value) => {
+    fetchWorkTags((err, value) => {
       if (err) return reject
-      dispatch(setTags(value))
+      dispatch(setWorkTags(value))
+    })
+  }
+}
+
+export function loadNewsTags() {
+  return dispatch => {
+    fetchNewsTags((err, value) => {
+      if (err) return reject
+      dispatch(setNewsTags(value))
     })
   }
 }

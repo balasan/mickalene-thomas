@@ -10,6 +10,7 @@ const rootReducer = combineReducers({
   routing: routeReducer,
   works,
   menu,
+  news,
   workItem
 })
 

@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 // import Work from '../components/Work';
 import WorkItemComponent from '../components/WorkItem';
 import * as WorkActions from '../actions/work'
-import { fetchWork } from '../api/work';
-import { fetchItem } from '../api/work';
+// import { fetchWork } from '../api/work';
+// import { fetchItem } from '../api/work';
 
 if(process.env.BROWSER){
   require('./../../client/css/work.css');
@@ -23,9 +23,9 @@ export default class WorkItemContainer extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.workItem) {
+    // if (!this.props.workItem) {
       this.constructor.fetchData(this.props.dispatch, this.props.params);
-    }
+    // }
   }
 
   render () {

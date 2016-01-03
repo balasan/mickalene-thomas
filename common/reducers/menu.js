@@ -1,5 +1,6 @@
 import { TOGGLE_MENU } from '../actions/menu'
-import { SET_TAGS } from '../actions/menu'
+import { SET_WORK_TAGS } from '../actions/menu'
+import { SET_NEWS_TAGS } from '../actions/menu'
 import { UPDATE_PATH } from 'redux-simple-router'
 
 const initialState = { showMenu:false }
@@ -12,9 +13,14 @@ export default function menu(state = initialState, action) {
         showMenu: !state.showMenu
       })
 
-    case SET_TAGS:
+    case SET_WORK_TAGS:
       return Object.assign({}, state, {
-        tags: action.payload
+        workTags: action.payload
+      })
+
+    case SET_NEWS_TAGS:
+      return Object.assign({}, state, {
+        newsTags: action.payload
       })
 
     default:

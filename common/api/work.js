@@ -188,7 +188,7 @@
  }
 
  export
- function fetchTags(callback) {
+ function fetchWorkTags(callback) {
      prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
          Api.form('everything')
              .ref(Api.master())
@@ -217,6 +217,36 @@
      });
  }
 
+ export
+ function fetchNewsTags(callback) {
+     prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
+         Api.form('everything')
+             .ref(Api.master())
+             .query(prismic.Predicates.at("document.type", "news")).pageSize(200).submit(function(err, response) {
+                 if (err) {
+                     console.log(err);
+                     done();
+                 }
+                 var tags = [];
+                 response.results.forEach(function(item) {
+                    item.tags.forEach(function(tag){
+                        tags.push(tag)
+                    })
+                 });
+
+                  var uniqueTags = [];
+
+                    tags.forEach(function(tag) {
+                      if(uniqueTags.indexOf(tag) < 0) {
+                        uniqueTags.push(tag)
+                      }
+                    })
+
+                    console.log(uniqueTags, 'newstags')
+                callback(null, uniqueTags)
+             })
+     });
+ }
 
 
 

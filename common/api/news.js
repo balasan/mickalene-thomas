@@ -31,13 +31,17 @@
                      console.log(err);
                      done();
                  }
+                 console.log(response, 'news response')
                  var simple = [];
                  response.results.forEach(function(item) {
                      var obj = {}
                      obj.id = item.id;
-                     // obj.tags = item.tags;
+                     obj.tags = item.tags;
                      obj.title = item.data["news.title"].value[0].text;
                      obj.date = item.data["news.date"] ? item.data["news.date"].value : '';
+                     obj.location = item.data["news.location"] ? item.data["news.location"].value[0].text : '';
+                     obj.description = item.data["news.description"] ? item.data["news.description"].value[0].text : '';
+                     obj.link = item.data["news.link"] ? item.data["news.link"].value.url : '';
 
                      obj.image = {};
 
@@ -50,7 +54,8 @@
                      obj.image.large = {};
                      obj.image.large.dimensions = {};
 
-                     obj.image.main.url = item.data["news.image"].value.main.url;
+                     if (item.data["news.image"]) {
+                        obj.image.main.url = item.data["news.image"].value.main.url;
                      obj.image.main.dimensions.height = item.data["news.image"].value.main.dimensions.height;
                      obj.image.main.dimensions.width = item.data["news.image"].value.main.dimensions.width;
 
@@ -84,29 +89,18 @@
                         obj.image.large.dimensions.height = item.data["news.image"].value.views.large.dimensions.height;
                         obj.image.large.dimensions.width = item.data["news.image"].value.views.large.dimensions.width;
                      }
-
+                     }
                      simple.push(obj)
                  });
 
-                function shuffle(array) {
-                  var currentIndex = array.length, temporaryValue, randomIndex;
-
-                  while (0 !== currentIndex) {
-
-                    randomIndex = Math.floor(Math.random() * currentIndex);
-                    currentIndex -= 1;
-
-                    temporaryValue = array[currentIndex];
-                    array[currentIndex] = array[randomIndex];
-                    array[randomIndex] = temporaryValue;
-                  }
-
-                  return array;
-                }
-
-                shuffle(simple)
-
+                console.log(simple, 'news simple')
                 callback(null, simple)
              })
      });
  }
+
+
+
+
+
+
