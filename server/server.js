@@ -5,6 +5,7 @@ import path from 'path'
 import Express from 'express'
 import qs from 'qs'
 import morgan from 'morgan'
+var Instagram = require('instagram-node-lib');
 
 
 import handleRender from './render';
@@ -34,6 +35,13 @@ if (isDevelopment) {
   app.use(webpackHotMiddleware(compiler))
 }
 app.use(morgan('dev'));
+
+//Instagram
+Instagram.set('client_id', '6b28f9f281864fb59b94fe20c92d5322');
+Instagram.set('client_secret', '7edfe35e83ba4f9f9a4dafc353f20afa');
+Instagram.set('access_token', '868216340.1677ed0.ac68e70d0bd34418a78a1cdf59030f75');
+
+console.log(Instagram.users.recent({ user_id: 868216340 })); // Notice the distinct lack of quotes around the user_Id
 
 // This is fired every time the server side receives a request
 // app.get('/', handleRender)
