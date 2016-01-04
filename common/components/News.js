@@ -9,12 +9,14 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 export default class News extends Component {
 
   componentDidMount() {
+    console.log(this.props, "news props")
   }
 
   componentWillUpdate(){
   }
 
   componentDidUpdate() {
+    console.log("news did update")
   }
 
   render () {

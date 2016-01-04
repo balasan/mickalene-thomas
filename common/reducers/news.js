@@ -1,4 +1,5 @@
 import { GET_NEWS} from '../actions/news'
+// import { GET_INSTA} from '../actions/news'
 import { UPDATE_PATH } from 'redux-simple-router'
 
 export default function work(state = null, action) {
@@ -8,6 +9,11 @@ export default function work(state = null, action) {
         return Object.assign({}, state, {
           all: action.payload.results,
         })
+
+    // case GET_INSTA:
+    //     return Object.assign({}, state, {
+    //       insta: action.payload.results,
+    //     })
 
     case UPDATE_PATH:
       // var simplePath = action.path.substr(0, 5);

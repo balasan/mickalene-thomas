@@ -5,13 +5,15 @@ import { works, workItem } from './work'
 import currentitem from './work'
 import menu from './menu'
 import news from './news'
+import insta from './insta'
 
 const rootReducer = combineReducers({
   routing: routeReducer,
   works,
   menu,
   news,
-  workItem
+  workItem,
+  insta
 })
 
 export default rootReducer

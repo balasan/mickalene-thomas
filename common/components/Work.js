@@ -19,7 +19,7 @@ export default class Work extends Component {
     this.c1 = document.getElementById("flex-container1");
     this.c2 = document.getElementById("flex-container2");
     this.animateIn()
-    self.flex = new flexImages({ selector: self.container, rowHeight: 250 })
+    self.flex = new flexImages({ selector: self.container, rowHeight: 300 })
   }
 
 
@@ -31,7 +31,7 @@ export default class Work extends Component {
     self.flex = new flexImages({
       selector: self.container,
       container: '.item:not(.work-leave)',
-      rowHeight: 250,
+      rowHeight: 300,
     })
   }
 
@@ -64,6 +64,7 @@ export default class Work extends Component {
             key=${item.id}
             href=${'/works/i/' + item.id}>
           <img
+              class=${item.tags[0] == 'paintings' || item.tags[0] == 'collages' ? 'zoom' : ''}
               key=${item.id}
               src=${item.image.small.url}
             />

@@ -10,16 +10,24 @@ if(process.env.BROWSER){
 
 export default class NewsParent extends Component {
 
-  static fetchDataOnClient(dispatch) {
+  static fetchNewsDataOnClient(dispatch) {
     var { loadNews } = bindActionCreators(NewsActions, dispatch)
     return Promise.all([
       loadNews()
     ])
   }
 
+    static fetchInstaDataOnClient(dispatch) {
+    var { loadInsta } = bindActionCreators(NewsActions, dispatch)
+    return Promise.all([
+      loadInsta()
+    ])
+  }
+
   componentDidMount() {
     // if (!this.props.work || !this.props.work.store || !this.props.work.store.length) {
-      this.constructor.fetchDataOnClient(this.props.dispatch);
+      this.constructor.fetchNewsDataOnClient(this.props.dispatch);
+      this.constructor.fetchInstaDataOnClient(this.props.dispatch);
     // }
   }
 
@@ -34,6 +42,7 @@ export default class NewsParent extends Component {
 
 export default connect(
   state => {
+    console.log(state, 'news state')
     return {news: state.news}
   },
   dispatch => {

@@ -4,7 +4,6 @@ import { Router, RoutingContext, match } from 'react-router';
 import { Provider } from 'react-redux';
 import createHistory from 'history/lib/createMemoryHistory';
 import qs from 'qs';
-
 import routes from '../common/routes';
 import configureStore from '../common/store/configureStore';
 import App from '../common/containers/App';
@@ -58,6 +57,7 @@ export default function handleRender(req, res) {
 
     // Compile an initial state
     // const initialState = { counter };
+
     const initialState = {routing : {path: req.originalUrl}};
 
     // Create a new Redux store instance
