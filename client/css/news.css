@@ -1,67 +1,96 @@
 .newsParent {
     display: flex;
-    flex-direction: column;
 
-    div {
-        display: flex;
-        background-color: white;
-        margin: 2px 0 2px 0;
-        padding: 1em;
+    div.parent {
+        display: inline-flex;
+        flex-direction: column;
 
-        section {
-            &.left {
-                min-width: 10vw;
-
-                img {
-                    width: 10vw;
+        &.right {
+            width: 25%;
+            border-left: 4px solid transparent;
+            background-color: transparent;
+            div {
+                width: 100%;
+                 margin: 0;
+                    padding: 0;
+                &:first-of-type {
+                     margin: 4px 0 0 0;
                 }
-
-                margin: 0 3em 0 0;
-            }
-
-            &.middle {
-                flex-grow: 1;
-
-                h1, p {
+                img {
+                    width: 100%;
                     margin: 0;
                     padding: 0;
                 }
-
-                h1 {
-                    color: black;
-                    font-family: 'Minion Pro', sans-serif;
-                    font-style: italic;
-                    text-transform: uppercase;
-                    font-size: 24px;
-                }
-
-                p {
-                    color: black;
-
-                    &.location {
-                        font-family: 'Avenir Next', sans-serif;
-                        font-style: italic;
-                        text-transform: uppercase;
-                    }
-
-                    &.description {
-                        padding: 1em 0 0 0;
-                        font-family: 'Avenir Next', sans-serif;
-                    }
-                }
             }
+        }
 
-            &.right {
-                a {
-                    height: 25px;
-                    margin: 1em 1em 1em 2em;
-                    padding: 0;
-                    width: 25px;
-                    background-position: center center;
-                    background-repeat: no-repeat;
-                    display: inline-block;
-                    background-size: contain;
-                    background-image: url("/images/link.png");
+        &.left {
+            width: 75%;
+
+            div {
+                background-color: white;
+                margin: 2px 0 2px 0;
+                padding: 1em;
+                &:first-of-type {
+                    margin: 4px 0 2px 0;
+                }
+
+                section {
+                    &.left {
+                        min-width: 10vw;
+
+                        img {
+                            width: 10vw;
+                        }
+
+                        margin: 0 3em 0 0;
+                    }
+
+                    &.middle {
+                        flex-grow: 1;
+
+                        h1, p {
+                            margin: 0;
+                            padding: 0;
+                        }
+
+                        h1 {
+                            color: black;
+                            font-family: 'Minion Pro', sans-serif;
+                            font-style: italic;
+                            text-transform: uppercase;
+                            font-size: 24px;
+                        }
+
+                        p {
+                            color: black;
+
+                            &.location {
+                                font-family: 'Avenir Next', sans-serif;
+                                font-style: italic;
+                                text-transform: uppercase;
+                            }
+
+                            &.description {
+                                padding: 1em 0 0 0;
+                                font-family: 'Avenir Next', sans-serif;
+                            }
+                        }
+                    }
+
+                    &.right {
+                        a {
+                            height: 25px;
+                            margin: 1em 1em 1em 2em;
+                            padding: 0;
+                            width: 25px;
+                            background-position: center center;
+                            background-repeat: no-repeat;
+                            display: inline-block;
+                            background-size: contain;
+                            background-image: url("/images/link.png");
+                        }
+                    }
                 }
             }
         }

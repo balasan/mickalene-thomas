@@ -39,12 +39,12 @@ if (isDevelopment) {
 app.use(morgan('dev'));
 
 //Instagram
-Instagram.set('client_id', '6b28f9f281864fb59b94fe20c92d5322');
-Instagram.set('client_secret', '7edfe35e83ba4f9f9a4dafc353f20afa');
-Instagram.set('access_token', '868216340.1677ed0.ac68e70d0bd34418a78a1cdf59030f75');
+Instagram.set('client_id', 'b7ed061ff5ca4f7288c2833dc509dc44');
+Instagram.set('client_secret', 'b38cc163d4f44e80aa23cf5f513088c8');
+Instagram.set('access_token', '2460658527.1677ed0.ce2225bfbd194a6f939bca44d02c3017');
 
 app.get('/api/instagram', function(req, res) {
-  Instagram.users.recent({user_id: 868216340, complete: function(data) {
+  Instagram.users.recent({user_id: 2460658527, complete: function(data) {
     res.json(data);
   }});
 });

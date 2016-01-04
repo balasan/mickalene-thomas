@@ -20,6 +20,13 @@ export function setWorkItem(value) {
   };
 }
 
+export function clearItem() {
+  return {
+    type: GET_WORK_ITEM,
+    payload: null
+  }
+}
+
 export function loadWorkItem(id) {
   console.log("load work action")
   return dispatch => {

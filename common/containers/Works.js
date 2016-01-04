@@ -17,10 +17,21 @@ export default class Works extends Component {
     ])
   }
 
+  static clearItemOnClient(dispatch) {
+    var { clearItem } = bindActionCreators(WorkActions, dispatch)
+    return Promise.all([
+      clearItem()
+    ])
+  }
+
   componentDidMount() {
     if (!this.props.works.length) {
       this.constructor.fetchDataOnClient(this.props.dispatch, this.props.params.filter);
     }
+  }
+
+  componentWillUnmount() {
+    this.constructor.clearItemOnClient(this.props.dispatch)
   }
 
   render () {

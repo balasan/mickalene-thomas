@@ -39,6 +39,7 @@ export default class WorkItemContainer extends Component {
 
 export default connect(
   state => {
+    console.log(state.workItem, 'state.workitem')
     return {workItem: state.workItem}
   },
   dispatch => {

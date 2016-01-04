@@ -25,10 +25,8 @@ export default class NewsParent extends Component {
   }
 
   componentDidMount() {
-    // if (!this.props.work || !this.props.work.store || !this.props.work.store.length) {
       this.constructor.fetchNewsDataOnClient(this.props.dispatch);
       this.constructor.fetchInstaDataOnClient(this.props.dispatch);
-    // }
   }
 
   render () {
@@ -42,8 +40,7 @@ export default class NewsParent extends Component {
 
 export default connect(
   state => {
-    console.log(state, 'news state')
-    return {news: state.news}
+    return {state: state}
   },
   dispatch => {
     return Object.assign({}, { dispatch },  bindActionCreators(NewsActions, dispatch))
