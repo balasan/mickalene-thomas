@@ -23,6 +23,7 @@ export default class WorkItemContainer extends Component {
   }
 
   componentDidMount() {
+
      if (!this.props.state.work) {
          this.constructor.fetchData(this.props.dispatch, this.props.params);
      }
