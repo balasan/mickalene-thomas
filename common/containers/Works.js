@@ -45,7 +45,6 @@ export default class Works extends Component {
 
 export default connect(
   state => {
-    console.log(state, 'work state')
     return {works: state.works}
   },
   dispatch => {

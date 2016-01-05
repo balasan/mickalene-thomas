@@ -13,7 +13,7 @@
         backface-visibility: hidden;
         transition: opacity .5s easeOutQuart;
         &.zoom {
-            transform: scale(1.4);
+            transform: scale(1.2);
         }
     }
 

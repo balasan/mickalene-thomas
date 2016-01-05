@@ -7,15 +7,27 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 export default class WorkItem extends Component {
   componentDidMount() {
+    var workItemNew = null;
+    if (this.props.state.workItem) {
+      workItemNew = this.props.state.workItem;
+    } else {
+      var idX = this.props.params.itemId;
+      this.props.state.works.forEach(function(item, i) {
+        if (item.id == idX) {
+          workItemNew = item;
+        }
+      })
+    }
+    this.workItem = workItemNew;
     this.render();
   }
 
   render () {
 
-    const { workItem, clickitem } = this.props
+    const { state, clickitem } = this.props
 
     var selectedWork;
-
+    var workItem = this.workItem;
     if ( workItem ) {
       selectedWork = (
 
@@ -27,12 +39,12 @@ export default class WorkItem extends Component {
               transitionEnterTimeout={0}
               transitionLeaveTimeout={0}>
               <div className="image">
-                  <img src={workItem.image.main.url} />
+           <img src={workItem.image.main.url} />
               </div>
            </ReactCSSTransitionGroup>
           <div className="description">
             <div>
-              <p>{workItem.title}</p>
+            <p>{workItem.title}</p>
               <p>{workItem.date.substr(0, 4)}{workItem.medium ? ', ' + workItem.medium : null}</p>
             </div>
           </div>

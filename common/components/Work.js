@@ -64,7 +64,7 @@ export default class Work extends Component {
             key=${item.id}
             href=${'/works/i/' + item.id}>
           <img
-              class=${item.tags[0] == 'paintings' || item.tags[0] == 'collages' ? 'zoom' : ''}
+              class=${item.tags[0] == 'paintings' || item.tags[0] == 'collages' || item.tags[0] == 'print' ? 'zoom' : ''}
               key=${item.id}
               src=${item.image.small.url}
             />
