@@ -90,7 +90,7 @@
 
                      simple=obj
                  });
-                 console.log(simple, 'item')
+                 // console.log(simple, 'item')
                  callback(null, simple)
              })
      });

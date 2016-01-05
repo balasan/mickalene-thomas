@@ -185,14 +185,15 @@ $i: 0;
         &.links-appear.links-appear-active {
             transition-delay: calc(0.05s * $i);
         }
+
         &.links-enter.links-enter-active {
-           transition-delay: calc(0.05s * $i);
+            transition-delay: calc(0.05s * $i);
         }
     }
 }
 
 .menuLink:not(.links-appear):not(.links-leave):not(.links-enter) {
-  transition: color 250ms easeOutQuart;
+    transition: color 250ms easeOutQuart;
 }
 
 .main-leave:not(.main-leave-active) {

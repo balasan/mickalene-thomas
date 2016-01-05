@@ -65,7 +65,7 @@ export default class Work extends Component {
             href=${'/works/i/' + item.id}>
             <div class="imageContainer">
               <img
-                class=${item.tags[0] == 'paintings' || item.tags[0] == 'collages' ? 'zoom' : ''}
+                class=${item.tags[0] == 'paintings' || item.tags[0] == 'collages' || item.tags[0] == 'print' ? 'zoom' : ''}
                 key=${item.id}
                 src=${item.image.small.url}
               />
@@ -113,7 +113,7 @@ export default class Work extends Component {
           self.lastContainer.removeChild(el);
         } catch(err){}
       }
-    }, this.flex.maxDelay * 1000 + 300)
+    }, this.flex.maxDelay * 1000 + 600)
     // function removeEl(e){
     //   var el = e.target;
     //   try{

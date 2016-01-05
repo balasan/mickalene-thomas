@@ -23,9 +23,10 @@ export default class WorkItemContainer extends Component {
   }
 
   componentDidMount() {
-    // if (!this.props.workItem) {
-      this.constructor.fetchData(this.props.dispatch, this.props.params);
-    // }
+
+     if (!this.props.state.work) {
+         this.constructor.fetchData(this.props.dispatch, this.props.params);
+     }
   }
 
   render () {
@@ -39,8 +40,7 @@ export default class WorkItemContainer extends Component {
 
 export default connect(
   state => {
-    console.log(state.workItem, 'state.workitem')
-    return {workItem: state.workItem}
+    return {state: state}
   },
   dispatch => {
     return Object.assign({}, { dispatch },  bindActionCreators(WorkActions, dispatch))

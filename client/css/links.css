@@ -63,15 +63,17 @@
             a {
                 &:first-of-type {
                     img {
-                        padding: 0 1em 0 0;
+                        padding: 0 0.5em 0 0;
+                        height: 23px;
+                        width: 23px;
                     }
                 }
             }
 
             img {
                 pointer-events: auto;
-                height: 30px;
-                width: 30px;
+                height: 25px;
+                width: 25px;
                 opacity: 1;
                 transition: opacity 250ms easeOutQuart;
                 box-sizing: content-box;
