@@ -8,24 +8,34 @@
     opacity: 0;
     transform: translate3d(0, 0%, 0) rotateX(-90deg);
     transform-origin: 50% 0%;
+    .imageContainer {
+      /*transform: scale(1.3,1.3);*/
+      transform: translateX(-100px);
+
+    }
 }
 
 .work-enter.work-enter-active {
     opacity: 1;
     transform-origin: 50% 0%;
     transform: translate3d(0, 0%, 0) rotateX(0deg);
-    transition: opacity .6s easeOutQuart, transform .7s easeOutQuart;
+    transition: opacity .7s easeOutQuart, transform .7s easeOutQuart;
+    .imageContainer{
+      /*transform: scale(1,1);*/
+      transform: translateX(0px);
+      transition: transform 1s easeOutQuart;
+    }
 }
 
 .work-leave {
     opacity: 1;
-    transform: translate3d(0, 0%, 0);
+    transform: translate3d(0px, 0, 0);
 }
 
 .work-leave.work-leave-active {
     opacity: 0;
-    transition: opacity .3s easeOutQuart, transform .3s easeOutQuart;
-    transform: translate3d(0, 100%, 0);
+    transition: opacity .6s easeOutQuart, transform .3s easeOutQuart;
+    transform: translate3d(100px,0, 0);
 }
 
 .work-appear {

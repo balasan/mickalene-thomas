@@ -63,13 +63,15 @@ export default class Work extends Component {
             data-h=${item.image.small.dimensions.height}
             key=${item.id}
             href=${'/works/i/' + item.id}>
-          <img
-              class=${item.tags[0] == 'paintings' || item.tags[0] == 'collages' ? 'zoom' : ''}
-              key=${item.id}
-              src=${item.image.small.url}
-            />
-            <div class="text">
-              <p>${item.title}</p>
+            <div class="imageContainer">
+              <img
+                class=${item.tags[0] == 'paintings' || item.tags[0] == 'collages' ? 'zoom' : ''}
+                key=${item.id}
+                src=${item.image.small.url}
+              />
+              <div class="text">
+                <p>${item.title}</p>
+              </div>
             </div>
         </a>`
       var span = document.createElement("span");
