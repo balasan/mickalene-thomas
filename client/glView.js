@@ -1,6 +1,7 @@
 'user strict';
 window.THREE = require('three')
 require('./OBJLoader');
+require('./ColladaLoader');
 
 // require('three-json-loader');
 // var collada = require('three-loaders-collada')(THREE);
@@ -155,7 +156,7 @@ function GLView() {
     bg2N.repeat.set(5, 5);
 
 
-    var trans = THREE.ImageUtils.loadTexture("/images/transparent1.png",render);
+    var trans = THREE.ImageUtils.loadTexture("/images/transparent1black.jpg",render);
     trans.wrapS = trans.wrapT = THREE.RepeatWrapping;
     var transN = THREE.ImageUtils.loadTexture("/images/transparent_NRM.png",render);
     transN.wrapS = transN.wrapT = THREE.RepeatWrapping;
@@ -226,17 +227,51 @@ function GLView() {
     // var s = .1;
     logo.scale.set(s, s, s);
 
+    var cLoader = new THREE.ColladaLoader();
+
+    // cLoader.load( '/3d/m_03.dae', function ( collada ) {
+
+    //   var mesh = collada.scene;
+
+    //   mesh.traverse( function ( child ) {
+
+    //     if(child.material){
+    //       console.log(child.material.name)
+    //     }
+
+    //   })
+    // })
+
+
     var loader = new THREE.OBJLoader();
-    loader.load('/3d/M.obj', function(object) {
-      object.traverse(function(child) {
-        if (child instanceof THREE.Mesh) {
-          child.material = transMaterial;
-        }
-      });
-      // console.log(object, 'object')
-      M = object;
-      logo.add(M);
-    });
+    var jLoader = new THREE.JSONLoader();
+    jLoader.load('/3d/MfaceOnly.js',function ( geometry, materials ) {
+      console.log(materials);
+      var material = new THREE.MeshFaceMaterial( [textMaterial,transMaterial,textMaterial] );
+      var object = new THREE.Mesh( geometry, material );
+      logo.add( object );
+    })
+
+    // loader.load('/3d/Mface.obj', function(object) {
+    //   object.traverse(function(child) {
+    //     if (child instanceof THREE.Mesh) {
+    //       // child.material = transMaterial;
+    //       child.material = new THREE.MeshFaceMaterial(transMaterial,textMaterial,transMaterial,transMaterial,transMaterial);
+    //     }
+    //   });
+    //   logo.add(object);
+    // });
+
+    // loader.load('/3d/M.obj', function(object) {
+    //   object.traverse(function(child) {
+    //     if (child instanceof THREE.Mesh) {
+    //       child.material = transMaterial;
+    //     }
+    //   });
+    //   // console.log(object, 'object')
+    //   M = object;
+    //   logo.add(M);
+    // });
 
     loader.load('/3d/text.obj', function(object) {
       object.traverse(function(child) {
@@ -345,6 +380,8 @@ function GLView() {
     scene.add(logo);
   }
   this.stop = function(){
+    camera.position.x = 0;
+    camera.position.y = 0;
     stop = true;
   }
   this.remove = function() {
