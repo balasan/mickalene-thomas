@@ -23,8 +23,8 @@ export default class WorkItemContainer extends Component {
   }
 
   componentDidMount() {
-
-     if (!this.props.state.work) {
+    console.log(this.props.state.works.length , "before fetch")
+     if (this.props.state.works.length < 1) {
          this.constructor.fetchData(this.props.dispatch, this.props.params);
      }
   }
