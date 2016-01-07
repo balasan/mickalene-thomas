@@ -31,7 +31,7 @@ export default class Menu extends Component {
           <header>
             <section className='left'></section>
             <section className='right'>
-              <img onClick={toggleMenu} src='../../images/close.svg' />
+              <img onClick={toggleMenu} src='/images/close.svg' />
             </section>
           </header>
 

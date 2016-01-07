@@ -12,6 +12,11 @@
   perspective-origin: 50% 50%;
   perspective: 600px;
   transform-style:preserve-3d;
+
+  .imageContainer{
+    height:100%;
+    overflow:hidden;
+  }
 }
 #flex-container1, #flex-container2{
   position:absolute;
@@ -29,7 +34,7 @@
   margin: 2px;
   border: 1px solid transparent;
   box-sizing: content-box;
-  overflow: hidden;
+  /*overflow: hidden;*/
   position: relative;
   display:inline-block;
   vertical-align: middle;
@@ -40,3 +45,5 @@
   width: auto;
   height: 100%;
 }
+
+

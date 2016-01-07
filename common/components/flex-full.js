@@ -59,11 +59,16 @@ var flexImages = (function(){
             self.maxDelay = 0;
             row.forEach(function(itm,i){
                 var el = itm[0];
+                var imgContainer = el.getElementsByClassName('imageContainer')[0];
                 // clearClass(el, 'example-enter');
                 // el.className += " example-enter";
                 var tDelay = .066 * i + .033 * ((rows-1)%3);
                 el.style.transitionDelay = tDelay + 's';
                 el.style.WebkitTransitionDelay = tDelay + 's';
+
+                imgContainer.style.transitionDelay = tDelay + .1 +'s';
+                imgContainer.style.WebkitTransitionDelay = tDelay + .1 +'s';
+
                 self.maxDelay = Math.max(self.maxDelay,tDelay)
             })
         }
