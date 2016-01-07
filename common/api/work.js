@@ -111,6 +111,7 @@
                      var obj = {}
                      obj.id = item.id;
                      obj.tags = item.tags;
+                     obj.type = item.type;
                      obj.title = item.data["work.title"].value[0].text;
                      obj.date = item.data["work.date"] ? item.data["work.date"].value : '';
                      obj.medium = item.data["work.medium"] ? item.data["work.medium"].value[0].text : null;

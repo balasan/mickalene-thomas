@@ -13,7 +13,7 @@ if(process.env.BROWSER){
 
 export default class WorkItemContainer extends Component {
 
-  static fetchData(dispatch, params) {
+  static fetchItemData(dispatch, params) {
     var id = params.itemId
     console.log("FETCHING ITEM", id)
     var { loadWorkItem } = bindActionCreators(WorkActions, dispatch, id)
@@ -22,10 +22,19 @@ export default class WorkItemContainer extends Component {
     ])
   }
 
+  static fetchWorkData(dispatch) {
+    var { loadWork } = bindActionCreators(WorkActions, dispatch)
+    return Promise.all([
+      loadWork()
+    ])
+  }
+
   componentDidMount() {
-    console.log(this.props.state.works.length , "before fetch")
+    // console.log(this.props.state.works.length , "before fetch")
+    this.constructor.fetchItemData(this.props.dispatch, this.props.params);
+
      if (this.props.state.works.length < 1) {
-         this.constructor.fetchData(this.props.dispatch, this.props.params);
+         this.constructor.fetchWorkData(this.props.dispatch);
      }
   }
 

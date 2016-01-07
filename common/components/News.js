@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as NewsActions from '../actions/news'
+import * as WorkActions from '../actions/work'
 import presets from '../presets';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -34,14 +34,14 @@ export default class News extends Component {
     const { state, params } = this.props;
     if (this.props.state.news) {
       if(params.filter) {
-        state.news.all.forEach(function(item) {
+        state.news.forEach(function(item) {
           if (item.tags.indexOf(params.filter) > -1) {
             self.news.push(item)
           }
         })
       }
       else {
-        this.news = this.props.state.news.all.slice();
+        this.news = this.props.state.news.slice();
       }
     }
   }
@@ -67,7 +67,7 @@ export default class News extends Component {
         </section>
         </div>`
       var div = document.createElement("div");
-      div.className = "links-enter"
+      div.className = "delay links-enter"
       div.innerHTML = el;
       self.container.appendChild(div);
       setTimeout(function(){

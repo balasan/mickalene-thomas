@@ -22,7 +22,6 @@ export default class Work extends Component {
     self.flex = new flexImages({ selector: self.container, rowHeight: 300 })
   }
 
-
   componentDidUpdate() {
     var self = this;
     this.filterWorks();
@@ -38,14 +37,29 @@ export default class Work extends Component {
   filterWorks() {
     var self = this;
     this.works = [];
-    const { works, params } = this.props;
-    if(params.filter)
-    works.forEach(function(item) {
-      if (item.tags.indexOf(params.filter) > -1) {
-        self.works.push(item)
-      }
-    })
-    else this.works = works.slice();
+    console.log(this, 'filterworks this')
+    const { state, params } = this.props;
+    if(params.filter) {
+      state.works.forEach(function(item) {
+        if (item.tags.indexOf(params.filter) > -1) {
+          self.works.push(item)
+        }
+      })
+      state.news.forEach(function(item) {
+        if (item.tags.indexOf(params.filter) > -1) {
+          self.works.push(item)
+        }
+      })
+    } else if (state.works && state.news) {
+      this.works = state.works.slice();
+
+      state.news.forEach(function(item, i) {
+        self.works.splice((i*4), 0, item)
+      })
+
+    } else {
+      this.works = state.works.slice();
+    }
   }
 
   animateIn () {
@@ -56,7 +70,8 @@ export default class Work extends Component {
     this.container.innerHTML = "";
 
     this.works.forEach(function(item,i){
-      var el =
+      if (item.type == 'work') {
+              var el =
         `<a
             class='item work-enter'
             data-w=${item.image.small.dimensions.width}
@@ -72,6 +87,14 @@ export default class Work extends Component {
               <p>${item.title}</p>
             </div>
         </a>`
+      } else {
+        var el = `<a data-h='500' data-w='500' class="item newsItem work-enter">
+           <div class="textNews">
+              <p>${item.title}</p>
+              <p>${item.location}</p>
+            </div>
+        </a>`
+      }
       var span = document.createElement("span");
       span.innerHTML = el;
       self.container.appendChild(span);
@@ -144,6 +167,8 @@ export default class Work extends Component {
   }
 
   render () {
+
+    console.log(this, 'work render this')
 
     var all = null;
     var all = (

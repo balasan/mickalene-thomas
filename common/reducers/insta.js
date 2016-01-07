@@ -1,4 +1,4 @@
-import { GET_INSTA} from '../actions/news'
+import { GET_INSTA} from '../actions/work'
 import { UPDATE_PATH } from 'redux-simple-router'
 
 export default function insta(state = null, action) {

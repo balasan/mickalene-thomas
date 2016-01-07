@@ -4,8 +4,10 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as WorkActions from '../actions/work'
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+import { updatePath } from 'redux-simple-router';
 
 export default class WorkItem extends Component {
+
   componentDidMount() {
     var workItemNew = null;
     if (this.props.state.workItem) {
@@ -22,7 +24,42 @@ export default class WorkItem extends Component {
     this.render();
   }
 
+  componentDidUpdate() {
+  }
+
   render () {
+
+    var self = this;
+
+    const nextItem = function() {
+      var currentId = self.props.params.itemId;
+      var works = self.props.state.works
+      var nextIndex;
+      works.forEach(function(item, i) {
+        if (item.id == currentId) {
+          nextIndex = i+=1;
+        }
+      })
+      var newId = works[nextIndex].id;
+      self.props.dispatch(updatePath('/works/i/' + newId))
+      self.workItem = works[nextIndex];
+      self.render();
+    }
+
+    const prevItem = function() {
+      var currentId = self.props.params.itemId;
+      var works = self.props.state.works
+      var prevIndex;
+      works.forEach(function(item, i) {
+        if (item.id == currentId) {
+          prevIndex = i-=1;
+        }
+      })
+      var newId = works[prevIndex].id;
+      self.props.dispatch(updatePath('/works/i/' + newId))
+      self.workItem = works[prevIndex];
+      self.render();
+    }
 
     const { state, clickitem } = this.props
 
@@ -47,6 +84,11 @@ export default class WorkItem extends Component {
             <p>{workItem.title}</p>
               <p>{workItem.date.substr(0, 4)}{workItem.medium ? ', ' + workItem.medium : null}</p>
             </div>
+          </div>
+          <div className="arrowsParent">
+            <section onClick={prevItem} className="left"></section>
+            <section className="middle"></section>
+            <section onClick={nextItem} className="right"></section>
           </div>
         </section>
       )

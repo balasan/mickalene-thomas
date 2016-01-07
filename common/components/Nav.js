@@ -4,6 +4,7 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as MenuActions from '../actions/menu'
+import { updatePath } from 'redux-simple-router';
 
 export default class Nav extends Component {
 
@@ -34,6 +35,10 @@ export default class Nav extends Component {
     const { toggleMenu } = this.props;
     var showMenu = this.props.menu.showMenu;
     var location = this.props.state.routing.path;
+    var self = this;
+    const closeItem = function() {
+       self.props.dispatch(updatePath('/works'))
+    }
 
     var showHeader = true;
     if(location == '/' || showMenu)
@@ -100,7 +105,7 @@ export default class Nav extends Component {
         <ReactCSSTransitionGroup transitionName="nav" transitionAppear={true} transitionAppearTimeout={0} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
           <nav className={itemPage ? 'transparent' : ''}>
             <section className='left'>
-              <Link to="/">mickalene thomas</Link>
+              {path == 'works/i/:itemId' ? null : <Link to="/">mickalene thomas</Link>}
             </section>
             <section className='middle'>
               {itemPage ? null : location}
@@ -108,7 +113,7 @@ export default class Nav extends Component {
             </section>
             <section className='right'>
 
-              <img className={itemPage ? 'close' : ''} onClick={itemPage ? this.props.history.goBack : toggleMenu} src={itemPage ? '../../images/close.svg' : '../../images/menu.svg'} />
+              <img className={itemPage ? 'close' : ''} onClick={itemPage ? closeItem : toggleMenu} src={itemPage ? '../../images/close.svg' : '../../images/menu.svg'} />
 
             </section>
           </nav>

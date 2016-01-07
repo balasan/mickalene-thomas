@@ -37,6 +37,7 @@
                      var obj = {}
                      obj.id = item.id;
                      obj.tags = item.tags;
+                      obj.type = item.type;
                      obj.title = item.data["news.title"].value[0].text;
                      obj.date = item.data["news.date"] ? item.data["news.date"].value : '';
                      obj.location = item.data["news.location"] ? item.data["news.location"].value[0].text : '';
