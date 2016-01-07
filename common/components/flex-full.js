@@ -66,8 +66,11 @@ var flexImages = (function(){
                 el.style.transitionDelay = tDelay + 's';
                 el.style.WebkitTransitionDelay = tDelay + 's';
 
-                imgContainer.style.transitionDelay = tDelay + .1 +'s';
-                imgContainer.style.WebkitTransitionDelay = tDelay + .1 +'s';
+                if (imgContainer) {
+                    imgContainer.style.transitionDelay = tDelay + .1 +'s';
+                    imgContainer.style.WebkitTransitionDelay = tDelay + .1 +'s';
+                }
+
 
                 self.maxDelay = Math.max(self.maxDelay,tDelay)
             })

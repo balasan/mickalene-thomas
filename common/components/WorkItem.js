@@ -37,27 +37,42 @@ export default class WorkItem extends Component {
       var nextIndex;
       works.forEach(function(item, i) {
         if (item.id == currentId) {
-          nextIndex = i+=1;
+          nextIndex = i+1;
         }
       })
-      var newId = works[nextIndex].id;
+      var calcIndex;
+      if (nextIndex < 0) {
+        calcIndex = works.length += nextIndex;
+      } else {
+        calcIndex = nextIndex%works.length;
+      }
+      console.log(calcIndex, 'calcIndex')
+      var newId = works[calcIndex].id;
       self.props.dispatch(updatePath('/works/i/' + newId))
-      self.workItem = works[nextIndex];
+      self.workItem = works[calcIndex];
       self.render();
     }
 
     const prevItem = function() {
+
       var currentId = self.props.params.itemId;
       var works = self.props.state.works
+      console.log(works)
       var prevIndex;
       works.forEach(function(item, i) {
         if (item.id == currentId) {
-          prevIndex = i-=1;
+          prevIndex = i-1;
         }
       })
-      var newId = works[prevIndex].id;
+      var calcIndex;
+      if (prevIndex < 0) {
+        calcIndex = (works.length - Math.abs(prevIndex))%works.length;
+      } else {
+        calcIndex = prevIndex%works.length;
+      }
+      var newId = works[calcIndex].id;
       self.props.dispatch(updatePath('/works/i/' + newId))
-      self.workItem = works[prevIndex];
+      self.workItem = works[calcIndex];
       self.render();
     }
 
