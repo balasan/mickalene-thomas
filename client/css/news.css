@@ -45,6 +45,10 @@
                 section {
                     &.left {
                        width: 20%;
+                       display: inline-flex;
+                       align-items: center;
+                       justify-content: center;
+                       flex-direction: column;
 
                         img {
                             width: 100%;
@@ -54,7 +58,11 @@
                     }
 
                     &.middle {
-                       /* flex-grow: 1;*/
+                       display: inline-flex;
+                       align-items: flex-start;
+                       flex-direction: column;
+                       justify-content: center;
+
                        width: 70%;
 
                         h1, p {
@@ -90,8 +98,9 @@
 
                     &.right {
                         width: 10%;
-                        display: flex;
+                        display: inline-flex;
                         justify-content: flex-end;
+                        align-items: center;
 
                         a {
                             height: 20px;

@@ -17,8 +17,31 @@ export default class News extends Component {
     this.c1 = document.getElementById("newsList1");
     this.c2 = document.getElementById("newsList2");
     this.animateIn();
+    setTimeout(function() {
+      self.scroll();
+    }, 1500);
   }
 
+
+  scroll() {
+    if (!this.props.location.hash) return;
+    var hash = this.props.location.hash.slice(1, this.props.location.hash.length);
+    var els = document.getElementsByClassName(hash);
+    var selectedEl = els[els.length-1];
+    console.log(hash, 'hash')
+    console.log(selectedEl, 'selectedEl')
+    if (!selectedEl.classList.contains('links-enter-active')) return;
+    var scrollSelf = this;
+    var scrollInterval = setInterval(function(){
+      var elTop = selectedEl.getBoundingClientRect().top;
+      if (elTop < 50) clearInterval(scrollInterval);
+      var scrollY = window.scrollY;
+      var newY = (scrollY + elTop)*.3;
+      if (elTop > 0) {
+        window.scrollTo(0, scrollY += (elTop*0.02))
+      }
+     }, 0);
+  }
 
   componentDidUpdate() {
     var self = this;
@@ -64,14 +87,15 @@ export default class News extends Component {
         </section>
         <section class='right'>
         ${item.link ? '<a href=' + item.link + ' target=_blank></a>' : ''}
-        </section>
-        </div>`
+        </section>`
       var div = document.createElement("div");
       div.className = "delay links-enter"
       div.innerHTML = el;
+      // div.id = item.id;
       self.container.appendChild(div);
       setTimeout(function(){
-        div.className += " links-enter-active";
+        div.className += " " + item.id + " links-enter-active";
+        // self.scroll();
       },10);
     })
   }
@@ -85,7 +109,7 @@ export default class News extends Component {
     var i = els.length
     while (i--) {
       var el = els[i]
-      console.log(el, 'el')
+      // console.log(el, 'el')
       clearClass(el,'links-enter');
       el.className += " links-leave";
       leaveActive(el);

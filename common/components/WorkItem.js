@@ -30,9 +30,15 @@ export default class WorkItem extends Component {
   render () {
 
     var self = this;
+    var element  = document.getElementById("singleImage");
 
     const nextItem = function() {
+      self.workItem = null;
       var currentId = self.props.params.itemId;
+      // element.className = "image single-leave";
+      // setTimeout(function() {
+      //   element.className = "image single-leave single-leave-active";
+      // }, 10);
       var works = self.props.state.works
       var nextIndex;
       works.forEach(function(item, i) {
@@ -48,16 +54,19 @@ export default class WorkItem extends Component {
       }
       console.log(calcIndex, 'calcIndex')
       var newId = works[calcIndex].id;
-      self.props.dispatch(updatePath('/works/i/' + newId))
       self.workItem = works[calcIndex];
       self.render();
+      // element.className = "image single-enter";
+      // setTimeout(function() {
+      //   element.className = "image single-enter single-enter-active";
+      // }, 10);
+      self.props.dispatch(updatePath('/works/i/' + newId))
     }
 
     const prevItem = function() {
 
       var currentId = self.props.params.itemId;
       var works = self.props.state.works
-      console.log(works)
       var prevIndex;
       works.forEach(function(item, i) {
         if (item.id == currentId) {
@@ -90,7 +99,7 @@ export default class WorkItem extends Component {
               transitionAppearTimeout={0}
               transitionEnterTimeout={0}
               transitionLeaveTimeout={0}>
-              <div className="image">
+              <div className="image" id="singleImage">
            <img src={workItem.image.main.url} />
               </div>
            </ReactCSSTransitionGroup>

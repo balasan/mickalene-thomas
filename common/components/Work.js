@@ -65,13 +65,14 @@ export default class Work extends Component {
   animateIn () {
 
     const {works, dispatch } = this.props;
+
     var self = this;
 
     this.container.innerHTML = "";
 
     this.works.forEach(function(item,i){
       if (item.type == 'work') {
-              var el =
+        var el =
         `<a
             class='item work-enter'
             data-w=${item.image.small.dimensions.width}
@@ -102,7 +103,11 @@ export default class Work extends Component {
       self.container.appendChild(span);
       span.getElementsByTagName('a')[0].onclick = function(e){
         e.preventDefault()
-        dispatch(updatePath('/works/i/' + item.id))
+        if (item.type == 'work') {
+          dispatch(updatePath('/works/i/' + item.id))
+        } else {
+           dispatch(updatePath('/news#' + item.id))
+        }
       };
       setTimeout(function(){
         span.getElementsByTagName('a')[0].className += " work-enter-active";
