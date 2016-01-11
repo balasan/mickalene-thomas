@@ -22,6 +22,13 @@ export default class News extends Component {
     }, 1500);
   }
 
+  componentWillReceiveProps() {
+    // if (this.props.news) {
+    //   if (this.props.news.all) {
+    //     this.scroll()
+    //   }
+    // }
+  }
 
   scroll() {
     if (!this.props.location.hash) return;
@@ -33,13 +40,24 @@ export default class News extends Component {
     if (!selectedEl.classList.contains('links-enter-active')) return;
     var scrollSelf = this;
     var scrollInterval = setInterval(function(){
-      var elTop = selectedEl.getBoundingClientRect().top;
-      if (elTop < 50) clearInterval(scrollInterval);
+      // var elTop = selectedEl.getBoundingClientRect().top;
+      // if (elTop < 50) clearInterval(scrollInterval);
+      var offTop = selectedEl.offsetTop;
       var scrollY = window.scrollY;
-      var newY = (scrollY + elTop)*.3;
-      if (elTop > 0) {
-        window.scrollTo(0, scrollY += (elTop*0.02))
-      }
+      if (scrollY > offTop - 12 || scrollY == offTop) clearInterval(scrollInterval);
+      // var newY = (scrollY + elTop)*.3;
+      var newY = (offTop - scrollY);
+      console.log(offTop - scrollY, 'difference')
+
+      console.log(offTop, 'offTop')
+      console.log(scrollY, 'scrollY')
+      console.log(newY, 'newY')
+
+      if (scrollY < offTop) window.scrollTo(0, scrollY += (newY*0.1))
+
+      // if (elTop > 0) {
+      //   window.scrollTo(0, scrollY += (elTop*0.02))
+      // }
      }, 0);
   }
 
