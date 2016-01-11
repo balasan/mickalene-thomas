@@ -9,6 +9,9 @@ import { updatePath } from 'redux-simple-router';
 export default class WorkItem extends Component {
 
   componentDidMount() {
+  }
+
+  componentDidUpdate() {
     var workItemNew = null;
     if (this.props.state.workItem) {
       workItemNew = this.props.state.workItem;
@@ -21,16 +24,12 @@ export default class WorkItem extends Component {
       })
     }
     this.workItem = workItemNew;
-    this.render();
-  }
-
-  componentDidUpdate() {
   }
 
   render () {
 
     var self = this;
-    var element  = document.getElementById("singleImage");
+    // var element  = document.getElementById("singleImage");
 
     const nextItem = function() {
       self.workItem = null;
