@@ -207,20 +207,26 @@ function GLView() {
     var textMaterial = greyMaterial.clone()
     textMaterial.map = null;
     textMaterial.normalMap = null;
-    // textMaterial.metal = true;
+    textMaterial.metal = true;
     textMaterial.transparent = false;
-    textMaterial.color = new THREE.Color("hsl(0, 0%, 50%)");
-    textMaterial.specular = new THREE.Color("hsl(0, 0%, 30%)");
+    // textMaterial.color = new THREE.Color("hsl(0, 0%, 50%)");
+    // textMaterial.specular = new THREE.Color("hsl(0, 0%, 30%)");
+    // textMaterial.specular = new THREE.Color("hsl(0, 0%, 100%)");
+    textMaterial.shininess = 30;
+    textMaterial.color = new THREE.Color("rgb(165,125,0)");
+    textMaterial.specular = new THREE.Color("rgb(165,125,0)");
 
 
     var sideMaterial = greyMaterial.clone()
     sideMaterial.map = null;
     sideMaterial.normalMap = null;
-    // textMaterial.metal = true;
-    textMaterial.transparent = false;
-    textMaterial.color = new THREE.Color("hsl(0, 0%, 50%)");
-    textMaterial.specular = new THREE.Color("hsl(0, 0%, 100%)");
-    textMaterial.shininess = 20;
+    sideMaterial.metal = true;
+    sideMaterial.transparent = false;
+    sideMaterial.color = new THREE.Color("rgb(215,195,0)");
+    // sideMaterial.specular = new THREE.Color("hsl(0, 0%, 100%)");
+    sideMaterial.specular = new THREE.Color("rgb(225,185,0)");
+    sideMaterial.shininess = 30;
+
 
     var plane = new THREE.Mesh(planeGeometry, greyMaterial);
     plane.position.y = -100;
@@ -262,7 +268,7 @@ function GLView() {
     var jLoader = new THREE.JSONLoader();
     jLoader.load('/3d/MfaceOnly.js',function ( geometry, materials ) {
       console.log(materials);
-      var material = new THREE.MeshFaceMaterial( [textMaterial,transMaterial,textMaterial] );
+      var material = new THREE.MeshFaceMaterial( [sideMaterial,transMaterial,sideMaterial] );
       var object = new THREE.Mesh( geometry, material );
       logo.add( object );
     })
