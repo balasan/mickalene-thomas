@@ -26,6 +26,7 @@ export default class Work extends Component {
   componentDidUpdate() {
     var self = this;
     this.filterWorks();
+    if(!self.updatedWorks()) return;
     self.animateOut()
     self.animateIn()
     self.flex = new flexImages({
@@ -33,6 +34,20 @@ export default class Work extends Component {
       container: '.item:not(.work-leave)',
       rowHeight: 300,
     })
+  }
+
+  updatedWorks() {
+    var self = this;
+    var updated = false;
+    for(var i=0; i<this.works.length;i++){
+      if(this.oldWorks && this.oldWorks[i] && this.works[i].id != this.oldWorks[i].id){
+        updated = true;
+        this.oldWorks = this.works.slice();
+        return updated;
+      }
+    }
+    this.oldWorks = this.works.slice();
+    return updated;
   }
 
   filterWorks() {

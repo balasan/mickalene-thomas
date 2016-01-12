@@ -113,6 +113,10 @@ function GLView() {
     pLight.position.set(-100, -10, 800);
     scene.add(pLight);
 
+    var bottomLight = new THREE.PointLight(new THREE.Color(1, 1, 1), 1.7, 100);
+    bottomLight.position.set(10, 60, 10);
+    scene.add(bottomLight);
+
     var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
     directionalLight.position.set( 1, 1, -1 ).normalize();
     // scene.add( directionalLight );
@@ -198,6 +202,7 @@ function GLView() {
     transMaterial.normalMap = transN;
     // transMaterial.metal = true;
     transMaterial.specular = new THREE.Color("hsl(0, 0%, 30%)");
+    transMaterial.color = new THREE.Color("hsl(0, 0%, 80%)");
 
     var textMaterial = greyMaterial.clone()
     textMaterial.map = null;
@@ -206,6 +211,16 @@ function GLView() {
     textMaterial.transparent = false;
     textMaterial.color = new THREE.Color("hsl(0, 0%, 50%)");
     textMaterial.specular = new THREE.Color("hsl(0, 0%, 30%)");
+
+
+    var sideMaterial = greyMaterial.clone()
+    sideMaterial.map = null;
+    sideMaterial.normalMap = null;
+    // textMaterial.metal = true;
+    textMaterial.transparent = false;
+    textMaterial.color = new THREE.Color("hsl(0, 0%, 50%)");
+    textMaterial.specular = new THREE.Color("hsl(0, 0%, 100%)");
+    textMaterial.shininess = 20;
 
     var plane = new THREE.Mesh(planeGeometry, greyMaterial);
     plane.position.y = -100;
