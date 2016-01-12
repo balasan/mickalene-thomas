@@ -55,7 +55,7 @@ export default class WorkItem extends Component {
       console.log(calcIndex, 'calcIndex')
       var newId = works[calcIndex].id;
       self.workItem = works[calcIndex];
-      self.render();
+      // self.render();
       element.className = "image single-enter";
       setTimeout(function() {
         element.className = "image single-enter single-enter-active";
@@ -64,7 +64,10 @@ export default class WorkItem extends Component {
     }
 
     const prevItem = function() {
-
+      self.workItem = null;
+      var element  = document.getElementById("singleImage");
+      element.className = "image single-leave";
+      element.className = "image single-leave single-leave-active";
       var currentId = self.props.params.itemId;
       var works = self.props.state.works
       var prevIndex;
@@ -82,7 +85,11 @@ export default class WorkItem extends Component {
       var newId = works[calcIndex].id;
       self.props.dispatch(updatePath('/works/i/' + newId))
       self.workItem = works[calcIndex];
-      self.render();
+      // self.render();
+      element.className = "image single-enter";
+      setTimeout(function() {
+        element.className = "image single-enter single-enter-active";
+      }, 10);
     }
 
     const { state, clickitem } = this.props
