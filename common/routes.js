@@ -4,10 +4,10 @@ import App from './containers/App';
 import Splash from './containers/Splash';
 import About from './containers/About';
 import Contact from './containers/Contact';
-import NewsParent from './containers/News';
-import Works from './containers/Works';
-import Store from './containers/Store';
-import WorkItem from './containers/WorkItem';
+import NewsParent from './containers/NewsParent';
+import WorkParent from './containers/WorkParent';
+import StoreParent from './containers/StoreParent';
+import WorkItemParent from './containers/WorkItemParent';
 import NotFound from './containers/NotFound';
 
 var routes = {
@@ -17,12 +17,12 @@ var routes = {
   childRoutes: [
     { path: 'about', component: About },
     { path: 'news', component: NewsParent },
-    { path: 'works', component: Works },
-    { path: 'works/i/:itemId', component: WorkItem },
-    { path: 'works/filter/:filter', component: Works },
+    { path: 'works', component: WorkParent },
+    { path: 'works/i/:itemId', component: WorkItemParent },
+    { path: 'works/filter/:filter', component: WorkParent },
     { path: 'news/filter/:filter', component: NewsParent },
     { path: 'contact', component: Contact },
-    { path: 'store', component: Store },
+    { path: 'store', component: StoreParent },
     { path: '*', component: NotFound }
   ]
 };

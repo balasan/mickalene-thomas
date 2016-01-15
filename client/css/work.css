@@ -1,3 +1,5 @@
+@import "customMedia.css";
+
 .showcase {
     display: flex;
     width: 100vw;
@@ -74,6 +76,10 @@
             background-repeat: no-repeat;
             background-position: center center;
             background-size: 45%;
+            @media (--mobile) {
+               background-size: 80%;
+               background-position: center left;
+            }
             opacity: 1;
             transition: opacity 250ms easeOutQuart;
             cursor: pointer;

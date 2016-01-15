@@ -31,7 +31,7 @@
                      console.log(err);
                      done();
                  }
-                 console.log(response, 'news response')
+                 // console.log(response, 'news response')
                  var simple = [];
                  response.results.forEach(function(item) {
                      var obj = {}
@@ -94,7 +94,7 @@
                      simple.push(obj)
                  });
 
-                console.log(simple, 'news simple')
+                // console.log(simple, 'news simple')
                 callback(null, simple)
              })
      });

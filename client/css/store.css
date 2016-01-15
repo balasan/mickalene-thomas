@@ -1,12 +1,18 @@
-.storeTxt {
-  height: calc(100vh - 75px);
-  background-color: black;
+.products {
   width: 100%;
   display: flex;
-  padding: 4em 10vw;
-  h1 {
-    color: white;
-    font-size: 40px;
-    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+  flex-wrap: wrap;
+  section {
+    width: calc((100% - 6px) * 0.33333333333);
+    margin: 1px;
+    background-color: white;
+    height: 33vw;
+    background-size: 65%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    p {
+      color: black;
+      display: none;
+    }
   }
 }

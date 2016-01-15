@@ -37,7 +37,7 @@ export default class Work extends Component {
   filterWorks() {
     var self = this;
     this.works = [];
-    console.log(this, 'filterworks this')
+    // console.log(this, 'filterworks this')
     const { state, params } = this.props;
     if(params.filter) {
       state.works.forEach(function(item) {
@@ -175,7 +175,7 @@ export default class Work extends Component {
 
   render () {
 
-    console.log(this, 'work render this')
+    // console.log(this, 'work render this')
 
     var all = null;
     var all = (

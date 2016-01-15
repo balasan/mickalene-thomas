@@ -6,6 +6,7 @@ import currentitem from './work'
 import menu from './menu'
 import news from './news'
 import insta from './insta'
+import store from './store'
 
 const rootReducer = combineReducers({
   routing: routeReducer,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   menu,
   news,
   workItem,
-  insta
+  insta,
+  store
 })
 
 export default rootReducer

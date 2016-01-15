@@ -8,7 +8,7 @@ if(process.env.BROWSER){
   require('./../../client/css/work.css');
 }
 
-export default class Works extends Component {
+export default class WorkParent extends Component {
 
   static fetchWorkOnClient(dispatch, filter) {
     var { loadWork } = bindActionCreators(WorkActions, dispatch, filter)
@@ -57,6 +57,6 @@ export default connect(
   },
   dispatch => {
     return Object.assign({}, { dispatch },  bindActionCreators(WorkActions, dispatch))
-  })(Works)
+  })(WorkParent)
 
 
