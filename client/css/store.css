@@ -1,18 +1,31 @@
+@import "customMedia.css";
+
 .products {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  section {
-    width: calc((100% - 6px) * 0.33333333333);
-    margin: 1px;
-    background-color: white;
-    height: 33vw;
-    background-size: 65%;
-    background-position: center center;
-    background-repeat: no-repeat;
-    p {
-      color: black;
-      display: none;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    a {
+        @media (--mobile) {
+            width: calc((100% - 6px) * 0.5);
+            height: 50vw;
+        }
+
+        @media (--desktop) {
+            width: calc((100% - 6px) * 0.33333333333);
+            height: 33vw;
+        }
+
+        cursor: pointer;
+        margin: 1px;
+        background-color: white;
+        background-size: 65%;
+        background-position: center center;
+        background-repeat: no-repeat;
+
+        p {
+            color: black;
+            display: none;
+        }
     }
-  }
 }

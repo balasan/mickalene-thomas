@@ -24,8 +24,6 @@ export default class Nav extends Component {
   }
 
   componentDidMount() {
-    // this.expand = false;
-    // console.log(this, 'did mount this')
     this.constructor.fetchWorkTags(this.props.dispatch);
     this.constructor.fetchNewsTags(this.props.dispatch);
   }
@@ -111,6 +109,21 @@ export default class Nav extends Component {
             )}, this)}
          </section>
         )
+      mobileFilters = (
+        <div>
+        {newsTags.map(function (filter, i) {
+            return (
+                <Link
+                  key={i}
+                  className={filterType == filter ? 'selected' : null}
+                  onClick={toggleExpand}
+                  to={'/news/filter/' + filter}
+                  >
+              {filter}
+              </Link>
+            )}, this)}
+        </div>
+        )
     }
 
     if (showHeader) {
@@ -118,6 +131,8 @@ export default class Nav extends Component {
           location = (<p>works</p>);
         } else if (path == 'news/filter/:filter') {
           location = (<p>news</p>);
+        } else if (path == 'store/:itemId') {
+          location = (<Link to='/store'>store</Link>);
         } else {
           location = (<p>{path}</p>);;
         }
@@ -135,7 +150,7 @@ export default class Nav extends Component {
 
     var cart = null;
 
-    if (path == 'store' && this.props.state.store.cart) {
+    if (path == 'store' && this.props.state.store.cart || path == 'store/:itemId' && this.props.state.store.cart) {
       cart = (
         <div className='cart'>
         <img src="../../images/cart.svg" />
@@ -150,7 +165,7 @@ export default class Nav extends Component {
             <div className='top'>
             <section className='left'>
               {path == 'works/i/:itemId' ? null : <Link to="/">mickalene thomas</Link>}
-              {path == 'works' || path == 'works/' || path == 'works/filter/:filter' ? <p onClick={toggleExpand}>filter</p> : null}
+              {path == 'works' || path == 'works/' || path == 'works/filter/:filter' || path == 'news/' || path == 'news' || path == 'news/filter/:filter' ? <p onClick={toggleExpand}>filter</p> : null}
             </section>
             <section className='middle'>
               {itemPage ? null : location}
@@ -160,8 +175,6 @@ export default class Nav extends Component {
             {cart}
 
               <img className={itemPage ? 'close' : ''} onClick={itemPage ? closeItem : toggleMenu} src={itemPage ? '../../images/close.svg' : '../../images/menu.svg'} />
-            }
-            }
             </section>
             </div>
             <div className={bottomClass}>

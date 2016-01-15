@@ -1,3 +1,5 @@
+@import "customMedia.css";
+
 .singleItem {
     height: calc(100vh - 75px);
 }
@@ -80,11 +82,21 @@
                 &:first-of-type {
                     line-height: 24px;
                     font-size: 20px;
+
+                    @media (--mobile) {
+                        font-size: 14px;
+                        line-height: 14px;
+                    }
+
                     font-family: 'Minion Pro', sans-serif;
                 }
+
                 &:nth-of-type(2) {
                     font-family: 'Avenir Next', sans-serif;
                     font-size: 12px;
+                    @media (--mobile) {
+                        font-size: 10px;
+                    }
                 }
             }
         }

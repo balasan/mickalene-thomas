@@ -8,6 +8,7 @@ import NewsParent from './containers/NewsParent';
 import WorkParent from './containers/WorkParent';
 import StoreParent from './containers/StoreParent';
 import WorkItemParent from './containers/WorkItemParent';
+import ProductParent from './containers/ProductParent';
 import NotFound from './containers/NotFound';
 
 var routes = {
@@ -19,6 +20,7 @@ var routes = {
     { path: 'news', component: NewsParent },
     { path: 'works', component: WorkParent },
     { path: 'works/i/:itemId', component: WorkItemParent },
+    { path: 'store/:itemId', component: ProductParent },
     { path: 'works/filter/:filter', component: WorkParent },
     { path: 'news/filter/:filter', component: NewsParent },
     { path: 'contact', component: Contact },

@@ -30,8 +30,6 @@ export default class News extends Component {
     var hash = this.props.location.hash.slice(1, this.props.location.hash.length);
     var els = document.getElementsByClassName(hash);
     var selectedEl = els[els.length-1];
-    console.log(hash, 'hash')
-    console.log(selectedEl, 'selectedEl')
     if (!selectedEl.classList.contains('links-enter-active')) return;
     var scrollSelf = this;
     var scrollInterval = setInterval(function(){
@@ -39,12 +37,6 @@ export default class News extends Component {
       var scrollY = window.scrollY;
       if (scrollY > offTop - 10 || scrollY == offTop) clearInterval(scrollInterval);
       var newY = (offTop - scrollY);
-
-      // console.log(offTop - scrollY, 'difference')
-      // console.log(offTop, 'offTop')
-      // console.log(scrollY, 'scrollY')
-      // console.log(newY, 'newY')
-
       if (scrollY < offTop) window.scrollTo(0, scrollY += (newY*0.1))
      }, 10);
   }
@@ -82,14 +74,24 @@ export default class News extends Component {
     this.container.innerHTML = "";
 
     this.news.forEach(function(item, i){
+      if (item.description) {
+        var description = `<p class='description'>${item.description}</p>`
+      } else {
+        var description = null;
+      }
+
       var el =
         `<section class='left'>
           ${item.image.main.url ? '<img src=' + item.image.main.url + ' />' : ''}
+          <article>
+          <h1>${item.title}</h1>
+          <p>${item.location}</p>
+          </article>
         </section>
         <section class='middle'>
-          <h1>${item.title}</h1>
-            <p class='location'>${item.location}</p>
-            <p class='description'>${item.description}</p>
+          <h1 class='desktop'>${item.title}</h1>
+            <p class='location desktop'>${item.location}</p>
+            ${description}
         </section>
         <section class='right'>
         ${item.link ? '<a href=' + item.link + ' target=_blank></a>' : ''}
@@ -97,11 +99,9 @@ export default class News extends Component {
       var div = document.createElement("div");
       div.className = "delay links-enter"
       div.innerHTML = el;
-      // div.id = item.id;
       self.container.appendChild(div);
       setTimeout(function(){
         div.className += " " + item.id + " links-enter-active";
-        // self.scroll();
       },10);
     })
   }

@@ -1,3 +1,5 @@
+@import "customMedia.css";
+
 .newsParent {
     display: flex;
 
@@ -7,6 +9,11 @@
 
         &.right {
             width: 30%;
+
+            @media (--mobile) {
+                display: none;
+            }
+
             border-left: 2px solid transparent;
             background-color: transparent;
 
@@ -31,6 +38,9 @@
         &.left {
             width: 70%;
 
+            @media (--mobile) {
+                width: 100%;
+            }
 
             div {
                 background-color: white;
@@ -38,32 +48,83 @@
                 padding: 2em;
                 display: flex;
 
+                @media (--mobile) {
+                    flex-direction: column;
+                    padding: 1.75em 1em;
+                }
+
                 &:first-of-type {
                     margin: 2px 0 1px 0;
                 }
 
                 section {
                     &.left {
-                       width: 20%;
-                       display: inline-flex;
-                       align-items: center;
-                       justify-content: center;
-                       flex-direction: column;
+                        width: 20%;
+                        display: inline-flex;
+                        align-items: center;
 
-                        img {
+                        @media (--mobile) {
                             width: 100%;
                         }
 
-                        margin: 0 3em 0 0;
+                        @media (--desktop) {
+                            margin: 0 3em 0 0;
+                            justify-content: center;
+                            flex-direction: column;
+
+                            article {
+                                display: none;
+                            }
+                        }
+
+                        article {
+                            h1, p {
+                                margin: 0;
+                                padding: 0;
+                            }
+
+                            h1 {
+                                color: black;
+                                font-family: 'Minion Pro', sans-serif;
+                                font-style: italic;
+                                text-transform: uppercase;
+                                font-size: 14px;
+                            }
+
+                            p {
+                                color: black;
+                                font-family: 'Avenir Next', sans-serif;
+                                font-style: italic;
+                                text-transform: uppercase;
+                                font-size: 12px;
+                            }
+                        }
+
+                        img {
+                            width: 100%;
+
+                            @media (--mobile) {
+                                width: 30%;
+                                margin: 0 1em 0 0;
+                            }
+                        }
                     }
 
                     &.middle {
-                       display: inline-flex;
-                       align-items: flex-start;
-                       flex-direction: column;
-                       justify-content: center;
+                        display: inline-flex;
+                        align-items: flex-start;
+                        flex-direction: column;
+                        justify-content: center;
+                        width: 70%;
 
-                       width: 70%;
+                        @media (--mobile) {
+                            width: 100%;
+                            font-size: 0;
+
+                            .desktop {
+                                display: none;
+                            }
+                        }
 
                         h1, p {
                             margin: 0;
@@ -92,6 +153,10 @@
                                 padding: 1em 0 0 0;
                                 font-size: 12px;
                                 font-family: 'Avenir Next', sans-serif;
+
+                                @media (--mobile) {
+                                    line-height: 20px;
+                                }
                             }
                         }
                     }
@@ -101,6 +166,10 @@
                         display: inline-flex;
                         justify-content: flex-end;
                         align-items: center;
+
+                        @media (--mobile) {
+                            display: none;
+                        }
 
                         a {
                             height: 20px;
@@ -120,13 +189,15 @@
     }
 }
 
-#newsList1, #newsList2{
-  position:absolute;
-  top:0px;
-  left:0px;
-/*  width:100%;*/
-  /*min-height: 300px;*/
+#newsList1, #newsList2 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    /*  width:100%;*/
+    /*min-height: 300px;*/
 }
-#newsList2{
-  position:relative;
+
+#newsList2 {
+    position: relative;
 }

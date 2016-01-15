@@ -11,9 +11,9 @@ if(process.env.BROWSER){
 export default class StoreParent extends Component {
 
   static fetchProductDataOnClient(dispatch) {
-    var { loadProduct } = bindActionCreators(ProductActions, dispatch)
+    var { loadProducts } = bindActionCreators(ProductActions, dispatch)
     return Promise.all([
-      loadProduct()
+      loadProducts()
     ])
   }
 

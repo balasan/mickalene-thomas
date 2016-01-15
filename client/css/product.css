@@ -1,0 +1,70 @@
+@import "customMedia.css";
+
+.productShowcase {
+    height: calc(100vh - 75px);
+    background-color: white;
+
+    .image {
+        text-align: center;
+        width: 100%;
+
+        img {
+            height: 70vh;
+        }
+    }
+
+    .info {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 1em;
+
+        section {
+          &.left, &.right {
+            width: 50%;
+            height: 100%;
+            display: inline-flex;
+            flex-direction: column;
+          }
+          &.right {
+            align-items: flex-end;
+          }
+        }
+
+        button {
+          font-family: 'Avenir Next Bold', sans-serif;
+          background-color: black;
+          color: white;
+          border: none;
+          text-transform: uppercase;
+          padding: 0.5em 0.75em;
+          cursor: pointer;
+        }
+
+        .price {
+          margin-bottom: 0.5em;
+          font-size: 14px;
+        }
+
+        h1, p {
+            color: black;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-family: 'Avenir Next Bold', sans-serif;
+            font-weight: bolder;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 16px;
+            margin-bottom: 0.5em;
+        }
+
+        p {
+            font-family: 'Avenir Next', sans-serif;
+            font-size: 12px;
+        }
+    }
+}

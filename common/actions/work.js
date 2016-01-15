@@ -32,7 +32,6 @@ export function clearItem() {
 }
 
 export function loadWorkItem(id) {
-  console.log("load work action")
   return dispatch => {
     return new Promise(function(resolve, reject) {
       fetchItem(id,  (err, value) => {

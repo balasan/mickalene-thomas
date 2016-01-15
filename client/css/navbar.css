@@ -21,22 +21,6 @@ nav {
 
         .bottom {
             display: flex;
-
-            /*            padding-top: 1.5em;*/
-            height: 100%;
-
-            div {
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-
-                a {
-                    text-decoration: none;
-                    text-transform: uppercase;
-                }
-            }
         }
     }
 
@@ -118,16 +102,31 @@ nav {
             .cart {
                 display: flex;
                 padding: 1em;
+
+                @media (--mobile) {
+                    padding: 0 0.75em 0 0;
+                }
+
                 align-items: center;
 
                 img {
                     display: inline-block;
                     margin: 0 0.5em 0 0;
+
+                    @media (--mobile) {
+                        height: auto;
+                        width: 20px;
+                    }
                 }
 
                 p {
                     font-family: 'Futura Bold', sans-serif;
                     font-size: 12px;
+
+                    @media (--mobile) {
+                        font-size: 10px;
+                    }
+
                     display: inline-block;
                     color: black;
                     margin: 0;
@@ -136,9 +135,17 @@ nav {
             }
 
             img {
-                height: 20px;
                 opacity: 1;
                 transition: opacity 250ms easeOutQuart;
+
+                @media (--desktop) {
+                    height: 20px;
+                }
+
+                @media (--mobile) {
+                    height: auto;
+                    width: 25px;
+                }
 
                 &.close {
                     height: 30px;
@@ -163,7 +170,7 @@ nav {
             justify-content: center;
             align-items: center;
 
-            p {
+            p, a {
                 color: black;
                 font-family: 'Futura Bold', sans-serif;
                 text-transform: uppercase;
@@ -214,9 +221,24 @@ nav {
         display: none;
         justify-content: center;
         align-items: center;
+        height: 100%;
+        padding-top: 50px;
 
-        a {
-            color: black;
+        div {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            a {
+                text-decoration: none;
+                font-family: 'Futura Bold', sans-serif;
+                letter-spacing: 5px;
+                padding: 1.25em;
+                text-transform: uppercase;
+                color: black;
+            }
         }
     }
 }

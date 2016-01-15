@@ -29,14 +29,14 @@ main {
   }
 }
 
-article {
+/*article {
     width: 100px;
     height: 100px;
     background-color: red;
     display: inline-block;
     margin: 1px;
     padding: 0;
-}
+}*/
 
 #webGLView{
     width:100%;
