@@ -14,9 +14,9 @@ export default class Cart extends Component {
   }
 
   render () {
-    console.log(this.props.state.store.cart, 'current cart on cart component')
-
+    const { changeQuantity } = this.props;
     var cart = this.props.state.store.cart;
+    console.log(cart, 'cart')
     var cartEl = null;
     var total = 0;
     if (cart) {
@@ -30,17 +30,19 @@ export default class Cart extends Component {
               <h1>{item.title}</h1>
               <p>{item.description}</p>
             </section>
-            <section>
-              <p>{'$' + item.price.toFixed(2)}</p>
+            <section className='price'>
+              <p>{'$' + (item.price * item.quantity).toFixed(2)}</p>
             </section>
-            <section>
-              <p>quantity</p>
+            <section className='quantity'>
+              <button onClick={changeQuantity.bind(this, item.id, false)}>-</button>
+              <p>{item.quantity}</p>
+              <button onClick={changeQuantity.bind(this, item.id, true)}>+</button>
             </section>
           </div>
         );
       });
       cart.forEach(function(item, i) {
-          total += item.price;
+          total += (item.price * item.quantity);
       })
     }
 
@@ -50,7 +52,9 @@ export default class Cart extends Component {
         {cartEl}
         <div className='total'>
           <h1>total</h1>
+
           <p>{'$' + total.toFixed(2)}</p>
+
         </div>
         <div className='holdButton'>
           <button>proceed to payment</button>

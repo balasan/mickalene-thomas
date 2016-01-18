@@ -25,6 +25,19 @@
 
         section {
             width: 25%;
+            &.price {
+              text-align: right;
+            }
+            &.quantity {
+              display: flex;
+              justify-content: flex-end;
+              button {
+                border: none;
+                background-color: transparent;
+                color: black;
+                cursor: pointer;
+              }
+            }
         }
 
         img {
@@ -57,6 +70,7 @@
         p {
             font-family: 'Avenir Next', sans-serif;
             font-size: 20px;
+            margin: 3px 0 0 0.5em;
         }
     }
 

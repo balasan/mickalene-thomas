@@ -47,6 +47,7 @@
                      obj.description = item.data["product.description"] ? item.data["product.description"].value[0].text : null;
 
                      obj.image = {};
+                     obj.quantity = 1;
 
                      obj.image.main = {};
                      obj.image.main.dimensions = {}
@@ -127,6 +128,7 @@
                      obj.description = item.data["product.description"] ? item.data["product.description"].value[0].text : null;
 
                      obj.image = {};
+                     obj.quantity = 1;
 
                      obj.image.main = {};
                      obj.image.main.dimensions = {}
