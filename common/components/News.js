@@ -156,9 +156,9 @@ export default class News extends Component {
           <div className='right parent'>
              {this.props.state.insta.map(function (item, i) {
               return (
-                <div key={i}>
+                <a target='_blank' href={item.link} key={i}>
                   <img src={item.images.standard_resolution.url} />
-                </div>
+                </a>
               )
             }, this)}
           </div>

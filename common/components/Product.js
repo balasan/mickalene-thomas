@@ -32,14 +32,18 @@ export default class Product extends Component {
               </div>
            </ReactCSSTransitionGroup>
            <div className='info'>
-           <section className='left'>
-            <h1>{product.title}</h1>
-            <p>{product.description}</p>
-            </section>
-            <section className='right'>
-            <p className='price'>{product.price ? '$' : null}{product.price ? product.price : null}</p>
+
+           <section className='top'>
+             <h1>{product.title}</h1>
+             <p className='price'>{product.price ? '$' : null}{product.price ? product.price : null}</p>
+           </section>
+
+           <section className='bottom'>
+           <p className='description'>{product.description}</p>
             <button onClick={add.bind(this, product)}>add to shopping bag</button>
-            </section>
+           </section>
+
+
             </div>
         </section>
       )

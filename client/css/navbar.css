@@ -12,8 +12,6 @@ nav {
     left: 0;
     z-index: 999;
     height: 75px;
-
-    /*    padding: 1.5em;*/
     transition: height 300ms easeOutQuart;
 
     &.expand {
@@ -54,14 +52,29 @@ nav {
             display: inline-flex;
 
             a {
-                color: black;
-                font-family: 'Rockwell Bold', serif;
-                text-transform: uppercase;
-                letter-spacing: 2px;
                 margin: 0;
 
-                @media (--mobile) {
-                    display: none;
+                &.back {
+                    height: 20px;
+                    width: 20px;
+                    background-image: url("/images/left.svg");
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                     @media (--desktop) {
+                        display: none;
+                    }
+                }
+
+                &.logo {
+                    font-family: 'Rockwell Bold', serif;
+                    text-transform: uppercase;
+                    color: black;
+                    letter-spacing: 2px;
+
+                    @media (--mobile) {
+                        display: none;
+                    }
                 }
             }
 
@@ -73,11 +86,6 @@ nav {
                 font-size: 12px;
                 letter-spacing: 1.5px;
                 color: rgba(200, 200, 200, 1);
-
-                /*            background-image: url("/images/filter_arrow.svg");
-                            background-position: center right;
-                            background-repeat: no-repeat;*/
-
                 background: url("/images/filter_arrow.svg") no-repeat center right;
                 background-size: 21%;
                 padding: 0 1.25em 0 0;
@@ -99,52 +107,19 @@ nav {
                 align-items: center;
             }
 
-            .cart {
-                display: flex;
-                padding: 1em;
-
-                @media (--mobile) {
-                    padding: 0 0.75em 0 0;
-                }
-
-                align-items: center;
-
-                img {
-                    display: inline-block;
-                    margin: 0 0.5em 0 0;
-
-                    @media (--mobile) {
-                        height: auto;
-                        width: 20px;
-                    }
-                }
-
-                p {
-                    font-family: 'Futura Bold', sans-serif;
-                    font-size: 12px;
-
-                    @media (--mobile) {
-                        font-size: 10px;
-                    }
-
-                    display: inline-block;
-                    color: black;
-                    margin: 0;
-                    padding: 0;
-                }
-            }
-
             img {
                 opacity: 1;
                 transition: opacity 250ms easeOutQuart;
 
-                @media (--desktop) {
-                    height: 20px;
-                }
+                &.hamburger {
+                    @media (--desktop) {
+                        height: 20px;
+                    }
 
-                @media (--mobile) {
-                    height: auto;
-                    width: 25px;
+                    @media (--mobile) {
+                        height: auto;
+                        width: 25px;
+                    }
                 }
 
                 &.close {
@@ -160,6 +135,46 @@ nav {
                 }
 
                 cursor: pointer;
+            }
+
+            .cart {
+                display: flex;
+                padding: 0 1.5em 0 0;
+
+                @media (--mobile) {
+                    padding: 0 0.75em 0 0;
+                }
+
+                align-items: center;
+
+                img {
+                    display: inline-block;
+                    margin: 0 0.5em 0 0;
+
+                    @media (--mobile) {
+                        height: auto;
+                        width: 20px;
+                    }
+
+                    @media (--desktop) {
+                        height: auto;
+                        width: 20px;
+                    }
+                }
+
+                p {
+                    font-family: 'Futura Bold', sans-serif;
+                    font-size: 10px;
+
+                    @media (--mobile) {
+                        font-size: 10px;
+                    }
+
+                    display: inline-block;
+                    color: black;
+                    margin: 0;
+                    padding: 0;
+                }
             }
         }
 
@@ -191,7 +206,6 @@ nav {
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-            font-family: 'Futura Medium', sans-serif;
             letter-spacing: 1px;
             margin: 4px 0 0 0;
 
@@ -205,6 +219,7 @@ nav {
 
             a {
                 text-transform: uppercase;
+                font-family: 'Futura Medium', sans-serif;
                 margin: 0;
                 padding: 0.25em 1em;
                 font-size: 9px;

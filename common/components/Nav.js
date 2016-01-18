@@ -164,8 +164,9 @@ export default class Nav extends Component {
           <nav className={navClass}>
             <div className='top'>
             <section className='left'>
-              {path == 'works/i/:itemId' ? null : <Link to="/">mickalene thomas</Link>}
+              {path == 'works/i/:itemId' ? null : <Link className='logo' to="/">mickalene thomas</Link>}
               {path == 'works' || path == 'works/' || path == 'works/filter/:filter' || path == 'news/' || path == 'news' || path == 'news/filter/:filter' ? <p onClick={toggleExpand}>filter</p> : null}
+              {path == 'store/:itemId' ? <a href='/store' className='back'></a> : null}
             </section>
             <section className='middle'>
               {itemPage ? null : location}
@@ -174,7 +175,7 @@ export default class Nav extends Component {
             <section className='right'>
             {cart}
 
-              <img className={itemPage ? 'close' : ''} onClick={itemPage ? closeItem : toggleMenu} src={itemPage ? '../../images/close.svg' : '../../images/menu.svg'} />
+              <img className={itemPage ? 'close' : 'hamburger'} onClick={itemPage ? closeItem : toggleMenu} src={itemPage ? '../../images/close.svg' : '../../images/menu.svg'} />
             </section>
             </div>
             <div className={bottomClass}>
