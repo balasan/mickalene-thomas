@@ -18,7 +18,6 @@ export default class Store extends Component {
 
 
   render () {
-    console.log(this.props.state.store.cart, 'current cart')
 
     const { add } = this.props;
 

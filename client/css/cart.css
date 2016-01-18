@@ -1,0 +1,75 @@
+.cart {
+    .cartItem {
+        width: 100vw;
+        display: flex;
+        background-color: white;
+        border-bottom: 1px solid gray;
+        align-items: center;
+
+        p, h1 {
+            color: black;
+            margin: 0;
+        }
+
+        h1 {
+            font-family: 'Avenir Next Bold', sans-serif;
+            text-transform: uppercase;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-family: 'Avenir Next', sans-serif;
+            font-size: 12px;
+        }
+
+        section {
+            width: 25%;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+    }
+
+    .total {
+        width: 100vw;
+        display: flex;
+        background-color: white;
+        align-items: center;
+        padding: 1em;
+        justify-content: flex-end;
+
+        p, h1 {
+            color: black;
+            margin: 0;
+        }
+
+        h1 {
+            font-family: 'Avenir Next Bold', sans-serif;
+            text-transform: uppercase;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-family: 'Avenir Next', sans-serif;
+            font-size: 20px;
+        }
+    }
+
+    .holdButton {
+      width: 100%;
+      text-align: right;
+      padding: 2em;
+        button {
+            background-color: white;
+            padding: 0.5em 2em;
+            cursor: pointer;
+            border: none;
+            font-family: 'Avenir Next Bold', sans-serif;
+        }
+    }
+}

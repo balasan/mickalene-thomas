@@ -150,12 +150,12 @@ export default class Nav extends Component {
 
     var cart = null;
 
-    if (path == 'store' && this.props.state.store.cart || path == 'store/:itemId' && this.props.state.store.cart) {
+    if (path == 'store' && this.props.state.store.cart || path == 'store/:itemId' && this.props.state.store.cart ||  path == 'cart' && this.props.state.store.cart) {
       cart = (
-        <div className='cart'>
+        <Link to='/cart' className='cart'>
         <img src="../../images/cart.svg" />
         <p>{'X ' + this.props.state.store.cart.length}</p>
-        </div>
+        </Link>
         )
     }
 
@@ -166,7 +166,7 @@ export default class Nav extends Component {
             <section className='left'>
               {path == 'works/i/:itemId' ? null : <Link className='logo' to="/">mickalene thomas</Link>}
               {path == 'works' || path == 'works/' || path == 'works/filter/:filter' || path == 'news/' || path == 'news' || path == 'news/filter/:filter' ? <p onClick={toggleExpand}>filter</p> : null}
-              {path == 'store/:itemId' ? <a href='/store' className='back'></a> : null}
+              {path == 'store/:itemId' ? <Link to='/store' className='back'></Link> : null}
             </section>
             <section className='middle'>
               {itemPage ? null : location}

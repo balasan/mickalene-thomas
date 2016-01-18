@@ -9,6 +9,7 @@ import WorkParent from './containers/WorkParent';
 import StoreParent from './containers/StoreParent';
 import WorkItemParent from './containers/WorkItemParent';
 import ProductParent from './containers/ProductParent';
+import CartParent from './containers/CartParent';
 import NotFound from './containers/NotFound';
 
 var routes = {
@@ -23,6 +24,7 @@ var routes = {
     { path: 'store/:itemId', component: ProductParent },
     { path: 'works/filter/:filter', component: WorkParent },
     { path: 'news/filter/:filter', component: NewsParent },
+    { path: 'cart', component: CartParent },
     { path: 'contact', component: Contact },
     { path: 'store', component: StoreParent },
     { path: '*', component: NotFound }
