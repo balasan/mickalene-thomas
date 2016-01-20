@@ -23,10 +23,10 @@ export default class Cart extends Component {
       var cartEl = cart.map(function(item, i) {
         return (
           <div key={i} className='cartItem'>
-            <section>
+            <section className='image'>
               <img src={item.image.small.url} />
             </section>
-            <section>
+            <section className='description'>
               <h1>{item.title}</h1>
               <p>{item.description}</p>
             </section>
@@ -57,7 +57,6 @@ export default class Cart extends Component {
 
         </div>
         <div className='holdButton'>
-          <button>proceed to payment</button>
         </div>
       </div>
     )

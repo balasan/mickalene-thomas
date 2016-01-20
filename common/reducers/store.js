@@ -34,11 +34,12 @@ export default function news(state = initialState, action) {
       })
 
     case QUANTITY:
-      console.log(action.payload, 'quantity')
       if (!action.payload.value) {
         state.cart.forEach(function(item, i) {
           if (item.id === action.payload.id) {
-            item.quantity -= 1;
+            if (item.quantity > 0) {
+              item.quantity -= 1;
+            }
           }
         })
       } else if (action.payload.value) {

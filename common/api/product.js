@@ -45,6 +45,7 @@
                      obj.link = item.data["product.link"] ? item.data["product.link"].value.url : '';
                      obj.price = item.data["product.price"] ? item.data["product.price"].value : null;
                      obj.description = item.data["product.description"] ? item.data["product.description"].value[0].text : null;
+                     obj.sku = item.data["product.sku"] ? item.data["product.sku"].value[0].text : null;
 
                      obj.image = {};
                      obj.quantity = 1;
@@ -126,6 +127,7 @@
                      obj.medium = item.data["product.medium"] ? item.data["product.medium"].value[0].text : null;
                      obj.price = item.data["product.price"] ? item.data["product.price"].value : null;
                      obj.description = item.data["product.description"] ? item.data["product.description"].value[0].text : null;
+                     obj.sku = item.data["product.sku"] ? item.data["product.sku"].value[0].text : null;
 
                      obj.image = {};
                      obj.quantity = 1;

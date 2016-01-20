@@ -40,8 +40,6 @@ export default class Nav extends Component {
     var location = this.props.state.routing.path;
     var self = this;
 
-    console.log(this.props, 'nav props')
-
     const closeItem = function() {
        self.props.dispatch(updatePath('/works'))
     }

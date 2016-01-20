@@ -35,7 +35,7 @@ export default class Product extends Component {
 
            <section className='top'>
              <h1>{product.title}</h1>
-             <p className='price'>{product.price ? '$' : null}{product.price ? product.price : null}</p>
+             <p className='price'>{product.price ? '$' : null}{product.price ? product.price.toFixed(2) : null}</p>
            </section>
 
            <section className='bottom'>
