@@ -13,53 +13,65 @@ export default class StripeButton extends Component {
         return 'https://checkout.stripe.com/checkout.js';
     }
 
-    onScriptLoaded() {
+    componentDidMount() {
+      this.total = 0;
+      this.skus = [];
+    }
+
+    componentDidUpdate() {
+      this.total = 0;
+      this.skus = [];
+      this.cartData();
+    }
+
+    cartData() {
+      console.log('run cart data')
       var self = this;
       var cart = this.props.state.store.cart;
-      var total = 0;
-      var skus = [];
-
       cart.forEach(function(item, i) {
-        total += (item.price * item.quantity);
-        skus.push({'sku': item.sku, 'quantity': item.quantity});
+        self.total += (item.price * item.quantity);
+        self.skus.push({'sku': item.sku, 'quantity': item.quantity});
       });
+      this.configureStripe()
+    }
 
-        // Initialize the Stripe handler on the first onScriptLoaded call.
-        // This handler is shared by all StripeButtons on the page.
-        if (!StripeButton.stripeHandler) {
-            StripeButton.stripeHandler = StripeCheckout.configure({
-                key: 'pk_test_CZxc4aQDJvojPMDeQflnWvGe',
-                image: '/images/m.png',
-                billingAddress: true,
-                shippingAddress: true,
-                token: function(token) {
+    configureStripe() {
+      var self = this;
+      StripeButton.stripeHandler = StripeCheckout.configure({
+        key: 'pk_test_CZxc4aQDJvojPMDeQflnWvGe',
+        image: '/images/m.png',
+        billingAddress: true,
+        shippingAddress: true,
+        token: function(token) {
+          var formData = {
+            stripeToken: token,
+            total: self.total,
+            skus: self.skus
+          }
+          console.log('formData', formData)
 
-                  var formData = {
-                    stripeToken: token,
-                    total: total,
-                    skus: skus
-                  }
-                  console.log('formData', formData)
-
-                  var xmlhttp = new XMLHttpRequest();
-                  xmlhttp.open('POST', '/stripe', true);
-                  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-                  xmlhttp.send(JSON.stringify(formData));
-                  // Use the token to create the charge with a server-side script.
-                }
-            });
-            if (this.hasPendingClick) {
-                this.showStripeDialog();
-            }
+          var xmlhttp = new XMLHttpRequest();
+          xmlhttp.open('POST', '/stripe', true);
+          xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+          xmlhttp.send(JSON.stringify(formData));
         }
+      });
+    }
+
+    onScriptLoaded() {
+      var self = this;
+      if (!StripeButton.stripeHandler) {
+          this.configureStripe();
+      }
+      if (this.hasPendingClick) {
+          this.showStripeDialog();
+      }
     }
 
     showLoadingDialog() {
-        // show a loading dialog
     }
 
     hideLoadingDialog() {
-        // hide the loading dialog
     }
 
     showStripeDialog() {
