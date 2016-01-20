@@ -17,7 +17,7 @@ console.log(process.env.NODE_ENV)
 //-------------Dev server watch and hot reload---------------
 var isDevelopment = (process.env.NODE_ENV !== 'production');
 if (isDevelopment) {
-  console.log("DEV ENV!?!?");
+  console.log("dev env");
   var webpack = require('webpack');
   var webpackDevMiddleware = require('webpack-dev-middleware');
   var webpackHotMiddleware = require('webpack-hot-middleware');
@@ -45,15 +45,15 @@ app.get('/api/instagram', function(req, res) {
 });
 
 //Stripe
-app.get('/stripe', function(req, res, next) {
-  res.send("Scram!");
+app.get('/stripe', function(req, res) {
+  res.send("😇 😇 😇");
   console.log('get stripe')
 });
 
 // create application/json parser
 var jsonParser = bodyParser.json()
 
-app.post('/stripe', jsonParser, function(req, res, next) {
+app.post('/stripe', jsonParser, function(req, res) {
   console.log(req.body, 'req.body.cart')
 
   var stripeToken = req.body.stripeToken;
@@ -61,7 +61,7 @@ app.post('/stripe', jsonParser, function(req, res, next) {
   var items = [];
 
   req.body.skus.forEach(function(sku, i) {
-    items.push({type: 'sku', parent: sku})
+    items.push({type: 'sku', parent: sku.sku, quantity: sku.quantity})
   })
 
   console.log(items, 'items array')

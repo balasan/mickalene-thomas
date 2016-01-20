@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { updatePath } from 'redux-simple-router';
+import StripeButton from '../components/StripeButton';
 
 export default class Cart extends Component {
 
@@ -57,6 +58,7 @@ export default class Cart extends Component {
 
         </div>
         <div className='holdButton'>
+          <StripeButton { ...this.props }/>
         </div>
       </div>
     )

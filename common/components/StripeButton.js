@@ -18,10 +18,12 @@ export default class StripeButton extends Component {
       var cart = this.props.state.store.cart;
       var total = 0;
       var skus = [];
+
       cart.forEach(function(item, i) {
         total += (item.price * item.quantity);
-        skus.push(item.sku);
+        skus.push({'sku': item.sku, 'quantity': item.quantity});
       });
+
         // Initialize the Stripe handler on the first onScriptLoaded call.
         // This handler is shared by all StripeButtons on the page.
         if (!StripeButton.stripeHandler) {
@@ -96,7 +98,7 @@ export default class StripeButton extends Component {
       }
 
         return (
-            <button onClick={clickFunc}>Place order</button>
+            <button onClick={clickFunc}>Proceed to Payment</button>
         );
     }
 }

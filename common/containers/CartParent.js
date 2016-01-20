@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Cart from '../components/Cart';
-import StripeButton from '../components/StripeButton';
+
 import * as ProductActions from '../actions/product'
 
 if(process.env.BROWSER){
@@ -19,7 +19,7 @@ export default class CartParent extends Component {
     return (
       <div>
        <Cart { ...this.props }/>
-       <StripeButton { ...this.props }/>
+
       </div>
       )
   }
