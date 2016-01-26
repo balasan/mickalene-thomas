@@ -1,12 +1,36 @@
-.storeTxt {
-  height: calc(100vh - 75px);
-  background-color: black;
-  width: 100%;
-  display: flex;
-  padding: 4em 10vw;
-  h1 {
-    color: white;
-    font-size: 40px;
-    font-family: 'AvenirNextLTPro-Regular', sans-serif;
-  }
+@import "customMedia.css";
+
+.products {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+
+    a {
+        padding: 2em;
+        @media (--mobile) {
+            width: calc((100% - 6px) * 0.5);
+            height: 50vw;
+        }
+
+        @media (--desktop) {
+            width: calc((100% - 6px) * 0.33333333333);
+            height: 33vw;
+        }
+
+        cursor: pointer;
+        margin: 1px;
+        background-color: white;
+
+        img {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+        }
+
+        p {
+            color: black;
+            display: none;
+        }
+    }
 }

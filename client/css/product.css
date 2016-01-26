@@ -1,0 +1,125 @@
+@import "customMedia.css";
+
+.productShowcase {
+    @media (--desktop) {
+        height: calc(100vh - 75px);
+    }
+
+    @media (--mobile) {
+        height: 100%;
+        min-height: calc(100vh - 75px);
+    }
+
+    background-color: white;
+
+    .image {
+        text-align: center;
+        width: 100%;
+        max-width: 100vw;
+
+        img {
+            height: 70vh;
+            max-width: 100vw;
+            object-fit: contain;
+        }
+    }
+
+    .info {
+        bottom: 0;
+        width: 100%;
+        padding: 1em;
+        position: absolute;
+
+        section {
+            &.top, &.bottom {
+                display: flex;
+            }
+
+            &.top {
+                margin: 0 0 0.5em 0;
+
+                h1, p {
+                    width: 50%;
+                }
+
+                p {
+                    text-align: right;
+                }
+            }
+
+            &.bottom {
+                @media (--mobile) {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                p {
+                    @media (--desktop) {
+                        width: 70%;
+                        padding: 0 25% 0 0;
+                    }
+                }
+
+                button {
+                    @media (--desktop) {
+                        width: 30%;
+                    }
+
+                    @media (--mobile) {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        button {
+            font-family: 'Avenir Next Bold', sans-serif;
+            background-color: black;
+            color: white;
+            border: none;
+            text-transform: uppercase;
+            padding: 0.5em 2em;
+            cursor: pointer;
+            background-image: url("/images/t4.jpg");
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            letter-spacing: 1px;
+
+            @media (--mobile) {
+                width: 100%;
+            }
+        }
+
+        h1, p {
+            color: black;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-family: 'Avenir Next Bold', sans-serif;
+            font-weight: bolder;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 16px;
+        }
+
+        p {
+            font-family: 'Avenir Next', sans-serif;
+
+            &.description {
+                font-size: 12px;
+
+                @media (--mobile) {
+                    margin: 0 0 0.5em 0;
+                }
+            }
+
+            &.price {
+                font-size: 16px;
+            }
+        }
+    }
+}

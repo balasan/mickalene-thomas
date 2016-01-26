@@ -31,12 +31,13 @@
                      console.log(err);
                      done();
                  }
-                 console.log(response, 'news response')
+                 // console.log(response, 'news response')
                  var simple = [];
                  response.results.forEach(function(item) {
                      var obj = {}
                      obj.id = item.id;
                      obj.tags = item.tags;
+                      obj.type = item.type;
                      obj.title = item.data["news.title"].value[0].text;
                      obj.date = item.data["news.date"] ? item.data["news.date"].value : '';
                      obj.location = item.data["news.location"] ? item.data["news.location"].value[0].text : '';
@@ -93,7 +94,7 @@
                      simple.push(obj)
                  });
 
-                console.log(simple, 'news simple')
+                // console.log(simple, 'news simple')
                 callback(null, simple)
              })
      });

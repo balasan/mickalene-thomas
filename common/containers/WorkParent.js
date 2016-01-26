@@ -8,12 +8,19 @@ if(process.env.BROWSER){
   require('./../../client/css/work.css');
 }
 
-export default class Works extends Component {
+export default class WorkParent extends Component {
 
-  static fetchDataOnClient(dispatch, filter) {
+  static fetchWorkOnClient(dispatch, filter) {
     var { loadWork } = bindActionCreators(WorkActions, dispatch, filter)
     return Promise.all([
       loadWork(filter)
+    ])
+  }
+
+  static fetchNewsOnClient(dispatch) {
+    var { loadNews } = bindActionCreators(WorkActions, dispatch)
+    return Promise.all([
+      loadNews()
     ])
   }
 
@@ -25,9 +32,10 @@ export default class Works extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.works.length) {
-      this.constructor.fetchDataOnClient(this.props.dispatch, this.props.params.filter);
+    if (!this.props.works) {
+      this.constructor.fetchWorkOnClient(this.props.dispatch, this.props.params.filter)
     }
+       this.constructor.fetchNewsOnClient(this.props.dispatch);
   }
 
   componentWillUnmount() {
@@ -45,10 +53,10 @@ export default class Works extends Component {
 
 export default connect(
   state => {
-    return {works: state.works}
+    return {state: state}
   },
   dispatch => {
     return Object.assign({}, { dispatch },  bindActionCreators(WorkActions, dispatch))
-  })(Works)
+  })(WorkParent)
 
 

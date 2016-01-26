@@ -66,8 +66,11 @@ var flexImages = (function(){
                 el.style.transitionDelay = tDelay + 's';
                 el.style.WebkitTransitionDelay = tDelay + 's';
 
-                imgContainer.style.transitionDelay = tDelay + .1 +'s';
-                imgContainer.style.WebkitTransitionDelay = tDelay + .1 +'s';
+                if (imgContainer) {
+                    imgContainer.style.transitionDelay = tDelay + .1 +'s';
+                    imgContainer.style.WebkitTransitionDelay = tDelay + .1 +'s';
+                }
+
 
                 self.maxDelay = Math.max(self.maxDelay,tDelay)
             })
@@ -92,13 +95,24 @@ var flexImages = (function(){
             if (!containers.length) continue;
             var s = window.getComputedStyle ? getComputedStyle(containers[0], null) : containers[0].currentStyle;
             o.margin = (parseInt(s.marginLeft) || 0) + (parseInt(s.marginRight) || 0) + (Math.round(parseFloat(s.borderLeftWidth)) || 0) + (Math.round(parseFloat(s.borderRightWidth)) || 0);
+
             for (var j=0;j<containers.length;j++) {
-                var c = containers[j],
+                var isNews = containers[j].classList.contains("newsItem");
+                if (!isNews) {
+                    var c = containers[j],
                     w = parseInt(c.getAttribute('data-w')),
                     norm_w = w*(o.rowHeight/parseInt(c.getAttribute('data-h'))), // normalized width
                     obj = c.querySelector(o.object);
-                items.push([c, w, norm_w, obj, obj.getAttribute('data-src')]);
+                    items.push([c, w, norm_w, obj, obj.getAttribute('data-src')]);
+                } else {
+                    var c = containers[j],
+                    w = parseInt(c.getAttribute('data-w')),
+                    norm_w = w*(o.rowHeight/parseInt(c.getAttribute('data-h'))); // normalized width
+                    items.push([c, w, norm_w]);
+                }
+
             }
+
             makeGrid(grid, items, o);
             var tempf = function() { makeGrid(grid, items, o); };
             if (document.addEventListener) {

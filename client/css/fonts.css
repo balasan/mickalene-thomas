@@ -19,6 +19,11 @@
 }
 
 @font-face {
+    font-family: 'Avenir Next Bold';
+    src: url('/fonts/avenir-next-bold.ttf');
+}
+
+@font-face {
     font-family: 'MyriadPro-Regular';
     src: url('/fonts/MyriadPro-Regular.otf');
 }

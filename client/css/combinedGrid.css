@@ -1,0 +1,6 @@
+#combinedGrid {
+  pointer-events: none;
+  div, h1 {
+    pointer-events: none;
+  }
+}

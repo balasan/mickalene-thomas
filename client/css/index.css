@@ -20,6 +20,14 @@ body{
 
 }
 
+button:focus, input[type="button"]:focus {
+    outline: none;
+}
+
+a {
+    text-decoration: none;
+}
+
 main {
   padding: 75px 0 0 0;
   transition: opacity 300ms ease;
@@ -27,15 +35,6 @@ main {
     opacity: 0;
     pointer-events: none;
   }
-}
-
-article {
-    width: 100px;
-    height: 100px;
-    background-color: red;
-    display: inline-block;
-    margin: 1px;
-    padding: 0;
 }
 
 #webGLView{

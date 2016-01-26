@@ -106,14 +106,14 @@ function GLView() {
     // loader.load( "tree.js", treeLoaded );
     // loader.load( "butterfly.js", butterflyLoaded );
 
-    var aLight = new THREE.AmbientLight(new THREE.Color("hsl(0, 0%, 50%)"));
+    var aLight = new THREE.AmbientLight(new THREE.Color("hsl(0, 0%, 30%)"));
     scene.add(aLight);
 
-    var pLight = new THREE.PointLight(new THREE.Color(1, 1, 1), .7, 2000);
+    var pLight = new THREE.PointLight(new THREE.Color(1, 1, 1), .5, 2000);
     pLight.position.set(-100, -10, 800);
     scene.add(pLight);
 
-    var bottomLight = new THREE.PointLight(new THREE.Color(1, 1, 1), 1.7, 100);
+    var bottomLight = new THREE.PointLight(new THREE.Color(1, 1, 1), 0.7, 100);
     bottomLight.position.set(10, 60, 10);
     scene.add(bottomLight);
 
@@ -212,7 +212,7 @@ function GLView() {
     // textMaterial.color = new THREE.Color("hsl(0, 0%, 50%)");
     // textMaterial.specular = new THREE.Color("hsl(0, 0%, 30%)");
     // textMaterial.specular = new THREE.Color("hsl(0, 0%, 100%)");
-    textMaterial.shininess = 30;
+    textMaterial.shininess = 60;
     textMaterial.color = new THREE.Color("rgb(165,125,0)");
     textMaterial.specular = new THREE.Color("rgb(165,125,0)");
 

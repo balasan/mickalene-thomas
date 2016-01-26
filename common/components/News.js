@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as NewsActions from '../actions/news'
+import * as WorkActions from '../actions/work'
 import presets from '../presets';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -17,12 +17,35 @@ export default class News extends Component {
     this.c1 = document.getElementById("newsList1");
     this.c2 = document.getElementById("newsList2");
     this.animateIn();
+    setTimeout(function() {
+      self.scroll();
+    }, 100);
   }
 
+  componentWillReceiveProps() {
+  }
+
+  scroll() {
+    if (!this.props.location.hash) return;
+    var hash = this.props.location.hash.slice(1, this.props.location.hash.length);
+    var els = document.getElementsByClassName(hash);
+    var selectedEl = els[els.length-1];
+    if (!selectedEl.classList.contains('links-enter-active')) return;
+    var scrollSelf = this;
+    var scrollInterval = setInterval(function(){
+      var offTop = selectedEl.offsetTop + 7;
+      var scrollY = window.scrollY;
+      if (scrollY > offTop - 10 || scrollY == offTop) clearInterval(scrollInterval);
+      var newY = (offTop - scrollY);
+      if (scrollY < offTop) window.scrollTo(0, scrollY += (newY*0.1))
+     }, 10);
+  }
 
   componentDidUpdate() {
     var self = this;
     this.filterNews();
+    if(this.oldNews && JSON.stringify(this.news) == JSON.stringify(this.oldNews)) return;
+    this.oldNews = this.news;
     self.animateOut()
     self.animateIn()
   }
@@ -34,14 +57,14 @@ export default class News extends Component {
     const { state, params } = this.props;
     if (this.props.state.news) {
       if(params.filter) {
-        state.news.all.forEach(function(item) {
+        state.news.forEach(function(item) {
           if (item.tags.indexOf(params.filter) > -1) {
             self.news.push(item)
           }
         })
       }
       else {
-        this.news = this.props.state.news.all.slice();
+        this.news = this.props.state.news.slice();
       }
     }
   }
@@ -53,25 +76,34 @@ export default class News extends Component {
     this.container.innerHTML = "";
 
     this.news.forEach(function(item, i){
+      if (item.description) {
+        var description = `<p class='description'>${item.description}</p>`
+      } else {
+        var description = null;
+      }
+
       var el =
         `<section class='left'>
           ${item.image.main.url ? '<img src=' + item.image.main.url + ' />' : ''}
+          <article>
+          <h1>${item.title}</h1>
+          <p>${item.location}</p>
+          </article>
         </section>
         <section class='middle'>
-          <h1>${item.title}</h1>
-            <p class='location'>${item.location}</p>
-            <p class='description'>${item.description}</p>
+          <h1 class='desktop'>${item.title}</h1>
+            <p class='location desktop'>${item.location}</p>
+            ${description}
         </section>
         <section class='right'>
         ${item.link ? '<a href=' + item.link + ' target=_blank></a>' : ''}
-        </section>
-        </div>`
+        </section>`
       var div = document.createElement("div");
-      div.className = "links-enter"
+      div.className = "delay links-enter"
       div.innerHTML = el;
       self.container.appendChild(div);
       setTimeout(function(){
-        div.className += " links-enter-active";
+        div.className += " " + item.id + " links-enter-active";
       },10);
     })
   }
@@ -85,7 +117,7 @@ export default class News extends Component {
     var i = els.length
     while (i--) {
       var el = els[i]
-      console.log(el, 'el')
+      // console.log(el, 'el')
       clearClass(el,'links-enter');
       el.className += " links-leave";
       leaveActive(el);
@@ -126,9 +158,9 @@ export default class News extends Component {
           <div className='right parent'>
              {this.props.state.insta.map(function (item, i) {
               return (
-                <div key={i}>
+                <a target='_blank' href={item.link} key={i}>
                   <img src={item.images.standard_resolution.url} />
-                </div>
+                </a>
               )
             }, this)}
           </div>

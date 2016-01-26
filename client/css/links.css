@@ -1,14 +1,23 @@
+@import "customMedia.css";
+
 .linksParent {
     a {
         &.menuLink {
             pointer-events: auto;
             color: rgba(255, 255, 255, 1);
             display: inline-block;
-            font-family: 'Futura Bold', sans-serif;
+            font-family: 'Futura Medium', sans-serif;
             text-transform: uppercase;
+            font-weight: bolder;
             font-size: 60px;
             letter-spacing: 6px;
             padding: 0.25em;
+
+            @media (--mobile) {
+                font-size: 45px;
+
+            }
+
             &:hover {
                 color: rgba(255, 255, 255, 0.5);
             }
@@ -88,6 +97,7 @@
             width: 50%;
             display: flex;
             justify-content: flex-end;
+
             a {
                 pointer-events: auto;
             }
@@ -120,6 +130,7 @@
                 opacity: 1;
                 cursor: pointer;
                 transition: opacity 250ms easeOutQuart;
+
                 &:hover {
                     opacity: 0.5;
                 }
