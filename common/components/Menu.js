@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as MenuActions from '../actions/menu'
 
-export default class Menu extends Component {
+class Menu extends Component {
 
   render () {
     var filterType = this.props.params.filter;

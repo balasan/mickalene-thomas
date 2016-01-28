@@ -8,7 +8,7 @@ if(process.env.BROWSER){
   require('./../../client/css/work.css');
 }
 
-export default class WorkParent extends Component {
+class WorkParent extends Component {
 
   static fetchWorkOnClient(dispatch, filter) {
     var { loadWork } = bindActionCreators(WorkActions, dispatch, filter)
@@ -32,14 +32,15 @@ export default class WorkParent extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.works) {
+    if (!this.props.works)
       this.constructor.fetchWorkOnClient(this.props.dispatch, this.props.params.filter)
-    }
+    if(!this.props.news)
        this.constructor.fetchNewsOnClient(this.props.dispatch);
   }
 
   componentWillUnmount() {
-    this.constructor.clearItemOnClient(this.props.dispatch)
+    //whats going on here?
+    // this.constructor.clearItemOnClient(this.props.dispatch)
   }
 
   render () {

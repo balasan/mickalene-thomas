@@ -8,7 +8,7 @@ if(process.env.BROWSER){
   require('./../../client/css/work.css');
 }
 
-export default class WorkItemParent extends Component {
+class WorkItemParent extends Component {
 
   static fetchItemData(dispatch, params) {
     var id = params.itemId

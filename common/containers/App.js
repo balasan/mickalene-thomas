@@ -22,7 +22,7 @@ if (process.env.BROWSER) {
   require('./../../client/css/navbar.css');
 }
 
-export default class App extends Component {
+class App extends Component {
   render () {
     if (this.props.menu) {
       if (!this.props.menu.showMenu) {

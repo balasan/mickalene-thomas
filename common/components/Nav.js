@@ -7,7 +7,7 @@ import * as MenuActions from '../actions/menu'
 import { updatePath } from 'redux-simple-router';
 var classNames = require('classnames');
 
-export default class Nav extends Component {
+class Nav extends Component {
 
   static fetchWorkTags(dispatch) {
     var { loadWorkTags } = bindActionCreators(MenuActions, dispatch)
