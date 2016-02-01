@@ -107,7 +107,7 @@ export default class WorkItem extends Component {
               transitionEnterTimeout={0}
               transitionLeaveTimeout={0}>
               <div className="image" id="singleImage">
-           <img src={workItem.image.main.url} />
+           <img src={workItem.image.main.url} key={workItem.image.main.url} />
               </div>
            </ReactCSSTransitionGroup>
           <div className="description">
