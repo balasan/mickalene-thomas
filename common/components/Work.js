@@ -126,13 +126,13 @@ export default class Work extends Component {
     // }
     // console.log("DONE FILTER");
   }
-
+  
   handleScroll(e) {
-    //basic throttle
-    var self = this;
-    if (self.wait) {
-      //dont run code
-    } else {
+    //basic debounce
+    if (this.timeout) {
+    clearTimeout(this.timeout);
+    } 
+    this.timeout = setTimeout(function() {
       //run, but wait again
       var scrollTop = e.srcElement.body.scrollTop;
       var scrollHeight = e.srcElement.body.scrollHeight;
@@ -144,14 +144,9 @@ export default class Work extends Component {
           this.setState({});
         }
       }
-      self.wait = true; 
-      window.setTimeout(function() {
-        self.wait = false;
-      }, 400)
       console.log(scrollTop);
       console.log(e.srcElement.body.scrollHeight-e.srcElement.body.clientHeight);
-    }
-    
+    }.bind(this), 100);
   };
 
   render() {
