@@ -1,12 +1,86 @@
+@import "customMedia.css";
+
+.contactImg {
+  height: calc(100vh - 75px);
+  background-color: white;
+  background-image: url("/images/contact.jpg");
+  background-size: cover;
+  background-position: center center;
+}
 .contactTxt {
-    height: calc(100vh - 75px);
-  background-color: black;
+  background-color: white;
   width: 100%;
   display: flex;
-  padding: 4em 10vw;
-  h1 {
-    color: white;
-    font-size: 40px;
-    font-family: 'AvenirNextLTPro-Regular', sans-serif;
+  padding: 4em 15vw;
+
+  @media (--mobile) {
+    flex-direction: column-reverse;
+  }
+  section {
+    @media (--desktop) {
+      width: 50%;
+
+      &.studio {
+        text-align: center;
+
+        main {
+          margin: 0 auto;
+          text-align: left;
+          display: inline-block;
+          min-width: 300px;
+        }
+      }
+    }
+    h2, p, a {
+      color: black;
+      margin: 0;
+      font-size: 14px;
+      display: block;
+    }
+    p, a {
+      font-family: 'Avenir Next', sans-serif;
+    }
+    h2 {
+      font-family: 'Avenir Next Demi', sans-serif;
+      text-transform: uppercase;
+    }
+    article {
+      margin: 0 0 1.5em 0;
+
+      div {
+        margin: 0 0 0.75em 0;
+      }
+    }
+  }
+  .newsletter {
+    display: flex;
+
+    input, button {
+      display: inline-block;
+      font-family: 'Avenir Next', sans-serif;
+      font-size: 14px;
+      @media (--mobile) {
+        font-size: 12px;
+      }
+      padding: 0.5em;
+      border: solid 2px #ccc;
+    }
+    input {
+      color: #ccc;
+      width: calc(100% - 95px);
+      margin: 0 5px 0 0;
+    }
+    button {
+      background-color: #ccc;
+      color: white;
+      width: 90px;
+      cursor: pointer;
+      transition: background-color 150ms ease-out, color 250ms ease-out;
+
+      &:hover {
+        background-color: white;
+        color: #ccc;
+      }
+    }
   }
 }

@@ -16,6 +16,7 @@ export default class StripeButton extends Component {
     componentDidMount() {
       this.total = 0;
       this.skus = [];
+      this.cartData();
     }
 
     componentDidUpdate() {
@@ -76,16 +77,16 @@ export default class StripeButton extends Component {
 
     showStripeDialog() {
       var self = this;
-      var total = 0;
+      // var total = 0;
       var cart = this.props.state.store.cart;
-      cart.forEach(function(item, i) {
-        total += (item.price * item.quantity);
-      })
+      // cart.forEach(function(item, i) {
+      //   total += (item.price * item.quantity);
+      // })
       this.hideLoadingDialog();
       StripeButton.stripeHandler.open({
         name: 'Mickalene Thomas',
-        description: cart.length > 1 ? cart.length + ' items ($' + total.toFixed(2) + ')' : cart.length + ' item ($' + total.toFixed(2) + ')',
-        amount: total*100
+        description: cart.length > 1 ? cart.length + ' items ($' + self.total.toFixed(2) + ')' : cart.length + ' item ($' + self.total.toFixed(2) + ')',
+        amount: self.total*100
       });
     }
 

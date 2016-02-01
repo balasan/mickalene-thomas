@@ -38,7 +38,6 @@
         padding: 2em 10vw;
 
         @media (--mobile) {
-/*            text-align: center;*/
              padding: 2em 10vw;
              font-size: 28px;
         }
@@ -52,9 +51,6 @@
         background-color: white;
         color: black;
         @media (--mobile) {
-/*            text-align: center;*/
-     /*        padding: 4em 10vw;*/
- /*            font-size: 28px;*/
         }
     }
 }

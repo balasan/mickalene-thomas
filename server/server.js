@@ -47,14 +47,11 @@ app.get('/api/instagram', function(req, res) {
 //Stripe
 app.get('/stripe', function(req, res) {
   res.send("😇 😇 😇");
-  console.log('get stripe')
 });
 
-// create application/json parser
 var jsonParser = bodyParser.json()
 
 app.post('/stripe', jsonParser, function(req, res) {
-  console.log(req.body, 'req.body.cart')
 
   var stripeToken = req.body.stripeToken;
   var total = req.body.total;
@@ -64,41 +61,54 @@ app.post('/stripe', jsonParser, function(req, res) {
     items.push({type: 'sku', parent: sku.sku, quantity: sku.quantity})
   })
 
-  console.log(items, 'items array')
+  console.log(items, 'items')
 
-stripe.orders.create({
-  currency: 'usd',
-  items: items,
-  shipping: {
-    name: stripeToken.card.name,
-    address: {
-      line1: stripeToken.card.address_line1,
-      city: stripeToken.card.address_city,
-      country: stripeToken.card.country,
-      postal_code: stripeToken.card.address_zip
+  console.log(items.length, 'items length')
+
+  stripe.orders.create({
+    currency: 'usd',
+    items: items,
+    shipping: {
+      name: stripeToken.card.name,
+      address: {
+        line1: stripeToken.card.address_line1,
+        city: stripeToken.card.address_city,
+        country: stripeToken.card.country,
+        postal_code: stripeToken.card.address_zip
+      }
+    },
+    email: stripeToken.email
+    }, function(err, order) {
+      console.log(err, 'order create error');
+  });
+
+  var charge = stripe.charges.create({
+    amount: total*100,
+    currency: "usd",
+    card: stripeToken.id,
+    description: items.length > 1 ? items.length + " items from Mickalene Thomas store" : "1 item from Mickalene Thomas store",
+    receipt_email: stripeToken.email
+  }, function(err, charge) {
+    if (err && err.type === 'StripeCardError') {
+      console.log(err, 'stripe card error')
+    } else if (err) {
+      console.log(err, 'charge error')
+    } else {
+      console.log('successful')
     }
-  },
-  email: stripeToken.email
-}, function(err, order) {
-    console.log(err, 'order create error');
+  });
 
-});
-
-var charge = stripe.charges.create({
-  amount: total*100,
-  currency: "usd",
-  card: stripeToken.id,
-  description: "Example charge"
-}, function(err, charge) {
-  if (err && err.type === 'StripeCardError') {
-    console.log(err, 'stripe card error')
-  } else if (err) {
-    console.log(err, 'charge error')
-  } else {
-    console.log('successful')
-  }
-});
-
+// stripe.customers.create({
+//   source: stripeToken,
+//   description: stripeToken.email
+// }).then(function(customer) {
+//   return stripe.charges.create({
+//     amount: total*100, // amount in cents, again
+//     currency: "usd",
+//     customer: customer.id,
+//     receipt_email: stripeToken.email
+//   });
+// })
 });
 
 //public folder

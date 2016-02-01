@@ -27,7 +27,7 @@ class App extends Component {
     if (this.props.menu) {
       if (!this.props.menu.showMenu) {
         var main = (
-           <ReactCSSTransitionGroup component='main' transitionName="main" transitionAppear={true}
+           <ReactCSSTransitionGroup component='main' className='main-container' transitionName="main" transitionAppear={true}
               transitionAppearTimeout={500} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
               {this.props.children}
             </ReactCSSTransitionGroup>)

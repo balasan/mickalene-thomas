@@ -1,7 +1,6 @@
 * {
     box-sizing: border-box;
 }
-
 $pink: red;
 
 html, body {
@@ -15,39 +14,34 @@ html, body {
     font-family: sans-serif;
     height: 100%;
 }
-
-body{
-
+body {
 }
-
 button:focus, input[type="button"]:focus {
     outline: none;
 }
-
 a {
     text-decoration: none;
 }
-
 main {
-  padding: 75px 0 0 0;
-  transition: opacity 300ms ease;
-  &.hide {
-    opacity: 0;
-    pointer-events: none;
-  }
-}
+    &.main-container {
+        padding: 75px 0 0 0;
+        transition: opacity 300ms ease;
 
-#webGLView{
-    width:100%;
-    height:100%;
-    position:fixed;
-    top:0;
-    left:0;
+        &.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+    }
 }
-
-#app{
-    position:relative;
+#webGLView {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
-
+#app {
+    position: relative;
+}
 @import "customMedia.css";
 @import "fonts.css";

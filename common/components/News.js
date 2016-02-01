@@ -83,8 +83,7 @@ export default class News extends Component {
       }
 
       var el =
-        `<section class='left'>
-          ${item.image.main.url ? '<img src=' + item.image.main.url + ' />' : ''}
+        `<section class='left' ${item.image.main.url ? 'style="background-image: url(' + item.image.main.url + ')"' : ''}>
           <article>
           <h1>${item.title}</h1>
           <p>${item.location}</p>
@@ -117,7 +116,6 @@ export default class News extends Component {
     var i = els.length
     while (i--) {
       var el = els[i]
-      // console.log(el, 'el')
       clearClass(el,'links-enter');
       el.className += " links-leave";
       leaveActive(el);
@@ -145,7 +143,6 @@ export default class News extends Component {
         });
         el.className = classes.join(" ").trim();
     }
-
   }
 
   render () {

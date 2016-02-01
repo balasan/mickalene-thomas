@@ -20,7 +20,11 @@
 
 @font-face {
     font-family: 'Avenir Next Bold';
-    src: url('/fonts/avenir-next-bold.ttf');
+    src: url('/fonts/AvenirNextLTPro-Bold.otf');
+}
+@font-face {
+    font-family: 'Avenir Next Demi';
+    src: url('/fonts/AvenirNextLTPro-Demi.otf');
 }
 
 @font-face {
