@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Work from '../components/Work';
 import * as WorkActions from '../actions/work'
 
-if(process.env.BROWSER){
+if (process.env.BROWSER) {
   require('./../../client/css/work.css');
 }
 
@@ -32,10 +32,12 @@ class WorkParent extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.works)
-      this.constructor.fetchWorkOnClient(this.props.dispatch, this.props.params.filter)
-    if(!this.props.news)
+    if (!this.props.works) {
+      this.constructor.fetchWorkOnClient(this.props.dispatch, this.props.params.filter);
+    }
+    if (!this.props.news) {
        this.constructor.fetchNewsOnClient(this.props.dispatch);
+    }
   }
 
   componentWillUnmount() {
@@ -43,7 +45,7 @@ class WorkParent extends Component {
     // this.constructor.clearItemOnClient(this.props.dispatch)
   }
 
-  render () {
+  render() {
     return (
       <div>
         <Work { ...this.props }/>
