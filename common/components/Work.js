@@ -96,7 +96,7 @@ export default class Work extends Component {
       }
     }).slice(0, this.worksLimit);
 
-    if (state.news) {
+    if (state.news && !params.filter) {
       state.news.forEach(function(item, i) {
         self.works.splice((i*4), 0, item);
       });
