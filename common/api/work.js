@@ -103,10 +103,10 @@
 
  function fetchWork(callback) {
     var allWork = [];
-    var totalPages = 0;
+    // var totalPages = 0;
 
     function callbackFunc() {
-        console.log('callbackFunc');
+        console.log(allWork, 'callbackFunc');
         callback(null, allWork);
     }
 
@@ -114,33 +114,34 @@
          Api.form('everything').ref(Api.master())
              .query(
                  prismic.Predicates.at("document.type", "work")
-         ).submit(function(err, response) {
+         ).pageSize(20).submit(function(err, response) {
              if (err) {
                  console.log(err);
                  callback();
              }
 
              console.log(response, 'response results');
-             totalPages = response.total_pages;
+             var totalPages = response.total_pages;
              pageLoop(totalPages)
          });
      });
 
-     function pageLoop() {
+     function pageLoop(totalPages) {
          var currentPage = 0;
 
-         for (currentPage = 0; currentPage <= totalPages; currentPage++) {
-             pageQuery(currentPage);
+         for (currentPage = 0; currentPage < totalPages; currentPage++) {
+             pageQuery(currentPage, totalPages);
+             if (currentPage == totalPages - 1) callbackFunc();
          }
      }
 
-     function pageQuery(currentPage) {
+     function pageQuery(currentPage, totalPages) {
          prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
              Api.form('everything')
                  .ref(Api.master())
                  .query(
                      prismic.Predicates.at("document.type", "work")
-             ).submit(function(err, response) {
+             ).pageSize(20).submit(function(err, response) {
                  if (err) {
                      console.log(err);
                      callback();
@@ -203,7 +204,7 @@
 
 
                      allWork.push(obj);
-                     if (currentPage == totalPages && i == response.results.length - 1) callbackFunc();
+                     // if (currentPage == totalPages - 1 && i == response.results.length - 1) callbackFunc();
                  });
              })
          });
