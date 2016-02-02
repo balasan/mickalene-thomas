@@ -25,15 +25,11 @@ if (process.env.BROWSER) {
 class App extends Component {
   render () {
     if (this.props.menu) {
-      if (!this.props.menu.showMenu) {
         var main = (
            <ReactCSSTransitionGroup component='main' className='main-container' transitionName="main" transitionAppear={true}
               transitionAppearTimeout={500} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
-              {this.props.children}
-            </ReactCSSTransitionGroup>)
-      } else {
-        var main = null;
-      }
+              {!this.props.menu.showMenu ? this.props.children : null}
+            </ReactCSSTransitionGroup>);
     }
 
     return (

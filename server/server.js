@@ -82,10 +82,22 @@ app.post('/stripe', jsonParser, function(req, res) {
       console.log(err, 'order create error');
   });
 
+
+//   var customer = stripe.customers.create({
+//   description: stripeToken.email,
+//   source: stripeToken.id,
+//     email: stripeToken.email
+// }, function(err, customer) {
+//       if (err) console.log(err, 'customer error')
+// });
+
+
+console.log(customer, 'customer')
   var charge = stripe.charges.create({
     amount: total*100,
     currency: "usd",
-    card: stripeToken.id,
+    // card: stripeToken.id,
+    customer: customer.id,
     description: items.length > 1 ? items.length + " items from Mickalene Thomas store" : "1 item from Mickalene Thomas store",
     receipt_email: stripeToken.email
   }, function(err, charge) {
@@ -99,7 +111,7 @@ app.post('/stripe', jsonParser, function(req, res) {
   });
 
 // stripe.customers.create({
-//   source: stripeToken,
+//   source: stripeToken.card,
 //   description: stripeToken.email
 // }).then(function(customer) {
 //   return stripe.charges.create({

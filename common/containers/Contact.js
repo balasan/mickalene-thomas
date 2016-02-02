@@ -35,6 +35,7 @@ export default class Contact extends Component {
           self.galleriesEl = `<div>
             <h2>${gallery.name}</h2>
             <p>${gallery.address}</p>
+            ${gallery.address2 ? '<p>' + gallery.address2 + '</p>' : ''}
             <p>${gallery.city}, ${gallery.state} ${gallery.zipcode}</p>
           </div>
           <div>
@@ -56,10 +57,11 @@ export default class Contact extends Component {
         self.studioEl = `<article>
             <div>
               <h2>${studioInfo.name}</h2>
-              <p>${studioInfo.email}</p>
+              <a href=${'mailto:' + studioInfo.email}>${studioInfo.email}</a>
             </div>
             <div>
               <p>${studioInfo.address}</p>
+              ${studioInfo.address2 ? '<p>' + studioInfo.address2 + '</p>' : ''}
               <p>${studioInfo.city}, ${studioInfo.state} ${studioInfo.zipcode}</p>
             </div>
           </article>
