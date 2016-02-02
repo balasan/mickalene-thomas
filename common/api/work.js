@@ -106,21 +106,21 @@ function fetchWork(callback) {
     prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
         Api.form('everything')
             .ref(Api.master())
-            .query(prismic.Predicates.at("document.type", "work")).pageSize(100).submit(function(err, response) {
+            .query(prismic.Predicates.at("document.type", "work")).pageSize(10).submit(function(err, response) {
                 if (err) {
                     console.log(err);
                     callback();
                 }
-                var simple = [];
-                console.log(response, 'prismic response')
 
-                var i = 0;
+                var currentPage = 0;
                 var totalPages = response.total_pages;
+                var pageArray = [];
 
-                for (i = 0; i < totalPages; i++) {
+                for (currentPage = 0; currentPage < totalPages; currentPage++) {
 
-                    runPages(function(pages) {
+                    runPages(function() {
                         function shuffle(array) {
+
                             var currentIndex = array.length,
                                 temporaryValue, randomIndex;
 
@@ -137,25 +137,23 @@ function fetchWork(callback) {
                             return array;
                         }
 
-                        shuffle(pages)
+                        shuffle(pageArray);
 
-                        callback(null, pages);
+                        callback(null, pageArray);
                     })
 
                     function runPages(pagesCallback) {
-                        var pageArray = [];
+
                         prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
                             Api.form('everything')
                                 .ref(Api.master())
-                                .query(prismic.Predicates.at("document.type", "work")).pageSize(100).page(i).submit(function(err, response) {
+                                .query(prismic.Predicates.at("document.type", "work")).pageSize(10).page(currentPage).submit(function(err, response) {
                                     if (err) {
                                         console.log(err);
                                         callback();
                                     }
-                                    console.log(response, 'page num ' + i + ' response')
+
                                     response.results.forEach(function(item, i) {
-
-
                                         var obj = {}
                                         obj.id = item.id;
                                         obj.tags = item.tags;
@@ -212,7 +210,8 @@ function fetchWork(callback) {
 
 
                                         pageArray.push(obj)
-                                        if (i == response.results.length - 1) pagesCallback(pageArray);
+                                        if (currentPage == totalPages) pagesCallback();
+
                                     });
                                 })
                         });
