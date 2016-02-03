@@ -15,6 +15,10 @@ function GLView() {
   var camera, scene, renderer;
   var cameraTarget = new THREE.Vector3(0, 0, -100);
   var cameraExtra = new THREE.Vector2(0, 0);
+  var wall;
+  var WIDTH;
+  var HEIGHT;
+  var corner = false;
 
   var controls;
 
@@ -109,7 +113,7 @@ function GLView() {
     var aLight = new THREE.AmbientLight(new THREE.Color("hsl(0, 0%, 30%)"));
     scene.add(aLight);
 
-    var pLight = new THREE.PointLight(new THREE.Color(1, 1, 1), .5, 2000);
+    var pLight = new THREE.PointLight(new THREE.Color(1, 1, 1), .7, 2000);
     pLight.position.set(-100, -10, 800);
     scene.add(pLight);
 
@@ -213,8 +217,8 @@ function GLView() {
     // textMaterial.specular = new THREE.Color("hsl(0, 0%, 30%)");
     // textMaterial.specular = new THREE.Color("hsl(0, 0%, 100%)");
     textMaterial.shininess = 60;
-    textMaterial.color = new THREE.Color("rgb(165,125,0)");
-    textMaterial.specular = new THREE.Color("rgb(165,125,0)");
+    textMaterial.color = new THREE.Color("rgb(215,195,0)");
+    textMaterial.specular = new THREE.Color("rgb(165,125,100)");
 
 
     var sideMaterial = greyMaterial.clone()
@@ -233,12 +237,12 @@ function GLView() {
     plane.rotation.x = -Math.PI / 2;
     // scene.add(plane);
 
-    var plane = new THREE.Mesh(planeGeometry, texture3);
+    wall = new THREE.Mesh(planeGeometry, texture3);
     // plane.position.y = -100;
-    plane.position.z = -1000;
+    wall.position.z = -1000;
     // plane.rotation.y = -Math.PI / 7;
-    plane.scale.set(20, 20, 20);
-    scene.add(plane);
+    wall.scale.set(20, 20, 20);
+    scene.add(wall);
 
 
     logo = new THREE.Object3D();
@@ -317,6 +321,7 @@ function GLView() {
     //   logo.add(text);
     // });
 
+    onWindowResize()
     render();
   }
 
@@ -324,6 +329,9 @@ function GLView() {
 
     var w = window.innerWidth;
     var h = window.innerHeight;
+
+    WIDTH = w;
+    HEIGHT = w;
 
     renderer.setSize(w, h);
     camera.aspect = w / h;
@@ -380,9 +388,18 @@ function GLView() {
       delta = 1000 / 60;
     }
 
-    camera.position.x += (mouse.x / 10 - camera.position.x) * .05;
-    camera.position.y += (- mouse.y / 10 - camera.position.y) * .05;
-    camera.lookAt(scene.position);
+    if (corner) {
+      // wall.rotation.y += (.5 * mouse.x / WIDTH - wall.rotation.y) * .05;
+      // wall.rotation.x += (.5 * mouse.y / HEIGHT - wall.rotation.x) * .05;
+      logo.rotation.y += (.7 * mouse.x / WIDTH - logo.rotation.y) * .05;
+      logo.rotation.x += (.7 * mouse.y / HEIGHT - logo.rotation.x) * .05;
+    }
+    else {
+      camera.position.x += (mouse.x / 10 - camera.position.x) * .05;
+      camera.position.y += (- mouse.y / 10 - camera.position.y) * .05;
+      camera.lookAt(scene.position);
+    }
+
 
     // controls.update();
     var optimalDivider = delta / 16;
@@ -393,14 +410,14 @@ function GLView() {
     }
   }
 
-  this.start = function(){
+  this.start = function() {
     stop = false;
     animate();
   }
-  this.add = function(){
+  this.add = function() {
     scene.add(logo);
   }
-  this.stop = function(){
+  this.stop = function() {
     camera.position.x = 0;
     camera.position.y = 0;
     stop = true;
