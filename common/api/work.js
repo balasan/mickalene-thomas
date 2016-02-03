@@ -141,7 +141,7 @@
                  .ref(Api.master())
                  .query(
                      prismic.Predicates.at("document.type", "work")
-             ).pageSize(20).submit(function(err, response) {
+             ).page(currentPage).pageSize(20).submit(function(err, response) {
                  if (err) {
                      console.log(err);
                      callback();
