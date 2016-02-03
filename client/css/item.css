@@ -14,12 +14,14 @@
 
     img {
         backface-visibility: hidden;
-        transition: opacity .5s easeOutQuart;
-        opacity: 0.45;
+        -webkit-backface-visibility: hidden;
+        transition: opacity .5s easeOutQuart, filter .5s easeOutQuart;
+        opacity: 0.5;
+/*        filter: blur(2px);*/
 
-        &.zoom {
+   /*     &.zoom {
             transform: scale(1.2);
-        }
+        }*/
     }
 
     .text {
@@ -44,14 +46,14 @@
             font-size: 12px;
             font-family: 'Avenir Next', sans-serif;
             font-style: italic;
-/*            letter-spacing: 1.5px;*/
             text-align: center;
         }
     }
 
     &:hover {
         img {
-            opacity: 0.75;
+            opacity: 1;
+    /*        filter: blur(0px);*/
         }
 
         .text {
@@ -63,7 +65,7 @@
         cursor: pointer;
 
         .textNews {
-            transition: background-color .5s easeOutQuart;
+            transition: background-color .5s easeOutQuart, filter .5s easeOutQuart;
             background-color: rgba(197, 2, 11, 0.5);
             display: flex;
             justify-content: center;
@@ -72,6 +74,7 @@
             height: 100%;
             width: 100%;
             padding: 15px;
+/*            filter:blur(2px);*/
 
             p {
                 font-style: italic;
@@ -107,6 +110,7 @@
         &:hover {
             .textNews {
                 background-color: rgba(197, 2, 11, 1);
+     /*           filter:blur(0px);*/
                 p {
                     color: rgba(255,255,255,1)
                 }

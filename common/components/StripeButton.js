@@ -16,7 +16,7 @@ export default class StripeButton extends Component {
     componentDidMount() {
       this.total = 0;
       this.skus = [];
-      this.cartData();
+      // this.cartData();
     }
 
     componentDidUpdate() {
@@ -62,6 +62,7 @@ export default class StripeButton extends Component {
     onScriptLoaded() {
       var self = this;
       if (!StripeButton.stripeHandler) {
+          this.cartData();
           this.configureStripe();
       }
       if (this.hasPendingClick) {

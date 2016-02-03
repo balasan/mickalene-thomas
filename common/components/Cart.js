@@ -50,15 +50,15 @@ export default class Cart extends Component {
 
     return (
       <div className="cart">
+        <div className="cart-items">
         {cartEl}
+        </div>
         <div className='total'>
           <h1>total</h1>
-
           <p>{'$' + total.toFixed(2)}</p>
-
-        </div>
-        <div className='holdButton'>
+          <div className='holdButton'>
           <StripeButton { ...this.props }/>
+          </div>
         </div>
       </div>
     )

@@ -1,4 +1,12 @@
+@import "customMedia.css";
+
 .cart {
+    min-height: calc(100vh - 75px);
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
     .cartItem {
         width: 100vw;
         display: flex;
@@ -6,11 +14,14 @@
         border-bottom: 1px solid gray;
         align-items: center;
 
+        @media (--mobile) {
+            flex-wrap: wrap;
+            padding: 1em 0;
+        }
         p, h1 {
             color: black;
             margin: 0;
         }
-
         h1 {
             font-family: 'Avenir Next Bold', sans-serif;
             text-transform: uppercase;
@@ -18,38 +29,47 @@
             margin: 0 0 1em 0;
             letter-spacing: 1px;
         }
-
         p {
             font-family: 'Avenir Next', sans-serif;
             font-size: 12px;
         }
-
         section {
             &.description {
                 width: 40%;
+                @media (--mobile) {
+                    width: 50%;
+                }
             }
-
             &.price {
                 text-align: center;
                 width: 20%;
+
+                @media (--mobile) {
+                    display: flex;
+                    width: 75%;
+                    justify-content: flex-end;
+                }
+
                 p {
                     font-size: 16px;
                 }
             }
-
             &.quantity {
                 width: 20%;
                 display: flex;
                 justify-content: center;
 
+                @media (--mobile) {
+                    width: 25%;
+                    justify-content: flex-end;
+                }
+
                 p, button {
                     font-size: 16px;
                 }
-
                 p {
                     transform: translateY(3px);
                 }
-
                 button {
                     border: none;
                     background-color: transparent;
@@ -57,10 +77,12 @@
                     cursor: pointer;
                 }
             }
-
             &.image {
                 width: 20%;
 
+                @media (--mobile) {
+                    width: 50%;
+                }
                 img {
                     width: 100%;
                     height: 100px;
@@ -70,7 +92,6 @@
             }
         }
     }
-
     .total {
         width: 100vw;
         display: flex;
@@ -83,32 +104,36 @@
             color: black;
             margin: 0;
         }
-
         h1 {
             font-family: 'Avenir Next Bold', sans-serif;
             text-transform: uppercase;
             font-size: 12px;
             letter-spacing: 1px;
         }
-
         p {
             font-family: 'Avenir Next', sans-serif;
             font-size: 20px;
-            margin: 3px 0 0 0.5em;
+            margin: 0 0 0 0.5em;
         }
     }
-
     .holdButton {
-        width: 100%;
         text-align: right;
-        padding: 2em;
+        padding: 0 0 0 1em;
 
         button {
-            background-color: white;
+            background-color: black;
             padding: 0.5em 2em;
             cursor: pointer;
+            color: white;
             border: none;
+            transition: color 150ms ease-out, background-color 150ms ease-out;
             font-family: 'Avenir Next Bold', sans-serif;
+            border: 2px solid black;
+
+            &:hover {
+                background-color: white;
+                color: black;
+            }
         }
     }
 }

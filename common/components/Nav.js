@@ -150,7 +150,7 @@ class Nav extends Component {
 
     if (path == 'store' && this.props.state.store.cart || path == 'store/:itemId' && this.props.state.store.cart ||  path == 'cart' && this.props.state.store.cart) {
       cart = (
-        <Link to='/cart' className='cart'>
+        <Link to='/cart' className='cart-icon'>
         <img src="../../images/cart.svg" />
         <p>{'X ' + this.props.state.store.cart.length}</p>
         </Link>

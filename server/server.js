@@ -11,24 +11,26 @@ var stripe = require('stripe')('sk_test_4y83aHU2CwVFqFvE8jK1xNMB');
 
 const app = new Express()
 
-require('dotenv').config({silent: true});
+require('dotenv').config({
+    silent: true
+});
 console.log(process.env.NODE_ENV)
 
 //-------------Dev server watch and hot reload---------------
 var isDevelopment = (process.env.NODE_ENV !== 'production');
 if (isDevelopment) {
-  console.log("dev env");
-  var webpack = require('webpack');
-  var webpackDevMiddleware = require('webpack-dev-middleware');
-  var webpackHotMiddleware = require('webpack-hot-middleware');
-  var webpackConfig = require('../webpack.config');
-  // Use this middleware to set up hot module reloading via webpack.
-  const compiler = webpack(webpackConfig)
-  app.use(webpackDevMiddleware(compiler, {
-    noInfo: true,
-    publicPath: webpackConfig.output.publicPath,
-  }))
-  app.use(webpackHotMiddleware(compiler))
+    console.log("dev env");
+    var webpack = require('webpack');
+    var webpackDevMiddleware = require('webpack-dev-middleware');
+    var webpackHotMiddleware = require('webpack-hot-middleware');
+    var webpackConfig = require('../webpack.config');
+    // Use this middleware to set up hot module reloading via webpack.
+    const compiler = webpack(webpackConfig)
+    app.use(webpackDevMiddleware(compiler, {
+        noInfo: true,
+        publicPath: webpackConfig.output.publicPath,
+    }))
+    app.use(webpackHotMiddleware(compiler))
 }
 app.use(morgan('dev'));
 
@@ -39,88 +41,75 @@ Instagram.set('client_secret', 'b38cc163d4f44e80aa23cf5f513088c8');
 Instagram.set('access_token', '2460658527.1677ed0.ce2225bfbd194a6f939bca44d02c3017');
 
 app.get('/api/instagram', function(req, res) {
-  Instagram.users.recent({user_id: 2460658527, complete: function(data) {
-    res.json(data);
-  }});
+    Instagram.users.recent({
+        user_id: 2460658527,
+        complete: function(data) {
+            res.json(data);
+        }
+    });
 });
 
 //Stripe
 app.get('/stripe', function(req, res) {
-  res.send("😇 😇 😇");
+    res.send("😇 😇 😇");
 });
 
 var jsonParser = bodyParser.json()
 
 app.post('/stripe', jsonParser, function(req, res) {
 
-  var stripeToken = req.body.stripeToken;
-  var total = req.body.total;
-  var items = [];
+    var stripeToken = req.body.stripeToken;
+    var total = req.body.total;
+    var items = [];
 
-  req.body.skus.forEach(function(sku, i) {
-    items.push({type: 'sku', parent: sku.sku, quantity: sku.quantity})
-  })
+    req.body.skus.forEach(function(sku, i) {
+        items.push({
+            type: 'sku',
+            parent: sku.sku,
+            quantity: sku.quantity
+        })
+    });
 
-  console.log(items, 'items')
-
-  console.log(items.length, 'items length')
-
-  stripe.orders.create({
-    currency: 'usd',
-    items: items,
-    shipping: {
-      name: stripeToken.card.name,
-      address: {
-        line1: stripeToken.card.address_line1,
-        city: stripeToken.card.address_city,
-        country: stripeToken.card.country,
-        postal_code: stripeToken.card.address_zip
-      }
-    },
-    email: stripeToken.email
-    }, function(err, order) {
-      console.log(err, 'order create error');
-  });
-
-
-//   var customer = stripe.customers.create({
-//   description: stripeToken.email,
-//   source: stripeToken.id,
-//     email: stripeToken.email
-// }, function(err, customer) {
-//       if (err) console.log(err, 'customer error')
-// });
-
-
-console.log(customer, 'customer')
-  var charge = stripe.charges.create({
-    amount: total*100,
-    currency: "usd",
-    // card: stripeToken.id,
-    customer: customer.id,
-    description: items.length > 1 ? items.length + " items from Mickalene Thomas store" : "1 item from Mickalene Thomas store",
-    receipt_email: stripeToken.email
-  }, function(err, charge) {
-    if (err && err.type === 'StripeCardError') {
-      console.log(err, 'stripe card error')
-    } else if (err) {
-      console.log(err, 'charge error')
-    } else {
-      console.log('successful')
+    function chargesCreate(customer) {
+        stripe.charges.create({
+            amount: total * 100,
+            currency: "usd",
+            customer: customer.id,
+            receipt_email: stripeToken.email,
+            description: 'Mickalene Thomas store item',
+            statement_descriptor: 'Mickalene Thomas store'
+        });
     }
-  });
 
-// stripe.customers.create({
-//   source: stripeToken.card,
-//   description: stripeToken.email
-// }).then(function(customer) {
-//   return stripe.charges.create({
-//     amount: total*100, // amount in cents, again
-//     currency: "usd",
-//     customer: customer.id,
-//     receipt_email: stripeToken.email
-//   });
-// })
+    function ordersCreate(customer) {
+        stripe.orders.create({
+            currency: 'usd',
+            items: items,
+            customer: customer.id,
+            shipping: {
+                name: stripeToken.card.name,
+                address: {
+                    line1: stripeToken.card.address_line1,
+                    city: stripeToken.card.address_city,
+                    country: stripeToken.card.country,
+                    postal_code: stripeToken.card.address_zip
+                }
+            },
+            email: stripeToken.email
+        }, function(err, order) {
+            if (err) console.log(err, 'order create error');
+        });
+    }
+
+    stripe.customers.create({
+        source: stripeToken.id,
+        description: stripeToken.card.name,
+        email: stripeToken.email
+    }).then(function(customer) {
+        var a = chargesCreate(customer);
+        var b = ordersCreate(customer);
+        return a && b;
+    });
 });
 
 //public folder
@@ -134,9 +123,9 @@ var port = process.env.PORT || 3000
 
 
 app.listen(port, (error) => {
-  if (error) {
-    console.error(error)
-  } else {
-    console.info(`==> 🌎  Listening on port ${port}. Open up http://localhost:${port}/ in your browser.`)
-  }
+    if (error) {
+        console.error(error)
+    } else {
+        console.info(`==> 🌎  Listening on port ${port}. Open up http://localhost:${port}/ in your browser.`)
+    }
 })
