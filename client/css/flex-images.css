@@ -22,8 +22,7 @@
 }
 
 .flex-images .item {
-  margin: 2px;
-  border: 1px solid transparent;
+  margin: 3px;
   box-sizing: content-box;
   position: relative;
   display:inline-block;

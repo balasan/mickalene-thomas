@@ -44,61 +44,51 @@
 
                      obj.image = {};
 
-                     obj.image.main = {};
-                     obj.image.main.dimensions = {}
-                     obj.image.small = {};
-                     obj.image.small.dimensions = {};
-                     obj.image.smaller = {};
-                     obj.image.smaller.dimensions = {};
-                     obj.image.medium = {};
-                     obj.image.medium.dimensions = {};
-                     obj.image.large = {};
-                     obj.image.large.dimensions = {};
+                      obj.image.main = {};
+                    obj.image.main.dimensions = {};
+                    obj.image.small = {};
+                    obj.image.small.dimensions = {};
+                    obj.image.medium = {};
+                    obj.image.medium.dimensions = {};
+                    obj.image.smaller = {};
+                    obj.image.smaller.dimensions = {};
 
-                     obj.image.main.url = item.data["work.image"].value.main.url;
-                     obj.image.main.dimensions.height = item.data["work.image"].value.main.dimensions.height;
-                     obj.image.main.dimensions.width = item.data["work.image"].value.main.dimensions.width;
+                    obj.image.main.url = item.data["work.image"].value.main.url;
+                    obj.image.main.dimensions.height = item.data["work.image"].value.main.dimensions.height;
+                    obj.image.main.dimensions.width = item.data["work.image"].value.main.dimensions.width;
 
 
-                     if (item.data["work.image"].value.main.dimensions.height < 500) {
+                    if (item.data["work.image"].value.main.dimensions.width < 500) {
                         obj.image.smaller.url = item.data["work.image"].value.main.url;
                         obj.image.smaller.dimensions.height = item.data["work.image"].value.main.dimensions.height;
                         obj.image.smaller.dimensions.width = item.data["work.image"].value.main.dimensions.width;
-                     } else {
+                    } else {
                         obj.image.smaller.url = item.data["work.image"].value.views.smaller.url;
                         obj.image.smaller.dimensions.height = item.data["work.image"].value.views.smaller.dimensions.height;
                         obj.image.smaller.dimensions.width = item.data["work.image"].value.views.smaller.dimensions.width;
-                     }
+                    }
 
-                     if (item.data["work.image"].value.main.dimensions.width < 1000) {
-                         obj.image.small.url = item.data["work.image"].value.main.url;
+
+                    if (item.data["work.image"].value.main.dimensions.width < 1000) {
+                        obj.image.small.url = item.data["work.image"].value.main.url;
                         obj.image.small.dimensions.height = item.data["work.image"].value.main.dimensions.height;
                         obj.image.small.dimensions.width = item.data["work.image"].value.main.dimensions.width;
-                     } else {
-                         obj.image.small.url = item.data["work.image"].value.views.small.url;
+                    } else {
+                        obj.image.small.url = item.data["work.image"].value.views.small.url;
                         obj.image.small.dimensions.height = item.data["work.image"].value.views.small.dimensions.height;
                         obj.image.small.dimensions.width = item.data["work.image"].value.views.small.dimensions.width;
-                     }
+                    }
 
-                     if (item.data["work.image"].value.main.dimensions.width < 1920) {
+                    if (item.data["work.image"].value.main.dimensions.width < 1920) {
                         obj.image.medium.url = item.data["work.image"].value.main.url;
                         obj.image.medium.dimensions.height = item.data["work.image"].value.main.dimensions.height;
                         obj.image.medium.dimensions.width = item.data["work.image"].value.main.dimensions.width;
-                     } else {
+                    } else {
                         obj.image.medium.url = item.data["work.image"].value.views.medium.url;
                         obj.image.medium.dimensions.height = item.data["work.image"].value.views.medium.dimensions.height;
                         obj.image.medium.dimensions.width = item.data["work.image"].value.views.medium.dimensions.width;
-                     }
+                    }
 
-                     if (item.data["work.image"].value.main.dimensions.width < 3840) {
-                        obj.image.large.url = item.data["work.image"].value.main.url;
-                        obj.image.large.dimensions.height = item.data["work.image"].value.main.dimensions.height;
-                        obj.image.large.dimensions.width = item.data["work.image"].value.main.dimensions.width;
-                     } else {
-                         obj.image.large.url = item.data["work.image"].value.views.large.url;
-                        obj.image.large.dimensions.height = item.data["work.image"].value.views.large.dimensions.height;
-                        obj.image.large.dimensions.width = item.data["work.image"].value.views.large.dimensions.width;
-                     }
 
                      simple=obj
                  });
@@ -130,49 +120,51 @@
 
                      obj.image = {};
 
-                     obj.image.main = {};
-                     obj.image.main.dimensions = {}
-                     obj.image.small = {};
-                     obj.image.small.dimensions = {};
-                     obj.image.medium = {};
-                     obj.image.medium.dimensions = {};
-                     obj.image.large = {};
-                     obj.image.large.dimensions = {};
+                      obj.image.main = {};
+                    obj.image.main.dimensions = {};
+                    obj.image.small = {};
+                    obj.image.small.dimensions = {};
+                    obj.image.medium = {};
+                    obj.image.medium.dimensions = {};
+                    obj.image.smaller = {};
+                    obj.image.smaller.dimensions = {};
 
-                     obj.image.main.url = item.data["work.image"].value.main.url;
-                     obj.image.main.dimensions.height = item.data["work.image"].value.main.dimensions.height;
-                     obj.image.main.dimensions.width = item.data["work.image"].value.main.dimensions.width;
+                    obj.image.main.url = item.data["work.image"].value.main.url;
+                    obj.image.main.dimensions.height = item.data["work.image"].value.main.dimensions.height;
+                    obj.image.main.dimensions.width = item.data["work.image"].value.main.dimensions.width;
 
 
-                     if (item.data["work.image"].value.main.dimensions.width < 1000) {
-                         obj.image.small.url = item.data["work.image"].value.main.url;
+                    if (item.data["work.image"].value.main.dimensions.width < 500) {
+                        obj.image.smaller.url = item.data["work.image"].value.main.url;
+                        obj.image.smaller.dimensions.height = item.data["work.image"].value.main.dimensions.height;
+                        obj.image.smaller.dimensions.width = item.data["work.image"].value.main.dimensions.width;
+                    } else {
+                        obj.image.smaller.url = item.data["work.image"].value.views.smaller.url;
+                        obj.image.smaller.dimensions.height = item.data["work.image"].value.views.smaller.dimensions.height;
+                        obj.image.smaller.dimensions.width = item.data["work.image"].value.views.smaller.dimensions.width;
+                    }
+
+
+                    if (item.data["work.image"].value.main.dimensions.width < 1000) {
+                        obj.image.small.url = item.data["work.image"].value.main.url;
                         obj.image.small.dimensions.height = item.data["work.image"].value.main.dimensions.height;
                         obj.image.small.dimensions.width = item.data["work.image"].value.main.dimensions.width;
-                     } else {
-                         obj.image.small.url = item.data["work.image"].value.views.small.url;
+                    } else {
+                        obj.image.small.url = item.data["work.image"].value.views.small.url;
                         obj.image.small.dimensions.height = item.data["work.image"].value.views.small.dimensions.height;
                         obj.image.small.dimensions.width = item.data["work.image"].value.views.small.dimensions.width;
-                     }
+                    }
 
-                     if (item.data["work.image"].value.main.dimensions.width < 1920) {
+                    if (item.data["work.image"].value.main.dimensions.width < 1920) {
                         obj.image.medium.url = item.data["work.image"].value.main.url;
                         obj.image.medium.dimensions.height = item.data["work.image"].value.main.dimensions.height;
                         obj.image.medium.dimensions.width = item.data["work.image"].value.main.dimensions.width;
-                     } else {
+                    } else {
                         obj.image.medium.url = item.data["work.image"].value.views.medium.url;
                         obj.image.medium.dimensions.height = item.data["work.image"].value.views.medium.dimensions.height;
                         obj.image.medium.dimensions.width = item.data["work.image"].value.views.medium.dimensions.width;
-                     }
+                    }
 
-                     if (item.data["work.image"].value.main.dimensions.width < 3840) {
-                        obj.image.large.url = item.data["work.image"].value.main.url;
-                        obj.image.large.dimensions.height = item.data["work.image"].value.main.dimensions.height;
-                        obj.image.large.dimensions.width = item.data["work.image"].value.main.dimensions.width;
-                     } else {
-                         obj.image.large.url = item.data["work.image"].value.views.large.url;
-                        obj.image.large.dimensions.height = item.data["work.image"].value.views.large.dimensions.height;
-                        obj.image.large.dimensions.width = item.data["work.image"].value.views.large.dimensions.width;
-                     }
 
                      simple.push(obj)
                  });

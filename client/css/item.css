@@ -10,10 +10,12 @@
     transform-origin: 50% 0%;
     perspective: 600px;
     transform-style: preserve-3d;
+    background-color: black;
 
     img {
         backface-visibility: hidden;
         transition: opacity .5s easeOutQuart;
+        opacity: 0.45;
 
         &.zoom {
             transform: scale(1.2);
@@ -22,7 +24,7 @@
 
     .text {
         opacity: 0;
-        transition: opacity 1s .2s easeOutQuart;
+        transition: opacity 1s .1s easeOutQuart;
         width: 100%;
         height: 100%;
         display: flex;
@@ -42,14 +44,14 @@
             font-size: 12px;
             font-family: 'Avenir Next', sans-serif;
             font-style: italic;
-            letter-spacing: 1.5px;
+/*            letter-spacing: 1.5px;*/
             text-align: center;
         }
     }
 
     &:hover {
         img {
-            opacity: 0.25;
+            opacity: 0.75;
         }
 
         .text {
@@ -62,7 +64,7 @@
 
         .textNews {
             transition: background-color .5s easeOutQuart;
-            background-color: rgba(197, 2, 11, 0.75);
+            background-color: rgba(197, 2, 11, 0.5);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -74,9 +76,10 @@
             p {
                 font-style: italic;
                 text-transform: uppercase;
-                color: white;
+                color: rgba(255,255,255,0.5);
                 margin: 0;
                 padding: 0;
+                transition: color .5s easeOutQuart;
                 text-align: center;
 
                 &:first-of-type {
@@ -103,7 +106,10 @@
 
         &:hover {
             .textNews {
-                background-color: rgba(197, 2, 11, 0.5);
+                background-color: rgba(197, 2, 11, 1);
+                p {
+                    color: rgba(255,255,255,1)
+                }
             }
         }
     }

@@ -126,19 +126,19 @@ export default class Work extends Component {
     // }
     // console.log("DONE FILTER");
   }
-  
+
   handleScroll(e) {
     //basic debounce
     if (this.timeout) {
     clearTimeout(this.timeout);
-    } 
+    }
     this.timeout = setTimeout(function() {
       //run, but wait again
       var scrollTop = e.srcElement.body.scrollTop;
       var scrollHeight = e.srcElement.body.scrollHeight;
       var clientHeight = e.srcElement.body.clientHeight;
       if (((scrollTop+clientHeight) / scrollHeight) > 0.7) {
-        if (this.worksLimit) { 
+        if (this.worksLimit) {
           this.oldWorksLimit = this.worksLimit;
           this.worksLimit = this.worksLimit + 10;
           this.setState({});
@@ -169,7 +169,7 @@ export default class Work extends Component {
               className={'item '+ action}
               data-w={item.image.smaller.dimensions.width}
               data-h={item.image.smaller.dimensions.height}
-              key={item.id+self.params.filter}
+              key={item.id+self.params.filter+i}
               to={'/works/i/' + item.id}>
               <div className="imageContainer">
                 <img
@@ -183,11 +183,11 @@ export default class Work extends Component {
               </div>
             </Link>
           );
-        } else { 
+        } else {
           return(
             <Link  data-h='500'
                 data-w='500'
-                key={item.id+self.params.filter}
+                key={item.id+self.params.filter+i}
                 to={'/news#' + item.id}
                 className={"item newsItem "+ action}>
 

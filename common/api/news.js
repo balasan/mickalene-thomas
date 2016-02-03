@@ -26,7 +26,7 @@
      prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
          Api.form('everything')
              .ref(Api.master())
-             .query(prismic.Predicates.at("document.type", "news")).pageSize(200).submit(function(err, response) {
+             .query(prismic.Predicates.at("document.type", "news")).pageSize(100).submit(function(err, response) {
                  if (err) {
                      console.log(err);
                      done();
