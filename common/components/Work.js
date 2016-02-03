@@ -167,15 +167,15 @@ export default class Work extends Component {
           return (
             <Link
               className={'item '+ action}
-              data-w={item.image.small.dimensions.width}
-              data-h={item.image.small.dimensions.height}
+              data-w={item.image.smaller.dimensions.width}
+              data-h={item.image.smaller.dimensions.height}
               key={item.id+self.params.filter}
               to={'/works/i/' + item.id}>
               <div className="imageContainer">
                 <img
                   className={item.tags[0] == 'paintings' || item.tags[0] == 'collages' || item.tags[0] == 'print' ? 'zoom' : ''}
                   key={item.id}
-                  src={item.image.small.url}
+                  src={item.image.smaller.url}
                 />
                 <div className="text">
                   <p>{item.title}</p>

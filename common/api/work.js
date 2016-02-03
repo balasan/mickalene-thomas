@@ -48,6 +48,8 @@
                      obj.image.main.dimensions = {}
                      obj.image.small = {};
                      obj.image.small.dimensions = {};
+                     obj.image.smaller = {};
+                     obj.image.smaller.dimensions = {};
                      obj.image.medium = {};
                      obj.image.medium.dimensions = {};
                      obj.image.large = {};
@@ -57,6 +59,16 @@
                      obj.image.main.dimensions.height = item.data["work.image"].value.main.dimensions.height;
                      obj.image.main.dimensions.width = item.data["work.image"].value.main.dimensions.width;
 
+
+                     if (item.data["work.image"].value.main.dimensions.height < 500) {
+                        obj.image.smaller.url = item.data["work.image"].value.main.url;
+                        obj.image.smaller.dimensions.height = item.data["work.image"].value.main.dimensions.height;
+                        obj.image.smaller.dimensions.width = item.data["work.image"].value.main.dimensions.width;
+                     } else {
+                        obj.image.smaller.url = item.data["work.image"].value.views.smaller.url;
+                        obj.image.smaller.dimensions.height = item.data["work.image"].value.views.smaller.dimensions.height;
+                        obj.image.smaller.dimensions.width = item.data["work.image"].value.views.smaller.dimensions.width;
+                     }
 
                      if (item.data["work.image"].value.main.dimensions.width < 1000) {
                          obj.image.small.url = item.data["work.image"].value.main.url;
