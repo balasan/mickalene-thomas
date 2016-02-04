@@ -10,12 +10,15 @@
     transform-origin: 50% 0%;
     perspective: 600px;
     transform-style: preserve-3d;
-    background-color: black;
+    background-color: transparent;
 
     img {
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
         transition: opacity .5s easeOutQuart;
+        &.zoom {
+            transform: scale(1.2);
+        }
     }
 
     .text {
@@ -67,12 +70,11 @@
             height: 100%;
             width: 100%;
             padding: 15px;
-/*            filter:blur(2px);*/
 
             p {
                 font-style: italic;
                 text-transform: uppercase;
-                color: rgba(255,255,255,0.5);
+                color: rgba(255,255,255,1);
                 margin: 0;
                 padding: 0;
                 transition: color .5s easeOutQuart;
@@ -103,7 +105,6 @@
         &:hover {
             .textNews {
                 background-color: rgba(197, 2, 11, 1);
-     /*           filter:blur(0px);*/
                 p {
                     color: rgba(255,255,255,1)
                 }
@@ -111,13 +112,3 @@
         }
     }
 }
-
-/*.newsItem {
-    background-color: rgba(255, 0, 0, 1);
-    opacity: 1;
-    cursor: pointer;
-
-    &:hover {
-        opacity: 0.5;
-    }
-}*/
