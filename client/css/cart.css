@@ -1,12 +1,50 @@
 @import "customMedia.css";
 
 .cart {
-    min-height: calc(100vh - 75px);
+    height: 100vh;
     background-color: white;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: height 250ms ease-out;
+    width: 100%;
+    overflow: hidden;
+    z-index: 2000;
 
+    .empty {
+        text-align: center;
+        color: black;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        pointer-events: none;
+
+        h1 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%) translateX(-50%);
+            font-family: 'Avenir Next', sans-serif;
+        }
+    }
+    .cart-items {
+        &.max-height {
+            height: 100%;
+        }
+    }
+    .close-cart {
+        display: block;
+        height: 30px;
+        width: 30px;
+        margin: 1.5em 1.5em 1.5em auto;
+        background-image: url("/images/close_black_2.svg");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+    }
     .cartItem {
         width: 100vw;
         display: flex;
@@ -36,8 +74,24 @@
         section {
             &.description {
                 width: 40%;
+
                 @media (--mobile) {
                     width: 50%;
+                }
+            }
+            &.remove-section {
+                cursor: pointer;
+                @media (--desktop) {
+                    display: none;
+                }
+                @media (--mobile) {
+                    width: 10%;
+                    padding: 0 1.5em 0 0;
+
+                    img {
+                        height: 15px;
+                        width: 15px;
+                    }
                 }
             }
             &.price {
@@ -48,8 +102,11 @@
                     display: flex;
                     width: 75%;
                     justify-content: flex-end;
-                }
 
+                    p {
+                        transform: translateY(3px);
+                    }
+                }
                 p {
                     font-size: 16px;
                 }
@@ -57,18 +114,29 @@
             &.quantity {
                 width: 20%;
                 display: flex;
-                justify-content: center;
+                justify-content: flex-end;
+                align-items: center;
 
                 @media (--mobile) {
                     width: 25%;
                     justify-content: flex-end;
+                    padding: 0 1.5em 0 0;
                 }
-
                 p, button {
                     font-size: 16px;
                 }
                 p {
                     transform: translateY(3px);
+                }
+                img {
+                    cursor: pointer;
+                    height: 15px;
+                    width: 15px;
+                    margin: 0 1.5em 0 5em;
+
+                    @media (--mobile) {
+                        display: none;
+                    }
                 }
                 button {
                     border: none;
@@ -81,7 +149,7 @@
                 width: 20%;
 
                 @media (--mobile) {
-                    width: 50%;
+                    width: 40%;
                 }
                 img {
                     width: 100%;
@@ -93,13 +161,14 @@
         }
     }
     .total {
-        width: 100vw;
-        display: flex;
+        width: 100%;
         background-color: white;
-        align-items: center;
         padding: 1em;
-        justify-content: flex-end;
+        text-align: right;
 
+        &.hidden {
+            display: none;
+        }
         p, h1 {
             color: black;
             margin: 0;
@@ -115,25 +184,33 @@
             font-size: 20px;
             margin: 0 0 0 0.5em;
         }
-    }
-    .holdButton {
-        text-align: right;
-        padding: 0 0 0 1em;
+        p, h1, .holdButton {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .holdButton {
+            text-align: right;
+            padding: 0 0 0 1em;
 
-        button {
-            background-color: black;
-            padding: 0.5em 2em;
-            cursor: pointer;
-            color: white;
-            border: none;
-            transition: color 150ms ease-out, background-color 150ms ease-out;
-            font-family: 'Avenir Next Bold', sans-serif;
-            border: 2px solid black;
+            button {
+                background-color: black;
+                padding: 1em 2.5em;
+                cursor: pointer;
+                color: white;
+                border: none;
+                transition: color 150ms ease-out, background-color 150ms ease-out;
+                font-family: 'Avenir Next Bold', sans-serif;
+                border: 2px solid black;
 
-            &:hover {
-                background-color: white;
-                color: black;
+                &:hover {
+                    background-color: white;
+                    color: black;
+                }
             }
         }
+    }
+    &.hidden {
+        height: 0px;
+        pointer-events: none;
     }
 }

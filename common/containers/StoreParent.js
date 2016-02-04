@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Store from '../components/Store';
-import * as ProductActions from '../actions/product'
+import * as ProductActions from '../actions/product';
+import Cart from '../components/Cart';
 
 if(process.env.BROWSER){
   require('./../../client/css/store.css');
@@ -22,10 +23,10 @@ export default class StoreParent extends Component {
   }
 
   render () {
-
     return (
       <div>
         <Store { ...this.props }/>
+        <Cart { ...this.props }/>
       </div>
       )
   }

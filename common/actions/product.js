@@ -2,6 +2,7 @@ export const GET_PRODUCT = 'GET_PRODUCT';
 export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const SET_PRODUCT = 'SET_PRODUCT';
 export const QUANTITY = 'QUANTITY';
+export const REMOVE = 'REMOVE';
 import { fetchProducts, fetchProduct } from '../api/product'
 
 export function set(value) {
@@ -20,6 +21,16 @@ export function changeQuantity(id, value) {
     payload: {
       id: id,
       value: value
+    }
+  };
+}
+
+export function removeItem(id) {
+  console.log('remove item', id)
+  return {
+    type: REMOVE,
+    payload: {
+      id: id
     }
   };
 }
