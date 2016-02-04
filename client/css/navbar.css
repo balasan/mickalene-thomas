@@ -12,6 +12,9 @@ nav {
     left: 0;
     z-index: 999;
     height: 75px;
+    @media (--mobile) {
+        height: 60px;
+    }
     transition: height 300ms easeOutQuart;
 
     &.expand {
@@ -41,6 +44,9 @@ nav {
 
     .top {
         height: 75px;
+         @media (--mobile) {
+        height: 60px;
+    }
         padding: 1.5em;
         width: 100%;
         display: flex;

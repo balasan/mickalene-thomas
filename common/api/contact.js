@@ -34,6 +34,8 @@
 
                  var data = response.results[0].data;
 
+                 console.log(data, 'contact data')
+
                  var obj = {};
                  obj.studio = {};
                  obj.studio.name = data['contact.name'] ?  data['contact.name'].value : null;

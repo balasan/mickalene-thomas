@@ -136,8 +136,9 @@ class Nav extends Component {
         } else if (path == 'store/:itemId') {
           location = (<Link to='/store'>store</Link>);
         } else {
-          location = (<p>{path}</p>);;
+          location = (<p>{path}</p>);
         }
+      }
 
       var itemPage = this.props.location.pathname.substr(0,8) == '/works/i' ? true : false;
 
@@ -186,7 +187,7 @@ class Nav extends Component {
           </nav>
         </ReactCSSTransitionGroup>)
 
-       }
+
 
     return (
       <div>
