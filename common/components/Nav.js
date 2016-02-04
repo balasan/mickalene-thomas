@@ -40,10 +40,6 @@ class Nav extends Component {
     var location = this.props.state.routing.path;
     var self = this;
 
-    const closeItem = function() {
-       self.props.dispatch(updatePath('/works'))
-    }
-
     var showHeader = true;
     if(location == '/' || showMenu)
       showHeader = false
@@ -124,6 +120,9 @@ class Nav extends Component {
         )
     }
 
+    var itemPage = this.props.location.pathname.substr(0,8) == '/works/i' ? true : false;
+    if(itemPage) showHeader = false;
+
     if (showHeader) {
         if (path == 'works/filter/:filter') {
           location = (<p>works</p>);
@@ -132,10 +131,9 @@ class Nav extends Component {
         } else if (path == 'store/:itemId') {
           location = (<Link to='/store'>store</Link>);
         } else {
-          location = (<p>{path}</p>);;
+          location = (<p>{path}</p>);
         }
 
-      var itemPage = this.props.location.pathname.substr(0,8) == '/works/i' ? true : false;
 
     var navClass = classNames({
       'transparent': itemPage,
@@ -158,8 +156,7 @@ class Nav extends Component {
     }
 
       var nav = (
-        <ReactCSSTransitionGroup transitionName="nav" transitionAppear={true} transitionAppearTimeout={0} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
-          <nav className={navClass}>
+          <nav className={navClass} key={showHeader}>
             <div className='top'>
             <section className='left'>
               {path == 'works/i/:itemId' ? null : <Link className='logo' to="/">mickalene thomas</Link>}
@@ -173,22 +170,27 @@ class Nav extends Component {
             <section className='right'>
             {cart}
 
-              <img className={itemPage ? 'close' : 'hamburger'} onClick={itemPage ? closeItem : toggleMenu} src={itemPage ? '../../images/close.svg' : '../../images/menu.svg'} />
+            <img className={'hamburger'} onClick={toggleMenu} src={'../../images/menu.svg'} />
+
             </section>
             </div>
             <div className={bottomClass}>
             {mobileFilters}
             </div>
           </nav>
-        </ReactCSSTransitionGroup>)
-
-       }
+        )
+    }
+    else nav = <nav className="hidden" key={showHeader}></nav>
 
     return (
-      <div>
+      <ReactCSSTransitionGroup
+        transitionName="nav"
+        transitionAppear={true}
+        transitionAppearTimeout={0}
+        transitionEnterTimeout={700}
+        transitionLeaveTimeout={500}>
           {nav}
-      </div>
-    )
+      </ReactCSSTransitionGroup>)
   }
 }
 

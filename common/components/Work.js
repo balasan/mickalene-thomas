@@ -30,16 +30,17 @@ export default class Work extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    console.log('componentWillUpdate', nextProps);
     var self = this;
-    const { state, params } = nextProps;
+    const { state, params, filteredWorks } = nextProps;
 
     // if (this.newWorks) {
     //   this.oldWorks = this.newWorks.slice();
     // }
 
     self.params = params;
-    this.filterWorks(state, params);
+    // this.filterWorks(state, params);
+    this.works = filteredWorks.slice(0, this.worksLimit);;
+
     if (this.oldWorks && (JSON.stringify(this.works) == JSON.stringify(this.oldWorks))) return;
 
     //don't update if its the same stuff
@@ -100,30 +101,6 @@ export default class Work extends Component {
         self.works.splice((i*4), 0, item);
       });
     }
-
-    // if (params.filter) {
-    //   console.log("START FILTER", params.filter);
-    //   state.works.forEach(function(item) {
-    //     if (item.tags.indexOf(params.filter) > -1) {
-    //       self.works.push(item);
-    //     }
-    //   });
-    //   // state.news.forEach(function(item) {
-    //   //   if (item.tags.indexOf(params.filter) > -1) {
-    //   //     self.works.push(item)
-    //   //   }
-    //   // })
-    // } else if (state.works && state.news) {
-    //   this.works = state.works.slice();
-
-    //   state.news.forEach(function(item, i) {
-    //     self.works.splice((i*4), 0, item)
-    //   })
-
-    // } else {
-    //   this.works = state.works.slice();
-    // }
-    // console.log("DONE FILTER");
   }
 
   handleScroll(e) {

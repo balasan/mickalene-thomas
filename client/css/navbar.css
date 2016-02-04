@@ -14,6 +14,10 @@ nav {
     height: 75px;
     transition: height 300ms easeOutQuart;
 
+    &.hidden{
+        display:none;
+    };
+
     &.expand {
         height: 100vh;
 

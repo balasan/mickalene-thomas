@@ -1,5 +1,12 @@
 @import "customMedia.css";
 
+.worksContainer{
+    transition: all .5s easeOutQuart;
+    &.hidden{
+        opacity: 0;
+        transform:translateY(100px);
+    }
+}
 .workItemContainer{
     z-index:10;
     position: fixed;
@@ -8,6 +15,19 @@
     width:100%;
     &.hidden{
         display:none;
+    }
+    .close{
+        top:-50px;
+        position:absolute;
+        right:15px;
+        width:30px;
+        height:30px;
+        cursor:pointer;
+        opacity:.7;
+        z-index: 100;
+        &:hover{
+            opacity:1;
+        };
     }
     /*background:black;*/
 }

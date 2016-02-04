@@ -33,6 +33,7 @@ class WorkParent extends Component {
     ])
   }
 
+
   componentDidMount() {
     if (!this.props.works) {
       this.constructor.fetchWorkOnClient(this.props.dispatch, this.props.params.filter);
@@ -40,6 +41,19 @@ class WorkParent extends Component {
     if (!this.props.news) {
        this.constructor.fetchNewsOnClient(this.props.dispatch);
     }
+    this.worksLimit = 10;
+    this.works = [];
+    this.worksOnly = [];
+  }
+
+  componentWillUpdate(nextProps) {
+    var self = this;
+    const { state, params } = nextProps;
+    if (!params.itemId) {
+      this.filterWorks(state, params);
+      this.closeUrl = params.filter ? '/works/filter/' + params.filter : '/works';
+    }
+    else if (!this.worksOnly.length) this.filterWorks(state, params);
   }
 
   componentWillUnmount() {
@@ -47,17 +61,38 @@ class WorkParent extends Component {
     // this.constructor.clearItemOnClient(this.props.dispatch)
   }
 
+  filterWorks(state, params) {
+    var self = this;
+
+    self.works = state.works.filter(function(item) {
+      if (params.filter && item.tags.indexOf(params.filter) === -1) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+
+    this.worksOnly = self.works.slice();
+
+    if (state.news && !params.filter) {
+      state.news.forEach(function(item, i) {
+        self.works.splice((i * 4), 0, item);
+      });
+    }
+  }
+
+
   render() {
     var showWorkItem = this.props.params.itemId ? '' : 'hidden';
     var showWorkGrid = this.props.params.itemId ? 'hidden' : '';
 
     return (
       <div>
-        <div className={showWorkItem}>
-          <Work { ...this.props } className={showWorkGrid}/>
+        <div className={'worksContainer ' + showWorkGrid}>
+          <Work { ...this.props } filteredWorks={this.works} className={showWorkGrid}/>
         </div>
-        <div className={'workItemContainer ' + showWorkItem}>
-          <WorkItem { ...this.props }/>
+        <div className={'workItemContainer ' + showWorkItem} >
+          <WorkItem { ...this.props } filteredWorks={this.worksOnly} closeUrl={this.closeUrl}/>
         </div>
       </div>
       )

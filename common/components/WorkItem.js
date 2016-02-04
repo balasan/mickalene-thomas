@@ -20,32 +20,32 @@ export default class WorkItem extends Component {
       workItemNew = newProps.state.workItem;
     } else {
       var idX = newProps.params.itemId;
-      newProps.state.works.forEach(function(item, i) {
+      newProps.filteredWorks.forEach(function(item, i) {
         if (item.id == idX) {
           workItemNew = item;
         }
       })
     }
     this.workItem = workItemNew;
-    if(this.props.state.works.length) this.getNextPrevItems(newProps);
+    if(newProps.filteredWorks.length) this.getNextPrevItems(newProps);
   }
 
+
   getNextPrevItems(newProps) {
-    const { state, params } = newProps;
+    const { state, params, filteredWorks } = newProps;
     var nextIndex;
     var prevIndex;
-    var works = state.works;
-    works.forEach(function(item, i) {
+    filteredWorks.forEach(function(item, i) {
       if (item.id == params.itemId) {
         nextIndex = i+1;
         prevIndex = i-1
       }
     })
-    nextIndex = nextIndex.mod(works.length);
-    prevIndex = prevIndex.mod(works.length);
+    nextIndex = nextIndex.mod(filteredWorks.length);
+    prevIndex = prevIndex.mod(filteredWorks.length);
 
-    this.nextItem = works[nextIndex];
-    this.prevItem = works[prevIndex];
+    this.nextItem = filteredWorks[nextIndex];
+    this.prevItem = filteredWorks[prevIndex];
 
     //preload image
     var imgN = new Image()
@@ -55,6 +55,7 @@ export default class WorkItem extends Component {
   }
 
 
+
   render () {
 
     var self = this;
@@ -62,9 +63,11 @@ export default class WorkItem extends Component {
     const nextItem = function() {
       self.props.dispatch(updatePath('/works/i/' + self.nextItem.id))
     }
-
     const prevItem = function() {
       self.props.dispatch(updatePath('/works/i/' + self.prevItem.id))
+    }
+    const closeItem = function() {
+      self.props.dispatch(updatePath(self.props.closeUrl))
     }
 
     const { state, clickitem } = this.props
@@ -88,6 +91,8 @@ export default class WorkItem extends Component {
           </SingleSlide>
           {arrows}
         </section>
+        <img className={'close'} onClick={closeItem} src={'../../images/close.svg'} />
+
       </div>
     )
   }
