@@ -71,7 +71,21 @@ export default class Work extends Component {
       for(var i = 0; i < els.length; i++) {
         els[i].className += " work-leave-active";
       }
-    // },10);
+    this.newsColor();
+  }
+
+  newsColor() {
+    var newsEls = document.getElementsByClassName('newsItem');
+    var i = 0;
+    for (i = 0; i < newsEls.length; i+=3) {
+      newsEls[i].classList.add('red');
+    }
+    for (i = 1; i < newsEls.length; i+=3) {
+      newsEls[i].classList.add('blue');
+    }
+    for (i = 2; i < newsEls.length; i+=3) {
+      newsEls[i].classList.add('brown');
+    }
   }
 
   flexGridLayout(container) {
@@ -85,10 +99,6 @@ export default class Work extends Component {
   filterWorks(state, params) {
     var self = this;
 
-    // function isEven(n) {
-    //   return n % 2 == 0;
-    // }
-
     self.works = state.works.filter(function(item) {
       if (params.filter && item.tags.indexOf(params.filter) === -1) {
         return false;
@@ -100,12 +110,7 @@ export default class Work extends Component {
     if (state.news && !params.filter) {
 
       state.news.forEach(function(item, i) {
-        // var even = isEven(i);
-        // console.log(even, 'even')
-        // if (even)
           self.works.splice((i*5), 0, item);
-        // else
-        //   self.works.splice(( (i*5) + 1 ), 0, item);
       });
 
     }

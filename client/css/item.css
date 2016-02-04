@@ -16,7 +16,6 @@
 
     img {
         backface-visibility: hidden;
-
         -webkit-backface-visibility: hidden;
         transition: opacity .5s easeOutQuart;
         &.zoom {
@@ -62,10 +61,33 @@
 
     &.newsItem {
         cursor: pointer;
+        &.red {
+             background-color: rgba(197, 2, 11, 0.5);
+             &:hover {
+                .textNews {
+                       background-color: rgba(197, 2, 11, 1);
+                }
+             }
+        }
+        &.blue {
+             background-color: rgba(149,217,240,0.5);
+             &:hover {
+                .textNews {
+                       background-color: rgba(149,217,240,1);
+                }
+             }
+        }
+         &.brown {
+             background-color: rgba(215,184,140,0.5);
+             &:hover {
+                .textNews {
+                       background-color: rgba(215,184,140,1);
+                }
+             }
+        }
 
         .textNews {
             transition: background-color .5s easeOutQuart, filter .5s easeOutQuart;
-            background-color: rgba(197, 2, 11, 0.5);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -107,7 +129,10 @@
 
         &:hover {
             .textNews {
-                background-color: rgba(197, 2, 11, 1);
+
+
+
+
                 p {
                     color: rgba(255,255,255,1)
                 }
