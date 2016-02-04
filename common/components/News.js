@@ -30,7 +30,7 @@ export default class News extends Component {
     var hash = this.props.location.hash.slice(1, this.props.location.hash.length);
     var els = document.getElementsByClassName(hash);
     var selectedEl = els[els.length-1];
-    if (!selectedEl.classList.contains('links-enter-active')) return;
+    if (!selectedEl.classList.contains('work-enter-active')) return;
     var scrollSelf = this;
     var scrollInterval = setInterval(function(){
       var offTop = selectedEl.offsetTop + 7;
@@ -83,26 +83,27 @@ export default class News extends Component {
       }
 
       var el =
-        `<section class='left' ${item.image.main.url ? 'style="background-image: url(' + item.image.main.url + ')"' : ''}>
+        `${item.image.main.url ? "<img src=" + item.image.main.url + " class='mobile-image' />" : ''}
+        <section class='left' ${item.image.main.url ? 'style="background-image: url(' + item.image.main.url + ')"' : ''}>
           <article>
           <h1>${item.title}</h1>
           <p>${item.location}</p>
           </article>
         </section>
-        <section class='middle'>
+        <section ${item.description ? "class='middle'" : "class='middle mobile-hide'"}>
           <h1 class='desktop'>${item.title}</h1>
-            <p class='location desktop'>${item.location}</p>
+          <p class='location desktop'>${item.location}</p>
             ${description}
         </section>
         <section class='right'>
         ${item.link ? '<a href=' + item.link + ' target=_blank></a>' : ''}
         </section>`
       var div = document.createElement("div");
-      div.className = "delay links-enter"
+      div.className = "delay work-enter"
       div.innerHTML = el;
       self.container.appendChild(div);
       setTimeout(function(){
-        div.className += " " + item.id + " links-enter-active";
+        div.className += " " + item.id + " work-enter-active news-item";
       },10);
     })
   }
@@ -116,8 +117,8 @@ export default class News extends Component {
     var i = els.length
     while (i--) {
       var el = els[i]
-      clearClass(el,'links-enter');
-      el.className += " links-leave";
+      clearClass(el,'work-enter');
+      el.className += " work-leave";
       leaveActive(el);
     }
 
@@ -133,7 +134,7 @@ export default class News extends Component {
 
     function leaveActive(el){
       setTimeout(function(){
-        el.className += " links-leave-active";
+        el.className += " work-leave-active";
       },10);
     }
 

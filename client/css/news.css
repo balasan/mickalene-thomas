@@ -13,7 +13,6 @@
             @media (--mobile) {
                 display: none;
             }
-
             border-left: 2px solid transparent;
             background-color: transparent;
 
@@ -26,7 +25,6 @@
                 &:first-of-type {
                     margin: 2px 0 0 0;
                 }
-
                 img {
                     width: 100%;
                     margin: 0;
@@ -34,29 +32,34 @@
                 }
             }
         }
-
         &.left {
             width: 70%;
 
             @media (--mobile) {
                 width: 100%;
             }
-
-            div {
+            .news-item {
                 background-color: white;
                 margin: 1px 0 1px 0;
                 padding: 2em;
-                display: flex;
-
-                @media (--mobile) {
-                    flex-direction: column;
-                    padding: 1.75em 1em;
+                @media (--desktop) {
+                   display: flex;
                 }
 
+                @media (--mobile) {
+                    padding: 1.75em 1em;
+                }
                 &:first-of-type {
                     margin: 2px 0 1px 0;
                 }
-
+                .mobile-image {
+                    @media (--desktop) {
+                        display: none;
+                    }
+                    width: 100%;
+                    height: auto;
+                    margin: 0 0 1em 0;
+                }
                 section {
                     &.left {
                         width: 20%;
@@ -68,8 +71,8 @@
 
                         @media (--mobile) {
                             width: 100%;
+                            background-image: none !important;
                         }
-
                         @media (--desktop) {
                             margin: 0 3em 0 0;
                             justify-content: center;
@@ -79,13 +82,11 @@
                                 display: none;
                             }
                         }
-
                         article {
                             h1, p {
                                 margin: 0;
                                 padding: 0;
                             }
-
                             h1 {
                                 color: black;
                                 font-family: 'Minion Pro', sans-serif;
@@ -93,7 +94,6 @@
                                 text-transform: uppercase;
                                 font-size: 14px;
                             }
-
                             p {
                                 color: black;
                                 font-family: 'Avenir Next', sans-serif;
@@ -103,13 +103,18 @@
                             }
                         }
                     }
-
                     &.middle {
                         display: inline-flex;
                         align-items: flex-start;
                         flex-direction: column;
                         justify-content: center;
                         width: 70%;
+                        &.mobile-hide {
+                             @media (--mobile) {
+                           display: none;
+                       }
+
+                        }
 
                         @media (--mobile) {
                             width: 100%;
@@ -119,12 +124,10 @@
                                 display: none;
                             }
                         }
-
                         h1, p {
                             margin: 0;
                             padding: 0;
                         }
-
                         h1 {
                             color: black;
                             font-family: 'Minion Pro', sans-serif;
@@ -132,7 +135,6 @@
                             text-transform: uppercase;
                             font-size: 20px;
                         }
-
                         p {
                             color: black;
 
@@ -142,7 +144,6 @@
                                 text-transform: uppercase;
                                 font-size: 12px;
                             }
-
                             &.description {
                                 padding: 1em 0 0 0;
                                 font-size: 12px;
@@ -154,7 +155,6 @@
                             }
                         }
                     }
-
                     &.right {
                         width: 10%;
                         display: inline-flex;
@@ -164,7 +164,6 @@
                         @media (--mobile) {
                             display: none;
                         }
-
                         a {
                             height: 20px;
                             padding: 0;
@@ -182,16 +181,13 @@
         }
     }
 }
-
 #newsList1, #newsList2 {
     position: absolute;
     top: 0px;
-    left: 0px;
+    left: 0px;    /*  width:100%;*/
 
-    /*  width:100%;*/
     /*min-height: 300px;*/
 }
-
 #newsList2 {
     position: relative;
 }

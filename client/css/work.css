@@ -36,8 +36,9 @@
         perspective: 600px;
         transform-style: preserve-3d;
         backface-visibility:hidden;
+
         padding: 0 1.5em 0 1.5em;
-        
+
         max-width: 65%;
         margin: auto;
 
