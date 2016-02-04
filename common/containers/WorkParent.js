@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Work from '../components/Work';
 import WorkItem from '../components/WorkItem';
 import * as WorkActions from '../actions/work'
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 if (process.env.BROWSER) {
   require('./../../client/css/work.css');
@@ -48,9 +49,13 @@ class WorkParent extends Component {
 
   render() {
     var showWorkItem = this.props.params.itemId ? '' : 'hidden';
+    var showWorkGrid = this.props.params.itemId ? 'hidden' : '';
+
     return (
       <div>
-        <Work { ...this.props }/>
+        <div className={showWorkItem}>
+          <Work { ...this.props } className={showWorkGrid}/>
+        </div>
         <div className={'workItemContainer ' + showWorkItem}>
           <WorkItem { ...this.props }/>
         </div>

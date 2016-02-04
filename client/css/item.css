@@ -1,15 +1,6 @@
 @import "customMedia.css";
 
-.workItemContainer{
-    z-index:10;
-    position: fixed;
-    top:75px;
-    height:100%;
-    width:100%;
-    &.hidden{
-        display:none;
-    }
-}
+
 
 .singleItem {
     height: calc(100vh - 75px);

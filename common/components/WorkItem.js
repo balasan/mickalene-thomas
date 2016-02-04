@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import * as WorkActions from '../actions/work'
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import { updatePath } from 'redux-simple-router';
-import SingleImage from './SingleImage';
+import SingleSlide from './SingleSlide';
 
 Number.prototype.mod = function(n) { return ((this % n) + n) % n; };
 
@@ -14,8 +14,8 @@ export default class WorkItem extends Component {
   componentWillUpdate(newProps) {
 
     if(!newProps.params.itemId) return this.workItem = null;
-
     var workItemNew = null;
+
     if (newProps.state.workItem) {
       workItemNew = newProps.state.workItem;
     } else {
@@ -27,45 +27,33 @@ export default class WorkItem extends Component {
       })
     }
     this.workItem = workItemNew;
-    if(this.props.state.works.length){
-      this.getNextItem(newProps);
-      this.getPrevItem(newProps);
-    }
+    if(this.props.state.works.length) this.getNextPrevItems(newProps);
   }
 
-  getNextItem(newProps) {
-    self = this;
+  getNextPrevItems(newProps) {
     const { state, params } = newProps;
     var nextIndex;
+    var prevIndex;
     var works = state.works;
     works.forEach(function(item, i) {
       if (item.id == params.itemId) {
         nextIndex = i+1;
+        prevIndex = i-1
       }
     })
     nextIndex = nextIndex.mod(works.length);
+    prevIndex = prevIndex.mod(works.length);
+
     this.nextItem = works[nextIndex];
+    this.prevItem = works[prevIndex];
+
     //preload image
-    var img = new Image()
-    img.src = this.nextItem.image.medium.url
+    var imgN = new Image()
+    imgN.src = this.nextItem.image.medium.url
+    var imgP = new Image()
+    imgP.src = this.prevItem.image.medium.url
   }
 
-  getPrevItem(newProps) {
-    self = this;
-    const { state, params } = newProps;
-    var works = state.works;
-    var prevIndex;
-    works.forEach(function(item, i) {
-      if (item.id == params.itemId) {
-        prevIndex = i-1;
-      }
-    })
-    prevIndex = prevIndex.mod(works.length);
-    self.prevItem = works[prevIndex];
-    //preload image
-    var img = new Image()
-    img.src = this.prevItem.image.medium.url
-  }
 
   render () {
 
@@ -85,15 +73,6 @@ export default class WorkItem extends Component {
 
     if ( !workItem ) return false;
 
-    var description = (
-      <div className="description">
-        <div>
-          <p>{workItem.title}</p>
-          <p>{workItem.date.substr(0, 4)}{workItem.medium ? ', ' + workItem.medium : null}</p>
-        </div>
-      </div>
-    )
-
     var arrows = (
       <div className="arrowsParent">
         <section onClick={prevItem} className="left"></section>
@@ -105,9 +84,8 @@ export default class WorkItem extends Component {
     return (
       <div className='selectedWork'>
         <section className='showcase'>
-          <SingleImage imageSrc={workItem.image.medium.url}>
-          </SingleImage>
-          {description}
+          <SingleSlide workItem={workItem}>
+          </SingleSlide>
           {arrows}
         </section>
       </div>
