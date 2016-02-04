@@ -16,7 +16,6 @@ export default class StripeButton extends Component {
     componentDidMount() {
       this.total = 0;
       this.skus = [];
-      // this.cartData();
     }
 
     componentDidUpdate() {
@@ -26,18 +25,29 @@ export default class StripeButton extends Component {
     }
 
     cartData() {
-      console.log('run cart data')
       var self = this;
       var cart = this.props.state.store.cart;
       cart.forEach(function(item, i) {
         self.total += (item.price * item.quantity);
         self.skus.push({'sku': item.sku, 'quantity': item.quantity});
       });
-      this.configureStripe()
+      if (StripeButton.stripeHandler) {
+        this.configureStripe();
+      }
     }
 
     configureStripe() {
       var self = this;
+
+      if (StripeButton.stripeHandler) {
+        delete StripeButton.stripeHandler;
+        var stripeEls = document.getElementsByClassName('stripe_checkout_app');
+        var i = 0;
+        for (i = 0; i < stripeEls.length; i++) {
+          stripeEls[i].parentNode.removeChild(stripeEls[i]);
+        }
+      }
+
       StripeButton.stripeHandler = StripeCheckout.configure({
         key: 'pk_test_CZxc4aQDJvojPMDeQflnWvGe',
         image: '/images/m.png',
@@ -57,6 +67,7 @@ export default class StripeButton extends Component {
           xmlhttp.send(JSON.stringify(formData));
         }
       });
+
     }
 
     onScriptLoaded() {

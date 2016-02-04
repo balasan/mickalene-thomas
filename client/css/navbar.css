@@ -12,6 +12,9 @@ nav {
     left: 0;
     z-index: 999;
     height: 75px;
+    @media (--mobile) {
+        height: 60px;
+    }
     transition: height 300ms easeOutQuart;
 
     &.hidden{
@@ -45,6 +48,9 @@ nav {
 
     .top {
         height: 75px;
+         @media (--mobile) {
+        height: 60px;
+    }
         padding: 1.5em;
         width: 100%;
         display: flex;
@@ -145,6 +151,7 @@ nav {
             .cart-icon {
                 display: flex;
                 padding: 0 1.5em 0 0;
+                cursor: pointer;
 
                 @media (--mobile) {
                     padding: 0 0.75em 0 0;
@@ -229,6 +236,10 @@ nav {
                 padding: 0.25em 1em;
                 font-size: 9px;
                 color: gray;
+                transition: color 150ms ease-out;
+                &:hover {
+                    color: black;
+                }
 
                 &.selected {
                     color: black;

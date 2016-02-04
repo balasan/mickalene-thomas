@@ -15,13 +15,24 @@ export default class Cart extends Component {
   }
 
   render () {
-    const { changeQuantity } = this.props;
+
+    const { changeQuantity, removeItem } = this.props;
     var cart = this.props.state.store.cart;
-    console.log(cart, 'cart')
+    var cartHash = this.props.location.hash == '#cart';
+
+    const toggleCart = function() {
+      var cartHashCtx = window.location.hash == '#cart';
+      if (!cartHashCtx)
+        window.location.hash = '#cart';
+      else
+        window.location.hash = '';
+    }
+
     var cartEl = null;
     var total = 0;
     if (cart) {
-      var cartEl = cart.map(function(item, i) {
+      if (cart.length > 0) {
+              var cartEl = cart.map(function(item, i) {
         return (
           <div key={i} className='cartItem'>
             <section className='image'>
@@ -31,6 +42,9 @@ export default class Cart extends Component {
               <h1>{item.title}</h1>
               <p>{item.description}</p>
             </section>
+            <section className="remove-section">
+              <img onClick={removeItem.bind(this, item.id)} src="../../images/remove.svg" className='remove' />
+            </section>
             <section className='price'>
               <p>{'$' + (item.price * item.quantity).toFixed(2)}</p>
             </section>
@@ -38,6 +52,7 @@ export default class Cart extends Component {
               <button onClick={changeQuantity.bind(this, item.id, false)}>-</button>
               <p>{item.quantity}</p>
               <button onClick={changeQuantity.bind(this, item.id, true)}>+</button>
+              <img onClick={removeItem.bind(this, item.id)} src="../../images/remove.svg" className='remove' />
             </section>
           </div>
         );
@@ -45,19 +60,25 @@ export default class Cart extends Component {
       cart.forEach(function(item, i) {
           total += (item.price * item.quantity);
       })
+      } else {
+        var cartEl = (<div className="empty"><h1>cart is empty</h1></div>);
+      }
+
     }
 
 
     return (
-      <div className="cart">
-        <div className="cart-items">
+      <div className={cartHash ? 'cart' : 'cart hidden'}>
+        <a onClick={toggleCart} className="close-cart">
+        </a>
+        <div className={cart.length > 0 ? 'cart-items' : 'cart-items max-height'}>
         {cartEl}
         </div>
-        <div className='total'>
+        <div className={cart.length > 0 ? 'total' : 'total hidden'}>
           <h1>total</h1>
           <p>{'$' + total.toFixed(2)}</p>
           <div className='holdButton'>
-          <StripeButton { ...this.props }/>
+          {cart.length > 0 ? <StripeButton { ...this.props }/> : null}
           </div>
         </div>
       </div>

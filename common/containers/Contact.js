@@ -11,6 +11,7 @@ export default class Contact extends Component {
     });
     this.studioEl = false;
     this.galleriesEl = false;
+    this.mobileHeaderEl = false;
   }
 
   componentDidUpdate() {
@@ -24,7 +25,6 @@ export default class Contact extends Component {
 
   render () {
     var self = this;
-
     var galleries = null;
     var studioInfo = null;
 
@@ -77,12 +77,20 @@ export default class Contact extends Component {
           div.innerHTML = self.studioEl;
           var container = document.getElementsByClassName('studio')[0];
           container.appendChild(div);
+
+          self.mobileHeaderEl = `<p>${studioInfo.name}</p><a href=${'mailto:' + studioInfo.email}>${studioInfo.email}</a>`;
+          var mobileParent = document.createElement("div");
+          mobileParent.innerHTML = self.mobileHeaderEl;
+          var mobileContainer = document.getElementsByClassName('mobileHeader')[0];
+          mobileContainer.appendChild(mobileParent);
       }
     }
 
     return (
-    <div>
+    <div className='contactParent'>
       <div className='contactImg'>
+      </div>
+      <div className='mobileHeader'>
       </div>
       <div className="contactTxt">
         <section className="galleries">

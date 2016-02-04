@@ -78,15 +78,16 @@ export default class Work extends Component {
     this.flex = new flexImages({
       selector: container,
       container: '.item',
-      rowHeight: 300,
+      rowHeight: 350,
     })
   }
 
   filterWorks(state, params) {
     var self = this;
-    console.log('state.works.length', state.works.length);
-    console.log('params', params);
-    // console.log(this, 'filterworks this')
+
+    function isEven(n) {
+      return n % 2 == 0;
+    }
 
     self.works = state.works.filter(function(item) {
       if (params.filter && item.tags.indexOf(params.filter) === -1) {
@@ -97,9 +98,16 @@ export default class Work extends Component {
     }).slice(0, this.worksLimit);
 
     if (state.news && !params.filter) {
+
       state.news.forEach(function(item, i) {
-        self.works.splice((i*4), 0, item);
+        var even = isEven(i);
+        console.log(even, 'even')
+        if (even)
+          self.works.splice((i*5), 0, item);
+        else
+          self.works.splice(( (i*5) + 1 ), 0, item);
       });
+
     }
   }
 
@@ -120,8 +128,8 @@ export default class Work extends Component {
           this.setState({});
         }
       }
-      console.log(scrollTop);
-      console.log(e.srcElement.body.scrollHeight-e.srcElement.body.clientHeight);
+      // console.log(scrollTop);
+      // console.log(e.srcElement.body.scrollHeight-e.srcElement.body.clientHeight);
     }.bind(this), 100);
   };
 

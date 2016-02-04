@@ -127,6 +127,9 @@
 .nav-enter {
     opacity: 0;
     transform: translate3d(0, -75px, 0);
+    @media (--mobile) {
+        transform: translate3d(0, -60px, 0);
+    }
     transform-origin: 50% 0%;
 }
 

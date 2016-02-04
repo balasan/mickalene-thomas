@@ -1,4 +1,4 @@
-import { GET_PRODUCT, ADD_PRODUCT, SET_PRODUCT, QUANTITY } from '../actions/product'
+import { GET_PRODUCT, ADD_PRODUCT, SET_PRODUCT, QUANTITY, REMOVE } from '../actions/product'
 import { UPDATE_PATH } from 'redux-simple-router'
 
 const initialState = { cart:[], products:null, product:null }
@@ -29,9 +29,7 @@ export default function news(state = initialState, action) {
         state.cart.push(action.payload.results)
       }
 
-      return Object.assign({}, state, {
-          cart: state.cart
-      })
+
 
     case QUANTITY:
       if (!action.payload.value) {
@@ -49,6 +47,19 @@ export default function news(state = initialState, action) {
           }
         })
       }
+      return Object.assign({}, state, {
+          cart: state.cart
+      })
+
+    case REMOVE:
+      state.cart.forEach(function(item, i) {
+        if (item.id === action.payload.id) {
+          state.cart.splice(i, 1);
+        }
+      })
+      return Object.assign({}, state, {
+          cart: state.cart
+      })
 
     case UPDATE_PATH:
 

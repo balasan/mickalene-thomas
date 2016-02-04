@@ -40,6 +40,19 @@ class Nav extends Component {
     var location = this.props.state.routing.path;
     var self = this;
 
+
+    const closeItem = function() {
+       self.props.dispatch(updatePath('/works'))
+    }
+
+    const toggleCart = function() {
+      var cartHash = window.location.hash == '#cart';
+      if (!cartHash)
+        window.location.hash = '#cart';
+      else
+        window.location.hash = '';
+    }
+
     var showHeader = true;
     if(location == '/' || showMenu)
       showHeader = false
@@ -48,12 +61,8 @@ class Nav extends Component {
     var newsTags = [];
 
     if (this.props.menu) {
-      if (this.props.menu.workTags) {
-        workTags = this.props.menu.workTags;
-      }
-      if (this.props.menu.newsTags) {
-        newsTags = this.props.menu.newsTags;
-      }
+      if (this.props.menu.workTags) workTags = this.props.menu.workTags;
+      if (this.props.menu.newsTags) newsTags = this.props.menu.newsTags;
     }
 
     if (path == 'works/filter/:filter' || path == 'works') {
@@ -148,10 +157,10 @@ class Nav extends Component {
 
     if (path == 'store' && this.props.state.store.cart || path == 'store/:itemId' && this.props.state.store.cart ||  path == 'cart' && this.props.state.store.cart) {
       cart = (
-        <Link to='/cart' className='cart-icon'>
+        <a onClick={toggleCart} className='cart-icon'>
         <img src="../../images/cart.svg" />
         <p>{'X ' + this.props.state.store.cart.length}</p>
-        </Link>
+        </a>
         )
     }
 
@@ -181,6 +190,7 @@ class Nav extends Component {
         )
     }
     else nav = <nav className="hidden" key={showHeader}></nav>
+
 
     return (
       <ReactCSSTransitionGroup

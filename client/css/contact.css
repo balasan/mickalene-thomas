@@ -1,11 +1,43 @@
 @import "customMedia.css";
 
+.contactParent {
+  @media (--mobile) {
+    height: calc(100vh - 75px);
+    display: flex;
+    flex-direction: column;
+  }
+}
 .contactImg {
   height: calc(100vh - 75px);
   background-color: white;
   background-image: url("/images/contact.jpg");
   background-size: cover;
   background-position: center center;
+
+  @media (--mobile) {
+    display: none;
+  }
+}
+.mobileHeader {
+  display: block;
+  background-color: black;
+  overflow: auto;
+  color: white;
+  padding: 1.5em;
+
+  p {
+    font-family: 'Avenir Next Demi', sans-serif;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  a {
+    color: white;
+    font-family: 'Avenir Next', sans-serif;
+    margin: 0;
+  }
+  @media (--desktop) {
+    display: none;
+  }
 }
 .contactTxt {
   background-color: white;
@@ -15,6 +47,9 @@
 
   @media (--mobile) {
     flex-direction: column-reverse;
+    padding: 1.5em;
+    flex-grow: 1;
+    justify-content: flex-end;
   }
   section {
     @media (--desktop) {
@@ -28,6 +63,17 @@
           text-align: left;
           display: inline-block;
           min-width: 300px;
+        }
+      }
+    }
+    @media (--mobile) {
+      &.studio {
+        main {
+          article {
+            &:first-of-type {
+              display: none;
+            }
+          }
         }
       }
     }
@@ -59,6 +105,7 @@
       display: inline-block;
       font-family: 'Avenir Next', sans-serif;
       font-size: 14px;
+
       @media (--mobile) {
         font-size: 12px;
       }
@@ -69,6 +116,10 @@
       color: #ccc;
       width: calc(100% - 95px);
       margin: 0 5px 0 0;
+      @media (--mobile) {
+        width: calc(100% - 90px);
+        margin: 0;
+      }
     }
     button {
       background-color: #ccc;
@@ -82,5 +133,9 @@
         color: #ccc;
       }
     }
+  }
+  .social {
+    height: 100px;
+    width: 100px;
   }
 }
