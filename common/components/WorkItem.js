@@ -5,130 +5,111 @@ import { connect } from 'react-redux'
 import * as WorkActions from '../actions/work'
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import { updatePath } from 'redux-simple-router';
+import SingleImage from './SingleImage';
+
+Number.prototype.mod = function(n) { return ((this % n) + n) % n; };
 
 export default class WorkItem extends Component {
 
-  componentDidMount() {
-  }
+  componentWillUpdate(newProps) {
 
-  componentDidUpdate() {
+    if(!newProps.params.itemId) return this.workItem = null;
+
     var workItemNew = null;
-    if (this.props.state.workItem) {
-      workItemNew = this.props.state.workItem;
+    if (newProps.state.workItem) {
+      workItemNew = newProps.state.workItem;
     } else {
-      var idX = this.props.params.itemId;
-      this.props.state.works.forEach(function(item, i) {
+      var idX = newProps.params.itemId;
+      newProps.state.works.forEach(function(item, i) {
         if (item.id == idX) {
           workItemNew = item;
         }
       })
     }
     this.workItem = workItemNew;
+    if(this.props.state.works.length){
+      this.getNextItem(newProps);
+      this.getPrevItem(newProps);
+    }
+  }
+
+  getNextItem(newProps) {
+    self = this;
+    const { state, params } = newProps;
+    var nextIndex;
+    var works = state.works;
+    works.forEach(function(item, i) {
+      if (item.id == params.itemId) {
+        nextIndex = i+1;
+      }
+    })
+    nextIndex = nextIndex.mod(works.length);
+    this.nextItem = works[nextIndex];
+    //preload image
+    var img = new Image()
+    img.src = this.nextItem.image.medium.url
+  }
+
+  getPrevItem(newProps) {
+    self = this;
+    const { state, params } = newProps;
+    var works = state.works;
+    var prevIndex;
+    works.forEach(function(item, i) {
+      if (item.id == params.itemId) {
+        prevIndex = i-1;
+      }
+    })
+    prevIndex = prevIndex.mod(works.length);
+    self.prevItem = works[prevIndex];
+    //preload image
+    var img = new Image()
+    img.src = this.prevItem.image.medium.url
   }
 
   render () {
 
     var self = this;
 
-
     const nextItem = function() {
-      self.workItem = null;
-      var element  = document.getElementById("singleImage");
-      var currentId = self.props.params.itemId;
-      element.className = "image single-leave";
-      setTimeout(function() {
-        element.className = "image single-leave single-leave-active";
-      }, 10);
-      var works = self.props.state.works
-      var nextIndex;
-      works.forEach(function(item, i) {
-        if (item.id == currentId) {
-          nextIndex = i+1;
-        }
-      })
-      var calcIndex;
-      if (nextIndex < 0) {
-        calcIndex = works.length += nextIndex;
-      } else {
-        calcIndex = nextIndex%works.length;
-      }
-      console.log(calcIndex, 'calcIndex')
-      var newId = works[calcIndex].id;
-      self.workItem = works[calcIndex];
-      // self.render();
-      element.className = "image single-enter";
-      setTimeout(function() {
-        element.className = "image single-enter single-enter-active";
-      }, 10);
-      self.props.dispatch(updatePath('/works/i/' + newId))
+      self.props.dispatch(updatePath('/works/i/' + self.nextItem.id))
     }
 
     const prevItem = function() {
-      self.workItem = null;
-      var element  = document.getElementById("singleImage");
-      element.className = "image single-leave";
-      element.className = "image single-leave single-leave-active";
-      var currentId = self.props.params.itemId;
-      var works = self.props.state.works
-      var prevIndex;
-      works.forEach(function(item, i) {
-        if (item.id == currentId) {
-          prevIndex = i-1;
-        }
-      })
-      var calcIndex;
-      if (prevIndex < 0) {
-        calcIndex = (works.length - Math.abs(prevIndex))%works.length;
-      } else {
-        calcIndex = prevIndex%works.length;
-      }
-      var newId = works[calcIndex].id;
-      self.props.dispatch(updatePath('/works/i/' + newId))
-      self.workItem = works[calcIndex];
-      // self.render();
-      element.className = "image single-enter";
-      setTimeout(function() {
-        element.className = "image single-enter single-enter-active";
-      }, 10);
+      self.props.dispatch(updatePath('/works/i/' + self.prevItem.id))
     }
 
     const { state, clickitem } = this.props
 
-    var selectedWork;
     var workItem = this.workItem;
-    if ( workItem ) {
-      selectedWork = (
 
-        <section className='showcase'>
-            <ReactCSSTransitionGroup
-              transitionName="single"
-              transitionAppear={true}
-              transitionAppearTimeout={0}
-              transitionEnterTimeout={0}
-              transitionLeaveTimeout={0}>
-              <div className="image" id="singleImage">
-           <img src={workItem.image.main.url} key={workItem.image.main.url} />
-              </div>
-           </ReactCSSTransitionGroup>
-          <div className="description">
-            <div>
-            <p>{workItem.title}</p>
-              <p>{workItem.date.substr(0, 4)}{workItem.medium ? ', ' + workItem.medium : null}</p>
-            </div>
-          </div>
-          <div className="arrowsParent">
-            <section onClick={prevItem} className="left"></section>
-            <section className="middle"></section>
-            <section onClick={nextItem} className="right"></section>
-          </div>
-        </section>
-      )
-    }
+    if ( !workItem ) return false;
 
+    var description = (
+      <div className="description">
+        <div>
+          <p>{workItem.title}</p>
+          <p>{workItem.date.substr(0, 4)}{workItem.medium ? ', ' + workItem.medium : null}</p>
+        </div>
+      </div>
+    )
+
+    var arrows = (
+      <div className="arrowsParent">
+        <section onClick={prevItem} className="left"></section>
+        <section className="middle"></section>
+        <section onClick={nextItem} className="right"></section>
+      </div>
+    )
 
     return (
       <div className='selectedWork'>
-        {selectedWork}
+        <section className='showcase'>
+          <SingleImage imageSrc={workItem.image.medium.url}>
+          </SingleImage>
+          {description}
+          {arrows}
+        </section>
       </div>
     )
   }

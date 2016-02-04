@@ -20,7 +20,7 @@ var routes = {
     { path: 'about', component: About },
     { path: 'news', component: NewsParent },
     { path: 'works', component: WorkParent },
-    { path: 'works/i/:itemId', component: WorkItemParent },
+    { path: 'works/i/:itemId', component: WorkParent },
     { path: 'store/:itemId', component: ProductParent },
     { path: 'works/filter/:filter', component: WorkParent },
     { path: 'news/filter/:filter', component: NewsParent },

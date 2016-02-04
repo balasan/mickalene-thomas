@@ -11,12 +11,21 @@
     transform-style:preserve-3d;
 
 
+    img{
+        max-width: 70%;
+        max-height: 80%;
+        position:absolute;
+        left:50%;
+        top:50%;
+        transform: translate3d(-50%, -50%, 0);
+    }
 
 
     span {
         height: calc(100% - 75px);
-        perspective:600px;
-        transform-style:preserve-3d;
+        width:100%;
+        /*perspective:600px;*/
+        /*transform-style:preserve-3d;*/
     }
 
     .image {

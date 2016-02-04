@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Work from '../components/Work';
+import WorkItem from '../components/WorkItem';
 import * as WorkActions from '../actions/work'
 
 if (process.env.BROWSER) {
@@ -46,9 +47,13 @@ class WorkParent extends Component {
   }
 
   render() {
+    var showWorkItem = this.props.params.itemId ? '' : 'hidden';
     return (
       <div>
         <Work { ...this.props }/>
+        <div className={'workItemContainer ' + showWorkItem}>
+          <WorkItem { ...this.props }/>
+        </div>
       </div>
       )
   }

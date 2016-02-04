@@ -9,7 +9,6 @@ import Splash from './Splash';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 if (process.env.BROWSER) {
-  require('./../../client/css/animation.css');
   require('./../../client/css/flex-images.css');
   require('./../../client/css/index.css');
   require('./../../client/css/links.css');
@@ -20,6 +19,7 @@ if (process.env.BROWSER) {
   require('./../../client/css/contact.css');
   require('./../../client/css/item.css');
   require('./../../client/css/navbar.css');
+  require('./../../client/css/animation.css');
 }
 
 class App extends Component {
