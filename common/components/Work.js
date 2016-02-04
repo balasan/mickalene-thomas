@@ -6,8 +6,6 @@ import * as WorkActions from '../actions/work'
 import flexImages from './flex-full'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { updatePath } from 'redux-simple-router';
-// import { Animation } from '../custom/animation';
-var Animation = require('../custom/animation')
 // var rsr=require('redux-simple-router')
 // console.log(rsr);
 
@@ -16,7 +14,7 @@ export default class Work extends Component {
   constructor() {
     super();
     //this.oldWorksLimit = 20;
-    this.worksLimit = 10;
+    this.worksLimit = 20;
   }
 
   componentDidMount() {
@@ -51,6 +49,7 @@ export default class Work extends Component {
   shouldComponentUpdate(nextProps) {
     console.log('shouldComponentUpdate', nextProps)
     const { params, state } = nextProps;
+    if( params.itemId ) return false;
     if (this.works && (this.works.length === state.works.length) && (params.filter == this.props.params.filter) && this.worksLimit == this.oldWorksLimit) {
       return false;
     } else {return true};
@@ -217,6 +216,7 @@ export default class Work extends Component {
             {newWorks}
           </div>
         </div>)
+
 
     return (
       <div className='flex-images'>

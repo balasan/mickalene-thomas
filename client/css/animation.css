@@ -51,48 +51,73 @@
     transition: opacity .6s easeOutQuart, transform .7s easeOutQuart;
 }
 
-.single-enter:not(.single-enter-active),
-.single-leave:not(.single-leave-active) {
-    transition-delay: 0s !important;
-    transition-duration: 0s !important;
+
+
+/*WORK ITEM*/
+
+.single-enter, .single-appear {
+    opacity:0;
+    img{
+        opacity: 0;
+        transform: translate3d(0%, 0%, 0px) scale(.3, .3);
+    }
+    .description{
+        p{
+            opacity:0;
+            transform:translateY(15px);
+        }
+    }
+
 }
 
-.single-enter {
-    opacity: 0;
-    transform: translate3d(0, 0%, -200px);
-    transform-origin: 50% 0%;
-}
+.single-enter-active, .single-appear-active {
 
-.single-enter.single-enter-active {
-    opacity: 1;
-    transform-origin: 50% 0%;
-    transform: translate3d(0, 0%, 0) rotateX(0deg);
-    transition: opacity .6s easeOutQuart, transform .7s easeOutQuart;
+    transition: all .5s easeOutQuart;
+    opacity:1;
+    img{
+        opacity: 1;
+        transform: translate3d(0%, 0%, 0)  scale(1, 1);
+        transition: all .7s easeOutQuart;
+    }
+    .description{
+        p:nth-of-type(1){
+            opacity:1;
+            transform:translateY(0px);
+            transition: all .8s easeOutQuart;
+        }
+        p:nth-of-type(2){
+            opacity:1;
+            transform:translateY(0px);
+            transition: all .8s .1s easeOutQuart;
+        }
+    }
 }
 
 .single-leave {
-    opacity: 1;
-    transform: translate3d(0, 0%, 0);
+    img{
+        opacity: 1;
+        transform: translate3d(0%, 0%, 0);
+    }
+    .description{
+        opacity:0;
+    }
 }
 
-.single-leave.single-leave-active {
-    opacity: 0;
-    transition: opacity .2s easeOutQuart, transform .2s easeOutQuart;
-    transform: translate3d(-100px, 0, 0);
+.single-leave-active {
+    transition: all .5s easeOutQuart;
+    img{
+        opacity: 0;
+        transition: all .4s easeOutQuart;
+        transform: translate3d(-100px, 0%, 0);
+    }
+    .description{
+        opacity:0;
+    }
 }
 
-.single-appear {
-    opacity: 0;
-    transform: translate3d(0, 0%, -200px);
-    transform-origin: 50% 0%;
-}
 
-.single-appear.single-appear-active {
-    opacity: 1;
-    transform-origin: 50% 0%;
-    transform: translate3d(0, 0%, 0);
-    transition: opacity .9s easeOutQuart, transform .7s easeOutQuart;
-}
+
+
 
 .nav-leave:not(.nav-leave-active) {
     transition-delay: 0s !important;
