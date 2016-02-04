@@ -70,8 +70,8 @@ export default class Contact extends Component {
             <button>Submit</button>
           </article>
           <article class="social">
-            <a class="fb" href="http://facebook.com/mickalenethomas"></a>
-            <a class="twitter" href="http://twitter.com/mickalenethomas"></a>
+            <a class="fb" href=${studioInfo.fb}></a>
+            <a class="twitter" href=${studioInfo.twitter}></a>
           </article>`;
           var div = document.createElement("main");
           div.innerHTML = self.studioEl;

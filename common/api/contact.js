@@ -48,6 +48,8 @@
                  obj.studio.state = data['contact.state'] ? data['contact.state'].value : null;
                  obj.studio.zipcode = data['contact.zipcode'] ? data['contact.zipcode'].value : null;
                  obj.galleries = [];
+                 obj.studio.twitter = data['contact.twitter'] ? data['contact.twitter'].value : null;
+                 obj.studio.fb = data['contact.facebook'] ? data['contact.facebook'].value : null;
 
                  data['contact.galleries'].value.forEach(function(gallery) {
                     var galObj = {};

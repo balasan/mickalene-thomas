@@ -76,7 +76,9 @@ class WorkParent extends Component {
 
     if (state.news && !params.filter) {
       state.news.forEach(function(item, i) {
-        self.works.splice((i * 4), 0, item);
+
+        self.works.splice((i*5), 0, item);
+
       });
     }
   }

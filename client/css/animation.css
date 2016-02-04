@@ -1,3 +1,5 @@
+@import "customMedia.css";
+
 .work-enter:not(.work-enter-active),
 .work-leave:not(.work-leave-active) {
     transition-delay: 0s !important;
@@ -115,10 +117,6 @@
     }
 }
 
-
-
-
-
 /*.nav-leave:not(.nav-leave-active) {
     transition-delay: 0s !important;
     transition-duration: 0s !important;
@@ -149,11 +147,17 @@
     opacity: 0;
     transition: all .5s easeOutQuart;
     transform: translate3d(0, -75px, 0);
+     @media (--mobile) {
+        transform: translate3d(0, -60px, 0);
+    }
 }
 
 .nav-appear {
     opacity: 0;
     transform: translate3d(0, -75px, 0);
+     @media (--mobile) {
+        transform: translate3d(0, -60px, 0);
+    }
 }
 
 .nav-appear.nav-appear-active {
@@ -240,6 +244,9 @@ $i: 0;
 .main-enter {
     opacity: 0;
      transform: translateY(75px);
+      @media (--mobile) {
+        transform: translateY(60px);
+    }
 }
 
 .main-enter.main-enter-active {
@@ -257,11 +264,17 @@ transform: translateY(0px);
     opacity: 0;
 transition: opacity .2s easeOutQuart, transform .2s easeOutQuart;
  transform: translateY(75px);
+ @media (--mobile) {
+        transform: translateY(60px);
+    }
 }
 
 .main-appear {
     opacity: 0;
  transform: translateY(75px);
+  @media (--mobile) {
+        transform: translateY(60px);
+    }
 }
 
 .main-appear.main-appear-active {

@@ -85,9 +85,9 @@ export default class Work extends Component {
   filterWorks(state, params) {
     var self = this;
 
-    function isEven(n) {
-      return n % 2 == 0;
-    }
+    // function isEven(n) {
+    //   return n % 2 == 0;
+    // }
 
     self.works = state.works.filter(function(item) {
       if (params.filter && item.tags.indexOf(params.filter) === -1) {
@@ -100,12 +100,12 @@ export default class Work extends Component {
     if (state.news && !params.filter) {
 
       state.news.forEach(function(item, i) {
-        var even = isEven(i);
-        console.log(even, 'even')
-        if (even)
+        // var even = isEven(i);
+        // console.log(even, 'even')
+        // if (even)
           self.works.splice((i*5), 0, item);
-        else
-          self.works.splice(( (i*5) + 1 ), 0, item);
+        // else
+        //   self.works.splice(( (i*5) + 1 ), 0, item);
       });
 
     }
@@ -128,8 +128,6 @@ export default class Work extends Component {
           this.setState({});
         }
       }
-      // console.log(scrollTop);
-      // console.log(e.srcElement.body.scrollHeight-e.srcElement.body.clientHeight);
     }.bind(this), 100);
   };
 
