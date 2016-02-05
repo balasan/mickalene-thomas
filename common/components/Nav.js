@@ -39,6 +39,7 @@ class Nav extends Component {
     var showMenu = this.props.menu.showMenu;
     var location = this.props.state.routing.path;
     var self = this;
+    // console.log(this.props, 'nav ')
 
 
     const closeItem = function() {
@@ -63,6 +64,14 @@ class Nav extends Component {
     if (this.props.menu) {
       if (this.props.menu.workTags) workTags = this.props.menu.workTags;
       if (this.props.menu.newsTags) newsTags = this.props.menu.newsTags;
+    }
+
+    if (path == 'store/:itemId') {
+      filters = (
+        <section className='filterLinks'>
+        <Link to='/store'>back to products</Link>
+         </section>
+        )
     }
 
     if (path == 'works/filter/:filter' || path == 'works') {
@@ -156,10 +165,15 @@ class Nav extends Component {
     var cart = null;
 
     if (path == 'store' && this.props.state.store.cart || path == 'store/:itemId' && this.props.state.store.cart ||  path == 'cart' && this.props.state.store.cart) {
+      var totalItems = 0;
+      this.props.state.store.cart.forEach(function(item) {
+        totalItems += item.quantity;
+      })
+
       cart = (
         <a onClick={toggleCart} className='cart-icon'>
         <img src="../../images/cart.svg" />
-        <p>{'X ' + this.props.state.store.cart.length}</p>
+        <p>{'X ' + totalItems}</p>
         </a>
         )
     }
