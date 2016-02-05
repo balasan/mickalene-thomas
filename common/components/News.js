@@ -30,7 +30,7 @@ export default class News extends Component {
     var hash = this.props.location.hash.slice(1, this.props.location.hash.length);
     var els = document.getElementsByClassName(hash);
     var selectedEl = els[els.length-1];
-    if (!selectedEl.classList.contains('work-enter-active')) return;
+    if (!selectedEl.classList.contains('news-enter-active')) return;
     var scrollSelf = this;
     var scrollInterval = setInterval(function(){
       var offTop = selectedEl.offsetTop + 7;
@@ -99,11 +99,11 @@ export default class News extends Component {
         ${item.link ? '<a href=' + item.link + ' target=_blank></a>' : ''}
         </section>`
       var div = document.createElement("div");
-      div.className = "delay work-enter"
+      div.className = "delay news-enter"
       div.innerHTML = el;
       self.container.appendChild(div);
       setTimeout(function(){
-        div.className += " " + item.id + " work-enter-active news-item";
+        div.className += " " + item.id + " news-enter-active news-item";
       },10);
     })
   }
@@ -117,8 +117,8 @@ export default class News extends Component {
     var i = els.length
     while (i--) {
       var el = els[i]
-      clearClass(el,'work-enter');
-      el.className += " work-leave";
+      clearClass(el,'news-enter');
+      el.className += " news-leave";
       leaveActive(el);
     }
 
@@ -134,7 +134,7 @@ export default class News extends Component {
 
     function leaveActive(el){
       setTimeout(function(){
-        el.className += " work-leave-active";
+        el.className += " news-leave-active";
       },10);
     }
 

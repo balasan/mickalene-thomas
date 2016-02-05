@@ -44,6 +44,7 @@ class WorkParent extends Component {
     this.worksLimit = 10;
     this.works = [];
     this.worksOnly = [];
+    this.closeUrl = '/works'
   }
 
   componentWillUpdate(nextProps) {
@@ -87,7 +88,7 @@ class WorkParent extends Component {
     var showWorkGrid = this.props.params.itemId ? 'hidden' : '';
 
     return (
-      <div>
+      <div className="container3d">
         <div className={'worksContainer ' + showWorkGrid}>
           <Work { ...this.props } filteredWorks={this.works} className={showWorkGrid}/>
         </div>
