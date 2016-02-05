@@ -20,16 +20,17 @@ if (process.env.BROWSER) {
   require('./../../client/css/item.css');
   require('./../../client/css/navbar.css');
   require('./../../client/css/animation.css');
+  require('./../../client/css/mag.css');
 }
 
 class App extends Component {
   render () {
     if (this.props.menu) {
         var main = (
-           <ReactCSSTransitionGroup component='main' className='main-container' transitionName="main" 
+           <ReactCSSTransitionGroup component='main' className='main-container' transitionName="main"
             transitionAppear={true}
-            transitionAppearTimeout={1000} 
-            transitionEnterTimeout={1000} 
+            transitionAppearTimeout={1000}
+            transitionEnterTimeout={1000}
             transitionLeaveTimeout={500}>
               {!this.props.menu.showMenu ? this.props.children : null}
             </ReactCSSTransitionGroup>);

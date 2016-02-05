@@ -6,8 +6,6 @@ import * as WorkActions from '../actions/work'
 import flexImages from './flex-full'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { updatePath } from 'redux-simple-router';
-// var rsr=require('redux-simple-router')
-// console.log(rsr);
 
 export default class Work extends Component {
 
