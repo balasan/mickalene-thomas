@@ -36,7 +36,6 @@ export function removeItem(id) {
 }
 
 export function setProduct(value) {
-  console.log('single product', value)
   return {
     type: SET_PRODUCT,
     payload: {
