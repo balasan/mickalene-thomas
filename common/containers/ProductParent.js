@@ -35,7 +35,9 @@ export default class ProductParent extends Component {
         transitionAppearTimeout={700}
         transitionEnterTimeout={700}
         transitionLeaveTimeout={600}>
-          <Product { ...this.props } key={this.props.params.id}/>
+        <div key={this.props.params.id}>
+          <Product { ...this.props } />
+        </div>
       </ReactCSSTransitionGroup>
         <Cart { ...this.props } />
       </div>
