@@ -1,5 +1,5 @@
 'user strict';
-window.THREE = require('three')
+window.THREE = require('three/three.min.js')
 require('./OBJLoader');
 require('./ColladaLoader');
 

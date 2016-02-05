@@ -21,12 +21,12 @@ var routes = {
     { path: 'news', component: NewsParent },
     { path: 'works', component: WorkParent },
     { path: 'works/i/:itemId', component: WorkParent },
+    { path: 'store', component: StoreParent },
     { path: 'store/:itemId', component: ProductParent },
     { path: 'works/filter/:filter', component: WorkParent },
     { path: 'news/filter/:filter', component: NewsParent },
     { path: 'cart', component: CartParent },
     { path: 'contact', component: Contact },
-    { path: 'store', component: StoreParent },
     { path: '*', component: NotFound }
   ]
 };

@@ -29,19 +29,12 @@ export default class Product extends Component {
 
     if ( this.props.state.store.product ) {
       var product = this.props.state.store.product;
-      con
       productEl = (
-        <section className='productShowcase'>
-            <ReactCSSTransitionGroup
-              transitionName="single"
-              transitionAppear={true}
-              transitionAppearTimeout={0}
-              transitionEnterTimeout={0}
-              transitionLeaveTimeout={0}>
-              <div className="image" key={product.image[0]}>
+
+          <section className='productShowcase' key={product.id}>
+              <div className="image" >
                 <img src={product.image[0]} />
               </div>
-           </ReactCSSTransitionGroup>
            <div className='info'>
 
            <section className='top'>
@@ -56,14 +49,15 @@ export default class Product extends Component {
             </div>
            </section>
             </div>
-        </section>
+          </section>
       )
     }
 
 
     return (
       <div>
-        {productEl}
+
+          {productEl}
       </div>
     )
   }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Product from '../components/Product';
 import * as ProductActions from '../actions/product';
 import Cart from '../components/Cart';
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 if(process.env.BROWSER){
   require('./../../client/css/product.css');
@@ -28,7 +29,16 @@ export default class ProductParent extends Component {
   render () {
     return (
       <div>
-        <Product { ...this.props } />
+      <ReactCSSTransitionGroup
+        transitionName="single"
+        transitionAppear={true}
+        transitionAppearTimeout={700}
+        transitionEnterTimeout={700}
+        transitionLeaveTimeout={600}>
+        <div key={this.props.params.id}>
+          <Product { ...this.props } />
+        </div>
+      </ReactCSSTransitionGroup>
         <Cart { ...this.props } />
       </div>
       )
