@@ -20,17 +20,10 @@ export default class Product extends Component {
     if ( this.props.state.store.product ) {
       var product = this.props.state.store.product;
       productEl = (
-        <section className='productShowcase'>
-            <ReactCSSTransitionGroup
-              transitionName="single"
-              transitionAppear={true}
-              transitionAppearTimeout={0}
-              transitionEnterTimeout={0}
-              transitionLeaveTimeout={0}>
-              <div className="image" key={product.image.main.url}>
+          <section className='productShowcase' key={product.id}>
+              <div className="image" >
                 <img src={product.image.main.url} />
               </div>
-           </ReactCSSTransitionGroup>
            <div className='info'>
 
            <section className='top'>
@@ -43,14 +36,15 @@ export default class Product extends Component {
             {product.price ? <button onClick={add.bind(this, product)}>Add to Shopping Bag</button> : <a href="mailto:hello@mickalenethomas.com" target="_blank" className="no-price">contact us</a>}
            </section>
             </div>
-        </section>
+          </section>
       )
     }
 
 
     return (
       <div>
-        {productEl}
+
+          {productEl}
       </div>
     )
   }

@@ -37,6 +37,11 @@ module.exports = {
        preLoaders: [
         { test: /\.json$/, loader: 'json'},
     ],
+    // resolve: {
+    //   root:  path.resolve(__dirname, '..'),
+    //   extensions: ['', '.js', '.jsx'],
+    //   modulesDirectories: ["node_modules"]
+    // },
     loaders: [
       {
         test: /\.css$|\.scss$/,

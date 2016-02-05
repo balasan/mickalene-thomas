@@ -58,6 +58,8 @@ class Nav extends Component {
     if(location == '/' || showMenu)
       showHeader = false
 
+    if (!process.env.BROWSER) showHeader = false;
+
     var workTags = [];
     var newsTags = [];
 
@@ -203,18 +205,21 @@ class Nav extends Component {
           </nav>
         )
     }
-    else nav = <nav className="hidden"></nav>
-
+    else nav = (<nav className="hidden"></nav>)
 
     return (
-      <ReactCSSTransitionGroup
+      <div>
+{/*       <ReactCSSTransitionGroup
         transitionName="nav"
         transitionAppear={true}
         transitionAppearTimeout={0}
         transitionEnterTimeout={700}
-        transitionLeaveTimeout={500}>
+        transitionLeaveTimeout={500}> */}
           {nav}
-      </ReactCSSTransitionGroup>)
+{/*       </ReactCSSTransitionGroup>
+ */}      
+        </div>
+)
   }
 }
 
