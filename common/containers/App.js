@@ -26,8 +26,11 @@ class App extends Component {
   render () {
     if (this.props.menu) {
         var main = (
-           <ReactCSSTransitionGroup component='main' className='main-container' transitionName="main" transitionAppear={true}
-              transitionAppearTimeout={500} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+           <ReactCSSTransitionGroup component='main' className='main-container' transitionName="main" 
+            transitionAppear={true}
+            transitionAppearTimeout={1000} 
+            transitionEnterTimeout={1000} 
+            transitionLeaveTimeout={500}>
               {!this.props.menu.showMenu ? this.props.children : null}
             </ReactCSSTransitionGroup>);
     }
@@ -36,7 +39,6 @@ class App extends Component {
     <div>
       <Nav { ...this.props }></Nav>
       <Menu { ...this.props }></Menu>
-      <Splash></Splash>
       {main}
     </div>
     );

@@ -7,19 +7,22 @@ require('./ColladaLoader');
 // var collada = require('three-loaders-collada')(THREE);
 
 
-function GLView() {
+function GLView(_corner) {
 
   console.log('INIT GL VIEW')
 
+  var corner = _corner;
   var container;
   var camera, scene, renderer;
   var cameraTarget = new THREE.Vector3(0, 0, -100);
   var cameraExtra = new THREE.Vector2(0, 0);
   var wall;
-  var WIDTH;
-  var HEIGHT;
-  var corner = false;
-
+  var WIDTH = window.innerWidth;
+  var HEIGHT = window.innerHeight;
+  if (corner) {
+    WIDTH = 110;
+    HEIGHT = 110;
+  }
   var controls;
 
   var mouse = new THREE.Vector2(0, 0);
@@ -75,40 +78,19 @@ function GLView() {
 
   function init() {
 
-    // container = document.body;
-
-    // container = document.createElement('div');
-    // document.body.appendChild(container);
-
     //Scene
 
     scene = new THREE.Scene();
     // scene.fog = new THREE.Fog(0xffffff, 0, 1000);
 
-    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 5000);
+    camera = new THREE.PerspectiveCamera(60, WIDTH / HEIGHT, 1, 5000);
     camera.position.z = 150;
     camera.position.y = 0;
     camera.lookAt(cameraTarget);
     scene.add(camera);
 
 
-    // controls = new THREE.OrbitControls(camera, container);
-    // controls.minDistance = 10;
-    // controls.minY = -200;
-    // controls.maxDistance = 3500;
-    // controls.noPan = true;
-    // controls.damping = 0.1;
-    // controls.position = camera.position.clone();
-    // controls.target = cameraTarget.clone();
-
-
-
-
-
-    // tree
     var loader = new THREE.JSONLoader();
-    // loader.load( "tree.js", treeLoaded );
-    // loader.load( "butterfly.js", butterflyLoaded );
 
     var aLight = new THREE.AmbientLight(new THREE.Color("hsl(0, 0%, 30%)"));
     scene.add(aLight);
@@ -127,19 +109,29 @@ function GLView() {
 
     try {
       // renderer
-      renderer = new THREE.WebGLRenderer({
-        canvas: document.getElementById('webGL'),
+      var options = {
+        canvas: document.getElementById("webGL"),
         antialias: true,
-        alpha: true,
-      });
+        alpha: false,
+      }
+      if(corner) {
+        options = {
+          canvas: document.getElementById("webGLCorner"),
+          antialias: true,
+          alpha: true,
+        }
+      }
+
+      renderer = new THREE.WebGLRenderer(options);
+
       renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1);
 
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(WIDTH, HEIGHT);
 
       // renderer.setClearColor(scene.fog.color);
 
       renderer.sortObjects = false;
-      renderer.domElement.id = 'webGLView'
+      // renderer.domElement.id = 'webGLView'
 
       // container.appendChild(renderer.domElement);
       has_gl = true;
@@ -213,6 +205,11 @@ function GLView() {
     textMaterial.normalMap = null;
     textMaterial.metal = true;
     textMaterial.transparent = false;
+    if(corner) {
+      textMaterial.transparent = true;
+      textMaterial.opacity = 0;
+    }
+
     // textMaterial.color = new THREE.Color("hsl(0, 0%, 50%)");
     // textMaterial.specular = new THREE.Color("hsl(0, 0%, 30%)");
     // textMaterial.specular = new THREE.Color("hsl(0, 0%, 100%)");
@@ -242,7 +239,8 @@ function GLView() {
     wall.position.z = -1000;
     // plane.rotation.y = -Math.PI / 7;
     wall.scale.set(20, 20, 20);
-    scene.add(wall);
+    if (!corner)
+      scene.add(wall);
 
 
     logo = new THREE.Object3D();
@@ -270,33 +268,11 @@ function GLView() {
 
     var loader = new THREE.OBJLoader();
     var jLoader = new THREE.JSONLoader();
-    jLoader.load('/3d/MfaceOnly.js',function ( geometry, materials ) {
-      console.log(materials);
-      var material = new THREE.MeshFaceMaterial( [sideMaterial,transMaterial,sideMaterial] );
-      var object = new THREE.Mesh( geometry, material );
-      logo.add( object );
+    jLoader.load('/3d/MfaceOnly.js', function (geometry) {
+      var material = new THREE.MeshFaceMaterial([sideMaterial, transMaterial, sideMaterial]);
+      var object = new THREE.Mesh(geometry, material);
+      logo.add(object);
     })
-
-    // loader.load('/3d/Mface.obj', function(object) {
-    //   object.traverse(function(child) {
-    //     if (child instanceof THREE.Mesh) {
-    //       // child.material = transMaterial;
-    //       child.material = new THREE.MeshFaceMaterial(transMaterial,textMaterial,transMaterial,transMaterial,transMaterial);
-    //     }
-    //   });
-    //   logo.add(object);
-    // });
-
-    // loader.load('/3d/M.obj', function(object) {
-    //   object.traverse(function(child) {
-    //     if (child instanceof THREE.Mesh) {
-    //       child.material = transMaterial;
-    //     }
-    //   });
-    //   // console.log(object, 'object')
-    //   M = object;
-    //   logo.add(M);
-    // });
 
     loader.load('/3d/text.obj', function(object) {
       object.traverse(function(child) {
@@ -321,11 +297,12 @@ function GLView() {
     //   logo.add(text);
     // });
 
-    onWindowResize()
     render();
   }
 
   function onWindowResize(event) {
+
+    if (corner) return;
 
     var w = window.innerWidth;
     var h = window.innerHeight;
@@ -388,17 +365,17 @@ function GLView() {
       delta = 1000 / 60;
     }
 
-    if (corner) {
-      // wall.rotation.y += (.5 * mouse.x / WIDTH - wall.rotation.y) * .05;
-      // wall.rotation.x += (.5 * mouse.y / HEIGHT - wall.rotation.x) * .05;
-      logo.rotation.y += (.7 * mouse.x / WIDTH - logo.rotation.y) * .05;
-      logo.rotation.x += (.7 * mouse.y / HEIGHT - logo.rotation.x) * .05;
-    }
-    else {
-      camera.position.x += (mouse.x / 10 - camera.position.x) * .05;
+    // if (corner) {
+    //   // wall.rotation.y += (.5 * mouse.x / WIDTH - wall.rotation.y) * .05;
+    //   // wall.rotation.x += (.5 * mouse.y / HEIGHT - wall.rotation.x) * .05;
+    //   logo.rotation.y += (.7 * mouse.x / WIDTH - logo.rotation.y) * .05;
+    //   logo.rotation.x += (.7 * mouse.y / HEIGHT - logo.rotation.x) * .05;
+    // }
+    // else {
+      camera.position.x -= (mouse.x / 10 + camera.position.x) * .05;
       camera.position.y += (- mouse.y / 10 - camera.position.y) * .05;
       camera.lookAt(scene.position);
-    }
+    // }
 
 
     // controls.update();
@@ -426,6 +403,37 @@ function GLView() {
     console.log(scene, 'scene')
     scene.remove(logo)
   }
+
+  this.cornerState = function(_corner) {
+    // corner = _corner;
+    // if (corner) {
+    //   var position = unproject(110, 70, 0);
+    //   console.log(position);
+    //   var s = .1;
+    //   logo.scale.set(s, s, s);
+    //   logo.position.copy(position);
+    // }
+    // else {
+    //   var s = .4;
+    //   logo.scale.set(s, s, s);
+    //   logo.position.set(0, 10, 0);
+    // }
+  };
+
+  function unproject(x, y, z) {
+    var vector = new THREE.Vector3();
+
+    vector.set(
+        (x / window.innerWidth) * 2 - 1,
+        - (y / window.innerHeight) * 2 + 1,
+        -.5);
+    vector.unproject(camera);
+    var dir = vector.sub(camera.position).normalize();
+    var distance = - camera.position.z / dir.z;
+    var pos = camera.position.clone().add(dir.multiplyScalar(distance));
+    return pos;
+  }
+
   this.dom = renderer.domElement
 
 }

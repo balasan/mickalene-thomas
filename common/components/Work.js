@@ -19,7 +19,7 @@ export default class Work extends Component {
     var self = this;
     this.container = document.getElementById("flex-container2");
     this.containerOut = document.getElementById("flex-container1");
-
+    this.container3d = document.getElementById("flex-images");
     window.addEventListener('scroll', this.handleScroll.bind(this));
   }
 
@@ -31,25 +31,26 @@ export default class Work extends Component {
     var self = this;
     const { state, params, filteredWorks } = nextProps;
 
-    // if (this.newWorks) {
-    //   this.oldWorks = this.newWorks.slice();
-    // }
+    if (this.newWorks) {
+      // this.oldWorks = this.newWorks.slice();
+    }
 
     self.params = params;
-    // this.filterWorks(state, params);
+
     this.works = filteredWorks.slice(0, this.worksLimit);;
 
-    if (this.oldWorks && (JSON.stringify(this.works) == JSON.stringify(this.oldWorks))) return;
-
     //don't update if its the same stuff
+    if (this.oldWorks && (JSON.stringify(this.works) == JSON.stringify(this.oldWorks))) return;
     this.newWorks = this.works;
   }
 
   shouldComponentUpdate(nextProps) {
-    console.log('shouldComponentUpdate', nextProps)
     const { params, state } = nextProps;
     if( params.itemId ) return false;
-    if (this.works && (this.works.length === state.works.length) && (params.filter == this.props.params.filter) && this.worksLimit == this.oldWorksLimit) {
+    if (this.works
+      // && (this.works.length === state.works.length)
+      && (params.filter == this.props.params.filter)
+      && this.worksLimit == this.oldWorksLimit) {
       return false;
     } else {return true};
   }
@@ -59,16 +60,15 @@ export default class Work extends Component {
     this.flexGridLayout(this.container);
     this.flexGridLayout(this.containerOut);
 
-    // setTimeout(function(){
-      var els = self.container.getElementsByTagName('a');
-      for(var i = 0; i < els.length; i++) {
-       els[i].className += " work-enter-active";
-      }
+    var els = self.container.getElementsByTagName('a');
+    for(var i = 0; i < els.length; i++) {
+     els[i].className += " work-enter-active";
+    }
 
-      var els = self.containerOut.getElementsByTagName('a');
-      for(var i = 0; i < els.length; i++) {
-        els[i].className += " work-leave-active";
-      }
+    var els = self.containerOut.getElementsByTagName('a');
+    for(var i = 0; i < els.length; i++) {
+      els[i].className += " work-leave-active";
+    }
     this.newsColor();
   }
 
@@ -94,36 +94,21 @@ export default class Work extends Component {
     })
   }
 
-  filterWorks(state, params) {
-    var self = this;
-
-    self.works = state.works.filter(function(item) {
-      if (params.filter && item.tags.indexOf(params.filter) === -1) {
-        return false;
-      } else {
-        return true;
-      }
-    }).slice(0, this.worksLimit);
-
-    if (state.news && !params.filter) {
-
-      state.news.forEach(function(item, i) {
-          self.works.splice((i*5), 0, item);
-      });
-
-    }
-  }
-
   handleScroll(e) {
     //basic debounce
     if (this.timeout) {
-    clearTimeout(this.timeout);
+      clearTimeout(this.timeout);
     }
     this.timeout = setTimeout(function() {
       //run, but wait again
       var scrollTop = e.srcElement.body.scrollTop;
       var scrollHeight = e.srcElement.body.scrollHeight;
       var clientHeight = e.srcElement.body.clientHeight;
+
+      var pOrgin = "50% " + (scrollTop + clientHeight/2) + "px"
+      this.container3d.style.perspectiveOrigin = pOrgin
+      this.container3d.style.webkitPerspectiveOrigin = pOrgin
+
       if (((scrollTop+clientHeight) / scrollHeight) > 0.7) {
         if (this.worksLimit) {
           this.oldWorksLimit = this.worksLimit;
@@ -197,7 +182,7 @@ export default class Work extends Component {
 
 
     return (
-      <div className='flex-images'>
+      <div id="flex-images" className='flex-images'>
         {all}
       </div>
     )

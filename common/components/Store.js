@@ -26,7 +26,7 @@ export default class Store extends Component {
     if (this.props.state.store.products) {
       products = this.props.state.store.products.map(function(product, i) {
         return (
-          <Link to={'/store/' + product.id} key={i}>
+          <Link to={'/store/' + product.id} key={product.image.small.url}>
             <img src={product.image.small.url} />
           </Link>
         );

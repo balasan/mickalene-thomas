@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
-var Mag = require('magnificent');
+var wtf = require('magnificent');
 
 export default class SingleSlide extends Component {
    componentDidMount() {
@@ -13,7 +13,7 @@ export default class SingleSlide extends Component {
     var url = this.props.workItem.image.medium.url;
     var title = this.props.workItem.title;
 
-    console.log(Mag, 'mag');
+    console.log(wtf, 'mag');
 
     const fullscreen = function() {
 
@@ -32,10 +32,9 @@ export default class SingleSlide extends Component {
         body.webkitRequestFullscreen();
       }
 
+      var host = document.getElementsByClassName('thumb')[0];
       console.log(host, 'host')
-
-      var host = document.getElementsByClassName('thumb')[0];;
-      host.mag();
+      host.Mag();
     }
 
     var image = (

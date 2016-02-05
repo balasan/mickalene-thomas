@@ -40,7 +40,7 @@
         align-items: center;
         justify-content: center;
         background-color: black;
-        padding: 2em 10vw;
+        padding: 2em 22%;
 
         @media (--mobile) {
             padding: 1.5em;
@@ -52,7 +52,7 @@
         width: 100%;
         background-color: white;
         color: black;
-        padding: 4em 10vw;
+        padding: 4em 15%;
         @media (--mobile) {
             padding: 1.5em;
         }

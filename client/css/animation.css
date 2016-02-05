@@ -9,6 +9,7 @@
 .work-enter {
     opacity: 0;
     transform: translate3d(0, 0%, 0) rotateX(-90deg);
+
     transform-origin: 50% 0%;
     .imageContainer {
       /*transform: scale(1.3,1.3);*/
@@ -17,7 +18,7 @@
     }
 }
 
-.work-enter.work-enter-active {
+.work-enter-active {
     opacity: 1;
     transform-origin: 50% 0%;
     transform: translate3d(0, 0%, 0) rotateX(0deg);
@@ -34,7 +35,7 @@
     transform: translate3d(0px, 0, 0);
 }
 
-.work-leave.work-leave-active {
+.work-leave-active {
     opacity: 0;
     transition: opacity .6s easeOutQuart, transform .3s easeOutQuart;
     transform: translate3d(100px,0, 0);
@@ -46,7 +47,7 @@
     transform-origin: 50% 0%;
 }
 
-.work-appear.work-appear-active {
+.work-appear-active {
     opacity: 1;
     transform-origin: 50% 0%;
     transform: translate3d(0, 0%, 0) rotateX(0deg);
@@ -243,16 +244,18 @@ $i: 0;
 
 .main-enter {
     opacity: 0;
-     transform: translateY(75px);
+    transform: scale(1.05);
+
+/*     transform: translateY(75px);
       @media (--mobile) {
         transform: translateY(60px);
-    }
+    }*/
 }
 
 .main-enter.main-enter-active {
     opacity: 1;
- transform: translateY(0px);
-    transition: opacity .6s easeOutQuart, transform .7s easeOutQuart;
+    transform: translateY(0px) scale(1);
+    transition: opacity .7s easeOutQuart, transform 1.0s easeOutQuart;
 }
 
 .main-leave {
@@ -262,9 +265,9 @@ transform: translateY(0px);
 
 .main-leave.main-leave-active {
     opacity: 0;
-transition: opacity .2s easeOutQuart, transform .2s easeOutQuart;
- transform: translateY(75px);
- @media (--mobile) {
+    transition: opacity .5s easeOutQuart, transform .5s easeOutQuart;
+    transform: translateY(75px);
+     @media (--mobile) {
         transform: translateY(60px);
     }
 }
@@ -283,35 +286,38 @@ transition: opacity .2s easeOutQuart, transform .2s easeOutQuart;
     transition: opacity .9s easeOutQuart, transform .7s easeOutQuart;
 }
 
-/*.grid-enter{
+
+
+/*//NEWS*/
+.news-enter:not(.news-enter-active),
+.news-leave:not(.news-leave-active) {
+    transition-delay: 0s !important;
+    transition-duration: 0s !important;
+}
+
+.news-enter,
+.news-appear {
     opacity: 0;
-    transform:   translate(0,0);
-    transform: translate3d(0,0,0);
+    transform: translate3d(-100px, 0%, 0);
+    transform-origin: 50% 0%;
 }
 
-.grid-enter.grid-enter-active {
-  opacity: 1;
-  transform:   translate(0,0);
-  transform: translate3d(0,0,0);
+.news-enter-active,
+.news-appear-active {
+    opacity: 1;
+    transform-origin: 50% 0%;
+    transform: translate3d(0, 0%, 0) rotateX(0deg);
+    transition: opacity .7s easeOutQuart, transform .7s easeOutQuart;
 }
-.grid-leave {
-  opacity: 1;
-  transform:   translate(0,0,0);
-  transform: translate3d(0,0,0);
-}
-.grid-leave.grid-leave-active {
-  opacity: 0;
-  transform:   translate(0,0);
-  transform: translate3d(0,0,0);
-}*/
 
-/*need to tweak this to start iteration over on each row*/
-/*@for $j from 1 through 100 {
-  $i : 0;
-  @for $i from 1 through 10 {
-    .rowId-$j:nth-of-type($i)
-      {
-        transition-delay: calc(0.1s * $i);
-      }
-  }
-}*/
+.news-leave {
+    opacity: 1;
+    transform: translate3d(0px, 0, 0);
+}
+
+.news-leave-active {
+    opacity: 0;
+    transition: opacity .3s easeOutQuart, transform .3s easeOutQuart;
+    transform: translate3d(0,100px, 0);
+}
+

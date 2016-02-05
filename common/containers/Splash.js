@@ -9,6 +9,8 @@ class Splash extends Component {
   static glView;
 
   componentDidMount() {
+
+    var self = this;
     var GLView = require('../../client/glView')
     if (!window.glView) {
       window.glView = new GLView()
@@ -17,17 +19,9 @@ class Splash extends Component {
         window.glView.add();
       }
 
-      // if (this.props.state.routing.path != '/') {
-      //   setTimeout(function() {
-      //     window.glView.remove();
-      //     window.glView.stop()
-      //   }, 500);
-      // }
-
       window.glView.dom.addEventListener('click', () => {
         window.glView.remove();
-        this.props.dispatch(updatePath('/works'))
-        // this.props.showAllX()
+          self.props.dispatch(updatePath('/works'))
       })
     }
     else {
@@ -36,6 +30,37 @@ class Splash extends Component {
         window.glView.add()
       }
     }
+
+    if(!window.glViewCorner) {
+      var corner = true;
+      window.glViewCorner = new GLView(corner);
+      window.glViewCorner.add();
+      window.glViewCorner.start();
+      window.glViewCorner.dom.addEventListener('click', () => {
+        self.props.dispatch(updatePath('/'))
+      })
+      document.getElementsByTagName('nav')[0].appendChild(window.glViewCorner.dom)
+    }
+
+  }
+
+  componentWillUpdate(nextProps){
+
+    // var menu;
+    // if(nextProps.state.menu && nextProps.state.menu.showMenu) menu = true;
+
+    // if(menu || nextProps.state.routing.path == '/'){
+    //   window.glView.start()
+    //   window.glView.add()
+    //   if(menu) window.glView.cornerState(true)
+    //   else window.glView.cornerState(false)
+
+    // }
+    // else {
+    //    window.glView.remove();
+    //    window.glView.stop()
+    // }
+
   }
 
   componentWillUnmount() {

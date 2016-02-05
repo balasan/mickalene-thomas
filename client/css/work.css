@@ -1,21 +1,42 @@
 @import "customMedia.css";
 
-.worksContainer {
-    transition: all .5s easeOutQuart;
+.container3d{
 
-    &.hidden {
+}
+
+.worksContainer{
+    transition: all .5s easeOutQuart;
+    transform:scale(1) translateZ(0);
+    transform-origin: 50% 50%;
+
+    &.hidden{
         opacity: 0;
-        transform: translateY(100px);
+        /*transform:scale(1.05) translateZ(0);*/
+        .item{
+            transform: translateZ(-200px);
+        }
+        /*transform:rotateX(90deg) translateZ(0);*/
     }
 }
 .workItemContainer {
     z-index: 10;
     position: fixed;
-    top: 75px;
-    width: 100%;
+    top:75px;
+    /*height:100%;*/
+    width:100%;
+    .arrowsParent section.left, .arrowsParent section.right{
+        /*transform: translateX(0px);*/
+        transition: all .6s easeOutQuart;
+    }
+    &.hidden{
+        /*display:none;*/
+        .arrowsParent section.left{
+            transform: translateX(-100px) scale(-1);
+        }
+        .arrowsParent section.right{
+            transform: translateX(100px);
+        }
 
-    &.hidden {
-        display: none;
     }
     .close {
         top: -50px;
@@ -84,6 +105,8 @@
         align-items: center;
         text-align: center;
 
+        line-height: 15px;
+
         p {
             &:first-of-type {
                 letter-spacing: 3px;
@@ -125,7 +148,7 @@
                 background-position: center left;
             }
             opacity: .9;
-            transition: opacity 250ms easeOutQuart;
+            /*transition: opacity 250ms easeOutQuart;*/
             cursor: pointer;
 
             &:hover {

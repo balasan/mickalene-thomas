@@ -4,6 +4,7 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as MenuActions from '../actions/menu'
+import Splash from '../containers/Splash';
 
 class Menu extends Component {
 
@@ -64,7 +65,8 @@ class Menu extends Component {
 
     return (
       <div>
-          {links}
+        {links}
+        <Splash></Splash>
       </div>
     )
   }

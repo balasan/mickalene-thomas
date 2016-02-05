@@ -24,7 +24,7 @@
         }
 
         &.footerLink {
-            font-size: 20px;
+            font-size: 16px;
             color: rgba(255, 255, 255, 1);
             margin: 0;
             padding: 0;
@@ -73,8 +73,8 @@
                 &:first-of-type {
                     img {
                         padding: 0 0.5em 0 0;
-                        height: 23px;
-                        width: 23px;
+                        height: 19px;
+                        width: 19px;
                     }
                 }
             }

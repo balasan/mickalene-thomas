@@ -27,7 +27,7 @@ export default class Product extends Component {
               transitionAppearTimeout={0}
               transitionEnterTimeout={0}
               transitionLeaveTimeout={0}>
-              <div className="image">
+              <div className="image" key={product.image.main.url}>
                 <img src={product.image.main.url} />
               </div>
            </ReactCSSTransitionGroup>
