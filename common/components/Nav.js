@@ -179,7 +179,7 @@ class Nav extends Component {
     }
 
       var nav = (
-          <nav className={navClass} key={showHeader}>
+          <nav className={navClass} >
             <div className='top'>
             <section className='left'>
               {path == 'works/i/:itemId' ? null : <Link className='logo' to="/">mickalene thomas</Link>}
@@ -203,7 +203,7 @@ class Nav extends Component {
           </nav>
         )
     }
-    else nav = <nav className="hidden" key={showHeader}></nav>
+    else nav = <nav className="hidden"></nav>
 
 
     return (

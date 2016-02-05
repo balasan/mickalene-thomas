@@ -39,7 +39,6 @@ class App extends Component {
     <div>
       <Nav { ...this.props }></Nav>
       <Menu { ...this.props }></Menu>
-      <Splash></Splash>
       {main}
     </div>
     );

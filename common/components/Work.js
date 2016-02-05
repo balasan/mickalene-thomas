@@ -67,15 +67,10 @@ export default class Work extends Component {
      els[i].className += " work-enter-active";
     }
 
-<<<<<<< HEAD
     var els = self.containerOut.getElementsByTagName('a');
     for(var i = 0; i < els.length; i++) {
       els[i].className += " work-leave-active";
-=======
-      var els = self.containerOut.getElementsByTagName('a');
-      for(var i = 0; i < els.length; i++) {
-        els[i].className += " work-leave-active";
-      }
+    }
     this.newsColor();
   }
 
@@ -90,7 +85,6 @@ export default class Work extends Component {
     }
     for (i = 2; i < newsEls.length; i+=3) {
       newsEls[i].classList.add('brown');
->>>>>>> 2a5e630d51ace1c07ef64b805531b6fcb9d93e49
     }
   }
 
@@ -102,29 +96,6 @@ export default class Work extends Component {
     })
   }
 
-<<<<<<< HEAD
-=======
-  filterWorks(state, params) {
-    var self = this;
-
-    self.works = state.works.filter(function(item) {
-      if (params.filter && item.tags.indexOf(params.filter) === -1) {
-        return false;
-      } else {
-        return true;
-      }
-    }).slice(0, this.worksLimit);
-
-    if (state.news && !params.filter) {
-
-      state.news.forEach(function(item, i) {
-          self.works.splice((i*5), 0, item);
-      });
-
-    }
-  }
-
->>>>>>> 2a5e630d51ace1c07ef64b805531b6fcb9d93e49
   handleScroll(e) {
     //basic debounce
     if (this.timeout) {

@@ -16,12 +16,15 @@ nav {
     @media (--mobile) {
         height: 60px;
     }
-    transition: height 300ms easeOutQuart;
+    transition: height 300ms easeOutQuart, transform .6s easeOutQuart, opacity .6s easeOutQuart;
 
     &.hidden {
-        display: none;
+        /*display: none;*/
+        opacity:0;
+        transform: translateY(-75px);
+        transition: height 300ms easeOutQuart, transform .3s easeOutQuart, opacity .3s easeOutQuart;
+
     }
-    ;
 
     &.expand {
         height: 100vh;
@@ -81,6 +84,7 @@ nav {
                     text-transform: uppercase;
                     color: black;
                     letter-spacing: 2px;
+                    display:none;
 
                     @media (--mobile) {
                         display: none;
