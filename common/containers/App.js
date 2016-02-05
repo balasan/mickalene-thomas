@@ -32,7 +32,9 @@ class App extends Component {
             transitionAppearTimeout={1000}
             transitionEnterTimeout={1000}
             transitionLeaveTimeout={500}>
+              <div key={this.props.location.pathname + this.props.menu.showMenu}>
               {!this.props.menu.showMenu ? this.props.children : null}
+              </div>
             </ReactCSSTransitionGroup>);
     }
 

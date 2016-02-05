@@ -19,9 +19,7 @@ export default class News extends Component {
     this.c1 = document.getElementById("newsList1");
     this.c2 = document.getElementById("newsList2");
     // this.animateIn();
-    setTimeout(function() {
-      self.scroll();
-    }, 100);
+
   }
 
   componentWillReceiveProps() {
@@ -30,17 +28,16 @@ export default class News extends Component {
   scroll() {
     if (!this.props.location.hash) return;
     var hash = this.props.location.hash.slice(1, this.props.location.hash.length);
-    var els = document.getElementsByClassName(hash);
-    var selectedEl = els[els.length-1];
+    var selectedEl = document.getElementById(hash);
     if (!selectedEl.classList.contains('news-enter-active')) return;
     var scrollSelf = this;
     var scrollInterval = setInterval(function(){
       var offTop = selectedEl.offsetTop + 7;
       var scrollY = window.scrollY;
-      if (scrollY > offTop - 10 || scrollY == offTop) clearInterval(scrollInterval);
       var newY = (offTop - scrollY);
-      if (scrollY < offTop) window.scrollTo(0, scrollY += (newY*0.1))
-     }, 100);
+      if (Math.abs(newY)>10) window.scrollTo(0, scrollY += (newY*0.1))
+      else clearInterval(scrollInterval)
+     }, 10);
   }
 
   componentWillUpdate(nextProps) {
@@ -49,8 +46,9 @@ export default class News extends Component {
     this.filterNews(nextProps);
     if(this.oldNews && JSON.stringify(this.news) == JSON.stringify(this.oldNews)) return;
     this.oldNews = this.news;
-    // self.animateOut()
-    // self.animateIn()
+    setTimeout(function() {
+      if(self.news.length) self.scroll();
+    }, 100);
   }
 
 
@@ -87,12 +85,12 @@ export default class News extends Component {
       var sectionStyle = {}
       if( item.image.main.url )
         sectionStyle =  {
-          'background-image': "url("+item.image.main.url+")"
+          'backgroundImage': "url("+item.image.main.url+")"
         }
       var description = item.description ? <p className='description'>{item.description}</p> : ""; 
       var link = item.link ? <a href={item.link} target='_blank'></a> : ''
       return (
-        <div className="news-item" style={{"transition-delay" : delay}} key={item.id + self.filter}>
+        <div id={item.id} className="news-item" style={{"transitionDelay" : delay}} key={item.id + self.filter}>
           {img}
           <section style={sectionStyle} className='left' >
             <article>

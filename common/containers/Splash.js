@@ -51,6 +51,10 @@ class Splash extends Component {
 
     // if(menu || nextProps.state.routing.path == '/'){
     //   window.glView.start()
+    // }
+    // else{
+    //   window.glView.stop()
+    // }
     //   window.glView.add()
     //   if(menu) window.glView.cornerState(true)
     //   else window.glView.cornerState(false)

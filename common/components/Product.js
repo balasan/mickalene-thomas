@@ -16,6 +16,7 @@ export default class Product extends Component {
 
   render () {
     var productEl = null;
+    var product = this.props.state.store.product;
     const { add } = this.props;
 
     const openCart = function() {
@@ -27,8 +28,7 @@ export default class Product extends Component {
       openCart();
     }
 
-    if ( this.props.state.store.product ) {
-      var product = this.props.state.store.product;
+    if (product && product.id == this.props.params.itemId) {
       productEl = (
 
           <section className='productShowcase' key={product.id}>
@@ -55,10 +55,14 @@ export default class Product extends Component {
 
 
     return (
-      <div>
-
+      <ReactCSSTransitionGroup
+        transitionName="single"
+        transitionAppear={true}
+        transitionAppearTimeout={700}
+        transitionEnterTimeout={700}
+        transitionLeaveTimeout={600}>
           {productEl}
-      </div>
+      </ReactCSSTransitionGroup>
     )
   }
 }
