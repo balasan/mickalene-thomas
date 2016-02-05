@@ -18,6 +18,7 @@ export default class Cart extends Component {
 
     const { changeQuantity, removeItem } = this.props;
     var cart = this.props.state.store.cart;
+    console.log(cart, 'cart')
     var cartHash = this.props.location.hash == '#cart';
 
     const toggleCart = function() {
@@ -36,7 +37,7 @@ export default class Cart extends Component {
         return (
           <div key={i} className='cartItem'>
             <section className='image'>
-              <img src={item.image.small.url} />
+              <img src={item.image[0]} />
             </section>
             <section className='description'>
               <h1>{item.title}</h1>

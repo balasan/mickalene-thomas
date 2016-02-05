@@ -27,14 +27,48 @@ export default class Product extends Component {
       openCart();
     }
 
+    const switchImg = function(img) {
+      console.log(img);
+      document.getElementById('main-product-image').src=img;
+      var single = document.getElementsByClassName('single-prod-image');
+      var i = 0;
+      for (i = 0; i < single.length; i++) {
+        if (single[i].src == img) {
+          single[i].classList.add('selected')
+        } else {
+          if (single[i].classList.contains('selected')) {
+             single[i].classList.remove('selected');
+          }
+        }
+      }
+
+    }
+
+    var images = null;
+
     if ( this.props.state.store.product ) {
       var product = this.props.state.store.product;
+
+      if (product.image.length > 1) {
+        var images = product.image.map(function(image, i) {
+            if (i == 0) {
+              return (<img className='single-prod-image selected' onClick={switchImg.bind(this, image)} src={image} />)
+            } else {
+              return (<img className='single-prod-image' onClick={switchImg.bind(this, image)} src={image} />)
+            }
+        });
+      }
+
       productEl = (
 
           <section className='productShowcase' key={product.id}>
               <div className="image" >
-                <img src={product.image[0]} />
+                <img id="main-product-image" src={product.image[0]} />
               </div>
+              <div className="images-select">
+              {images}
+              </div>
+
            <div className='info'>
 
            <section className='top'>
