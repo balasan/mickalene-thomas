@@ -1,45 +1,53 @@
 import React, { Component, PropTypes } from 'react';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
-var wtf = require('magnificent');
+var $ = require('jquery');
 
 export default class SingleSlide extends Component {
    componentDidMount() {
-    window.MAGNIFICENT_OPTIONS = {
-      noTrack: true
-    };
+  }
+
+  componentDidUpdate() {
   }
 
   render () {
-    var url = this.props.workItem.image.medium.url;
+    console.log(this.props.workItem)
+    var url = this.props.workItem.image.small.url;
+    var hiRes = this.props.workItem.image.medium.url;
     var title = this.props.workItem.title;
+    var self = this;
 
-    console.log(wtf, 'mag');
-
-    const fullscreen = function() {
+    const toggleZoom = function() {
 
       var elem = document.getElementsByClassName('image')[0].childNodes[0];
       var app = document.getElementById('app');
       var body = document.getElementsByTagName("body")[0];
-      var mag = document.getElementsByClassName('mag')[0];
+      var mag = document.getElementsByClassName('mag');
 
-      if (body.requestFullscreen) {
-        body.requestFullscreen();
-      } else if (body.msRequestFullscreen) {
-        body.msRequestFullscreen();
-      } else if (body.mozRequestFullScreen) {
-        body.mozRequestFullScreen();
-      } else if (body.webkitRequestFullscreen) {
-        body.webkitRequestFullscreen();
-      }
+      if (body.classList.contains('zoom'))
+        body.classList.remove('zoom');
+      else
+        body.classList.add('zoom');
 
-      var host = document.getElementsByClassName('thumb')[0];
-      console.log(host, 'host')
-      host.Mag();
+      $('.tile')
+        .on('mouseover', function(){
+          $(this).children('.photo').css({'transform': 'scale('+ $(this).attr('data-scale') +')'});
+        })
+        .on('mouseout', function(){
+          $(this).children('.photo').css({'transform': 'scale(1)'});
+        })
+        .on('mousemove', function(e){
+          $(this).children('.photo').css({'transform-origin': ((e.pageX - $(this).offset().left) / $(this).width()) * 100 + '% ' + ((e.pageY - $(this).offset().top) / $(this).height()) * 100 +'%'});
+        })
+        .each(function(){
+          $(this)
+            .append('<div class="photo"></div>')
+            .children('.photo').css({'background-image': 'url('+ $(this).attr('data-image') +')'});
+        })
     }
 
     var image = (
         <div className="image" id="singleImage">
-          <img onClick={fullscreen} src={url}/>
+          <img onClick={toggleZoom} src={url}/>
         </div>
     )
 
@@ -51,12 +59,8 @@ export default class SingleSlide extends Component {
     )
 
     var mag = (
-      <div className="mag">
-        <div mag-thumb="inner" className="thumb">
-          <img src={url} />
-        </div>
-        <div mag-zoom="inner" className="zoom">
-          <img src={url} />
+      <div className="tiles">
+        <div className="tile" onClick={toggleZoom} data-scale="2.4" data-image={hiRes}>
         </div>
       </div>
       )
@@ -74,6 +78,7 @@ export default class SingleSlide extends Component {
             {mag}
             {description}
           </div>
+          <img onClick={toggleZoom} src="../../images/close.svg" className="zoom-close" />
         </ReactCSSTransitionGroup>
     );
   }
