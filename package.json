@@ -33,6 +33,7 @@
     "instagram-node-lib": "^0.1.1",
     "json-loader": "^0.5.4",
     "lodash.range": "^3.0.1",
+    "magnificent": "^2.1.4",
     "morgan": "^1.6.1",
     "qs": "^4.0.0",
     "react": "^0.14.0",

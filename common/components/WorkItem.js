@@ -70,6 +70,7 @@ export default class WorkItem extends Component {
       self.props.dispatch(updatePath(self.props.closeUrl))
     }
 
+
     const { state, clickitem } = this.props
 
     var workItem = this.workItem;
