@@ -146,6 +146,7 @@
                      obj.sku = item.data["product.sku"] ? item.data["product.sku"].value[0].text : null;
 
                      obj.image = [];
+                        obj.quantity = 1;
                      // obj.image.main.dimensions = {}
                      // obj.image.small = {};
                      // obj.image.small.dimensions = {};
