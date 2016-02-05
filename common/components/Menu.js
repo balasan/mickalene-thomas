@@ -14,8 +14,20 @@ class Menu extends Component {
     var location = '';
     var filters;
     const { toggleMenu } = this.props;
-    var showMenu = this.props.menu.showMenu;
+    console.log(this.props, 'menu props')
+    var showMenu = this.props.state.menu.showMenu;
     var location = this.props.state.routing.path;
+
+    // const multi = function() {
+    //   toggleMenu();
+    //   var main = document.getElementById('main');
+    //   if (main.classList.contains('hide')) {
+    //   main.classList.remove('hide');
+    //   } else {
+    //     main.classList.add('hide');
+    //   }
+
+    // }
 
     var showHeader = true;
     if(location == '/' || showMenu)

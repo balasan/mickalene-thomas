@@ -36,7 +36,7 @@ class Nav extends Component {
     var mobileFilters = null;
     const { toggleMenu, toggleExpand } = this.props;
     var expand = this.props.state.menu.expand;
-    var showMenu = this.props.menu.showMenu;
+    var showMenu = this.props.state.menu.showMenu;
     var location = this.props.state.routing.path;
     var self = this;
     // console.log(this.props, 'nav ')
@@ -45,6 +45,18 @@ class Nav extends Component {
     const closeItem = function() {
        self.props.dispatch(updatePath('/works'))
     }
+
+
+    // const multi = function() {
+    //   toggleMenu();
+    //   // var main = document.getElementById('main');
+    //   // if (main.classList.contains('hide')) {
+    //   // main.classList.remove('hide');
+    //   // } else {
+    //   //   main.classList.add('hide');
+    //   // }
+
+    // }
 
     const toggleCart = function() {
       var cartHash = window.location.hash == '#cart';
@@ -63,9 +75,9 @@ class Nav extends Component {
     var workTags = [];
     var newsTags = [];
 
-    if (this.props.menu) {
-      if (this.props.menu.workTags) workTags = this.props.menu.workTags;
-      if (this.props.menu.newsTags) newsTags = this.props.menu.newsTags;
+    if (this.props.state.menu) {
+      if (this.props.state.menu.workTags) workTags = this.props.state.menu.workTags;
+      if (this.props.state.menu.newsTags) newsTags = this.props.state.menu.newsTags;
     }
 
     if (path == 'store/:itemId') {
@@ -166,18 +178,31 @@ class Nav extends Component {
 
     var cart = null;
 
-    if (path == 'store' && this.props.state.store.cart || path == 'store/:itemId' && this.props.state.store.cart ||  path == 'cart' && this.props.state.store.cart) {
-      var totalItems = 0;
-      this.props.state.store.cart.forEach(function(item) {
-        totalItems += item.quantity;
-      })
 
-      cart = (
-        <a onClick={toggleCart} className='cart-icon'>
-        <img src="../../images/cart.svg" />
-        <p>{'X ' + totalItems}</p>
-        </a>
+    if (this.props.state.store.cart) {
+      if (path == 'store' ||  path == 'store/:itemId' ||  path == 'cart') {
+        var totalItems = 0;
+        this.props.state.store.cart.forEach(function(item) {
+          totalItems += item.quantity;
+        })
+        cart = (
+          <a onClick={toggleCart} className='cart-icon'>
+          <img src="../../images/cart.svg" />
+          <p>{'X ' + totalItems}</p>
+          </a>
         )
+      } else if (this.props.state.store.cart.length > 0) {
+        var totalItems = 0;
+        this.props.state.store.cart.forEach(function(item) {
+          totalItems += item.quantity;
+        })
+        cart = (
+          <a onClick={toggleCart} className='cart-icon'>
+          <img src="../../images/cart.svg" />
+          <p>{'X ' + totalItems}</p>
+          </a>
+        )
+      }
     }
 
       var nav = (
@@ -217,7 +242,7 @@ class Nav extends Component {
         transitionLeaveTimeout={500}> */}
           {nav}
 {/*       </ReactCSSTransitionGroup>
- */}      
+ */}
         </div>
 )
   }

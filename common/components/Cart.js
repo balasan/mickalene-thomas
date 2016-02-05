@@ -5,8 +5,10 @@ import { connect } from 'react-redux'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { updatePath } from 'redux-simple-router';
 import StripeButton from '../components/StripeButton';
+import * as ProductActions from '../actions/product';
 
-export default class Cart extends Component {
+
+class Cart extends Component {
 
   componentDidMount() {
   }
@@ -17,7 +19,13 @@ export default class Cart extends Component {
   render () {
 
     const { changeQuantity, removeItem } = this.props;
-    var cart = this.props.state.store.cart;
+
+    console.log(this, 'cart this')
+    var cart = [];
+    if (this.props.state) {
+      var cart = this.props.state.store.cart;
+    }
+
     console.log(cart, 'cart')
     var cartHash = this.props.location.hash == '#cart';
 
@@ -31,6 +39,7 @@ export default class Cart extends Component {
 
     var cartEl = null;
     var total = 0;
+
     if (cart) {
       if (cart.length > 0) {
               var cartEl = cart.map(function(item, i) {
@@ -85,4 +94,12 @@ export default class Cart extends Component {
     )
   }
 }
+
+export default connect(
+  state => {
+    return {state: state}
+  },
+  dispatch => {
+    return Object.assign({}, { dispatch },  bindActionCreators(ProductActions, dispatch))
+  })(Cart)
 
