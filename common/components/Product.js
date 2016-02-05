@@ -48,8 +48,7 @@ export default class Product extends Component {
 
     var images = null;
 
-    if ( this.props.state.store.product ) {
-      var product = this.props.state.store.product;
+    if ( product && product.id == this.props.params.itemId ) {
 
       if (product.image.length > 1) {
         var images = product.image.map(function(image, i) {
@@ -60,8 +59,6 @@ export default class Product extends Component {
             }
         });
       }
-
-    if (product && product.id == this.props.params.itemId) {
 
       productEl = (
 

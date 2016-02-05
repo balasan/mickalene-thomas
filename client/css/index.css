@@ -24,16 +24,19 @@ a {
 }
 main {
     &.main-container {
+        position:absolute;
+        top:0px;
+        width:100%;
         padding: 75px 0 0 0;
         @media (--mobile) {
             padding: 60px 0 0 0;
         }
-        transition: opacity 300ms ease;
+/*        transition: opacity 300ms ease;
 
         &.hide {
             opacity: 0;
             pointer-events: none;
-        }
+        }*/
     }
 }
 #webGLCorner{

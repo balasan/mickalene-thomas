@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as MenuActions from '../actions/menu';
 import Splash from './Splash';
+import Cart from '../components/Cart';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 if (process.env.BROWSER) {
@@ -25,24 +26,25 @@ if (process.env.BROWSER) {
 
 class App extends Component {
   render () {
-    if (this.props.menu) {
+    if (this.props.state.menu) {
         var main = (
            <ReactCSSTransitionGroup component='main' className='main-container' transitionName="main"
             transitionAppear={true}
             transitionAppearTimeout={1000}
             transitionEnterTimeout={1000}
             transitionLeaveTimeout={500}>
-              <div key={this.props.location.pathname + this.props.menu.showMenu}>
-              {!this.props.menu.showMenu ? this.props.children : null}
+              <div key={this.props.location.pathname + this.props.state.menu.showMenu}>
+                {!this.props.state.menu.showMenu ? this.props.children : null}
               </div>
             </ReactCSSTransitionGroup>);
     }
 
-    return (
+  return (
     <div>
       <Nav { ...this.props }></Nav>
       <Menu { ...this.props }></Menu>
       {main}
+      <Cart { ...this.props }/>
     </div>
     );
   }
@@ -50,7 +52,7 @@ class App extends Component {
 
 export default connect(
   state => {
-    return {menu: state.menu}
+    return {state: state}
   },
   dispatch => {
     return Object.assign({}, { dispatch },  bindActionCreators(MenuActions, dispatch))
