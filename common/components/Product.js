@@ -17,8 +17,19 @@ export default class Product extends Component {
   render () {
     var productEl = null;
     const { add } = this.props;
+
+    const openCart = function() {
+        window.location.hash = '#cart';
+    }
+
+    const doubleCart = function(product) {
+      add(product);
+      openCart();
+    }
+
     if ( this.props.state.store.product ) {
       var product = this.props.state.store.product;
+      con
       productEl = (
         <section className='productShowcase'>
             <ReactCSSTransitionGroup
@@ -27,8 +38,8 @@ export default class Product extends Component {
               transitionAppearTimeout={0}
               transitionEnterTimeout={0}
               transitionLeaveTimeout={0}>
-              <div className="image" key={product.image.main.url}>
-                <img src={product.image.main.url} />
+              <div className="image" key={product.image[0]}>
+                <img src={product.image[0]} />
               </div>
            </ReactCSSTransitionGroup>
            <div className='info'>
@@ -40,7 +51,9 @@ export default class Product extends Component {
 
            <section className='bottom'>
            <div className='description'><p>{product.description}</p></div>
-            {product.price ? <button onClick={add.bind(this, product)}>Add to Shopping Bag</button> : <a href="mailto:hello@mickalenethomas.com" target="_blank" className="no-price">Contact Us</a>}
+           <div className='button-parent'>
+            {product.price ? <button onClick={doubleCart.bind(this, product)}>Add to Shopping Bag</button> : <a href="mailto:hello@mickalenethomas.com" target="_blank" className="no-price">Contact Us</a>}
+            </div>
            </section>
             </div>
         </section>

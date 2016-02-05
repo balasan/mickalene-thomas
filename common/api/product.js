@@ -50,51 +50,67 @@
                      obj.image = {};
                      obj.quantity = 1;
 
-                     obj.image.main = {};
-                     obj.image.main.dimensions = {}
-                     obj.image.small = {};
-                     obj.image.small.dimensions = {};
-                     obj.image.medium = {};
-                     obj.image.medium.dimensions = {};
-                     obj.image.large = {};
-                     obj.image.large.dimensions = {};
-
-                     if (item.data["product.image"]) {
-                        obj.image.main.url = item.data["product.image"].value.main.url;
-                     obj.image.main.dimensions.height = item.data["product.image"].value.main.dimensions.height;
-                     obj.image.main.dimensions.width = item.data["product.image"].value.main.dimensions.width;
+                     obj.image = [];
+                     // obj.image.main.dimensions = {}
+                     // obj.image.small = {};
+                     // obj.image.small.dimensions = {};
+                     // obj.image.medium = {};
+                     // obj.image.medium.dimensions = {};
+                     // obj.image.large = {};
+                     // obj.image.large.dimensions = {};
 
 
-                     if (item.data["product.image"].value.main.dimensions.width < 1000) {
-                         obj.image.small.url = item.data["product.image"].value.main.url;
-                        obj.image.small.dimensions.height = item.data["product.image"].value.main.dimensions.height;
-                        obj.image.small.dimensions.width = item.data["product.image"].value.main.dimensions.width;
-                     } else {
-                         obj.image.small.url = item.data["product.image"].value.views.small.url;
-                        obj.image.small.dimensions.height = item.data["product.image"].value.views.small.dimensions.height;
-                        obj.image.small.dimensions.width = item.data["product.image"].value.views.small.dimensions.width;
-                     }
+                     console.log(item, 'item');
 
-                     if (item.data["product.image"].value.main.dimensions.width < 1920) {
-                        obj.image.medium.url = item.data["product.image"].value.main.url;
-                        obj.image.medium.dimensions.height = item.data["product.image"].value.main.dimensions.height;
-                        obj.image.medium.dimensions.width = item.data["product.image"].value.main.dimensions.width;
-                     } else {
-                        obj.image.medium.url = item.data["product.image"].value.views.medium.url;
-                        obj.image.medium.dimensions.height = item.data["product.image"].value.views.medium.dimensions.height;
-                        obj.image.medium.dimensions.width = item.data["product.image"].value.views.medium.dimensions.width;
-                     }
+                     item.data['product.images'].value.forEach(function(imageParent) {
+                        console.log(imageParent, 'imageParent')
+                        if (imageParent.image.value.main.dimensions.width < 1000) {
+                            obj.image.push(imageParent.image.value.main.url);
+                        } else {
+                            obj.image.push(imageParent.image.value.views.small.url);
+                        }
+                     })
 
-                     if (item.data["product.image"].value.main.dimensions.width < 3840) {
-                        obj.image.large.url = item.data["product.image"].value.main.url;
-                        obj.image.large.dimensions.height = item.data["product.image"].value.main.dimensions.height;
-                        obj.image.large.dimensions.width = item.data["product.image"].value.main.dimensions.width;
-                     } else {
-                         obj.image.large.url = item.data["product.image"].value.views.large.url;
-                        obj.image.large.dimensions.height = item.data["product.image"].value.views.large.dimensions.height;
-                        obj.image.large.dimensions.width = item.data["product.image"].value.views.large.dimensions.width;
-                     }
-                     }
+                     console.log(obj.image, 'image array')
+
+
+
+                     // if (item.data["product.image"]) {
+                     //    obj.image.main.url = item.data["product.image"].value.main.url;
+                     // obj.image.main.dimensions.height = item.data["product.image"].value.main.dimensions.height;
+                     // obj.image.main.dimensions.width = item.data["product.image"].value.main.dimensions.width;
+
+
+                     // if (item.data["product.image"].value.main.dimensions.width < 1000) {
+                     //     obj.image.small.url = item.data["product.image"].value.main.url;
+                     //    obj.image.small.dimensions.height = item.data["product.image"].value.main.dimensions.height;
+                     //    obj.image.small.dimensions.width = item.data["product.image"].value.main.dimensions.width;
+                     // } else {
+                     //     obj.image.small.url = item.data["product.image"].value.views.small.url;
+                     //    obj.image.small.dimensions.height = item.data["product.image"].value.views.small.dimensions.height;
+                     //    obj.image.small.dimensions.width = item.data["product.image"].value.views.small.dimensions.width;
+                     // }
+
+                     // if (item.data["product.image"].value.main.dimensions.width < 1920) {
+                     //    obj.image.medium.url = item.data["product.image"].value.main.url;
+                     //    obj.image.medium.dimensions.height = item.data["product.image"].value.main.dimensions.height;
+                     //    obj.image.medium.dimensions.width = item.data["product.image"].value.main.dimensions.width;
+                     // } else {
+                     //    obj.image.medium.url = item.data["product.image"].value.views.medium.url;
+                     //    obj.image.medium.dimensions.height = item.data["product.image"].value.views.medium.dimensions.height;
+                     //    obj.image.medium.dimensions.width = item.data["product.image"].value.views.medium.dimensions.width;
+                     // }
+
+                     // if (item.data["product.image"].value.main.dimensions.width < 3840) {
+                     //    obj.image.large.url = item.data["product.image"].value.main.url;
+                     //    obj.image.large.dimensions.height = item.data["product.image"].value.main.dimensions.height;
+                     //    obj.image.large.dimensions.width = item.data["product.image"].value.main.dimensions.width;
+                     // } else {
+                     //     obj.image.large.url = item.data["product.image"].value.views.large.url;
+                     //    obj.image.large.dimensions.height = item.data["product.image"].value.views.large.dimensions.height;
+                     //    obj.image.large.dimensions.width = item.data["product.image"].value.views.large.dimensions.width;
+                     // }
+                     // }
                      simple.push(obj)
                  });
 
@@ -129,54 +145,76 @@
                      obj.description = item.data["product.description"] ? item.data["product.description"].value[0].text : null;
                      obj.sku = item.data["product.sku"] ? item.data["product.sku"].value[0].text : null;
 
-                     obj.image = {};
-                     obj.quantity = 1;
-
-                     obj.image.main = {};
-                     obj.image.main.dimensions = {}
-                     obj.image.small = {};
-                     obj.image.small.dimensions = {};
-                     obj.image.medium = {};
-                     obj.image.medium.dimensions = {};
-                     obj.image.large = {};
-                     obj.image.large.dimensions = {};
-
-                if (item.data["product.image"]) {
-                     obj.image.main.url = item.data["product.image"].value.main.url;
-                     obj.image.main.dimensions.height = item.data["product.image"].value.main.dimensions.height;
-                     obj.image.main.dimensions.width = item.data["product.image"].value.main.dimensions.width;
+                     obj.image = [];
+                     // obj.image.main.dimensions = {}
+                     // obj.image.small = {};
+                     // obj.image.small.dimensions = {};
+                     // obj.image.medium = {};
+                     // obj.image.medium.dimensions = {};
+                     // obj.image.large = {};
+                     // obj.image.large.dimensions = {};
 
 
-                     if (item.data["product.image"].value.main.dimensions.width < 1000) {
-                         obj.image.small.url = item.data["product.image"].value.main.url;
-                        obj.image.small.dimensions.height = item.data["product.image"].value.main.dimensions.height;
-                        obj.image.small.dimensions.width = item.data["product.image"].value.main.dimensions.width;
-                     } else {
-                         obj.image.small.url = item.data["product.image"].value.views.small.url;
-                        obj.image.small.dimensions.height = item.data["product.image"].value.views.small.dimensions.height;
-                        obj.image.small.dimensions.width = item.data["product.image"].value.views.small.dimensions.width;
-                     }
+                     console.log(item, 'item');
 
-                     if (item.data["product.image"].value.main.dimensions.width < 1920) {
-                        obj.image.medium.url = item.data["product.image"].value.main.url;
-                        obj.image.medium.dimensions.height = item.data["product.image"].value.main.dimensions.height;
-                        obj.image.medium.dimensions.width = item.data["product.image"].value.main.dimensions.width;
-                     } else {
-                        obj.image.medium.url = item.data["product.image"].value.views.medium.url;
-                        obj.image.medium.dimensions.height = item.data["product.image"].value.views.medium.dimensions.height;
-                        obj.image.medium.dimensions.width = item.data["product.image"].value.views.medium.dimensions.width;
-                     }
+                     item.data['product.images'].value.forEach(function(imageParent) {
+                        console.log(imageParent, 'imageParent')
+                        if (imageParent.image.value.main.dimensions.width < 1000) {
+                            obj.image.push(imageParent.image.value.main.url);
+                        } else {
+                            obj.image.push(imageParent.image.value.views.small.url);
+                        }
+                     })
 
-                     if (item.data["product.image"].value.main.dimensions.width < 3840) {
-                        obj.image.large.url = item.data["product.image"].value.main.url;
-                        obj.image.large.dimensions.height = item.data["product.image"].value.main.dimensions.height;
-                        obj.image.large.dimensions.width = item.data["product.image"].value.main.dimensions.width;
-                     } else {
-                         obj.image.large.url = item.data["product.image"].value.views.large.url;
-                        obj.image.large.dimensions.height = item.data["product.image"].value.views.large.dimensions.height;
-                        obj.image.large.dimensions.width = item.data["product.image"].value.views.large.dimensions.width;
-                     }
-                }
+                     console.log(obj.image, 'image array')
+
+                     // comsole.log(item, 'item');
+
+                     // obj.image.main = {};
+                     // obj.image.main.dimensions = {}
+                     // obj.image.small = {};
+                     // obj.image.small.dimensions = {};
+                     // obj.image.medium = {};
+                     // obj.image.medium.dimensions = {};
+                     // obj.image.large = {};
+                     // obj.image.large.dimensions = {};
+
+                // if (item.data["product.image"]) {
+                //      obj.image.main.url = item.data["product.image"].value.main.url;
+                //      obj.image.main.dimensions.height = item.data["product.image"].value.main.dimensions.height;
+                //      obj.image.main.dimensions.width = item.data["product.image"].value.main.dimensions.width;
+
+
+                //      if (item.data["product.image"].value.main.dimensions.width < 1000) {
+                //          obj.image.small.url = item.data["product.image"].value.main.url;
+                //         obj.image.small.dimensions.height = item.data["product.image"].value.main.dimensions.height;
+                //         obj.image.small.dimensions.width = item.data["product.image"].value.main.dimensions.width;
+                //      } else {
+                //          obj.image.small.url = item.data["product.image"].value.views.small.url;
+                //         obj.image.small.dimensions.height = item.data["product.image"].value.views.small.dimensions.height;
+                //         obj.image.small.dimensions.width = item.data["product.image"].value.views.small.dimensions.width;
+                //      }
+
+                //      if (item.data["product.image"].value.main.dimensions.width < 1920) {
+                //         obj.image.medium.url = item.data["product.image"].value.main.url;
+                //         obj.image.medium.dimensions.height = item.data["product.image"].value.main.dimensions.height;
+                //         obj.image.medium.dimensions.width = item.data["product.image"].value.main.dimensions.width;
+                //      } else {
+                //         obj.image.medium.url = item.data["product.image"].value.views.medium.url;
+                //         obj.image.medium.dimensions.height = item.data["product.image"].value.views.medium.dimensions.height;
+                //         obj.image.medium.dimensions.width = item.data["product.image"].value.views.medium.dimensions.width;
+                //      }
+
+                //      if (item.data["product.image"].value.main.dimensions.width < 3840) {
+                //         obj.image.large.url = item.data["product.image"].value.main.url;
+                //         obj.image.large.dimensions.height = item.data["product.image"].value.main.dimensions.height;
+                //         obj.image.large.dimensions.width = item.data["product.image"].value.main.dimensions.width;
+                //      } else {
+                //          obj.image.large.url = item.data["product.image"].value.views.large.url;
+                //         obj.image.large.dimensions.height = item.data["product.image"].value.views.large.dimensions.height;
+                //         obj.image.large.dimensions.width = item.data["product.image"].value.views.large.dimensions.width;
+                //      }
+                // }
                      simple=obj
                  });
                  console.log(simple, 'item')
