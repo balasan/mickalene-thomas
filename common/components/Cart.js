@@ -42,17 +42,16 @@ export default class Cart extends Component {
               <h1>{item.title}</h1>
               <p>{item.description}</p>
             </section>
-            <section className="remove-section">
-              <img onClick={removeItem.bind(this, item.id)} src="../../images/remove.svg" className='remove' />
-            </section>
             <section className='price'>
               <p>{'$' + (item.price * item.quantity).toFixed(2)}</p>
             </section>
             <section className='quantity'>
+            <div>
               <button onClick={changeQuantity.bind(this, item.id, false)}>-</button>
               <p>{item.quantity}</p>
               <button onClick={changeQuantity.bind(this, item.id, true)}>+</button>
-              <img onClick={removeItem.bind(this, item.id)} src="../../images/remove.svg" className='remove' />
+              </div>
+              <p onClick={removeItem.bind(this, item.id)} className='remove'>remove</p>
             </section>
           </div>
         );

@@ -76,13 +76,6 @@ var flexImages = (function(){
             })
         }
 
-        // function clearClass(el, prefix){
-        //     var classes = el.className.split(" ").filter(function(c) {
-        //         return c.lastIndexOf(prefix, 0) !== 0;
-        //     });
-        //     el.className = classes.join(" ").trim();
-        // }
-
         var o = { selector: 0, container: '.item', object: 'img', rowHeight: 500, maxRows: 0, truncate: 0 };
         for (var k in options) { if (options.hasOwnProperty(k)) o[k] = options[k]; }
         var grids = typeof o.selector == 'object' ? [o.selector] : document.querySelectorAll(o.selector);

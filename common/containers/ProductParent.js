@@ -28,8 +28,8 @@ export default class ProductParent extends Component {
   render () {
     return (
       <div>
-        <Product { ...this.props }/>
-        <Cart { ...this.props }/>
+        <Product { ...this.props } />
+        <Cart { ...this.props } />
       </div>
       )
   }

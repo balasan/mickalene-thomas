@@ -2,7 +2,7 @@
 
 .contactParent {
   @media (--mobile) {
-    height: calc(100vh - 75px);
+    height: calc(100vh - 60px);
     display: flex;
     flex-direction: column;
   }
@@ -116,6 +116,7 @@
       color: #ccc;
       width: calc(100% - 95px);
       margin: 0 5px 0 0;
+
       @media (--mobile) {
         width: calc(100% - 90px);
         margin: 0;
@@ -135,7 +136,20 @@
     }
   }
   .social {
-    height: 100px;
-    width: 100px;
+    @media (--mobile) {
+      display: none;
+    }
+    a {
+      height: 30px;
+      width: 30px;
+      display: inline-block;
+
+      &.fb {
+        background-image: url('/images/fb.svg');
+      }
+      &.twitter {
+        background-image: url('/images/twitter.svg');
+      }
+    }
   }
 }

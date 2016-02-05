@@ -12,14 +12,16 @@ nav {
     left: 0;
     z-index: 999;
     height: 75px;
+
     @media (--mobile) {
         height: 60px;
     }
     transition: height 300ms easeOutQuart;
 
-    &.hidden{
-        display:none;
-    };
+    &.hidden {
+        display: none;
+    }
+    ;
 
     &.expand {
         height: 100vh;
@@ -28,7 +30,6 @@ nav {
             display: flex;
         }
     }
-
     &.transparent {
         background-color: transparent;
         padding: 0.5em;
@@ -39,18 +40,17 @@ nav {
                     color: white;
                 }
             }
-
             .right {
                 align-items: flex-start !important;
             }
         }
     }
-
     .top {
         height: 75px;
-         @media (--mobile) {
-        height: 60px;
-    }
+
+        @media (--mobile) {
+            height: 60px;
+        }
         padding: 1.5em;
         width: 100%;
         display: flex;
@@ -71,11 +71,11 @@ nav {
                     background-size: contain;
                     background-repeat: no-repeat;
                     background-position: center center;
-                     @media (--desktop) {
+
+                    @media (--desktop) {
                         display: none;
                     }
                 }
-
                 &.logo {
                     font-family: 'Rockwell Bold', serif;
                     text-transform: uppercase;
@@ -87,7 +87,6 @@ nav {
                     }
                 }
             }
-
             p {
                 font-family: 'Futura Bold', sans-serif;
                 text-transform: uppercase;
@@ -105,7 +104,6 @@ nav {
                 }
             }
         }
-
         .right {
             width: 30%;
             display: inline-flex;
@@ -116,7 +114,6 @@ nav {
                 height: 100%;
                 align-items: center;
             }
-
             img {
                 opacity: 1;
                 transition: opacity 250ms easeOutQuart;
@@ -125,13 +122,11 @@ nav {
                     @media (--desktop) {
                         height: 20px;
                     }
-
                     @media (--mobile) {
                         height: auto;
                         width: 25px;
                     }
                 }
-
                 &.close {
                     height: 30px;
                     opacity: 0.9;
@@ -139,15 +134,12 @@ nav {
                     @media (--mobile) {
                         height: 20px;
                     }
-
                     &:hover {
                         opacity: 0.5;
                     }
                 }
-
                 cursor: pointer;
             }
-
             .cart-icon {
                 display: flex;
                 padding: 0 1.5em 0 0;
@@ -156,7 +148,6 @@ nav {
                 @media (--mobile) {
                     padding: 0 0.75em 0 0;
                 }
-
                 align-items: center;
 
                 img {
@@ -167,13 +158,11 @@ nav {
                         height: auto;
                         width: 20px;
                     }
-
                     @media (--desktop) {
                         height: auto;
                         width: 20px;
                     }
                 }
-
                 p {
                     font-family: 'Futura Bold', sans-serif;
                     font-size: 10px;
@@ -181,7 +170,6 @@ nav {
                     @media (--mobile) {
                         font-size: 10px;
                     }
-
                     display: inline-block;
                     color: black;
                     margin: 0;
@@ -189,7 +177,6 @@ nav {
                 }
             }
         }
-
         .middle {
             width: 40%;
             display: inline-flex;
@@ -208,10 +195,14 @@ nav {
 
                 @media (--mobile) {
                     font-size: 12px;
+                    width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    text-align: center;
                 }
             }
         }
-
         .filterLinks {
             max-width: 400px;
             display: flex;
@@ -224,11 +215,9 @@ nav {
             @media (--mobile) {
                 display: none;
             }
-
             span, p, a {
                 display: inline-block;
             }
-
             a {
                 text-transform: uppercase;
                 font-family: 'Futura Medium', sans-serif;
@@ -237,17 +226,16 @@ nav {
                 font-size: 9px;
                 color: gray;
                 transition: color 150ms ease-out;
+
                 &:hover {
                     color: black;
                 }
-
                 &.selected {
                     color: black;
                 }
             }
         }
     }
-
     .bottom {
         display: none;
         justify-content: center;

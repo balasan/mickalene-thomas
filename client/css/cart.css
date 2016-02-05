@@ -78,22 +78,7 @@
                 width: 40%;
 
                 @media (--mobile) {
-                    width: 50%;
-                }
-            }
-            &.remove-section {
-                cursor: pointer;
-                @media (--desktop) {
-                    display: none;
-                }
-                @media (--mobile) {
-                    width: 10%;
-                    padding: 0 1.5em 0 0;
-
-                    img {
-                        height: 15px;
-                        width: 15px;
-                    }
+                    width: 60%;
                 }
             }
             &.price {
@@ -102,8 +87,9 @@
 
                 @media (--mobile) {
                     display: flex;
-                    width: 75%;
-                    justify-content: flex-end;
+                    width: 40%;
+                    justify-content: flex-start;
+                        padding: 0 0 0 1.5em;
 
                     p {
                         transform: translateY(3px);
@@ -120,25 +106,29 @@
                 align-items: center;
 
                 @media (--mobile) {
-                    width: 25%;
-                    justify-content: flex-end;
+                    width: 60%;
+                    justify-content: space-between;
+                        padding: 0 1.5em 0 1.5em;
+                }
+                @media (--desktop) {
                     padding: 0 1.5em 0 0;
+                    div {
+                        margin: 0 1.5em 0 0;
+                    }
+                }
+                .remove {
+                        cursor: hover;
+                    }
+                div {
+                    display: flex;
+                    align-items: center;
+
                 }
                 p, button {
                     font-size: 16px;
                 }
                 p {
                     transform: translateY(3px);
-                }
-                img {
-                    cursor: pointer;
-                    height: 15px;
-                    width: 15px;
-                    margin: 0 1.5em 0 5em;
-
-                    @media (--mobile) {
-                        display: none;
-                    }
                 }
                 button {
                     border: none;
@@ -200,12 +190,17 @@
                 cursor: pointer;
                 color: white;
                 border: none;
-                transition: color 150ms ease-out, background-color 150ms ease-out;
+                background-image: url("/images/t4.jpg");
+                background-position: center center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                transition: background-color 250ms ease-out, background-image 250ms ease-out;
                 font-family: 'Avenir Next Bold', sans-serif;
                 border: 2px solid black;
 
                 &:hover {
                     background-color: white;
+                    background-image: none;
                     color: black;
                 }
             }
