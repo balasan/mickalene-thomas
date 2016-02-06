@@ -10,7 +10,7 @@ export default class SingleSlide extends Component {
   }
 
   render () {
-    console.log(this.props.workItem)
+    // console.log(this.props.workItem)
     var url = this.props.workItem.image.small.url;
     var hiRes = this.props.workItem.image.medium.url;
     var title = this.props.workItem.title;

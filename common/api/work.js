@@ -247,7 +247,7 @@
                       }
                     })
 
-                    console.log(uniqueTags, 'newstags')
+                    // console.log(uniqueTags, 'newstags')
                 callback(null, uniqueTags)
              })
      });

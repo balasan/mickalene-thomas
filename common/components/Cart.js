@@ -20,13 +20,13 @@ class Cart extends Component {
 
     const { changeQuantity, removeItem } = this.props;
 
-    console.log(this, 'cart this')
+    // console.log(this, 'cart this')
     var cart = [];
     if (this.props.state) {
       var cart = this.props.state.store.cart;
     }
 
-    console.log(cart, 'cart')
+    // console.log(cart, 'cart')
     var cartHash = this.props.location.hash == '#cart';
 
     const toggleCart = function() {

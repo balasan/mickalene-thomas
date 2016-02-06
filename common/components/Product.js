@@ -72,15 +72,17 @@ export default class Product extends Component {
 
            <div className='info'>
 
-           <section className='top'>
+           <section className='left'>
              <h1>{product.title}</h1>
-             <p className={product.price ? 'price' : 'price no-price'}>{product.price ? '$' : null}{product.price ? product.price.toFixed(2) : 'price available upon request'}</p>
+             <div className='description'><p>{product.description}</p></div>
            </section>
 
-           <section className='bottom'>
-           <div className='description'><p>{product.description}</p></div>
-           <div className='button-parent'>
-            {product.price ? <button onClick={doubleCart.bind(this, product)}>Add to Shopping Bag</button> : <a href="mailto:hello@mickalenethomas.com" target="_blank" className="no-price">Contact Us</a>}
+           <section className='right'>
+            <div className={product.price ? 'price' : 'price no-price'}>
+              <p>{product.price ? '$' : null}{product.price ? product.price.toFixed(2) : 'price available upon request'}</p>
+            </div>
+            <div className='button-parent'>
+              {product.price ? <button onClick={doubleCart.bind(this, product)}>Add to Shopping Bag</button> : <a href="mailto:hello@mickalenethomas.com" target="_blank" className="no-price">Contact Us</a>}
             </div>
            </section>
             </div>

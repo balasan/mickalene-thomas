@@ -5,7 +5,7 @@ import { UPDATE_PATH } from 'redux-simple-router'
 const works = (state = [], action) => {
   switch(action.type){
     case GET_WORK:
-      console.log("ACTION GET_WORK", action.payload)
+      // console.log("ACTION GET_WORK", action.payload)
       return action.payload.results;
     default: return state;
   }

@@ -15,110 +15,115 @@
     .image {
         text-align: center;
         width: 100%;
-        max-width: 100vw;
+        max-width: 100%;
 
         @media (--desktop) {
             padding: 5em 0 0 0;
         }
+        @media (--mobile) {
+            padding: 1.5em;
+        }
         img {
             height: 55vh;
-            max-width: 100vw;
+            max-width: 100%;
             object-fit: contain;
         }
     }
     .info {
         bottom: 0;
         width: 100%;
-        padding: 1em;
+
+        @media (--desktop) {
+                padding: 1em 1em 2em 1em;
+        }
+        @media (--mobile) {
+            padding: 1em;
+        }
         position: absolute;
+        display: flex;
 
+        @media (--mobile) {
+            flex-direction: column;
+        }
         section {
-            &.top, &.bottom {
+            &.left, &.right {
                 display: flex;
-            }
-            &.top {
-                margin: 0 0 0.5em 0;
+                width: 50%;
 
-                h1 {
-                    width: 50%;
-
-                    @media (--mobile) {
-                        width: 75%;
-                    }
-                }
-                p {
-                    text-align: right;
-                    width: 50%;
-
-                    @media (--mobile) {
-                        width: 25%;
-                    }
-                }
-            }
-            &.bottom {
                 @media (--mobile) {
-                    display: flex;
-                    flex-direction: column;
+                    width: 100%;
                 }
-                .description {
-                    @media (--desktop) {
-                        width: 70%;
-                        padding: 0 25% 0 0;
-                        display: flex;
-                        align-items: center;
-
-                        p {
-                            font-size: 14px;
-                        }
-                    }
-                    @media (--mobile) {
-                        padding-bottom: 1em;
-
-                        p {
-                            font-size: 12px;
-                        }
-                    }
+            }
+            &.left {
+                flex-direction: column;
+                @media (--mobile) {
+                    margin: 0 0 0.5em 0;
+                }
+            }
+            &.right {
+                @media (--desktop) {
+                    justify-content: flex-end;
+                }
+                @media (--mobile) {
+                    flex-direction: column;
                 }
                 a {
                     text-align: center;
                     font-size: 11px;
                 }
+                .price {
+                    display: flex;
+
+                    @media (--desktop) {
+                        margin: 0 1em 0 0;
+                    }
+                    @media (--mobile) {
+                        margin: 0 0 0.5em 0;
+                    }
+                    align-items: center;
+
+                    P {
+                        font-size: 16px;
+                    }
+                    &.no-price {
+                        @media (--mobile) {
+                            p {
+                                font-size: 11px;
+                            }
+                        }
+                    }
+                }
                 .button-parent {
                     @media (--desktop) {
-                        width: 30%;
-                        display: flex;
-                        justify-content: flex-end;
+                        min-width: 30%;
                     }
                     @media (--mobile) {
                         width: 100%;
                     }
-                }
-            }
-        }
-        button, a {
-            background-color: black;
-            padding: 1em 2.5em;
-            cursor: pointer;
-            background-image: url("/images/t4.jpg");
-            background-position: center center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            transition: background-color 250ms ease-out, background-image 250ms ease-out;
-            font-family: 'Avenir Next Bold', sans-serif;
-            border: 2px solid black;
-            color: white;
-            display: block;
+                    button, a {
+                        background-color: black;
+                        padding: 1em 2.5em;
+                        cursor: pointer;
+                        background-image: url("/images/t4.jpg");
+                        background-position: center center;
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                        transition: background-color 250ms ease-out, background-image 250ms ease-out;
+                        font-family: 'Avenir Next Bold', sans-serif;
+                        border: 2px solid black;
+                        color: white;
+                        display: block;
 
-            @media (--desktop) {
-                width: 75%;
-            }
-            @media (--mobile) {
-                width: 100%;
-            }
-            &:hover {
-                background-color: white;
-                background-image: none;
-                color: black;
+                        @media (--mobile) {
+                            width: 100%;
+                        }
+                        &:hover {
+                            background-color: white;
+                            background-image: none;
+                            color: black;
+                        }
+                    }
+                }
             }
         }
         h1, p {
@@ -144,25 +149,16 @@
                     margin: 0 0 0.5em 0;
                 }
             }
-            &.price {
-                font-size: 16px;
-
-                &.no-price {
-                    @media (--mobile) {
-                        font-size: 11px;
-                    }
-                }
-            }
         }
     }
 }
-
 .images-select {
     position: absolute;
     top: 0;
     text-align: right;
     width: 100%;
     padding: 2em;
+
     img {
         display: inline-block;
         max-height: 100px;
@@ -172,12 +168,9 @@
         opacity: 0.5;
         margin: 0 0 0 1em;
         transition: opacity 250ms ease-out;
+
         &.selected {
             opacity: 1;
         }
     }
 }
-
-
-
-

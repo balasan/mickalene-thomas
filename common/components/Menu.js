@@ -14,7 +14,7 @@ class Menu extends Component {
     var location = '';
     var filters;
     const { toggleMenu } = this.props;
-    console.log(this.props, 'menu props')
+    // console.log(this.props, 'menu props')
     var showMenu = this.props.state.menu.showMenu;
     var location = this.props.state.routing.path;
 

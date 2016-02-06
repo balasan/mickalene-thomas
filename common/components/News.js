@@ -87,7 +87,7 @@ export default class News extends Component {
         sectionStyle =  {
           'backgroundImage': "url("+item.image.main.url+")"
         }
-      var description = item.description ? <p className='description'>{item.description}</p> : ""; 
+      var description = item.description ? <p className='description'>{item.description}</p> : "";
       var link = item.link ? <a href={item.link} target='_blank'></a> : ''
       return (
         <div id={item.id} className="news-item" style={{"transitionDelay" : delay}} key={item.id + self.filter}>
@@ -100,8 +100,8 @@ export default class News extends Component {
           </section>
 
           <section className={item.description ? "middle" : "middle mobile-hide"}>
-            <h1 class='desktop'>{item.title}</h1>
-            <p class='location desktop'>{item.location}</p>
+            <h1 className='desktop'>{item.title}</h1>
+            <p className='location desktop'>{item.location}</p>
             {description}
           </section>
 

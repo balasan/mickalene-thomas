@@ -6,7 +6,7 @@ import { fetchWorkTags } from '../api/work'
 import { fetchNewsTags } from '../api/work'
 
 export function toggleMenu() {
-  console.log("toggleMenu")
+  // console.log("toggleMenu")
   return {
     type: TOGGLE_MENU
   };

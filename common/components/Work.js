@@ -121,7 +121,7 @@ export default class Work extends Component {
 
   render() {
     var self = this, newWorks, oldWorks;
-    console.log(self.params);
+    // console.log(self.params);
 
     if (this.works) {
       newWorks = worksEl(this.works, 'work-enter');

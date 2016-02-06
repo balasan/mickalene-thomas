@@ -22,11 +22,10 @@ export default class About extends Component {
     render () {
       var self = this;
       var data = this.aboutData;
-      console.log(data, 'about data')
+      // console.log(data, 'about data')
       if (data) {
         if (data.header) {
           var headerEl = document.getElementById('about-header');
-          console.log(data.header);
           headerEl.innerHTML = data.header;
         }
         if (data.body) {

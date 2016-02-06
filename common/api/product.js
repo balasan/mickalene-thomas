@@ -60,10 +60,10 @@
                      // obj.image.large.dimensions = {};
 
 
-                     console.log(item, 'item');
+                     // console.log(item, 'item');
 
                      item.data['product.images'].value.forEach(function(imageParent) {
-                        console.log(imageParent, 'imageParent')
+                        // console.log(imageParent, 'imageParent')
                         if (imageParent.image.value.main.dimensions.width < 1000) {
                             obj.image.push(imageParent.image.value.main.url);
                         } else {
@@ -71,7 +71,7 @@
                         }
                      })
 
-                     console.log(obj.image, 'image array')
+                     // console.log(obj.image, 'image array')
 
 
 
@@ -134,7 +134,7 @@
                  var simple;
 
                  response.results.forEach(function(item) {
-                    console.log(item, 'product')
+                    // console.log(item, 'product')
                      var obj = {}
                      obj.id = item.id;
                      obj.tags = item.tags;
@@ -149,10 +149,10 @@
                     obj.quantity = 1;
 
 
-                     console.log(item, 'item');
+                     // console.log(item, 'item');
 
                      item.data['product.images'].value.forEach(function(imageParent) {
-                        console.log(imageParent, 'imageParent')
+                        // console.log(imageParent, 'imageParent')
                         if (imageParent.image.value.main.dimensions.width < 1000) {
                             obj.image.push(imageParent.image.value.main.url);
                         } else {
@@ -160,7 +160,7 @@
                         }
                      })
 
-                     console.log(obj.image, 'image array')
+                     // console.log(obj.image, 'image array')
 
                      // comsole.log(item, 'item');
 
@@ -211,7 +211,7 @@
                 // }
                      simple=obj
                  });
-                 console.log(simple, 'item')
+                 // console.log(simple, 'item')
                  callback(null, simple)
              })
      });
