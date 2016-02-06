@@ -27,13 +27,17 @@ if (process.env.BROWSER) {
 class App extends Component {
   render () {
     if (this.props.state.menu) {
+        var key = this.props.state.menu.showMenu;
+        if(this.props.location.pathname.match('store')){
+          key += this.props.location.pathname;
+        }
         var main = (
            <ReactCSSTransitionGroup component='main' className='main-container' transitionName="main"
             transitionAppear={true}
             transitionAppearTimeout={1000}
             transitionEnterTimeout={1000}
             transitionLeaveTimeout={500}>
-              <div key={this.props.location.pathname + this.props.state.menu.showMenu}>
+              <div className='mainContainerInside' key={key}>
                 {!this.props.state.menu.showMenu ? this.props.children : null}
               </div>
             </ReactCSSTransitionGroup>);

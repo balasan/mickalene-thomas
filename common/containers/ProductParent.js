@@ -21,7 +21,6 @@ export default class ProductParent extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.params, 'product params')
     this.constructor.fetchProductData(this.props.dispatch, this.props.params);
   }
 

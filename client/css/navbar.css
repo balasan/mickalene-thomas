@@ -69,7 +69,7 @@ nav {
 
                 &.back {
                     height: 20px;
-                    width: 20px;
+                    width: 10px;
                     background-image: url("/images/left.svg");
                     background-size: contain;
                     background-repeat: no-repeat;
@@ -92,11 +92,11 @@ nav {
                 }
             }
             p {
-                font-family: 'Futura Bold', sans-serif;
+                font-family: 'Futura', sans-serif;
                 text-transform: uppercase;
                 margin: 0;
                 padding: 0;
-                font-size: 12px;
+                font-size: 10px;
                 letter-spacing: 1.5px;
                 color: rgba(200, 200, 200, 1);
                 background: url("/images/filter_arrow.svg") no-repeat center right;
@@ -146,7 +146,7 @@ nav {
             }
             .cart-icon {
                 display: flex;
-                padding: 0 1.5em 0 0;
+                padding: 0 1.0em 0 0;
                 cursor: pointer;
 
                 @media (--mobile) {
@@ -164,20 +164,22 @@ nav {
                     }
                     @media (--desktop) {
                         height: auto;
-                        width: 20px;
+                        width: 21px;
                     }
                 }
                 p {
-                    font-family: 'Futura Bold', sans-serif;
+                    font-family: 'Futura', sans-serif;
                     font-size: 10px;
 
                     @media (--mobile) {
-                        font-size: 10px;
+                        font-size: 8px;
                     }
                     display: inline-block;
                     color: black;
                     margin: 0;
                     padding: 0;
+                    margin-left:-5px;
+
                 }
             }
         }
@@ -256,8 +258,9 @@ nav {
 
             a {
                 text-decoration: none;
-                font-family: 'Futura Bold', sans-serif;
+                font-family: 'Futura', sans-serif;
                 letter-spacing: 5px;
+                font-size: .8em;
                 padding: 1.25em;
                 text-transform: uppercase;
                 color: black;
