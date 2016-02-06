@@ -54,7 +54,6 @@ export default function news(state = initialState, action) {
     case REMOVE:
       state.cart.forEach(function(item, i) {
         if (item.id === action.payload.id) {
-          console.log(item, 'item to remove');
           item.quantity = 1;
           state.cart.splice(i, 1);
         }

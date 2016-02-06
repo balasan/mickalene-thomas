@@ -30,17 +30,11 @@ export default class Work extends Component {
   componentWillUpdate(nextProps) {
     var self = this;
     const { state, params, filteredWorks } = nextProps;
-
-    if (this.newWorks) {
+    // if (this.newWorks)
       // this.oldWorks = this.newWorks.slice();
-    }
-
     self.params = params;
-
+    if(this.params.filter != params.filter) window.scrollTo(0,0);
     this.works = filteredWorks.slice(0, this.worksLimit);;
-
-    //don't update if its the same stuff
-    if (this.oldWorks && (JSON.stringify(this.works) == JSON.stringify(this.oldWorks))) return;
     this.newWorks = this.works;
   }
 
@@ -70,6 +64,7 @@ export default class Work extends Component {
       els[i].className += " work-leave-active";
     }
     this.newsColor();
+    this.setPerspective();
   }
 
   newsColor() {
@@ -101,14 +96,10 @@ export default class Work extends Component {
     }
     this.timeout = setTimeout(function() {
       //run, but wait again
-      var scrollTop = e.srcElement.body.scrollTop;
-      var scrollHeight = e.srcElement.body.scrollHeight;
-      var clientHeight = e.srcElement.body.clientHeight;
-
-      var pOrgin = "50% " + (scrollTop + clientHeight/2) + "px"
-      this.container3d.style.perspectiveOrigin = pOrgin
-      this.container3d.style.webkitPerspectiveOrigin = pOrgin
-
+      var scrollTop = document.body.scrollTop;
+      var scrollHeight = document.body.scrollHeight;
+      var clientHeight = document.body.clientHeight;
+      this.setPerspective();
       if (((scrollTop+clientHeight) / scrollHeight) > 0.7) {
         if (this.worksLimit) {
           this.oldWorksLimit = this.worksLimit;
@@ -118,6 +109,14 @@ export default class Work extends Component {
       }
     }.bind(this), 100);
   };
+
+  setPerspective(){
+    var scrollTop = document.body.scrollTop;
+    var windowHeight = window.innerHeight;
+    var pOrgin = "50% " + (scrollTop + windowHeight/2) + "px"
+    this.container3d.style.perspectiveOrigin = pOrgin
+    this.container3d.style.webkitPerspectiveOrigin = pOrgin
+  }
 
   render() {
     var self = this, newWorks, oldWorks;

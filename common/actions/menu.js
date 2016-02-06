@@ -6,14 +6,12 @@ import { fetchWorkTags } from '../api/work'
 import { fetchNewsTags } from '../api/work'
 
 export function toggleMenu() {
-  // console.log("toggleMenu")
   return {
     type: TOGGLE_MENU
   };
 }
 
 export function toggleExpand() {
-  console.log("toggleExpand")
   return {
     type: TOGGLE_EXPAND
   };

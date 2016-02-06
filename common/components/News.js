@@ -44,7 +44,6 @@ export default class News extends Component {
     var self = this;
     this.filter = nextProps.params.filter
     this.filterNews(nextProps);
-    if(this.oldNews && JSON.stringify(this.news) == JSON.stringify(this.oldNews)) return;
     this.oldNews = this.news;
     setTimeout(function() {
       if(self.news.length) self.scroll();
@@ -52,11 +51,11 @@ export default class News extends Component {
   }
 
 
-  filterNews(props) {
+  filterNews(nextProps) {
     var self = this;
     this.news = [];
-    const { state, params } = props;
-    if (this.props.state.news) {
+    const { state, params } = nextProps;
+    if (state.news) {
       if(params.filter) {
         state.news.forEach(function(item) {
           if (item.tags.indexOf(params.filter) > -1) {
@@ -65,9 +64,10 @@ export default class News extends Component {
         })
       }
       else {
-        this.news = this.props.state.news.slice() || [];
+        this.news = state.news.slice() || [];
       }
     }
+
   }
 
   render () {

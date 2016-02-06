@@ -8,26 +8,19 @@ import Splash from '../containers/Splash';
 
 class Menu extends Component {
 
+  // componentWillUpdate(nextProps){
+  //   if(nextProps.menu.showMenu) window.location.hash = "menu"
+  //   else window.location.hash = ""
+  // }
+
   render () {
     var filterType = this.props.params.filter;
     var path = this.props.children.props.route.path;
     var location = '';
     var filters;
     const { toggleMenu } = this.props;
-    // console.log(this.props, 'menu props')
-    var showMenu = this.props.state.menu.showMenu;
-    var location = this.props.state.routing.path;
-
-    // const multi = function() {
-    //   toggleMenu();
-    //   var main = document.getElementById('main');
-    //   if (main.classList.contains('hide')) {
-    //   main.classList.remove('hide');
-    //   } else {
-    //     main.classList.add('hide');
-    //   }
-
-    // }
+    var showMenu = this.props.menu.showMenu;
+    var location = this.props.routing.path;
 
     var showHeader = true;
     if(location == '/' || showMenu)
@@ -86,8 +79,11 @@ class Menu extends Component {
 
 export default connect(
   state => {
-    return {state: state}
+    return {
+      routing: state.routing,
+      menu: state.menu
+    }
   },
   dispatch => {
-    return Object.assign({}, { dispatch },  bindActionCreators(MenuActions, dispatch))
+    return bindActionCreators(MenuActions, dispatch)
   })(Menu)

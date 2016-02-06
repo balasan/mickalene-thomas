@@ -22,12 +22,13 @@ if (process.env.BROWSER) {
   require('./../../client/css/navbar.css');
   require('./../../client/css/animation.css');
   require('./../../client/css/mag.css');
+
 }
 
 class App extends Component {
   render () {
-    if (this.props.state.menu) {
-        var key = this.props.state.menu.showMenu;
+    if (this.props.menu) {
+        var key = this.props.menu.showMenu;
         if(this.props.location.pathname.match('store')){
           key += this.props.location.pathname;
         }
@@ -38,7 +39,7 @@ class App extends Component {
             transitionEnterTimeout={1000}
             transitionLeaveTimeout={500}>
               <div className='mainContainerInside' key={key}>
-                {!this.props.state.menu.showMenu ? this.props.children : null}
+                {!this.props.menu.showMenu ? React.cloneElement(this.props.children) : null}
               </div>
             </ReactCSSTransitionGroup>);
     }
@@ -54,13 +55,11 @@ class App extends Component {
   }
 }
 
-export default connect(
-  state => {
-    return {state: state}
-  },
-  dispatch => {
-    return Object.assign({}, { dispatch },  bindActionCreators(MenuActions, dispatch))
-  })(App)
+function mapStateToProps(state) {
+  return {
+    menu: state.menu,
+    state: state
+  }
+}
 
-
-// export default App
+export default connect(mapStateToProps,{})(App)

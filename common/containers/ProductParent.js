@@ -13,7 +13,6 @@ export default class ProductParent extends Component {
 
   static fetchProductData(dispatch, params) {
     var id = params.itemId
-    console.log("fetching product", id)
     var { loadProduct } = bindActionCreators(ProductActions, dispatch, id)
     return Promise.all([
       loadProduct(id)
