@@ -28,6 +28,7 @@
   display:inline-block;
   vertical-align: middle;
   backface-visibility:hidden;
+  /*max-width:50%;*/
 }
 .flex-images .item img {
   display: block;

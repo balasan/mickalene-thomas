@@ -9,6 +9,7 @@ import { updatePath } from 'redux-simple-router';
 export default class Product extends Component {
 
   componentDidMount() {
+    window.scrollTo(0,0);
   }
 
   componentDidUpdate() {
