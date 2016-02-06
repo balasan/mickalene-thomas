@@ -43,7 +43,7 @@ main {
     }
 }
 #webGLCorner{
-    z-index: 1000;
+    z-index: 3000;
     position: fixed;
     top: -15px;
     left: 5px;
