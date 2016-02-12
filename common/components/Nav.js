@@ -186,9 +186,9 @@ class Nav extends Component {
           totalItems += item.quantity;
         })
         cart = (
-          <a onClick={toggleCart} className='cart-icon'>
-          <img src="../../images/cart.svg" />
-          <p>{'X ' + totalItems}</p>
+          <a onClick={toggleCart} className='cart-icon noselect'>
+          <img className="noselect" src="../../images/cart.svg" />
+          <p className="noselect">{'X ' + totalItems}</p>
           </a>
         )
       } else if (this.props.state.store.cart.length > 0) {
@@ -197,9 +197,9 @@ class Nav extends Component {
           totalItems += item.quantity;
         })
         cart = (
-          <a onClick={toggleCart} className='cart-icon'>
-          <img src="../../images/cart.svg" />
-          <p>{'X ' + totalItems}</p>
+          <a onClick={toggleCart} className='cart-icon noselect'>
+          <img className="noselect" src="../../images/cart.svg" />
+          <p className="noselect">{'X ' + totalItems}</p>
           </a>
         )
       }
@@ -220,7 +220,7 @@ class Nav extends Component {
             <section className='right'>
             {cart}
 
-            <img className={'hamburger'} onClick={toggleMenu} src={'../../images/menu.svg'} />
+            <img className={'hamburger noselect'} onClick={toggleMenu} src={'../../images/menu.svg'} />
 
             </section>
             </div>
@@ -233,7 +233,7 @@ class Nav extends Component {
     else nav = (<nav className="hidden"></nav>)
 
     return (
-      <div>
+      <div className="noselect">
 {/*       <ReactCSSTransitionGroup
         transitionName="nav"
         transitionAppear={true}

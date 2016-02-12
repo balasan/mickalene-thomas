@@ -33,6 +33,7 @@
     cursor: -moz-zoom-out;
     cursor: -webkit-zoom-out;
     cursor: zoom-out;
+    border: 2em solid transparent;
   }
 
   .txt {

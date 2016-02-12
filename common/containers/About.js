@@ -9,6 +9,7 @@ export default class About extends Component {
       self.aboutData = data;
       self.render();
     });
+    this.textEl = false;
   }
 
   componentDidUpdate() {
@@ -22,25 +23,24 @@ export default class About extends Component {
     render () {
       var self = this;
       var data = this.aboutData;
-      // console.log(data, 'about data')
       if (data) {
         if (data.header) {
           var headerEl = document.getElementById('about-header');
           headerEl.innerHTML = data.header;
         }
-        if (data.body) {
+        if (data.body && !this.textEl) {
           var textParent = document.getElementById('about-body');
           data.body.forEach(function(text, i){
-              var textEl = document.createElement("p");
-              textEl.innerHTML = text;
-              textParent.appendChild(textEl);
+              self.textEl = document.createElement("p");
+              self.textEl.innerHTML = text;
+              textParent.appendChild(self.textEl);
           })
         }
       }
 
       return (
         <div>
-        <section className='aboutImg'>
+        <section className='aboutImg noselect'>
           <img src='/images/down_arrow.png' />
         </section>
         <section className='aboutTxt'>

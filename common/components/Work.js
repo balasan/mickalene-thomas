@@ -90,7 +90,8 @@ export default class Work extends Component {
     this.flex = new flexImages({
       selector: container,
       container: '.item',
-      rowHeight: 350,
+      rowHeight: 400,
+      truncate: false
     })
   }
 
@@ -143,7 +144,7 @@ export default class Work extends Component {
               to={'/works/i/' + item.id}>
               <div className="imageContainer">
                 <img
-                  className={item.tags[0] == 'paintings' || item.tags[0] == 'collages' || item.tags[0] == 'print' ? 'zoom' : ''}
+                  className={item.tags[0] == 'paintings' || item.tags[0] == 'collages' || item.tags[0] == 'print' || item.tags[0] == 'sculpture' ? 'zoom' : ''}
                   key={item.id}
                   src={item.image.smaller.url}
                 />

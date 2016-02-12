@@ -70,7 +70,6 @@ export default class WorkItem extends Component {
       self.props.dispatch(updatePath(self.props.closeUrl))
     }
 
-
     const { state, clickitem } = this.props
 
     var workItem = this.workItem;
@@ -88,11 +87,11 @@ export default class WorkItem extends Component {
     return (
       <div className='selectedWork'>
         <section className='showcase'>
-          <SingleSlide workItem={workItem}>
+          <SingleSlide workItem={workItem} {...this} >
           </SingleSlide>
           {arrows}
         </section>
-        <img className={'close'} onClick={closeItem} src={'../../images/close.svg'} />
+        <img className={'close noselect'} onClick={closeItem} src={'../../images/close.svg'} />
 
       </div>
     )

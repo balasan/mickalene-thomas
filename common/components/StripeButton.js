@@ -123,7 +123,7 @@ export default class StripeButton extends Component {
       }
 
         return (
-            <button onClick={clickFunc}>Proceed to Payment</button>
+            <button className="noselect" onClick={clickFunc}>Proceed to Payment</button>
         );
     }
 }

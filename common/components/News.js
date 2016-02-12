@@ -117,7 +117,7 @@ export default class News extends Component {
         <div className='right parent'>
            {insta.map(function (item, i) {
             return (
-              <a target='_blank' href={item.link} key={i}>
+              <a target='_blank' className="noselect" href={item.link} key={i}>
                 <img src={item.images.standard_resolution.url} />
               </a>
             )

@@ -150,6 +150,9 @@
       &.twitter {
         background-image: url('/images/twitter.svg');
       }
+      &.insta {
+        background-image: url('/images/insta_gray.svg');
+      }
     }
   }
 }

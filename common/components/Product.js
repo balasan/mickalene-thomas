@@ -64,10 +64,10 @@ export default class Product extends Component {
       productEl = (
 
           <section className='productShowcase' key={product.id}>
-              <div className="image" >
+              <div className="image noselect">
                 <img id="main-product-image" src={product.image[0]} />
               </div>
-              <div className="images-select">
+              <div className="images-select noselect">
               {images}
               </div>
 
@@ -83,7 +83,7 @@ export default class Product extends Component {
               <p>{product.price ? '$' : null}{product.price ? product.price.toFixed(2) : 'price available upon request'}</p>
             </div>
             <div className='button-parent'>
-              {product.price ? <button onClick={doubleCart.bind(this, product)}>Add to Shopping Bag</button> : <a href="mailto:hello@mickalenethomas.com" target="_blank" className="no-price">Contact Us</a>}
+              {product.price ? <button className="noselect" onClick={doubleCart.bind(this, product)}>Add to Shopping Bag</button> : <a href="mailto:hello@mickalenethomas.com" target="_blank" className="no-price noselect">Contact Us</a>}
             </div>
            </section>
             </div>

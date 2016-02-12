@@ -34,7 +34,6 @@
 
                  var data = response.results[0].data;
 
-                 console.log(data, 'contact data')
 
                  var obj = {};
                  obj.studio = {};
@@ -50,6 +49,7 @@
                  obj.galleries = [];
                  obj.studio.twitter = data['contact.twitter'] ? data['contact.twitter'].value : null;
                  obj.studio.fb = data['contact.facebook'] ? data['contact.facebook'].value : null;
+                 obj.studio.insta = data['contact.insta'] ? data['contact.insta'].value : null;
 
                  data['contact.galleries'].value.forEach(function(gallery) {
                     var galObj = {};

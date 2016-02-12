@@ -65,13 +65,14 @@ export default class Contact extends Component {
               <p>${studioInfo.city}, ${studioInfo.state} ${studioInfo.zipcode}</p>
             </div>
           </article>
-          <article class="newsletter">
-            <input placeholder="Subscribe to Newsletter" />
+          <article class="newsletter noselect">
+            <input class="noselect" placeholder="Subscribe to Newsletter" />
             <button>Submit</button>
           </article>
-          <article class="social">
+          <article class="social noselect">
             <a class="fb" href=${studioInfo.fb}></a>
             <a class="twitter" href=${studioInfo.twitter}></a>
+            <a class="insta" href=${studioInfo.insta}></a>
           </article>`;
           var div = document.createElement("main");
           div.innerHTML = self.studioEl;

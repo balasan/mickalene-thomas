@@ -45,7 +45,7 @@ class Cart extends Component {
               var cartEl = cart.map(function(item, i) {
         return (
           <div key={i} className='cartItem'>
-            <section className='image'>
+            <section className='image noselect'>
               <img src={item.image[0]} />
             </section>
             <section className='description'>
@@ -55,7 +55,7 @@ class Cart extends Component {
             <section className='price'>
               <p>{'$' + (item.price * item.quantity).toFixed(2)}</p>
             </section>
-            <section className='quantity'>
+            <section className='quantity noselect'>
             <div>
               <button onClick={changeQuantity.bind(this, item.id, false)}>-</button>
               <p>{item.quantity}</p>

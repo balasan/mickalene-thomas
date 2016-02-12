@@ -36,7 +36,7 @@ export default class Store extends Component {
 
 
     return (
-      <div className="products">
+      <div className="products noselect">
        {products}
       </div>
     )

@@ -18,8 +18,9 @@
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
         transition: opacity .5s easeOutQuart;
+        transform: scale(1.1);
         &.zoom {
-            transform: scale(1.2);
+            transform: scale(1.5);
         }
     }
 
@@ -129,10 +130,6 @@
 
         &:hover {
             .textNews {
-
-
-
-
                 p {
                     color: rgba(255,255,255,1)
                 }
