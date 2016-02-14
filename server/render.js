@@ -19,8 +19,12 @@ function renderFullPage(html, initialState) {
         <link rel="stylesheet" href="/styles.css" />
       </head>
       <body>
+        <video id="vidBg" preload="auto" class="hidden" loop="true">
+          <source src="/video/bg-vid.mp4" type="video/mp4"/>
+        </video>
+        <div class='tint'></div>
         <canvas id="webGL"></canvas>
-        <canvas id="webGLCorner"></canvas>
+        <!--<canvas id="webGLCorner"></canvas>-->
 
         <div id="app">${html}</div>
          <script>

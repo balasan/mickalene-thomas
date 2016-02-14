@@ -9,8 +9,6 @@ require('./ColladaLoader');
 
 function GLView(_corner) {
 
-  console.log('INIT GL VIEW')
-
   var corner = _corner;
   var container;
   var camera, scene, renderer;
@@ -112,7 +110,7 @@ function GLView(_corner) {
       var options = {
         canvas: document.getElementById("webGL"),
         antialias: true,
-        alpha: false,
+        alpha: true,
       }
       if(corner) {
         options = {
@@ -239,8 +237,8 @@ function GLView(_corner) {
     wall.position.z = -1000;
     // plane.rotation.y = -Math.PI / 7;
     wall.scale.set(20, 20, 20);
-    if (!corner)
-      scene.add(wall);
+    // if (!corner)
+      // scene.add(wall);
 
 
     logo = new THREE.Object3D();

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { updatePath } from 'redux-simple-router'
 import * as MenuActions from '../actions/menu'
 import { bindActionCreators } from 'redux'
+import Video from './../components/Video'
 
 class Splash extends Component {
 
@@ -31,40 +32,20 @@ class Splash extends Component {
       }
     }
 
-    if(!window.glViewCorner) {
-      var corner = true;
-      window.glViewCorner = new GLView(corner);
-      window.glViewCorner.add();
-      window.glViewCorner.start();
-      window.glViewCorner.dom.addEventListener('click', () => {
-        self.props.dispatch(updatePath('/'))
-      })
-      document.getElementsByTagName('nav')[0].appendChild(window.glViewCorner.dom)
-    }
+    // if(!window.glViewCorner) {
+    //   var corner = true;
+    //   window.glViewCorner = new GLView(corner);
+    //   window.glViewCorner.add();
+    //   window.glViewCorner.start();
+    //   window.glViewCorner.dom.addEventListener('click', () => {
+    //     self.props.dispatch(updatePath('/'))
+    //   })
+    //   document.getElementsByTagName('nav')[0].appendChild(window.glViewCorner.dom)
+    // }
 
   }
 
   componentWillUpdate(nextProps){
-
-    // var menu;
-    // if(nextProps.state.menu && nextProps.state.menu.showMenu) menu = true;
-
-    // if(menu || nextProps.state.routing.path == '/'){
-    //   window.glView.start()
-    // }
-    // else{
-    //   window.glView.stop()
-    // }
-    //   window.glView.add()
-    //   if(menu) window.glView.cornerState(true)
-    //   else window.glView.cornerState(false)
-
-    // }
-    // else {
-    //    window.glView.remove();
-    //    window.glView.stop()
-    // }
-
   }
 
   componentWillUnmount() {
@@ -74,7 +55,9 @@ class Splash extends Component {
 
   render () {
     return (
-      <div></div>
+      <div>
+        <Video></Video>
+      </div>
     )
   }
 }
