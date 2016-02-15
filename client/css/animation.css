@@ -9,7 +9,6 @@
 .work-enter, .work-appear {
     opacity: 0;
     transform: translate3d(0, 0%, -400px) rotateX(0deg);
-
     transform-origin: 50% 0%;
 /*    img {
       transform: scale(1.5);

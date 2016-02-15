@@ -44,7 +44,7 @@ export default class Work extends Component {
       this.works = filteredWorks.slice(0, this.worksLimit);;
       this.newWorks = this.works;
     }
-    if(!this.newWorks.length){
+    if(!this.newWorks.length || (this.oldWorksLimit != this.worksLimit)){
       this.works = filteredWorks.slice(0, this.worksLimit);;
       this.newWorks = this.works;
     }
