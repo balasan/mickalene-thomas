@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var $ = require('jquery');
+var Hammer = require('react-hammerjs');
+import { updatePath } from 'redux-simple-router';
 
 export default class SingleSlide extends Component {
    componentDidMount() {
@@ -9,11 +11,28 @@ export default class SingleSlide extends Component {
   componentDidUpdate() {
   }
 
+
+
   render () {
     var url = this.props.workItem.image.small.url;
     var hiRes = this.props.workItem.image.medium.url;
     var title = this.props.workItem.title;
     var self = this;
+
+    const nextItem = function() {
+      self.props.props.dispatch(updatePath('/works/i/' + self.props.nextItem.id))
+    }
+    const prevItem = function() {
+      self.props.props.dispatch(updatePath('/works/i/' + self.props.prevItem.id))
+    }
+
+    const swipe = function(e) {
+      if (e.deltaX < 0) {
+        prevItem()
+      } else {
+        nextItem();
+      }
+    }
 
     const toggleZoom = function() {
 
@@ -45,7 +64,7 @@ export default class SingleSlide extends Component {
     }
 
     var image = (
-        <div className="image" id="singleImage">
+        <div className="image noselect" id="singleImage">
           <img onClick={toggleZoom} src={url}/>
         </div>
     )
@@ -76,8 +95,9 @@ export default class SingleSlide extends Component {
             {image}
             {mag}
             {description}
+            <Hammer onSwipe={swipe.bind(this)}><div className="swipe-field"></div></Hammer>
           </div>
-          <img onClick={toggleZoom} src="../../images/close.svg" className="zoom-close" />
+          <img onClick={toggleZoom} src="../../images/close.svg" className="zoom-close noselect" />
         </ReactCSSTransitionGroup>
     );
   }

@@ -4,7 +4,7 @@
     a {
         &.menuLink {
             pointer-events: auto;
-            color: rgba(255, 255, 255, 1);
+            color: rgba(255, 250, 240, 1);
             display: inline-block;
             font-family: 'Futura Medium', sans-serif;
             text-transform: uppercase;
@@ -19,13 +19,13 @@
             }
 
             &:hover {
-                color: rgba(255, 255, 255, 0.5);
+                color: rgba(255, 250, 240, 0.5);
             }
         }
 
         &.footerLink {
             font-size: 16px;
-            color: rgba(255, 255, 255, 1);
+            color: rgba(255, 250, 240, 1);
             margin: 0;
             padding: 0;
             font-family: 'Futura Medium', sans-serif;
@@ -34,7 +34,7 @@
             transition: color 250ms easeOutQuart;
 
             &:hover {
-                color: rgba(255, 255, 255, 0.5);
+                color: rgba(255, 250, 240, 0.5);
             }
         }
     }
@@ -70,13 +70,7 @@
             width: 50%;
 
             a {
-                &:first-of-type {
-                    img {
-                        padding: 0 0.5em 0 0;
-                        height: 19px;
-                        width: 19px;
-                    }
-                }
+                margin: 0 0.5em 0 0;
             }
 
             img {

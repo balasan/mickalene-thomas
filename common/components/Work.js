@@ -17,10 +17,17 @@ export default class Work extends Component {
 
   componentDidMount() {
     var self = this;
+    this.oldWorks = [];
+    this.newWorks = [];
     this.container = document.getElementById("flex-container2");
     this.containerOut = document.getElementById("flex-container1");
     this.container3d = document.getElementById("flex-images");
     window.addEventListener('scroll', this.handleScroll.bind(this));
+
+    if(this.props.filteredWorks){
+      this.works = this.props.filteredWorks.slice(0, this.worksLimit);;
+      this.newWorks = this.works;
+    }
   }
 
   componentWillUnmount() {
@@ -30,23 +37,32 @@ export default class Work extends Component {
   componentWillUpdate(nextProps) {
     var self = this;
     const { state, params, filteredWorks } = nextProps;
-    // if (this.newWorks)
-      // this.oldWorks = this.newWorks.slice();
+    if(!params || this.props.params.filter != params.filter){
+      window.scrollTo(0,0);
+      this.oldWorks = this.newWorks.slice();
+
+      this.works = filteredWorks.slice(0, this.worksLimit);;
+      this.newWorks = this.works;
+    }
+    if(!this.newWorks.length){
+      this.works = filteredWorks.slice(0, this.worksLimit);;
+      this.newWorks = this.works;
+    }
+
     self.params = params;
-    if(this.params.filter != params.filter) window.scrollTo(0,0);
-    this.works = filteredWorks.slice(0, this.worksLimit);;
-    this.newWorks = this.works;
+
   }
 
   shouldComponentUpdate(nextProps) {
     const { params, state } = nextProps;
     if( params.itemId ) return false;
-    if (this.works
-      // && (this.works.length === state.works.length)
-      && (params.filter == this.props.params.filter)
-      && this.worksLimit == this.oldWorksLimit) {
-      return false;
-    } else {return true};
+    return true;
+    // if (this.works
+    //   // && (this.works.length === state.works.length)
+    //   && (params.filter == this.props.params.filter)
+    //   && this.worksLimit == this.oldWorksLimit) {
+    //   return false;
+    // } else {return true};
   }
 
   componentDidUpdate() {
@@ -62,6 +78,12 @@ export default class Work extends Component {
     var els = self.containerOut.getElementsByTagName('a');
     for(var i = 0; i < els.length; i++) {
       els[i].className += " work-leave-active";
+    }
+    if(self.oldWorks.length) {
+      setTimeout(function(){
+        self.oldWorks = [];
+        self.setState({})
+      },500)
     }
     this.newsColor();
     this.setPerspective();
@@ -81,11 +103,18 @@ export default class Work extends Component {
     }
   }
 
+
   flexGridLayout(container) {
+    var rowHeight = 400;
+    if(this.newWorks.length < 10){
+      rowHeight = 600;
+    }
+
     this.flex = new flexImages({
       selector: container,
       container: '.item',
-      rowHeight: 350,
+      rowHeight: rowHeight,
+      truncate: false
     })
   }
 
@@ -130,21 +159,24 @@ export default class Work extends Component {
       oldWorks = worksEl(this.oldWorks, 'work-leave');
     }
 
+
     function worksEl(worksArray, action) {
+      var imgSize = 'small';
+
       return worksArray.map(function(item, i) {
         if (item.type == 'work') {
           return (
             <Link
               className={'item '+ action}
-              data-w={item.image.smaller.dimensions.width}
-              data-h={item.image.smaller.dimensions.height}
+              data-w={item.image[imgSize].dimensions.width}
+              data-h={item.image[imgSize].dimensions.height}
               key={item.id+self.params.filter+i}
               to={'/works/i/' + item.id}>
               <div className="imageContainer">
                 <img
-                  className={item.tags[0] == 'paintings' || item.tags[0] == 'collages' || item.tags[0] == 'print' ? 'zoom' : ''}
+                  className={item.tags[0] == 'paintings' || item.tags[0] == 'collages' || item.tags[0] == 'print' || item.tags[0] == 'sculpture' ? 'zoom' : ''}
                   key={item.id}
-                  src={item.image.smaller.url}
+                  src={item.image[imgSize].url}
                 />
                 <div className="text">
                   <p>{item.title}</p>
@@ -172,10 +204,10 @@ export default class Work extends Component {
     var all = (
         <div>
           <div id="flex-container1">
-            {oldWorks}
+              {oldWorks}
           </div>
           <div id="flex-container2">
-            {newWorks}
+              {newWorks}
           </div>
         </div>)
 

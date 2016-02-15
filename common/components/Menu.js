@@ -5,13 +5,28 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as MenuActions from '../actions/menu'
 import Splash from '../containers/Splash';
+import { fetchContact } from '../api/contact';
 
 class Menu extends Component {
 
-  // componentWillUpdate(nextProps){
-  //   if(nextProps.menu.showMenu) window.location.hash = "menu"
-  //   else window.location.hash = ""
-  // }
+
+  componentDidMount() {
+    var self = this;
+    fetchContact(function(i, data) {
+      self.contactData = data;
+      self.render();
+    });
+    this.socialEl = false;
+  }
+
+  componentDidUpdate() {
+    var self = this;
+    fetchContact(function(i, data) {
+      self.contactData = data;
+      self.render();
+    });
+  }
+
 
   render () {
     var filterType = this.props.params.filter;
@@ -19,14 +34,32 @@ class Menu extends Component {
     var location = '';
     var filters;
     const { toggleMenu } = this.props;
-    var showMenu = this.props.menu.showMenu;
-    var location = this.props.routing.path;
+    var showMenu = this.props.state.menu.showMenu;
+    var location = this.props.state.routing.path;
 
     var showHeader = true;
     if(location == '/' || showMenu)
       showHeader = false
 
     var links = null;
+
+    var socialEl = null;
+    if (this.contactData && !this.socialEl) {
+      var socialEl = (
+        <div>
+          <a target='_blank' className='footerLink noselect' onClick={toggleMenu} href={this.contactData.studio.fb}>
+            <img src='../../images/fb-w-f.svg' />
+          </a>
+          <a target='_blank' className='footerLink noselect' onClick={toggleMenu} href={this.contactData.studio.twitter}>
+            <img src='../../images/twitter_menu.svg' />
+          </a>
+          <a target='_blank' className='footerLink noselect' onClick={toggleMenu} href={this.contactData.studio.insta}>
+            <img src='../../images/insta-w.svg' />
+          </a>
+        </div>
+      )
+    }
+
 
     if (showMenu) {
       links = (
@@ -37,28 +70,23 @@ class Menu extends Component {
           <header>
             <section className='left'></section>
             <section className='right'>
-              <img onClick={toggleMenu} src='/images/close.svg' />
+              <img className="noselect" onClick={toggleMenu} src='/images/close.svg' />
             </section>
           </header>
 
           <ReactCSSTransitionGroup className="links" transitionName="links" transitionAppear={true} transitionAppearTimeout={0} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
-            <Link className='menuLink' onClick={toggleMenu} to="/works">works</Link>
-            <Link className='menuLink' onClick={toggleMenu} to="/about">about</Link>
-            <Link className='menuLink' onClick={toggleMenu} to="/news">news</Link>
-            <Link className='menuLink' onClick={toggleMenu} to="/store">store</Link>
+            <Link className='menuLink noselect' onClick={toggleMenu} to="/works">works</Link>
+            <Link className='menuLink noselect' onClick={toggleMenu} to="/about">about</Link>
+            <Link className='menuLink noselect' onClick={toggleMenu} to="/news">news</Link>
+            <Link className='menuLink noselect' onClick={toggleMenu} to="/store">store</Link>
           </ReactCSSTransitionGroup>
 
           <footer>
             <section className='left'>
-              <Link className='footerLink' onClick={toggleMenu} to='https://www.instagram.com/'>
-                <img src='../../images/insta-w.svg' />
-              </Link>
-              <Link className='footerLink' onClick={toggleMenu} to='https://www.facebook.com/'>
-                <img src='../../images/fb-w-f.svg' />
-              </Link>
+            {socialEl}
             </section>
             <section className='right'>
-              <Link className='footerLink' onClick={toggleMenu} to='/contact'>Contact</Link>
+              <Link className='footerLink noselect' onClick={toggleMenu} to='/contact'>Contact</Link>
             </section>
           </footer>
 

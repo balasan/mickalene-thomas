@@ -23,11 +23,6 @@ a {
     text-decoration: none;
 }
 
-/*.mainContainerInside{
-    position:absolute;
-    top:75px;
-}*/
-
 main {
     &.main-container {
         padding: 75px 0 0 0;
@@ -35,11 +30,6 @@ main {
             padding: 60px 0 0 0;
         }
        transition: opacity 300ms ease;
-/*
-        &.hide {
-            opacity: 0;
-            pointer-events: none;
-        }*/
     }
 }
 #webGLCorner{
@@ -48,6 +38,12 @@ main {
     top: -15px;
     left: 5px;
     cursor:pointer;
+      -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
     @media (--mobile) {
         display: none;
     }
@@ -84,6 +80,14 @@ main {
 
 #app {
     position: relative;
+}
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 @import "customMedia.css";
 @import "fonts.css";
