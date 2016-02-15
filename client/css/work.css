@@ -1,12 +1,6 @@
 @import "customMedia.css";
 
-.container3d {
-}
 .worksContainer {
-
-    /*position:absolute;*/
-
-    /*top:75px;*/
     transition: all .5s easeOutQuart;
     transform: scale(1) translateZ(0);
     transform-origin: 50% 50%;
@@ -155,7 +149,7 @@
                 background-size: 80%;
                 background-position: bottom left;
             }
-            opacity: .9;
+            opacity: 0;
             cursor: pointer;
 
             &:hover {

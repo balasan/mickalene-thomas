@@ -1,11 +1,8 @@
 @import "customMedia.css";
 
-
-
 .singleItem {
     height: calc(100vh - 75px);
 }
-
 .item {
     backface-visibility: hidden;
     display: inline-block;
@@ -19,11 +16,11 @@
         -webkit-backface-visibility: hidden;
         transition: opacity .5s easeOutQuart;
         transform: scale(1.1);
+
         &.zoom {
             transform: scale(1.5);
         }
     }
-
     .text {
         opacity: 0;
         transition: opacity 1s .1s easeOutQuart;
@@ -49,44 +46,47 @@
             text-align: center;
         }
     }
-
     &:hover {
         img {
             opacity: 0.25;
         }
-
         .text {
             opacity: 1;
         }
     }
-
     &.newsItem {
         cursor: pointer;
+        background-image: url(/images/transparent1.jpg);
+        background-blend-mode: darken;
+        background-size: cover;
+
         &.red {
-             background-color: rgba(197, 2, 11, 0.5);
-             &:hover {
+            background-color: rgba(197, 2, 11, 1);
+
+            &:hover {
                 .textNews {
-                       background-color: rgba(197, 2, 11, 1);
+                    background-color: rgba(197, 2, 11, 0.75);
                 }
-             }
+            }
         }
         &.blue {
-             background-color: rgba(149,217,240,0.5);
-             &:hover {
-                .textNews {
-                       background-color: rgba(149,217,240,1);
-                }
-             }
-        }
-         &.brown {
-             background-color: rgba(215,184,140,0.5);
-             &:hover {
-                .textNews {
-                       background-color: rgba(215,184,140,1);
-                }
-             }
-        }
+            background-color: rgba(149, 217, 240, 1);
 
+            &:hover {
+                .textNews {
+                    background-color: rgba(149, 217, 240, 0.75);
+                }
+            }
+        }
+        &.brown {
+            background-color: rgba(215, 184, 140, 1);
+
+            &:hover {
+                .textNews {
+                    background-color: rgba(215, 184, 140, 0.75);
+                }
+            }
+        }
         .textNews {
             transition: background-color .5s easeOutQuart, filter .5s easeOutQuart;
             display: flex;
@@ -100,7 +100,7 @@
             p {
                 font-style: italic;
                 text-transform: uppercase;
-                color: rgba(255,255,255,1);
+                color: rgba(255, 255, 255, 1);
                 margin: 0;
                 padding: 0;
                 transition: color .5s easeOutQuart;
@@ -114,24 +114,22 @@
                         font-size: 14px;
                         line-height: 14px;
                     }
-
                     font-family: 'Minion Pro', sans-serif;
                 }
-
                 &:nth-of-type(2) {
                     font-family: 'Avenir Next', sans-serif;
                     font-size: 12px;
+
                     @media (--mobile) {
                         font-size: 10px;
                     }
                 }
             }
         }
-
         &:hover {
             .textNews {
                 p {
-                    color: rgba(255,255,255,1)
+                    color: rgba(255, 255, 255, 1)
                 }
             }
         }
