@@ -1,4 +1,5 @@
 @import "customMedia.css";
+@import "colors.css";
 
 .cart {
     height: 100vh;
@@ -209,7 +210,6 @@
         }
     }
     &.hidden {
-        /*height: 0px;*/
         transform: translateY(-100%);
         pointer-events: none;
         opacity:0;
