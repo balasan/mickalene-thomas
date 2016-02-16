@@ -29,15 +29,15 @@ class App extends Component {
   render () {
     if (this.props.menu) {
         var key = this.props.menu.showMenu;
-        if(this.props.location.pathname.match('store')){
+        if (this.props.location.pathname.match('store')) {
           key += this.props.location.pathname;
         }
         var main = (
            <ReactCSSTransitionGroup component='main' className='main-container' transitionName="main"
-            transitionAppear={true}
-            transitionAppearTimeout={1000}
-            transitionEnterTimeout={1000}
-            transitionLeaveTimeout={500}>
+            transitionAppear = {true}
+            transitionAppearTimeout = {1000}
+            transitionEnterTimeout = {1000}
+            transitionLeaveTimeout = {500}>
               <div className='mainContainerInside' key={key}>
                 {!this.props.menu.showMenu ? React.cloneElement(this.props.children) : null}
               </div>

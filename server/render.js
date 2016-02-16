@@ -19,6 +19,7 @@ function renderFullPage(html, initialState) {
         <link rel="stylesheet" href="/styles.css" />
       </head>
       <body>
+        <div class="bg"></div>
         <video id="vidBg" preload="auto" class="hidden" loop="true">
           <source src="/video/bg-vid.mp4" type="video/mp4"/>
         </video>

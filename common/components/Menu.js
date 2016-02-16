@@ -99,8 +99,7 @@ class Menu extends Component {
     return (
       <div>
         {links}
-{/*         <Splash></Splash>
- */}      
+{/*          <Splash></Splash> */}
       </div>
     )
   }

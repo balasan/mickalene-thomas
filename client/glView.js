@@ -146,15 +146,22 @@ function GLView(_corner) {
     }
 
 
-    var bg2 = THREE.ImageUtils.loadTexture("/images/t4.jpg",null, render);
+    // var bg2 = THREE.ImageUtils.loadTexture("/images/t4.jpg",null, render);
+    // bg2.wrapS = bg2.wrapT = THREE.RepeatWrapping;
+    // bg2.repeat.set(5, 5);
+    // var bg2N = THREE.ImageUtils.loadTexture("/images/bg2_NRM.jpg",null,render);
+    // bg2N.wrapS = bg2N.wrapT = THREE.RepeatWrapping;
+    // bg2N.repeat.set(5, 5);
+
+    var bg2 = THREE.ImageUtils.loadTexture("/images/collage.jpg",null, render);
     bg2.wrapS = bg2.wrapT = THREE.RepeatWrapping;
     bg2.repeat.set(5, 5);
-    var bg2N = THREE.ImageUtils.loadTexture("/images/bg2_NRM.jpg",null,render);
+    var bg2N = THREE.ImageUtils.loadTexture("/images/collage.jpg",null,render);
     bg2N.wrapS = bg2N.wrapT = THREE.RepeatWrapping;
     bg2N.repeat.set(5, 5);
 
 
-    var trans = THREE.ImageUtils.loadTexture("/images/transparent1black.jpg",render);
+    var trans = THREE.ImageUtils.loadTexture("/images/collage.jpg",render);
     trans.wrapS = trans.wrapT = THREE.RepeatWrapping;
     var transN = THREE.ImageUtils.loadTexture("/images/transparent_NRM.png",render);
     transN.wrapS = transN.wrapT = THREE.RepeatWrapping;
@@ -162,7 +169,7 @@ function GLView(_corner) {
 
 
 
-    var shininess = 40,
+    var shininess = 30,
       // diffuse = new THREE.Color(.6, .6, .6),
       specular = new THREE.Color("hsl(0, 0%, 70%)"),
       normalScale = new THREE.Vector2(0, 1),
@@ -194,9 +201,17 @@ function GLView(_corner) {
     transMaterial = greyMaterial.clone()
     transMaterial.map = trans;
     transMaterial.normalMap = transN;
-    // transMaterial.metal = true;
+
+    transMaterial.normalMap = null;
+
+    transMaterial.metal = false;
+    //FLOWER PATTER
     transMaterial.specular = new THREE.Color("hsl(0, 0%, 30%)");
     transMaterial.color = new THREE.Color("hsl(0, 0%, 80%)");
+
+    //COLLAGE PATTERS
+    transMaterial.specular = new THREE.Color("hsl(0, 0%, 30%)");
+    transMaterial.color = new THREE.Color("hsl(0, 0%, 100%)");
 
     var textMaterial = greyMaterial.clone()
     textMaterial.map = null;
@@ -208,23 +223,28 @@ function GLView(_corner) {
       textMaterial.opacity = 0;
     }
 
-    // textMaterial.color = new THREE.Color("hsl(0, 0%, 50%)");
-    // textMaterial.specular = new THREE.Color("hsl(0, 0%, 30%)");
-    // textMaterial.specular = new THREE.Color("hsl(0, 0%, 100%)");
-    textMaterial.shininess = 60;
-    textMaterial.color = new THREE.Color("rgb(215,195,0)");
-    textMaterial.specular = new THREE.Color("rgb(165,125,100)");
+    textMaterial.shininess = 40;
+    // GOLD TEXT
+    // textMaterial.color = new THREE.Color("rgb(215,195,0)");
+    // textMaterial.specular = new THREE.Color("rgb(165,125,100)");
 
+    // SILVER TEXT
+    // textMaterial.color = new THREE.Color("hsl(0, 0%, 50%)");
+    textMaterial.color = new THREE.Color("hsl(0, 0%, 50%)");
+    textMaterial.specular = new THREE.Color("hsl(0, 0%, 70%)");
 
     var sideMaterial = greyMaterial.clone()
     sideMaterial.map = null;
     sideMaterial.normalMap = null;
     sideMaterial.metal = true;
     sideMaterial.transparent = false;
-    sideMaterial.color = new THREE.Color("rgb(215,195,0)");
-    // sideMaterial.specular = new THREE.Color("hsl(0, 0%, 100%)");
-    sideMaterial.specular = new THREE.Color("rgb(225,185,0)");
-    sideMaterial.shininess = 30;
+    // GOLD
+    // sideMaterial.color = new THREE.Color("rgb(215,195,0)");
+    // sideMaterial.specular = new THREE.Color("rgb(225,185,0)");
+    // SILVER
+    sideMaterial.color = new THREE.Color("hsl(0, 0%, 90%)");
+    sideMaterial.specular = new THREE.Color("hsl(0, 0%, 100%)");
+    sideMaterial.shininess = 70;
 
 
     var plane = new THREE.Mesh(planeGeometry, greyMaterial);
