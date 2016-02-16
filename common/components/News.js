@@ -88,9 +88,12 @@ export default class News extends Component {
           'backgroundImage': "url("+item.image.main.url+")"
         }
       var description = item.description ? <p className='description'>{item.description}</p> : "";
-      var link = item.link ? <a href={item.link} target='_blank'></a> : ''
+      var link = item.link ? <div></div> : null;
+
       return (
-        <div id={item.id} className="news-item" style={{"transitionDelay" : delay}} key={item.id + self.filter}>
+
+        <a id={item.id} href={item.link ? item.link : 'javascript:'} className={item.link ? 'link news-item' : 'news-item'} style={{"transitionDelay" : delay}} key={item.id + self.filter}>
+
           {img}
           <section style={sectionStyle} className='left' >
             <article>
@@ -106,39 +109,27 @@ export default class News extends Component {
           </section>
 
           <section className='right'>
-            {link}
+          {link}
           </section>
-        </div>
+        </a>
         )
     })
 
-
-      instaList = (
-        <div className='right parent'>
-           {insta.map(function (item, i) {
-            return (
-              <a target='_blank' className="noselect" href={item.link} key={i}>
-                <img src={item.images.standard_resolution.url} />
-              </a>
-            )
-          }, this)}
-        </div>
-      )
+    instaList = (
+      <div className='right parent'>
+         {insta.map(function (item, i) {
+          return (
+            <a target='_blank' className="noselect" href={item.link} key={i}>
+              <img src={item.images.standard_resolution.url} />
+            </a>
+          )
+        }, this)}
+      </div>
+    )
 
 
     return (
       <div className='newsParent'>
-{/*          <div id='newsList2' className='left parent'>
-          <ReactCSSTransitionGroup
-            transitionName="news"
-            transitionAppear={true}
-            transitionAppearTimeout={700}
-            transitionEnterTimeout={700}
-            transitionLeave={false}
-          >
-            {el}
-          </ReactCSSTransitionGroup>
-        </div> */}
          <div id='newsList2' className='left parent'>
           <ReactCSSTransitionGroup
             transitionName="news"

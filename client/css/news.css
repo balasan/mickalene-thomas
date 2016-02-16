@@ -42,6 +42,12 @@
                 background-color: white;
                 margin: 1px 0 1px 0;
                 padding: 2em;
+                &.link {
+                    cursor: pointer;
+                }
+                &:not(.link) {
+                    cursor: default !important;
+                }
                 @media (--desktop) {
                    display: flex;
                 }
@@ -164,7 +170,7 @@
                         @media (--mobile) {
                             display: none;
                         }
-                        a {
+                        div {
                             height: 20px;
                             padding: 0;
                             margin: 0;
