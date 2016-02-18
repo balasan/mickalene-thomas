@@ -89,7 +89,7 @@ nav {
                     letter-spacing: 2px;
 
                     @media (--mobile) {
-                        /*display: none;*/
+                        display: none;
                     }
                 }
             }

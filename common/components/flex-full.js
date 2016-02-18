@@ -59,6 +59,10 @@ var flexImages = (function() {
                     new_w = Math.ceil(row[x][2] * ratio);
                     exact_w += new_w + o.margin;
                     if (exact_w > max_w) new_w -= exact_w - max_w;
+                    // if (row.length < 2) {
+                    //     new_w = 0;
+                    //     row_h = 0;
+                    // }
                     if (!options.noRender)
                         _helper();
                 }
