@@ -44,7 +44,7 @@ class WorkParent extends Component {
     this.worksLimit = 10;
     this.works = [];
     this.worksOnly = [];
-    this.closeUrl = '/works'
+    this.closeUrl = '/works';
   }
 
   componentWillUpdate(nextProps) {
@@ -62,10 +62,32 @@ class WorkParent extends Component {
     // this.constructor.clearItemOnClient(this.props.dispatch)
   }
 
+  shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  }
+
   filterWorks(state, params) {
     var self = this;
+    var preShuffle = state.works;
+    var shuffled = this.shuffle(preShuffle);
 
-    self.works = state.works.filter(function(item) {
+
+    self.works = shuffled.filter(function(item) {
       if (params.filter && item.tags.indexOf(params.filter) === -1) {
         return false;
       } else {
@@ -75,11 +97,11 @@ class WorkParent extends Component {
 
     this.worksOnly = self.works.slice();
 
-    if (state.news && !params.filter) {
-      state.news.forEach(function(item, i) {
-        self.works.splice((i*5), 0, item);
-      });
-    }
+    // if (state.news && !params.filter) {
+    //   state.news.forEach(function(item, i) {
+    //     self.works.splice((i*5), 0, item);
+    //   });
+    // }
   }
 
 

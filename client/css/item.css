@@ -54,7 +54,24 @@
             opacity: 1;
         }
     }
-    &.newsItem {
+    &.special-selected {
+        img {
+            opacity: 0.5;
+        }
+        .text {
+            opacity: 1;
+            p {
+                font-size: 20px;
+            }
+        }
+        &:hover {
+            img {
+                opacity: 0.75;
+            }
+        }
+    }
+
+/*    &.newsItem {
         cursor: pointer;
         background-image: url(/images/transparent1.jpg);
         background-blend-mode: darken;
@@ -133,5 +150,5 @@
                 }
             }
         }
-    }
+    }*/
 }
