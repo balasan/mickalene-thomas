@@ -20,13 +20,11 @@ class Cart extends Component {
 
     const { changeQuantity, removeItem } = this.props;
 
-    // console.log(this, 'cart this')
     var cart = [];
     if (this.props.state) {
       var cart = this.props.state.store.cart;
     }
 
-    // console.log(cart, 'cart')
     var cartHash = this.props.location.hash == '#cart';
 
     const toggleCart = function() {
@@ -42,15 +40,37 @@ class Cart extends Component {
 
     if (cart) {
       if (cart.length > 0) {
-              var cartEl = cart.map(function(item, i) {
+        var cartEl = cart.map(function(item, i) {
+
+        var variationDescription = null;
+        var variationImage = null;
+
+        if (item.variation) {
+          if (item.variation.size && item.variation.description) {
+             variationDescription = (<p>{item.variation.description+' size: '+item.variation.size}</p>);
+          } else if (item.variation.size) {
+            variationDescription = (<p>{' size: '+item.variation.size}</p>);
+          } else if (item.variation.description) {
+            variationDescription = (<p>{item.variation.description}</p>);
+          }
+          if (item.variation.image) {
+            variationImage = (<img src={item.variation.image} />);
+          } else {
+            variationImage = (<img src={item.image.small.url} />);
+          }
+        } else {
+          variationImage = (<img src={item.image.small.url} />);
+        }
+
         return (
           <div key={i} className='cartItem'>
             <section className='image noselect'>
-              <img src={item.image[0]} />
+              {variationImage}
             </section>
             <section className='description'>
               <h1>{item.title}</h1>
               <p>{item.description}</p>
+              {variationDescription}
             </section>
             <section className='price'>
               <p>{'$' + (item.price * item.quantity).toFixed(2)}</p>

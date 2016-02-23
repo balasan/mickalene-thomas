@@ -4,6 +4,7 @@ import { UPDATE_PATH } from 'redux-simple-router'
 const initialState = { cart:[], products:null, product:null }
 
 export default function news(state = initialState, action) {
+  console.log(action.type, 'store action')
   switch (action.type) {
 
     case GET_PRODUCT:
@@ -17,17 +18,26 @@ export default function news(state = initialState, action) {
       })
 
     case ADD_PRODUCT:
-      var exists = state.cart.indexOf(action.payload.results);
+      // var wtf = action.payload.results;
+      state.cart.push(action.payload.results);
+      console.log(state.cart, 'state.cart');
+      // var exists = state.cart.indexOf(action.payload.results);
+      // console.log(state.cart, 'state cart');
+      // console.log(action.payload.results, 'adding this');
 
-      if (exists >= 0 ) {
-        state.cart.forEach(function(item, i) {
-          if (item.id === action.payload.results.id) {
-            item.quantity += 1;
-          }
-        })
-      } else {
-        state.cart.push(action.payload.results)
-      }
+      // if (exists >= 0 ) {
+      //   if (action.payload.results.selectedVari) {
+      //     state.cart.push(action.payload.results)
+      //   } else {
+      //     state.cart.forEach(function(item, i) {
+      //       if (item.id === action.payload.results.id) {
+      //         item.quantity += 1;
+      //       }
+      //     })
+      //   }
+      // } else {
+      //   state.cart.push(action.payload.results)
+      // }
 
 
 

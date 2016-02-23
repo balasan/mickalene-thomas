@@ -59,17 +59,60 @@ var jsonParser = bodyParser.json()
 app.post('/stripe', jsonParser, function(req, res) {
 
     var stripeToken = req.body.stripeToken;
-    var total = req.body.total;
+    var total = 0;
     var items = [];
 
-    req.body.skus.forEach(function(sku, i) {
-        items.push({
-            type: 'sku',
-            parent: sku.sku,
-            quantity: sku.quantity
-        })
+    req.body.cart.forEach(function(item, i) {
+        total += (item.price * item.quantity);
+        var size = null;
+        var style = null;
+        var description = null;
+
+        if (item.variation) {
+            if (item.variation.description) style = item.variation.description;
+            if (item.variation.size) size = item.variation.size;
+
+            if (item.variation.description && item.variation.size) {
+                description = item.title+' style: '+style+' size: '+size;
+            } else if (item.variation.description) {
+                 description = item.title+' style: '+style;
+            } else if (item.variation.size) {
+                 description = item.title+' size: '+size;
+            }
+        } else {
+            description = item.description;
+        }
+
+        stripe.products.create({
+          name: description,
+          // description: item.description+' style: '+style+' size: '+size,
+          // attributes: ['size', 'style']
+        }, function(err, product) {
+            skus(product, item, i);
+        });
+
     });
 
+    function skus(product, item, i) {
+
+        stripe.skus.create({
+              product: product.id,
+              // attributes: {'size': size, 'style': style},
+              price: item.price * 100,
+              currency: 'usd',
+              inventory: {'type': 'infinite'}
+            }, function(err, sku) {
+                items.push({
+                    type: 'sku',
+                    parent: sku.id,
+                    quantity: item.quantity
+                })
+                if (i == req.body.cart.length - 1) chargeThem();
+            });
+    }
+
+
+    //working customer create and charge create
     function chargesCreate(customer) {
         stripe.charges.create({
             amount: total * 100,
@@ -101,15 +144,18 @@ app.post('/stripe', jsonParser, function(req, res) {
         });
     }
 
-    stripe.customers.create({
-        source: stripeToken.id,
-        description: stripeToken.card.name,
-        email: stripeToken.email
-    }).then(function(customer) {
-        var a = chargesCreate(customer);
-        var b = ordersCreate(customer);
-        return a && b;
-    });
+    function chargeThem() {
+        stripe.customers.create({
+            source: stripeToken.id,
+            description: stripeToken.card.name,
+            email: stripeToken.email
+        }).then(function(customer) {
+            var a = chargesCreate(customer);
+            var b = ordersCreate(customer);
+            return a && b;
+        });
+    }
+
 });
 
 //public folder
