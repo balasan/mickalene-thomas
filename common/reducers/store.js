@@ -18,26 +18,54 @@ export default function news(state = initialState, action) {
       })
 
     case ADD_PRODUCT:
-      // var wtf = action.payload.results;
-      state.cart.push(action.payload.results);
-      console.log(state.cart, 'state.cart');
-      // var exists = state.cart.indexOf(action.payload.results);
-      // console.log(state.cart, 'state cart');
-      // console.log(action.payload.results, 'adding this');
+      if (action.payload.results.variation) {
+        var variation = action.payload.results.variation;
+        var description = action.payload.results.variation.description;
+        var size = action.payload.results.variation.size;
+        var varExists = 0;
+        if (state.cart.length > 0) {
+          state.cart.forEach(function(item, i) {
+            if (item.id === action.payload.results.id) {
 
-      // if (exists >= 0 ) {
-      //   if (action.payload.results.selectedVari) {
-      //     state.cart.push(action.payload.results)
-      //   } else {
-      //     state.cart.forEach(function(item, i) {
-      //       if (item.id === action.payload.results.id) {
-      //         item.quantity += 1;
-      //       }
-      //     })
-      //   }
-      // } else {
-      //   state.cart.push(action.payload.results)
-      // }
+              if (size && description) {
+                if (size == item.variation.size && description == item.variation.description) {
+                  item.quantity += 1;
+                  varExists += 1;
+                }
+              } else if (size) {
+                if (size == item.variation.size) {
+                  item.quantity += 1;
+                  varExists += 1;
+                }
+              } else if (description) {
+                if (description == item.variation.description) {
+                  item.quantity += 1;
+                  varExists += 1;
+                }
+              }
+
+            }
+            if (i == state.cart.length - 1 && varExists == 0) state.cart.push(action.payload.results);
+          });
+        } else {
+          state.cart.push(action.payload.results);
+        }
+      } else {
+        var exists = state.cart.indexOf(action.payload.results);
+        if (exists >= 0) {
+            state.cart.forEach(function(item, i) {
+              if (item.id === action.payload.results.id) {
+                item.quantity += 1;
+              }
+            })
+        } else {
+          state.cart.push(action.payload.results)
+        }
+      }
+
+
+
+      return state;
 
 
 

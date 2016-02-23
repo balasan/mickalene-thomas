@@ -27,7 +27,6 @@ export default class StripeButton extends Component {
       this.total = 0;
       var cart = this.props.state.store.cart;
       cart.forEach(function(item, i) {
-        console.log(item, 'item')
         self.total += (item.price * item.quantity);
         // self.skus.push({'sku': item.sku, 'quantity': item.quantity});
       });
