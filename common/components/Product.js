@@ -89,17 +89,19 @@ export default class Product extends Component {
 
     const optionSelect = function(e) {
       var selected = e.target.value;
-      product.vars.forEach(function(vari) {
-        if (vari.description == selected) {
-          switchImg(vari.image);
-          self.currentVariation = vari;
-        }
-      })
+      if (selected) {
+        product.vars.forEach(function(vari) {
+          if (vari.description == selected) {
+            switchImg(vari.image);
+            self.currentVariation = vari;
+          }
+        })
+      }
     }
 
     const sizeSelect = function(e) {
       var size = e.target.value;
-      self.currentSize = size;
+      if (size) self.currentSize = size;
     }
 
     var images = null;
@@ -142,9 +144,11 @@ export default class Product extends Component {
         var dropDowns = (
           <div>
             <select id="descriptions" onChange={optionSelect.bind(this)}>
+              <option value="null">select a style</option>
               {descriptions}
             </select>
             <select onChange={sizeSelect.bind(this)}>
+              <option value="null">select a size</option>
               {sizes}
             </select>
             {chartImgLink}
@@ -154,6 +158,7 @@ export default class Product extends Component {
         var dropDowns = (
           <div>
             <select id="descriptions" onChange={optionSelect.bind(this)}>
+              <option value="null">select a style</option>
               {descriptions}
             </select>
           </div>
@@ -162,6 +167,7 @@ export default class Product extends Component {
         var dropDowns = (
           <div>
             <select onChange={sizeSelect.bind(this)}>
+            <option value="null">select a size</option>
               {sizes}
             </select>
             {chartImgLink}

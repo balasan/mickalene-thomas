@@ -70,18 +70,59 @@ export default function news(state = initialState, action) {
 
 
     case QUANTITY:
+    console.log(action.payload, 'payload')
+      if (action.payload.item.variation) {
+          var variation = action.payload.item.variation;
+          var description = action.payload.item.variation.description;
+          var size = action.payload.item.variation.size;
+      }
       if (!action.payload.value) {
-        state.cart.forEach(function(item, i) {
-          if (item.id === action.payload.id) {
-            if (item.quantity > 0) {
-              item.quantity -= 1;
+        state.cart.forEach(function(itemX, i) {
+          if (itemX.id === action.payload.item.id) {
+
+            if (itemX.quantity > 0) {
+
+
+              if (size && description) {
+                if (size == itemX.variation.size && description == itemX.variation.description) {
+                   itemX.quantity -= 1;
+                }
+              } else if (size) {
+                if (size == itemX.variation.size) {
+                   itemX.quantity -= 1;
+                }
+              } else if (description) {
+                if (description == itemX.variation.description) {
+                   itemX.quantity -= 1;
+                }
+              } else {
+                itemX.quantity -= 1;
+              }
+
             }
+
           }
         })
       } else if (action.payload.value) {
-        state.cart.forEach(function(item, i) {
-          if (item.id === action.payload.id) {
-            item.quantity += 1;
+        state.cart.forEach(function(itemX, i) {
+          if (itemX.id === action.payload.item.id) {
+            if (size && description) {
+                if (size == itemX.variation.size && description == itemX.variation.description) {
+                   itemX.quantity += 1;
+                }
+              } else if (size) {
+                if (size == itemX.variation.size) {
+                   itemX.quantity += 1;
+                }
+              } else if (description) {
+                if (description == itemX.variation.description) {
+                   itemX.quantity += 1;
+                }
+              } else {
+                itemX.quantity += 1;
+              }
+
+
           }
         })
       }

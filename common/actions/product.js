@@ -14,12 +14,12 @@ export function set(value) {
   };
 }
 
-export function changeQuantity(id, value) {
-  console.log('quantity action', id, value)
+export function changeQuantity(item, value) {
+  console.log('quantity action', item, value)
   return {
     type: QUANTITY,
     payload: {
-      id: id,
+      item: item,
       value: value
     }
   };

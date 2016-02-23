@@ -77,9 +77,9 @@ class Cart extends Component {
             </section>
             <section className='quantity noselect'>
             <div>
-              <button onClick={changeQuantity.bind(this, item.id, false)}>-</button>
+              <button onClick={changeQuantity.bind(this, item, false)}>-</button>
               <p>{item.quantity}</p>
-              <button onClick={changeQuantity.bind(this, item.id, true)}>+</button>
+              <button onClick={changeQuantity.bind(this, item, true)}>+</button>
               </div>
               <p onClick={removeItem.bind(this, item.id)} className='remove'>remove</p>
             </section>
