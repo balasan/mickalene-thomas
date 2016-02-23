@@ -11,7 +11,6 @@ export default class Work extends Component {
 
   constructor() {
     super();
-    //this.oldWorksLimit = 20;
     this.worksLimit = 20;
   }
 
@@ -19,6 +18,8 @@ export default class Work extends Component {
     var self = this;
     this.oldWorks = [];
     this.newWorks = [];
+    this.shuffled = [];
+    this.selectedWorks = [];
     this.container = document.getElementById("flex-container2");
     this.containerOut = document.getElementById("flex-container1");
     this.container3d = document.getElementById("flex-images");
@@ -32,6 +33,7 @@ export default class Work extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll.bind(this));
+
   }
 
   componentWillUpdate(nextProps) {
@@ -48,9 +50,21 @@ export default class Work extends Component {
       this.works = filteredWorks.slice(0, this.worksLimit);;
       this.newWorks = this.works;
     }
-
+    // var preShuffle = this.works;
+    // this.shuffled = this.shuffle(preShuffle);
+    this.selectWork(this.works);
     self.params = params;
+  }
 
+  selectWork(work) {
+    var self = this;
+    work.forEach(function(item, i) {
+      var currentTags = [];
+      self.selectedWorks.forEach(function(selectedItem, i) {
+        currentTags.push(selectedItem.tags[0]);
+      });
+      if (currentTags.indexOf(item.tags[0]) == -1) self.selectedWorks.push(item);
+    });
   }
 
   shouldComponentUpdate(nextProps) {
@@ -85,6 +99,7 @@ export default class Work extends Component {
         self.setState({})
       },500)
     }
+
     this.newsColor();
     this.setPerspective();
   }
@@ -101,6 +116,25 @@ export default class Work extends Component {
     for (i = 2; i < newsEls.length; i+=3) {
       newsEls[i].classList.add('brown');
     }
+  }
+
+  shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
   }
 
 
@@ -148,30 +182,42 @@ export default class Work extends Component {
   }
 
   render() {
-    var self = this, newWorks, oldWorks;
-    // console.log(self.params);
-
-    if (this.works) {
-      newWorks = worksEl(this.works, 'work-enter');
+    var self = this, newWorks, oldWorks, selectedWorks;
+    var filterBool = true;
+    if (self.params) {
+      var filterBool = self.params.filter;
     }
 
-    if (this.oldWorks){
-      oldWorks = worksEl(this.oldWorks, 'work-leave');
+    if (filterBool) {
+      // var shuffled = this.works;
+
+      if (this.works) {
+        newWorks = worksEl(this.works, 'work-enter', false);
+      }
+      if (this.oldWorks){
+        oldWorks = worksEl(this.oldWorks, 'work-leave', false);
+      }
+    } else {
+      if (this.selectedWorks) {
+        newWorks = worksEl(this.selectedWorks, 'work-enter', true);
+      }
+      if (this.oldWorks){
+        oldWorks = worksEl(this.oldWorks, 'work-leave', true);
+      }
     }
 
-
-    function worksEl(worksArray, action) {
+    function worksEl(worksArray, action, selected) {
       var imgSize = 'small';
 
-      return worksArray.map(function(item, i) {
-        if (item.type == 'work') {
+        return worksArray.map(function(item, i) {
           return (
             <Link
-              className={'item '+ action}
+              className={selected ? 'item special-selected '+action : 'item '+ action}
               data-w={item.image[imgSize].dimensions.width}
               data-h={item.image[imgSize].dimensions.height}
               key={item.id+self.params.filter+i}
-              to={'/works/i/' + item.id}>
+              to={selected ? '/works/filter/'+item.tags[0] : '/works/i/' + item.id}
+              >
               <div className="imageContainer">
                 <img
                   className={item.tags[0] == 'paintings' || item.tags[0] == 'collages' || item.tags[0] == 'print' || item.tags[0] == 'sculpture' ? 'zoom' : ''}
@@ -179,26 +225,13 @@ export default class Work extends Component {
                   src={item.image[imgSize].url}
                 />
                 <div className="text">
-                  <p>{item.title}</p>
+                  <p>{selected ? item.tags[0] : item.title}</p>
                 </div>
               </div>
             </Link>
           );
-        } else {
-          return(
-            <Link  data-h='500'
-                data-w='500'
-                key={item.id+self.params.filter+i}
-                to={'/news#' + item.id}
-                className={"item newsItem "+ action}>
+        });
 
-              <div className="textNews">
-                <p>{item.title}</p>
-                <p>{item.location}</p>
-              </div>
-            </Link>
-          );}
-      });
     }
 
     var all = (

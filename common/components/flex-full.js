@@ -28,19 +28,6 @@ var flexImages = (function() {
                     row[x][0].style.width = new_w + 'px';
                     row[x][0].style.height = row_h + 'px';
                 } else {
-                    // console.log(row, 'lastrow')
-                    // var row_h_special;
-                    // row_width_special += row[x][2] + o.margin;
-                    // var margins_in_row_special = row.length * o.margin;
-                    // ratio_special = (max_w - margins_in_row_special) / (row_width_special - margins_in_row_special);
-                    // new_w_special = Math.round(row[x][2] * ratio_special);
-                    // row_h_special = Math.ceil(o.rowHeight * ratio_special);
-                    // exact_w_special += new_w_special + o.margin;
-                    // // if (exact_w_special > max_w) new_w_special -= exact_w_special - max_w;
-                    // // if (exact_w_special > max_w) new_w_special*0.5;
-                    // console.log(new_w_special, 'new w special')
-                    // row[x][0].style.width = new_w_special+'px';
-                    // row[x][0].style.height = row_h_special+'px';
 
                     row[x][0].style.width = new_w + 'px';
                     row[x][0].style.height = row_h + 'px';
@@ -72,12 +59,16 @@ var flexImages = (function() {
                     new_w = Math.ceil(row[x][2] * ratio);
                     exact_w += new_w + o.margin;
                     if (exact_w > max_w) new_w -= exact_w - max_w;
+                    // if (row.length < 2) {
+                    //     new_w = 0;
+                    //     row_h = 0;
+                    // }
                     if (!options.noRender)
                         _helper();
                 }
                 //adds a class to the row "rowID-i"
                 setTransitionDelay(row, rows);
-                
+
             }
 
             // layout last row - match height of last row to previous row

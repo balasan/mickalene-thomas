@@ -141,27 +141,30 @@
         &.left, &.right {
             width: 7%;
             pointer-events: auto;
-            background-image: url('/images/right_arrow.svg');
+/*            background-image: url('/images/right_arrow.svg');
             background-repeat: no-repeat;
             background-position: center center;
             background-size: 45%;
-
+*/
             @media (--mobile) {
-                background-size: 80%;
-                background-position: bottom left;
+/*                background-size: 80%;
+                background-position: bottom left;*/
             }
-            opacity: 0;
-            cursor: pointer;
-
+/*            opacity: 0;
+            cursor: pointer;*/
+/*
             &:hover {
                 opacity: 0.5;
-            }
+            }*/
         }
         &.left {
-            transform: scaleX(-1);
+           /* transform: scaleX(-1);*/
+            cursor: w-resize;
         }
         &.right {
+             cursor: e-resize;
         }
+
         &.middle {
             width: 86%;
         }

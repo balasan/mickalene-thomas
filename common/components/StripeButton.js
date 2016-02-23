@@ -15,21 +15,20 @@ export default class StripeButton extends Component {
 
     componentDidMount() {
       this.total = 0;
-      this.skus = [];
     }
 
     componentDidUpdate() {
-      this.total = 0;
-      this.skus = [];
+
       this.cartData();
     }
 
     cartData() {
       var self = this;
+      this.total = 0;
       var cart = this.props.state.store.cart;
       cart.forEach(function(item, i) {
         self.total += (item.price * item.quantity);
-        self.skus.push({'sku': item.sku, 'quantity': item.quantity});
+        // self.skus.push({'sku': item.sku, 'quantity': item.quantity});
       });
       if (StripeButton.stripeHandler) {
         this.configureStripe();
@@ -38,6 +37,7 @@ export default class StripeButton extends Component {
 
     configureStripe() {
       var self = this;
+      var cart = this.props.state.store.cart;
 
       if (StripeButton.stripeHandler) {
         delete StripeButton.stripeHandler;
@@ -56,8 +56,9 @@ export default class StripeButton extends Component {
         token: function(token) {
           var formData = {
             stripeToken: token,
-            total: self.total,
-            skus: self.skus
+            cart: cart
+            // total: self.total,
+            // skus: self.skus
           }
           console.log('formData', formData)
 
@@ -91,6 +92,12 @@ export default class StripeButton extends Component {
       var self = this;
       // var total = 0;
       var cart = this.props.state.store.cart;
+      self.cartData();
+      //  cart.forEach(function(item, i) {
+      //   // console.log(item, 'item')
+      //   self.total += (item.price * item.quantity);
+      //   // self.skus.push({'sku': item.sku, 'quantity': item.quantity});
+      // });
       // cart.forEach(function(item, i) {
       //   total += (item.price * item.quantity);
       // })

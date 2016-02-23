@@ -88,21 +88,13 @@ class Nav extends Component {
         )
     }
 
-    if (path == 'works/filter/:filter' || path == 'works') {
+    if (path == 'works/filter/:filter') {
+
       filters = (
         <section className='filterLinks'>
-        <Link
-          className={!filterType ? 'selected' : null} to='/works'>all</Link>
-          {workTags.map(function (filter, i) {
-            return (
-                <Link key={i}
-                  className={filterType == filter ? 'selected' : null}
-                  to={'/works/filter/' + filter}>
-              {filter}
-              </Link>
-            )}, this)}
-         </section>
-      )
+          <Link className={!filterType ? 'selected' : null} to='/works'>back</Link>
+        </section>);
+
       mobileFilters = (
         <div>
         {workTags.map(function (filter, i) {
@@ -210,7 +202,7 @@ class Nav extends Component {
             <div className='top'>
             <section className='left'>
               {path == 'works/i/:itemId' ? null : <Link className='logo' to="/">mickalene thomas</Link>}
-              {path == 'works' || path == 'works/' || path == 'works/filter/:filter' || path == 'news/' || path == 'news' || path == 'news/filter/:filter' ? <p onClick={toggleExpand}>filter</p> : null}
+              {path == 'works' || path == 'works/' || path == 'works/filter/:filter' || path == 'news/' || path == 'news' || path == 'news/filter/:filter' ? <Link to='/works' className='back'></Link> : null}
               {path == 'store/:itemId' ? <Link to='/store' className='back'></Link> : null}
             </section>
             <section className='middle'>
@@ -224,9 +216,9 @@ class Nav extends Component {
 
             </section>
             </div>
-            <div className={bottomClass}>
+            {/*<div className={bottomClass}>
             {mobileFilters}
-            </div>
+            </div> */}
           </nav>
         )
     }
