@@ -67,36 +67,84 @@ app.post('/stripe', jsonParser, function(req, res) {
         var size = null;
         var style = null;
         var description = null;
+        var titleSplit = item.title.split(' ').join('_');
+        var prodId = null;
 
         if (item.variation) {
             if (item.variation.description) style = item.variation.description;
             if (item.variation.size) size = item.variation.size;
+            var sizeSplit = size.split(' ').join('_');
+            var styleSplit = style.split(' ').join('_');
 
             if (item.variation.description && item.variation.size) {
                 description = item.title+' style: '+style+' size: '+size;
+                prodId = titleSplit+styleSplit+sizeSplit;
             } else if (item.variation.description) {
                  description = item.title+' style: '+style;
+                 prodId = titleSplit+styleSplit;
             } else if (item.variation.size) {
                  description = item.title+' size: '+size;
+                 prodId = titleSplit+sizeSplit;
             }
         } else {
-            description = item.description;
+            description = item.title;
+            prodId = titleSplit;
         }
 
-        stripe.products.create({
-          name: description,
-          // description: item.description+' style: '+style+' size: '+size,
-          // attributes: ['size', 'style']
-        }, function(err, product) {
-            skus(product, item, i);
-        });
+
+        var exists = 0;
+
+        stripe.products.list(
+          { limit: 100 },
+          function(err, products) {
+            if (products.data.length > 0) {
+                 products.data.forEach(function(productX, x) {
+                    // var exists = null;
+                    // if (productX.id != 'prod_'+prodId) exists == false;
+                    if (productX.id == 'prod_'+prodId) exists += 1;
+                    if (x == products.data.length-1) buildList(description, prodId, item, i, exists);
+                })
+            } else {
+                buildList(description, prodId, item, i, exists);
+            }
+
+          }
+        );
+
+
+
 
     });
 
-    function skus(product, item, i) {
+    function buildList(description, prodId, item, i, exists) {
 
+        if (exists == 0) {
+            console.log(prodId, 'prodId');
+            stripe.products.create({
+              name: description,
+              id: 'prod_'+prodId
+              // description: item.description+' style: '+style+' size: '+size,
+              // attributes: ['size', 'style']
+            }, function(err, product) {
+                console.log(product, 'product')
+                newSkus(product, item, i, prodId);
+            });
+        } else {
+            items.push({
+                type: 'sku',
+                parent: 'sku_'+prodId,
+                quantity: item.quantity
+            })
+            if (i == req.body.cart.length - 1) chargeThem();
+        }
+
+    }
+
+    function newSkus(product, item, i, prodId) {
+        // console.log(product, 'product')
         stripe.skus.create({
               product: product.id,
+              id: 'sku_'+prodId,
               // attributes: {'size': size, 'style': style},
               price: item.price * 100,
               currency: 'usd',
