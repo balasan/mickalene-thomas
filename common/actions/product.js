@@ -1,6 +1,7 @@
 export const GET_PRODUCT = 'GET_PRODUCT';
 export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const SET_PRODUCT = 'SET_PRODUCT';
+export const TOGGLE_CHART = 'TOGGLE_CHART';
 export const QUANTITY = 'QUANTITY';
 export const REMOVE = 'REMOVE';
 import { fetchProducts, fetchProduct } from '../api/product'
@@ -64,6 +65,13 @@ export function loadProducts () {
       })
     });
   }
+}
+
+export function toggleChart() {
+  console.log('toggle')
+  return {
+    type: TOGGLE_CHART
+  };
 }
 
 // export function loadProduct () {

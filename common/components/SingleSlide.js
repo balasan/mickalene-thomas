@@ -63,11 +63,14 @@ export default class SingleSlide extends Component {
         })
     }
 
+    var tag = this.props.workItem.tags[0];
+
     var image = (
         <div className="image noselect" id="singleImage">
-          <img onClick={toggleZoom} src={url}/>
+          <img className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={url}/>
         </div>
     )
+    console.log(this.props.workItem)
 
     var description = (
         <div className="description">
@@ -78,7 +81,7 @@ export default class SingleSlide extends Component {
 
     var mag = (
       <div className="tiles">
-        <div className="tile" onClick={toggleZoom} data-scale="2.4" data-image={hiRes}>
+        <div className="tile" data-scale="2.4" data-image={hiRes}>
         </div>
       </div>
       )

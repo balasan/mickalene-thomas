@@ -56,10 +56,10 @@ class Cart extends Component {
           if (item.variation.image) {
             variationImage = (<img src={item.variation.image} />);
           } else {
-            variationImage = (<img src={item.image.small.url} />);
+            variationImage = (<img src={item.images[0]} />);
           }
         } else {
-          variationImage = (<img src={item.image.small.url} />);
+          variationImage = (<img src={item.images[0]} />);
         }
 
         return (

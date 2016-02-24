@@ -69,12 +69,14 @@ app.post('/stripe', jsonParser, function(req, res) {
         var description = null;
         var titleSplit = item.title.split(' ').join('_');
         var prodId = null;
+        var sizeSplit = null;
+        var styleSplit = null;
 
         if (item.variation) {
             if (item.variation.description) style = item.variation.description;
             if (item.variation.size) size = item.variation.size;
-            var sizeSplit = size.split(' ').join('_');
-            var styleSplit = style.split(' ').join('_');
+            if (size) sizeSplit = size.split(' ').join('_');
+            if (style) styleSplit = style.split(' ').join('_');
 
             if (item.variation.description && item.variation.size) {
                 description = item.title+' style: '+style+' size: '+size;
@@ -99,34 +101,26 @@ app.post('/stripe', jsonParser, function(req, res) {
           function(err, products) {
             if (products.data.length > 0) {
                  products.data.forEach(function(productX, x) {
-                    // var exists = null;
-                    // if (productX.id != 'prod_'+prodId) exists == false;
                     if (productX.id == 'prod_'+prodId) exists += 1;
                     if (x == products.data.length-1) buildList(description, prodId, item, i, exists);
                 })
             } else {
                 buildList(description, prodId, item, i, exists);
             }
-
           }
         );
-
-
-
 
     });
 
     function buildList(description, prodId, item, i, exists) {
 
         if (exists == 0) {
-            console.log(prodId, 'prodId');
             stripe.products.create({
               name: description,
               id: 'prod_'+prodId
               // description: item.description+' style: '+style+' size: '+size,
               // attributes: ['size', 'style']
             }, function(err, product) {
-                console.log(product, 'product')
                 newSkus(product, item, i, prodId);
             });
         } else {
@@ -141,7 +135,6 @@ app.post('/stripe', jsonParser, function(req, res) {
     }
 
     function newSkus(product, item, i, prodId) {
-        // console.log(product, 'product')
         stripe.skus.create({
               product: product.id,
               id: 'sku_'+prodId,
