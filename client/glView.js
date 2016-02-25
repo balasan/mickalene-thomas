@@ -15,6 +15,7 @@ function GLView(_corner) {
   var cameraTarget = new THREE.Vector3(0, 0, -100);
   var cameraExtra = new THREE.Vector2(0, 0);
   var wall;
+  var videoTexture;
   var WIDTH = window.innerWidth;
   var HEIGHT = window.innerHeight;
   if (corner) {
@@ -22,6 +23,7 @@ function GLView(_corner) {
     HEIGHT = 110;
   }
   var controls;
+  var video;
 
   var mouse = new THREE.Vector2(0, 0);
   var uniforms;
@@ -90,16 +92,17 @@ function GLView(_corner) {
 
     var loader = new THREE.JSONLoader();
 
-    var aLight = new THREE.AmbientLight(new THREE.Color("hsl(0, 0%, 30%)"));
+    // var aLight = new THREE.AmbientLight(new THREE.Color("hsl(0, 0%, 30%)"));
+    var aLight = new THREE.AmbientLight(new THREE.Color("hsl(0, 0%, 100%)"));
     scene.add(aLight);
 
     var pLight = new THREE.PointLight(new THREE.Color(1, 1, 1), .7, 2000);
     pLight.position.set(-100, -10, 800);
-    scene.add(pLight);
+    // scene.add(pLight);
 
     var bottomLight = new THREE.PointLight(new THREE.Color(1, 1, 1), 0.7, 100);
     bottomLight.position.set(10, 60, 10);
-    scene.add(bottomLight);
+    // scene.add(bottomLight);
 
     var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
     directionalLight.position.set( 1, 1, -1 ).normalize();
@@ -146,15 +149,28 @@ function GLView(_corner) {
     }
 
 
-    var bg2 = THREE.ImageUtils.loadTexture("/images/t4.jpg",null, render);
+    video = document.getElementById("vidPattern");
+    videoTexture = new THREE.Texture( video );
+
+    videoTexture.minFilter = THREE.LinearFilter;
+    videoTexture.minFilter = THREE.LinearFilter;
+
+    // var bg2 = THREE.ImageUtils.loadTexture("/images/t4.jpg",null, render);
+    // bg2.wrapS = bg2.wrapT = THREE.RepeatWrapping;
+    // bg2.repeat.set(5, 5);
+    // var bg2N = THREE.ImageUtils.loadTexture("/images/bg2_NRM.jpg",null,render);
+    // bg2N.wrapS = bg2N.wrapT = THREE.RepeatWrapping;
+    // bg2N.repeat.set(5, 5);
+
+    var bg2 = THREE.ImageUtils.loadTexture("/images/collage.jpg",null, render);
     bg2.wrapS = bg2.wrapT = THREE.RepeatWrapping;
     bg2.repeat.set(5, 5);
-    var bg2N = THREE.ImageUtils.loadTexture("/images/bg2_NRM.jpg",null,render);
+    var bg2N = THREE.ImageUtils.loadTexture("/images/collage.jpg",null,render);
     bg2N.wrapS = bg2N.wrapT = THREE.RepeatWrapping;
     bg2N.repeat.set(5, 5);
 
 
-    var trans = THREE.ImageUtils.loadTexture("/images/transparent1black.jpg",render);
+    var trans = THREE.ImageUtils.loadTexture("/images/collage.jpg",render);
     trans.wrapS = trans.wrapT = THREE.RepeatWrapping;
     var transN = THREE.ImageUtils.loadTexture("/images/transparent_NRM.png",render);
     transN.wrapS = transN.wrapT = THREE.RepeatWrapping;
@@ -162,7 +178,7 @@ function GLView(_corner) {
 
 
 
-    var shininess = 40,
+    var shininess = 30,
       // diffuse = new THREE.Color(.6, .6, .6),
       specular = new THREE.Color("hsl(0, 0%, 70%)"),
       normalScale = new THREE.Vector2(0, 1),
@@ -193,10 +209,29 @@ function GLView(_corner) {
 
     transMaterial = greyMaterial.clone()
     transMaterial.map = trans;
+
+    transMaterial.map = videoTexture;
+
+    var tabletAspect = 1;
+    var videoAspect = 16/9;
+    // var videoAspect = 2.39
+
+    // child.material.map.offset.x = -tabletAspect/videoAspect * 1/2
+    transMaterial.map.repeat.x = tabletAspect/videoAspect
+    transMaterial.map.offset.x = (1-tabletAspect/videoAspect) * 1/2
+
     transMaterial.normalMap = transN;
-    // transMaterial.metal = true;
+
+    transMaterial.normalMap = null;
+
+    transMaterial.metal = false;
+    //FLOWER PATTER
     transMaterial.specular = new THREE.Color("hsl(0, 0%, 30%)");
     transMaterial.color = new THREE.Color("hsl(0, 0%, 80%)");
+
+    //COLLAGE PATTERS
+    transMaterial.specular = new THREE.Color("hsl(0, 0%, 30%)");
+    transMaterial.color = new THREE.Color("hsl(0, 0%, 100%)");
 
     var textMaterial = greyMaterial.clone()
     textMaterial.map = null;
@@ -208,23 +243,28 @@ function GLView(_corner) {
       textMaterial.opacity = 0;
     }
 
-    // textMaterial.color = new THREE.Color("hsl(0, 0%, 50%)");
-    // textMaterial.specular = new THREE.Color("hsl(0, 0%, 30%)");
-    // textMaterial.specular = new THREE.Color("hsl(0, 0%, 100%)");
-    textMaterial.shininess = 60;
-    textMaterial.color = new THREE.Color("rgb(215,195,0)");
-    textMaterial.specular = new THREE.Color("rgb(165,125,100)");
+    textMaterial.shininess = 40;
+    // GOLD TEXT
+    // textMaterial.color = new THREE.Color("rgb(215,195,0)");
+    // textMaterial.specular = new THREE.Color("rgb(165,125,100)");
 
+    // SILVER TEXT
+    // textMaterial.color = new THREE.Color("hsl(0, 0%, 50%)");
+    textMaterial.color = new THREE.Color("hsl(0, 0%, 100%)");
+    textMaterial.specular = new THREE.Color("hsl(0, 0%, 100%)");
 
     var sideMaterial = greyMaterial.clone()
     sideMaterial.map = null;
     sideMaterial.normalMap = null;
     sideMaterial.metal = true;
     sideMaterial.transparent = false;
-    sideMaterial.color = new THREE.Color("rgb(215,195,0)");
-    // sideMaterial.specular = new THREE.Color("hsl(0, 0%, 100%)");
-    sideMaterial.specular = new THREE.Color("rgb(225,185,0)");
-    sideMaterial.shininess = 30;
+    // GOLD
+    // sideMaterial.color = new THREE.Color("rgb(215,195,0)");
+    // sideMaterial.specular = new THREE.Color("rgb(225,185,0)");
+    // SILVER
+    sideMaterial.color = new THREE.Color("hsl(0, 0%, 90%)");
+    sideMaterial.specular = new THREE.Color("hsl(0, 0%, 100%)");
+    sideMaterial.shininess = 70;
 
 
     var plane = new THREE.Mesh(planeGeometry, greyMaterial);
@@ -266,11 +306,26 @@ function GLView(_corner) {
 
     var loader = new THREE.OBJLoader();
     var jLoader = new THREE.JSONLoader();
-    jLoader.load('/3d/MfaceOnly.js', function (geometry) {
-      var material = new THREE.MeshFaceMaterial([sideMaterial, transMaterial, sideMaterial]);
-      var object = new THREE.Mesh(geometry, material);
+    // jLoader.load('/3d/MfaceOnly.js', function (geometry) {
+    //   var material = new THREE.MeshFaceMaterial([sideMaterial, transMaterial, sideMaterial]);
+    //   var object = new THREE.Mesh(geometry, material);
+    //   logo.add(object);
+    // })
+
+    var mObj = "/3d/M-flat.obj";
+    if(window && window.location.hash == '#alt'){
+      var mObj = "/3d/M.obj";
+    }
+
+    loader.load(mObj, function(object) {
+      object.traverse(function(child) {
+        if (child instanceof THREE.Mesh) {
+          child.material = transMaterial;
+          console.log(child)
+        }
+      });
       logo.add(object);
-    })
+    });
 
     loader.load('/3d/text.obj', function(object) {
       object.traverse(function(child) {
@@ -294,6 +349,7 @@ function GLView(_corner) {
     //   text = object;
     //   logo.add(text);
     // });
+    //
 
     render();
   }
@@ -370,12 +426,15 @@ function GLView(_corner) {
     //   logo.rotation.x += (.7 * mouse.y / HEIGHT - logo.rotation.x) * .05;
     // }
     // else {
-      camera.position.x -= (mouse.x / 10 + camera.position.x) * .05;
-      camera.position.y += (- mouse.y / 10 - camera.position.y) * .05;
+      camera.position.x -= (mouse.x / 30 + camera.position.x) * .05;
+      camera.position.y += (- mouse.y / 30 - camera.position.y) * .05;
       camera.lookAt(scene.position);
     // }
 
 
+    if ( video.readyState === video.HAVE_ENOUGH_DATA ) {
+      if ( videoTexture ) videoTexture.needsUpdate = true;
+    }
     // controls.update();
     var optimalDivider = delta / 16;
     var smoothing = Math.max(5, (30 / optimalDivider));

@@ -231,10 +231,10 @@ $i: 0;
     opacity: 0;
     transform: scale(1.05) translateZ(0);
     backface-visibility: hidden;
-    img{
+/*    img{
         transform: translateZ(0);
         backface-visibility: hidden;
-    }
+    }*/
 }
 
 .main-enter-active, .main-appear-active {
@@ -242,10 +242,10 @@ $i: 0;
     backface-visibility: hidden;
     transform: scale(1) translateZ(0);
     transition: opacity .7s easeOutQuart, transform 1.0s easeOutQuart;
-    img{
+/*    img{
         transform: translateZ(0);
         backface-visibility: hidden;
-    }
+    }*/
 }
 
 .main-leave {

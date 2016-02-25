@@ -1,2 +1,4 @@
-$offWhite: rgba(225,225,225,1);
-$offWhiteHalf: rgba(225,225,225,0.5);
+/*$offWhite: rgba(225,225,225,1);
+$offWhiteHalf: rgba(225,225,225,0.5);*/
+$offWhite: hsla(0,0%,80%,1);
+$offWhiteHalf: hsla(0,0%,80%,0.5);
