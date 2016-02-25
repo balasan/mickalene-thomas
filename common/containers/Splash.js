@@ -32,6 +32,11 @@ class Splash extends Component {
       // }
     }
 
+    this.bgVid = "vidBg"
+    if(window && window.location.hash == '#alt'){
+      this.bgVid = 'vidPattern'
+    }
+
     // if(!window.glViewCorner) {
     //   var corner = true;
     //   window.glViewCorner = new GLView(corner);
@@ -54,13 +59,10 @@ class Splash extends Component {
   }
 
   render () {
-    var bgVid = "vidBg"
-    if(window && window.location.hash == '#alt'){
-      bgVid = 'vidPattern'
-    }
+    var bgVid = this.bgVid ? this.bgVid : "vidBg"
     return (
       <div>
-        <Video videoid={bgVid}></Video>
+        <Video videoid={bgVid} key={bgVid}></Video>
         <Video videoid="vidPattern"></Video>
       </div>
     )
