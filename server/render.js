@@ -2,7 +2,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Router, RoutingContext, match } from 'react-router';
 import { Provider } from 'react-redux';
-import createHistory from 'history/lib/createMemoryHistory';
+// import createHistory from 'history/lib/createMemoryHistory';
 import qs from 'qs';
 import routes from '../common/routes';
 import configureStore from '../common/store/configureStore';
@@ -20,10 +20,40 @@ function renderFullPage(html, initialState) {
       </head>
       <body>
         <div class="bg"></div>
-        <video id="vidBg" preload="auto" class="hidden" loop="true">
+        <video id="vidPattern" preload="auto" class="hidden video" loop="true">
           <source src="/video/bg-vid.mp4" type="video/mp4"/>
         </video>
+        <video id="vidBg" preload="auto" class="hidden video" loop="true">
+          <source src="/video/studio.mp4" type="video/mp4"/>
+        </video>
         <div class='tint'></div>
+
+        <!--
+        <div class="m2d">
+          <svg viewBox="0 0 600 300" class="svg-defs">
+            <symbol id="s-text">
+              <text text-anchor="middle" x="50%" y="50%" dy=".35em" class="text">
+                  M
+              </text>
+            </symbol>
+            <mask id="m-text" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+              <rect width="100%" height="100%" class="mask__shape">
+              </rect>
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#s-text" class="mask__text"></use>
+            </mask>
+          </svg>
+          <div class="box-with-text">
+            <div class="text-fill">
+              <video class="video" src="video/bg-vid.mp4" autoplay="" loop=""></video>
+            </div>
+            <svg viewBox="0 0 600 300" class="svg-inverted-mask">
+              <rect width="100%" height="100%" mask="url(#m-text)" class="shape--fill"></rect>
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#s-text" class="text--transparent"></use>
+            </svg>
+          </div>
+        </div> -->
+
+
         <canvas id="webGL"></canvas>
         <!--<canvas id="webGLCorner"></canvas>-->
 

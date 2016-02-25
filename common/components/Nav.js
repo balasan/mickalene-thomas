@@ -37,7 +37,7 @@ class Nav extends Component {
     const { toggleMenu, toggleExpand } = this.props;
     var expand = this.props.state.menu.expand;
     var showMenu = this.props.state.menu.showMenu;
-    var location = this.props.state.routing.path;
+    var location = this.props.children.props.route.path;
     var self = this;
     // console.log(this.props, 'nav ')
 
@@ -67,7 +67,7 @@ class Nav extends Component {
     }
 
     var showHeader = true;
-    if(location == '/' || showMenu)
+    if(!path || showMenu)
       showHeader = false
 
     if (!process.env.BROWSER) showHeader = false;

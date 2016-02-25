@@ -17,6 +17,7 @@ var routes = {
   component: App,
   indexRoute: { component: Splash },
   childRoutes: [
+    { path: 'splash/:id', component: Splash },
     { path: 'about', component: About },
     { path: 'news', component: NewsParent },
     { path: 'works', component: WorkParent },

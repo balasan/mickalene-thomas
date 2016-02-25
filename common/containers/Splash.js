@@ -15,10 +15,10 @@ class Splash extends Component {
     var GLView = require('../../client/glView')
     if (!window.glView) {
       window.glView = new GLView()
-      if(this.props.state.routing.path == '/'){
+      // if(this.props.state.routing.path == '/' || this.props.state.routing.path == '/#alt'){
         window.glView.start();
         window.glView.add();
-      }
+      // }
 
       window.glView.dom.addEventListener('click', () => {
         window.glView.remove();
@@ -27,9 +27,9 @@ class Splash extends Component {
     }
     else {
       window.glView.start()
-       if (this.props.state.routing.path == '/') {
+       // if (this.props.state.routing.path == '/' || this.props.state.routing.path == '/#alt') {
         window.glView.add()
-      }
+      // }
     }
 
     // if(!window.glViewCorner) {
@@ -54,9 +54,14 @@ class Splash extends Component {
   }
 
   render () {
+    var bgVid = "vidBg"
+    if(window && window.location.hash == '#alt'){
+      bgVid = 'vidPattern'
+    }
     return (
       <div>
-        <Video></Video>
+        <Video videoid={bgVid}></Video>
+        <Video videoid="vidPattern"></Video>
       </div>
     )
   }

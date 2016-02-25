@@ -5,14 +5,14 @@ export default class Video extends Component {
 
   componentDidMount() {
 
-    this.video = document.getElementById('vidBg');
+    this.video = document.getElementById(this.props.videoid);
     if(this.video.getAttribute('ready') != 'true'){
       this.initVideo();
       this.resize();
     }
     else{
       this.video.play();
-      this.video.className="";
+      this.video.className="video";
     }
   }
 
@@ -23,7 +23,8 @@ export default class Video extends Component {
 
   componentWillUnmount(){
     this.video.pause();
-    this.video.className = "hidden";
+    this.video.className = "hidden video";
+    window.removeEventListener('resize', this.resize.bind(this));
   }
 
   initVideo(){
@@ -34,7 +35,7 @@ export default class Video extends Component {
         self.resize();
     })
     this.video.setAttribute('ready','true')
-    window.onresize = this.resize.bind(this);
+    window.addEventListener('resize', this.resize.bind(this));
     this.video.play();
     this.video.className="";
   }
