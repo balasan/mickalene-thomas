@@ -257,21 +257,16 @@
 
     div {
         display: inline-block;
-        height: 100px;
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
         cursor: pointer;
-        width: 100px;
         border: 2px solid black;
         opacity: 0.5;
-        margin: 0 0 1em 1em;
+        width: 50px;
+        height: 50px;
+        margin: 0 0 0.5em 0.5em;
         transition: opacity 250ms ease-out;
-        @media (--mobile) {
-            width: 50px;
-            height: 50px;
-            margin: 0 0 0.5em 0.5em;
-        }
 
         &.selected {
             opacity: 1;

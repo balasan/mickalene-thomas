@@ -31,7 +31,7 @@
                      console.log(err);
                      done();
                  }
-                 console.log(response, 'news response')
+                //  console.log(response, 'news response')
                  var simple = [];
                  response.results.forEach(function(item) {
                      var obj = {}
@@ -99,9 +99,3 @@
              })
      });
  }
-
-
-
-
-
-
