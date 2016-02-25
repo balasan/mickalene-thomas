@@ -25,10 +25,12 @@ export default class Store extends Component {
 
     if (this.props.state.store.products) {
       products = this.props.state.store.products.map(function(product, i) {
-        // console.log(product, 'product')
+        var divStyle = {
+          backgroundImage: 'url(' + product.images[0] + ')'
+        };
         return (
-          <Link to={'/store/' + product.id} key={product.image.small.url}>
-            <img src={product.image.small.url} />
+          <Link to={'/store/' + product.id} key={product.images[0]}>
+            <div style={divStyle}></div>
           </Link>
         );
       });

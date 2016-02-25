@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import * as ProductActions from '../actions/product'
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import { updatePath } from 'redux-simple-router';
+// import SizeChart from '../components/SizeChart';
 
 export default class Product extends Component {
 
@@ -20,9 +21,10 @@ export default class Product extends Component {
   render () {
     var productEl = null;
     var product = this.props.state.store.product;
-    console.log(product, 'product');
-    const { add } = this.props;
+    var showChart = this.props.state.store.showChart;
+    const { add, toggleChart } = this.props;
     var self = this;
+    // console.log(product)
 
     const openCart = function() {
         window.location.hash = '#cart';
@@ -77,7 +79,7 @@ export default class Product extends Component {
       var single = document.getElementsByClassName('single-prod-image');
       var i = 0;
       for (i = 0; i < single.length; i++) {
-        if (single[i].src == img) {
+        if (single[i].getAttribute('data-src') == img) {
           single[i].classList.add('selected')
         } else {
           if (single[i].classList.contains('selected')) {
@@ -109,19 +111,33 @@ export default class Product extends Component {
     var sizes = null;
     var descriptions = null;
     var chartImgLink = null;
+    var sizeChart = null;
 
     if ( product && product.id == this.props.params.itemId ) {
 
       if (product.vars.length > 1) {
-        var images = product.vars.map(function(vari, i) {
-            if (i == 0) {
-              return (<img className='single-prod-image selected' onClick={switchImg.bind(this, vari.image)} src={vari.image} />)
-            } else {
-              return (<img className='single-prod-image' onClick={switchImg.bind(this, vari.image)} src={vari.image} />)
-            }
-        });
+
         var descriptions = product.vars.map(function(vari, i) {
-          if (vari.description) return (<option key={i} value={vari.description}>{vari.description}</option>);
+          if (vari.description) {
+            if (vari.available) {
+              return (<option key={i} value={vari.description}>{vari.description}</option>);
+            } else {
+              return (<option key={i} value={vari.description} disabled>{vari.description}</option>);
+            }
+          }
+        });
+      }
+
+      if (product.images.length > 1) {
+          var images = product.images.map(function(vari, i) {
+            var divStyle = {
+              backgroundImage: 'url(' + vari + ')'
+            };
+            if (i == 0) {
+              return (<div className='single-prod-image selected' onClick={switchImg.bind(this, vari)} data-src={vari} style={divStyle}></div>)
+            } else {
+              return (<div className='single-prod-image' onClick={switchImg.bind(this, vari)} data-src={vari} style={divStyle}></div>)
+            }
         });
       }
 
@@ -137,37 +153,38 @@ export default class Product extends Component {
       }
 
       if (product.sizeChart) {
-        chartImgLink = (<a target='_blank' href={product.sizeChart}>chart</a>);
+        chartImgLink = (<a onClick={toggleChart}>Sizing chart</a>);
+          sizeChart = (<div className={showChart ? 'size-chart' : 'size-chart hide'} onClick={toggleChart}><img src={product.sizeChart} /></div>);
       }
 
       if (product.vars.length > 1 && product.sizes.length > 1) {
         var dropDowns = (
-          <div>
+          <div className='dropdowns-parent'>
             <select id="descriptions" onChange={optionSelect.bind(this)}>
-              <option value="null">select a style</option>
+              <option value="null">Select a style</option>
               {descriptions}
             </select>
             <select onChange={sizeSelect.bind(this)}>
-              <option value="null">select a size</option>
+              <option value="null">Select a size</option>
               {sizes}
             </select>
-            {chartImgLink}
+
           </div>
         );
       } else if (product.vars.length > 1) {
         var dropDowns = (
-          <div>
+          <div className='dropdowns-parent'>
             <select id="descriptions" onChange={optionSelect.bind(this)}>
-              <option value="null">select a style</option>
+              <option value="null">Select a style</option>
               {descriptions}
             </select>
           </div>
         );
       } else if (product.sizes.length > 1) {
         var dropDowns = (
-          <div>
+          <div className='dropdowns-parent'>
             <select onChange={sizeSelect.bind(this)}>
-            <option value="null">select a size</option>
+            <option value="null">Select a size</option>
               {sizes}
             </select>
             {chartImgLink}
@@ -180,7 +197,7 @@ export default class Product extends Component {
           <section className='productShowcase' key={product.id}>
 
             <div className="image noselect">
-              <img id="main-product-image" src={product.image.main.url} />
+              <img id="main-product-image" src={product.images[0]} />
             </div>
 
             <div className="images-select noselect">
@@ -192,19 +209,33 @@ export default class Product extends Component {
               <section className='left'>
                 <h1>{product.title}</h1>
                 <div className='description'><p>{product.description}</p></div>
-                {dropDowns}
+
               </section>
 
               <section className='right'>
-                <div className={product.price ? 'price' : 'price no-price'}>
-                  <p>{product.price ? '$' : null}{product.price ? product.price.toFixed(2) : 'price available upon request'}</p>
+                <div className='top'>
+                  <div>
+                  {chartImgLink}
+                    {dropDowns}
+
+                  </div>
                 </div>
-                <div className='button-parent'>
-                  {product.price ? <button className="noselect" onClick={doubleCart}>Add to Shopping Bag</button> : <a href="mailto:hello@mickalenethomas.com" target="_blank" className="no-price noselect">Contact Us</a>}
+
+                <div className='bottom'>
+                  <div className={product.price ? 'price' : 'price no-price'}>
+                    <p>{product.price ? '$' : null}{product.price ? product.price.toFixed(2) : 'price available upon request'}</p>
+                  </div>
+                  <div className='button-parent'>
+                    {product.price ? <button className="noselect" onClick={doubleCart}>Add to Shopping Bag</button> : <a href="mailto:hello@mickalenethomas.com" target="_blank" className="no-price noselect">Contact Us</a>}
+                  </div>
                 </div>
+
               </section>
 
             </div>
+
+           {sizeChart}
+
           </section>
       )
     }

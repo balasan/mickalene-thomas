@@ -78,19 +78,23 @@
         text-align: center;
         transition: opacity 250ms ease-out;
         opacity: 1;
-        cursor: -moz-zoom-in;
-        cursor: -webkit-zoom-in;
-        cursor: zoom-in;
 
+        /*        cursor: -moz-zoom-in;
+                cursor: -webkit-zoom-in;
+                cursor: zoom-in;*/
         @media (--mobile) {
             max-width: 100%;
             padding: 0;
             height: 85%;
         }
         img {
-            height: 100%;
-            width: 100%;
-            object-fit: contain;
+            max-height: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+
+            &.painting {
+                border-radius: 15%;
+            }
         }
     }
     .description {
@@ -141,30 +145,34 @@
         &.left, &.right {
             width: 7%;
             pointer-events: auto;
-/*            background-image: url('/images/right_arrow.svg');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 45%;
-*/
+
+            /*            background-image: url('/images/right_arrow.svg');
+                        background-repeat: no-repeat;
+                        background-position: center center;
+                        background-size: 45%;
+            */
             @media (--mobile) {
-/*                background-size: 80%;
-                background-position: bottom left;*/
+
+                /*                background-size: 80%;
+                                background-position: bottom left;*/
             }
-/*            opacity: 0;
-            cursor: pointer;*/
-/*
-            &:hover {
-                opacity: 0.5;
-            }*/
+
+            /*            opacity: 0;
+                        cursor: pointer;*/
+
+            /*
+                        &:hover {
+                            opacity: 0.5;
+                        }*/
         }
         &.left {
-           /* transform: scaleX(-1);*/
+
+            /* transform: scaleX(-1);*/
             cursor: w-resize;
         }
         &.right {
-             cursor: e-resize;
+            cursor: e-resize;
         }
-
         &.middle {
             width: 86%;
         }
@@ -224,6 +232,7 @@
     left: 0;
     width: 100%;
     height: calc(100vh - 150px);
+
     @media (--desktop) {
         pointer-events: none;
     }
@@ -248,7 +257,6 @@ body {
                     }
                 }
             }
-
             .close {
                 opacity: 0 !important;
                 pointer-events: none !important;

@@ -155,5 +155,17 @@ main {
   -ms-user-select: none;
   user-select: none;
 }
+
+.no-events {
+  pointer-events: none;
+}
+
 @import "customMedia.css";
 @import "fonts.css";
+
+
+
+
+
+
+
