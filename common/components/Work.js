@@ -39,21 +39,29 @@ export default class Work extends Component {
   componentWillUpdate(nextProps) {
     var self = this;
     const { state, params, filteredWorks } = nextProps;
+
     if(!params || this.props.params.filter != params.filter){
       window.scrollTo(0,0);
       this.oldWorks = this.newWorks.slice();
+      this.updateNewWorks(nextProps);
 
-      this.works = filteredWorks.slice(0, this.worksLimit);;
-      this.newWorks = this.works;
     }
-    if(!this.newWorks.length || (this.oldWorksLimit != this.worksLimit)){
-      this.works = filteredWorks.slice(0, this.worksLimit);;
-      this.newWorks = this.works;
+    else if(!this.newWorks.length || (this.oldWorksLimit != this.worksLimit)){
+      this.updateNewWorks(nextProps);
     }
+
     // var preShuffle = this.works;
     // this.shuffled = this.shuffle(preShuffle);
-    this.selectWork(this.works);
+    this.selectWork(filteredWorks);
     self.params = params;
+  }
+
+  updateNewWorks(nextProps) {
+    const { params, filteredWorks } = nextProps;
+    this.works = filteredWorks.slice(0, this.worksLimit);
+    if(params.filter)
+      this.newWorks = this.works;
+    else this.newWorks = this.selectedWorks;
   }
 
   selectWork(work) {
@@ -70,12 +78,15 @@ export default class Work extends Component {
   shouldComponentUpdate(nextProps) {
     const { params, state } = nextProps;
     if( params.itemId ) return false;
+    if(this.props.params.itemId && this.works && this.works.length) return false;
     return true;
+
     // if (this.works
-    //   // && (this.works.length === state.works.length)
+    //   && (this.props.filteredWorks.length === this.works.length)
     //   && (params.filter == this.props.params.filter)
-    //   && this.worksLimit == this.oldWorksLimit) {
-    //   return false;
+    //   // && this.worksLimit == this.oldWorksLimit
+    //   ) {
+    //    return false;
     // } else {return true};
   }
 
@@ -100,55 +111,52 @@ export default class Work extends Component {
       },500)
     }
 
-    this.newsColor();
+    // this.newsColor();
     this.setPerspective();
   }
 
-  newsColor() {
-    var newsEls = document.getElementsByClassName('newsItem');
-    var i = 0;
-    for (i = 0; i < newsEls.length; i+=3) {
-      newsEls[i].classList.add('red');
-    }
-    for (i = 1; i < newsEls.length; i+=3) {
-      newsEls[i].classList.add('blue');
-    }
-    for (i = 2; i < newsEls.length; i+=3) {
-      newsEls[i].classList.add('brown');
-    }
-  }
-
-  shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-
-    return array;
-  }
+  // newsColor() {
+  //   var newsEls = document.getElementsByClassName('newsItem');
+  //   var i = 0;
+  //   for (i = 0; i < newsEls.length; i+=3) {
+  //     newsEls[i].classList.add('red');
+  //   }
+  //   for (i = 1; i < newsEls.length; i+=3) {
+  //     newsEls[i].classList.add('blue');
+  //   }
+  //   for (i = 2; i < newsEls.length; i+=3) {
+  //     newsEls[i].classList.add('brown');
+  //   }
+  // }
 
 
+  // - INF SCROLLING -
   flexGridLayout(container) {
     var rowHeight = 400;
-    if(this.newWorks.length < 10){
+
+    if(this.newWorks.length < 20){
+      rowHeight = 400;
+    }
+    else if(this.newWorks.length < 10){
       rowHeight = 600;
     }
 
+    var hideSingle = false;
+    var minCol = 2;
+    var maxCol = 3;
+    if(this.params.filter){
+      hideSingle = true;
+      // minCol = 2;
+      maxCol = null;
+    }
     this.flex = new flexImages({
       selector: container,
       container: '.item',
       rowHeight: rowHeight,
-      truncate: false
+      truncate: false,
+      hideSingle: hideSingle,
+      // minCol: minCol,
+      maxCol: maxCol
     })
   }
 
@@ -159,10 +167,13 @@ export default class Work extends Component {
     }
     this.timeout = setTimeout(function() {
       //run, but wait again
+      this.setPerspective();
+      if(this.props.filteredWorks.length === this.works.length) return;
+
       var scrollTop = document.body.scrollTop;
       var scrollHeight = document.body.scrollHeight;
       var clientHeight = document.body.clientHeight;
-      this.setPerspective();
+
       if (((scrollTop+clientHeight) / scrollHeight) > 0.7) {
         if (this.worksLimit) {
           this.oldWorksLimit = this.worksLimit;
@@ -183,28 +194,30 @@ export default class Work extends Component {
 
   render() {
     var self = this, newWorks, oldWorks, selectedWorks;
+
     var filterBool = true;
     if (self.params) {
       var filterBool = self.params.filter;
     }
 
-    if (filterBool) {
-      // var shuffled = this.works;
+    var selected = true;
+    if(self.params && self.params.filter)
+      selected = false;
 
-      if (this.works) {
-        newWorks = worksEl(this.works, 'work-enter', false);
-      }
-      if (this.oldWorks){
-        oldWorks = worksEl(this.oldWorks, 'work-leave', false);
-      }
-    } else {
-      if (this.selectedWorks) {
-        newWorks = worksEl(this.selectedWorks, 'work-enter', true);
-      }
-      if (this.oldWorks){
-        oldWorks = worksEl(this.oldWorks, 'work-leave', true);
-      }
+    if (this.works) {
+      newWorks = worksEl(this.newWorks, 'work-enter', selected);
     }
+    if (this.oldWorks){
+      oldWorks = worksEl(this.oldWorks, 'work-leave', selected);
+    }
+    // } else {
+    //   if (this.selectedWorks) {
+    //     newWorks = worksEl(this.selectedWorks, 'work-enter', true);
+    //   }
+    //   if (this.oldWorks){
+    //     oldWorks = worksEl(this.oldWorks, 'work-leave', true);
+    //   }
+    // }
 
     function worksEl(worksArray, action, selected) {
       var imgSize = 'small';

@@ -18,19 +18,23 @@ var flexImages = (function() {
 
             // define inside makeGrid to access variables in scope
             function _helper(lastRow) {
-                if (o.maxRows && rows > o.maxRows || o.truncate && lastRow && rows > 1)
-                    row[x][0].style.display = 'none';
+                if(lastRow && row.length < o.minCol) {
+                    o.rowHeight += 3;
+                    return makeGrid(grid, items, o)
+                }
+                if (o.maxRows && rows > o.maxRows || o.truncate && lastRow && rows > 1 || (o.hideSingle && row.length == 1))
+                    row[x].container.style.display = 'none';
                 else if (!lastRow) {
-                    if (row[x][4]) {
-                        row[x][3].setAttribute('src', row[x][4]);
-                        row[x][4] = '';
-                    }
-                    row[x][0].style.width = new_w + 'px';
-                    row[x][0].style.height = row_h + 'px';
+                    // if (row[x][4]) {
+                    //     row[x][3].setAttribute('src', row[x][4]);
+                    //     row[x][4] = '';
+                    // }
+                    row[x].container.style.width = new_w + 'px';
+                    row[x].container.style.height = row_h + 'px';
                 } else {
 
-                    row[x][0].style.width = new_w + 'px';
-                    row[x][0].style.height = row_h + 'px';
+                    row[x].container.style.width = new_w + 'px';
+                    row[x].container.style.height = row_h + 'px';
                 }
             }
 
@@ -38,9 +42,11 @@ var flexImages = (function() {
 
             function processItems() {
                 for (var i = 0; i < items.length; i++) {
-                    row.push(items[i]);
-                    row_width += items[i][2] + o.margin;
-                    if (row_width >= max_w) {
+                    var item = items[i];
+                    row.push(item);
+                    var currentWidth = item.w * o.rowHeight / item.h
+                    row_width += currentWidth + o.margin;
+                    if (row_width >= max_w || row.length >= o.maxCol) {
                         processRow(row);
                         // reset for next row
                         row = [], row_width = 0;
@@ -56,7 +62,9 @@ var flexImages = (function() {
                 var margins_in_row = row.length * o.margin;
                 ratio = (max_w - margins_in_row) / (row_width - margins_in_row), row_h = Math.ceil(o.rowHeight * ratio), exact_w = 0, new_w;
                 for (x = 0; x < row.length; x++) {
-                    new_w = Math.ceil(row[x][2] * ratio);
+                    var item = row[x];
+                    var currentWidth = item.w * o.rowHeight / item.h
+                    new_w = Math.ceil(currentWidth * ratio);
                     exact_w += new_w + o.margin;
                     if (exact_w > max_w) new_w -= exact_w - max_w;
                     // if (row.length < 2) {
@@ -64,7 +72,7 @@ var flexImages = (function() {
                     //     row_h = 0;
                     // }
                     if (!options.noRender)
-                        _helper();
+                        _helper(lastRow);
                 }
                 //adds a class to the row "rowID-i"
                 setTransitionDelay(row, rows);
@@ -94,7 +102,7 @@ var flexImages = (function() {
         function setTransitionDelay(row, rows) {
             self.maxDelay = 0;
             row.forEach(function(itm, i) {
-                var el = itm[0];
+                var el = itm.container;
                 var imgContainer = el.getElementsByClassName('imageContainer')[0];
                 // clearClass(el, 'example-enter');
                 // el.className += " example-enter";
@@ -118,10 +126,13 @@ var flexImages = (function() {
             object: 'img',
             rowHeight: 500,
             maxRows: 0,
-            truncate: 0
+            truncate: 0,
+            maxCol: 999999999,
+            hideSingle: false,
+            minCol: 2,
         };
         for (var k in options) {
-            if (options.hasOwnProperty(k)) o[k] = options[k];
+            if (options.hasOwnProperty(k) && options[k] != null) o[k] = options[k];
         }
         var grids = typeof o.selector == 'object' ? [o.selector] : document.querySelectorAll(o.selector);
 
@@ -136,18 +147,23 @@ var flexImages = (function() {
 
             for (var j = 0; j < containers.length; j++) {
                 var isNews = containers[j].classList.contains("newsItem");
-                if (!isNews) {
+                // if (!isNews) {
+                //     var c = containers[j],
+                //         w = parseInt(c.getAttribute('data-w')),
+                //         norm_w = w * (o.rowHeight / parseInt(c.getAttribute('data-h'))), // normalized width
+                //         obj = c.querySelector(o.object);
+                //     items.push([c, w, norm_w, obj, obj.getAttribute('data-src')]);
+                // } else {
                     var c = containers[j],
                         w = parseInt(c.getAttribute('data-w')),
-                        norm_w = w * (o.rowHeight / parseInt(c.getAttribute('data-h'))), // normalized width
-                        obj = c.querySelector(o.object);
-                    items.push([c, w, norm_w, obj, obj.getAttribute('data-src')]);
-                } else {
-                    var c = containers[j],
-                        w = parseInt(c.getAttribute('data-w')),
+                        h = parseInt(c.getAttribute('data-h')),
                         norm_w = w * (o.rowHeight / parseInt(c.getAttribute('data-h'))); // normalized width
-                    items.push([c, w, norm_w]);
-                }
+                    items.push({
+                        container: c,
+                        w: w,
+                        h: h,
+                    });
+                // }
 
             }
 
