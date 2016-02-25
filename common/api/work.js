@@ -105,15 +105,14 @@ function fetchWork(callback) {
 
    function callbackFunc() {
 
-    //  console.log(allWork, 'before sort')
-     //
-    //  var numberSort = function(a, b) {
-    //   //  console.log(a.time, b.time)
-    //   return parseFloat(a.time) - parseFloat(b.time);
-    //  }
-     //
-    //  var sorted = allWork.sort(numberSort);
-    //  console.log(sorted, 'after sort')
+     console.log(allWork, 'before sort')
+
+     var numberSort = function(a, b) {
+      return parseFloat(a.time) - parseFloat(b.time);
+     }
+
+     var sorted = allWork.sort(numberSort);
+     console.log(sorted, 'after sort')
 
      callback(null, allWork);
    }
@@ -122,7 +121,7 @@ function fetchWork(callback) {
         Api.form('everything').ref(Api.master())
             .query(
                 prismic.Predicates.at("document.type", "work")
-        ).pageSize(20).orderings('[my.work.date desc]').submit(function(err, response) {
+        ).pageSize(20).submit(function(err, response) {
             if (err) {
                 console.log(err);
                 callback();
@@ -148,7 +147,7 @@ function fetchWork(callback) {
                 .ref(Api.master())
                 .query(
                     prismic.Predicates.at("document.type", "work")
-            ).page(currentPage).orderings('[my.work.date desc]').pageSize(20).submit(function(err, response) {
+            ).page(currentPage).pageSize(20).submit(function(err, response) {
                 if (err) {
                     console.log(err);
                     callback();

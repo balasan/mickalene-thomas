@@ -24,7 +24,6 @@ export default class Product extends Component {
     var showChart = this.props.state.store.showChart;
     const { add, toggleChart } = this.props;
     var self = this;
-    // console.log(product)
 
     const openCart = function() {
         window.location.hash = '#cart';
@@ -75,7 +74,12 @@ export default class Product extends Component {
 
 
     const switchImg = function(img) {
-      document.getElementById('main-product-image').src=img;
+      var mainImg = document.getElementById('main-product-image');
+      mainImg.classList.add('mask');
+      setTimeout(function () {
+        mainImg.src=img;
+        mainImg.classList.remove('mask');
+      }, 200);
       var single = document.getElementsByClassName('single-prod-image');
       var i = 0;
       for (i = 0; i < single.length; i++) {
@@ -253,4 +257,3 @@ export default class Product extends Component {
     )
   }
 }
-
