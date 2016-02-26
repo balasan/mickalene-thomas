@@ -70,12 +70,17 @@ export default class SingleSlide extends Component {
           <img className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={url}/>
         </div>
     )
-    console.log(this.props.workItem)
+    console.log(this.props.workItem);
+    var date = this.props.workItem.date;
+    var formattedDate = '';
+    if (typeof date == 'string') {
+      formattedDate = date.substr(0, 4);
+    }
 
     var description = (
         <div className="description">
             <p>{title}</p>
-            <p>{this.props.workItem.date.substr(0, 4)}{this.props.workItem.medium ? ', ' + this.props.workItem.medium : null}</p>
+            <p>{formattedDate}{this.props.workItem.medium ? ', ' + this.props.workItem.medium : null}</p>
         </div>
     )
 
@@ -105,4 +110,3 @@ export default class SingleSlide extends Component {
     );
   }
 };
-

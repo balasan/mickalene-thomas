@@ -31,6 +31,7 @@ export default class Store extends Component {
         return (
           <Link to={'/store/' + product.id} key={product.images[0]}>
             <div style={divStyle}></div>
+            <p>{product.title}</p>
           </Link>
         );
       });
@@ -39,9 +40,10 @@ export default class Store extends Component {
 
     return (
       <div className="products noselect">
+      <div className='inner'>
        {products}
+       </div>
       </div>
     )
   }
 }
-

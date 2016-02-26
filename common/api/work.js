@@ -104,16 +104,6 @@ function fetchWork(callback) {
    var allWork = [];
 
    function callbackFunc() {
-
-     console.log(allWork, 'before sort')
-
-     var numberSort = function(a, b) {
-      return parseFloat(a.time) - parseFloat(b.time);
-     }
-
-     var sorted = allWork.sort(numberSort);
-     console.log(sorted, 'after sort')
-
      callback(null, allWork);
    }
 
@@ -126,7 +116,6 @@ function fetchWork(callback) {
                 console.log(err);
                 callback();
             }
-            // console.log(response, response)
             var totalPages = response.total_pages;
             pageLoop(totalPages)
         });
@@ -135,9 +124,8 @@ function fetchWork(callback) {
     function pageLoop(totalPages) {
         var currentPage = 0;
 
-        for (currentPage = 0; currentPage < totalPages; currentPage++) {
+        for (currentPage = 1; currentPage <= totalPages; currentPage++) {
             pageQuery(currentPage, totalPages);
-            if (currentPage == totalPages - 1) callbackFunc();
         }
     }
 
@@ -158,7 +146,7 @@ function fetchWork(callback) {
                     obj.tags = item.tags;
                     obj.type = item.type;
                     obj.title = item.data["work.title"].value[0].text;
-                    obj.date = item.data["work.date"] ? item.data["work.date"].value : '';
+                    obj.date = item.data["work.date"] ? item.data["work.date"].value : new Date('2014');
                     var time = new Date(obj.date);
                     obj.time = time.getTime();
                     obj.medium = item.data["work.medium"] ? item.data["work.medium"].value[0].text : null;
@@ -215,13 +203,14 @@ function fetchWork(callback) {
                       allWork.forEach(function(work, v) {
                         allIds.push(work.id);
                         if (v == allWork.length - 1) {
-                          if (allIds.indexOf(obj.id) < 0) allWork.push(obj);
+                           if (allIds.indexOf(obj.id) < 0) allWork.push(obj);
+                           if (currentPage == totalPages && i == response.results.length - 1) callbackFunc();
                         }
                       });
                     } else {
-                      allWork.push(obj)
+                      allWork.push(obj);
+                      if (currentPage == totalPages && i == response.results.length - 1) callbackFunc();
                     }
-
                 });
             })
         });

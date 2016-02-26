@@ -25,11 +25,13 @@ export default class Product extends Component {
     const { add, toggleChart } = this.props;
     var self = this;
 
+
     const openCart = function() {
         window.location.hash = '#cart';
     }
 
     const doubleCart = function() {
+      var warning = document.getElementById('warning');
       var regularProduct = JSON.parse(JSON.stringify(product));
       var productVariant = JSON.parse(JSON.stringify(product));
       productVariant.variation = {};
@@ -44,7 +46,9 @@ export default class Product extends Component {
             add(productVariant);
             openCart();
         } else {
-          alert('must have size and style');
+          // alert('must have size and style');
+          warning.innerHTML = 'must select size and style';
+          warning.classList.remove('hidden');
         }
       } else if (product.vars.length > 0 && product.sizes.length == 0) {
         if (self.currentVariation) {
@@ -55,7 +59,8 @@ export default class Product extends Component {
             add(productVariant);
             openCart();
         } else {
-          alert('must select a style');
+          warning.innerHTML = 'must select a style';
+          warning.classList.remove('hidden');
         }
       } else if (product.vars.length == 0 && product.sizes.length > 0) {
           if (self.currentSize) {
@@ -63,7 +68,8 @@ export default class Product extends Component {
             add(productVariant);
             openCart();
         } else {
-          alert('must select a size');
+          warning.innerHTML = 'must select a size';
+          warning.classList.remove('hidden');
         }
       }
       else {
@@ -94,8 +100,12 @@ export default class Product extends Component {
     }
 
     const optionSelect = function(e) {
+      var warning = document.getElementById('warning');
       var selected = e.target.value;
       if (selected) {
+        if (!warning.classList.contains('hidden')) {
+          warning.classList.add('hidden')
+        }
         product.vars.forEach(function(vari) {
           if (vari.description == selected) {
             switchImg(vari.image);
@@ -106,8 +116,14 @@ export default class Product extends Component {
     }
 
     const sizeSelect = function(e) {
+      var warning = document.getElementById('warning');
       var size = e.target.value;
-      if (size) self.currentSize = size;
+      if (size) {
+        if (!warning.classList.contains('hidden')) {
+          warning.classList.add('hidden')
+        }
+        self.currentSize = size;
+      }
     }
 
     var images = null;
@@ -220,8 +236,8 @@ export default class Product extends Component {
                 <div className='top'>
                   <div>
                   {chartImgLink}
-                    {dropDowns}
-
+                  <p id='warning' className='hidden'></p>
+                  {dropDowns}
                   </div>
                 </div>
 

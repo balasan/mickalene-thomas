@@ -81,27 +81,29 @@ class WorkParent extends Component {
     return array;
   }
 
+
+
   filterWorks(state, params) {
+    var numberSort = function(a, b) {
+     return parseFloat(a.time) - parseFloat(b.time);
+    }
     var self = this;
     var preShuffle = state.works;
     var shuffled = this.shuffle(preShuffle);
 
+      self.works = shuffled.filter(function(item) {
+        if (params.filter && item.tags.indexOf(params.filter) === -1) {
+          return false;
+        } else {
+          return true;
+        }
+      });
 
-    self.works = shuffled.filter(function(item) {
-      if (params.filter && item.tags.indexOf(params.filter) === -1) {
-        return false;
-      } else {
-        return true;
+      if (!params.filter) {
+        self.works.sort(numberSort)
       }
-    });
 
     this.worksOnly = self.works.slice();
-
-    // if (state.news && !params.filter) {
-    //   state.news.forEach(function(item, i) {
-    //     self.works.splice((i*5), 0, item);
-    //   });
-    // }
   }
 
 
@@ -129,5 +131,3 @@ export default connect(
   dispatch => {
     return Object.assign({}, { dispatch },  bindActionCreators(WorkActions, dispatch))
   })(WorkParent)
-
-

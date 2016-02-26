@@ -189,6 +189,7 @@ app.post('/stripe', jsonParser, function(req, res) {
                 name: stripeToken.card.name,
                 address: {
                     line1: stripeToken.card.address_line1,
+                    line2: stripeToken.card.address_line2 ? stripeToken.card.address_line2 : '',
                     city: stripeToken.card.address_city,
                     country: stripeToken.card.country,
                     postal_code: stripeToken.card.address_zip

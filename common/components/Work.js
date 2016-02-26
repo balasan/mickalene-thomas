@@ -80,14 +80,6 @@ export default class Work extends Component {
     if( params.itemId ) return false;
     if(this.props.params.itemId && this.works && this.works.length) return false;
     return true;
-
-    // if (this.works
-    //   && (this.props.filteredWorks.length === this.works.length)
-    //   && (params.filter == this.props.params.filter)
-    //   // && this.worksLimit == this.oldWorksLimit
-    //   ) {
-    //    return false;
-    // } else {return true};
   }
 
   componentDidUpdate() {

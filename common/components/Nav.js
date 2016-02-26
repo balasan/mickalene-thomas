@@ -161,7 +161,8 @@ class Nav extends Component {
 
     var navClass = classNames({
       'transparent': itemPage,
-      'expand': expand
+      'expand': expand,
+      'border-bottom': path == 'store'
     });
     var bottomClass = classNames({
       'expand bottom': expand,
