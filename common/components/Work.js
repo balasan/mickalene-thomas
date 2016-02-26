@@ -12,23 +12,29 @@ export default class Work extends Component {
   constructor() {
     super();
     this.worksLimit = 20;
+    this.works = [];
+    this.oldWorks = [];
+    this.newWorks = [];
+    this.shuffled = [];
+    this.works = [];
+    this.selectedWorks = [];
+    this.loaded = 0;
   }
 
   componentDidMount() {
     var self = this;
-    this.oldWorks = [];
-    this.newWorks = [];
-    this.shuffled = [];
-    this.selectedWorks = [];
+
     this.container = document.getElementById("flex-container2");
     this.containerOut = document.getElementById("flex-container1");
     this.container3d = document.getElementById("flex-images");
+
     window.addEventListener('scroll', this.handleScroll.bind(this));
 
     if(this.props.filteredWorks){
       this.works = this.props.filteredWorks.slice(0, this.worksLimit);;
       this.newWorks = this.works;
     }
+    this.props.showLoader(true)
   }
 
   componentWillUnmount() {
@@ -38,13 +44,16 @@ export default class Work extends Component {
 
   componentWillUpdate(nextProps) {
     var self = this;
-    const { state, params, filteredWorks } = nextProps;
+    const { state, params, filteredWorks, showLoader } = nextProps;
 
     if(!params || this.props.params.filter != params.filter){
       window.scrollTo(0,0);
       this.oldWorks = this.newWorks.slice();
       this.updateNewWorks(nextProps);
-
+      this.loaded = 0;
+      this.ready = false;
+      if(!nextProps.state.menu.showLoader)
+        showLoader(true)
     }
     else if(!this.newWorks.length || (this.oldWorksLimit != this.worksLimit)){
       this.updateNewWorks(nextProps);
@@ -184,6 +193,15 @@ export default class Work extends Component {
     this.container3d.style.webkitPerspectiveOrigin = pOrgin
   }
 
+  loadImages(){
+    this.loaded += 1;
+    if(this.loaded == this.newWorks.length){
+      this.ready = true;
+      this.props.showLoader(false)
+      this.setState({});
+    }
+  }
+
   render() {
     var self = this, newWorks, oldWorks, selectedWorks;
 
@@ -196,48 +214,47 @@ export default class Work extends Component {
     if(self.params && self.params.filter)
       selected = false;
 
-    if (this.works) {
-      newWorks = worksEl(this.newWorks, 'work-enter', selected);
-    }
-    if (this.oldWorks){
-      oldWorks = worksEl(this.oldWorks, 'work-leave', selected);
-    }
-    // } else {
-    //   if (this.selectedWorks) {
-    //     newWorks = worksEl(this.selectedWorks, 'work-enter', true);
-    //   }
-    //   if (this.oldWorks){
-    //     oldWorks = worksEl(this.oldWorks, 'work-leave', true);
-    //   }
-    // }
+    if( !self.ready ) newWorks = [];
+    else newWorks = worksEl(this.newWorks, 'work-enter', selected);
+
+    oldWorks = worksEl(this.oldWorks, 'work-leave', selected);
+
 
     function worksEl(worksArray, action, selected) {
       var imgSize = 'small';
 
-        return worksArray.map(function(item, i) {
-          return (
-            <Link
-              className={selected ? 'item special-selected '+action : 'item '+ action}
-              data-w={item.image[imgSize].dimensions.width}
-              data-h={item.image[imgSize].dimensions.height}
-              key={item.id+self.params.filter+i}
-              to={selected ? '/works/filter/'+item.tags[0] : '/works/i/' + item.id}
-              >
-              <div className="imageContainer">
-                <img
-                  className={item.tags[0] == 'paintings' || item.tags[0] == 'collages' || item.tags[0] == 'print' || item.tags[0] == 'sculpture' ? 'zoom' : ''}
-                  key={item.id}
-                  src={item.image[imgSize].url}
-                />
-                <div className="text">
-                  <p>{selected ? item.tags[0] : item.title}</p>
-                </div>
+      return worksArray.map(function(item, i) {
+        return (
+          <Link
+            className={selected ? 'item special-selected '+action : 'item '+ action}
+            data-w={item.image[imgSize].dimensions.width}
+            data-h={item.image[imgSize].dimensions.height}
+            key={item.id+self.params.filter+i}
+            to={selected ? '/works/filter/'+item.tags[0] : '/works/i/' + item.id}
+            >
+            <div className="imageContainer">
+              <img
+                className={item.tags[0] == 'paintings' || item.tags[0] == 'collages' || item.tags[0] == 'print' || item.tags[0] == 'sculpture' ? 'zoom' : ''}
+                key={item.id}
+                src={item.image[imgSize].url}
+              />
+              <div className="text">
+                <p>{selected ? item.tags[0] : item.title}</p>
               </div>
-            </Link>
-          );
-        });
-
+            </div>
+          </Link>
+        );
+      });
     }
+
+    var imgSize = 'small';
+    var images = this.newWorks.map(function(item, i){
+      if(self.ready) return null;
+      return (
+        <img  src={item.image[imgSize].url}  onLoad={self.loadImages.bind(self)}/>
+        )
+    })
+
 
     var all = (
         <div>
@@ -246,6 +263,9 @@ export default class Work extends Component {
           </div>
           <div id="flex-container2">
               {newWorks}
+          </div>
+          <div id="loadingWorks">
+            {images}
           </div>
         </div>)
 

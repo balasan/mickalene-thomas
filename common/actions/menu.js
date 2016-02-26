@@ -2,6 +2,7 @@ export const TOGGLE_MENU = 'TOGGLE_MENU';
 export const TOGGLE_EXPAND = 'TOGGLE_EXPAND';
 export const SET_WORK_TAGS = 'SET_WORK_TAGS';
 export const SET_NEWS_TAGS = 'SET_NEWS_TAGS';
+export const SHOW_LOADER = 'SHOW_LOADER';
 import { fetchWorkTags } from '../api/work'
 import { fetchNewsTags } from '../api/work'
 
@@ -47,4 +48,11 @@ export function loadNewsTags() {
       dispatch(setNewsTags(value))
     })
   }
+}
+
+export function showLoader(value) {
+ return {
+    type: SHOW_LOADER,
+    payload: value
+  };
 }

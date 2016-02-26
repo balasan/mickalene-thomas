@@ -3,6 +3,7 @@ import { SET_WORK_TAGS } from '../actions/menu'
 import { SET_NEWS_TAGS } from '../actions/menu'
 import { TOGGLE_EXPAND } from '../actions/menu'
 import { UPDATE_PATH } from 'redux-simple-router'
+import { SHOW_LOADER } from '../actions/menu'
 
 const initialState = { showMenu:false, expand:false }
 
@@ -27,6 +28,11 @@ export default function menu(state = initialState, action) {
     case SET_NEWS_TAGS:
       return Object.assign({}, state, {
         newsTags: action.payload
+      })
+
+    case SHOW_LOADER:
+      return Object.assign({}, state, {
+        showLoader: action.payload
       })
 
     default:
