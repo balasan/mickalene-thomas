@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Work from '../components/Work';
 import WorkItem from '../components/WorkItem';
 import * as WorkActions from '../actions/work'
+import * as MenuActions from '../actions/menu'
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 if (process.env.BROWSER) {
@@ -127,7 +128,7 @@ export default connect(
     return {state: state}
   },
   dispatch => {
-    return Object.assign({}, { dispatch },  bindActionCreators(WorkActions, dispatch))
+    return Object.assign({}, { dispatch },  bindActionCreators(Object.assign({}, MenuActions, WorkActions), dispatch))
   })(WorkParent)
 
 

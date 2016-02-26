@@ -309,3 +309,25 @@ transform: translateY(0px);
     transition-delay: 0 !important;
 }
 
+
+/*//Loader*/
+
+
+.loader-enter,
+.loader-appear {
+    opacity: 0;
+}
+
+.loader-enter-active,
+.loader-appear-active {
+    opacity: 1;
+    transition: opacity .6s easeOutQuart, transform .6s easeOutQuart;
+}
+.loader-leave {
+    opacity: 1;
+}
+.loader-leave-active {
+    opacity: 0;
+    transition: all .4s easeOutQuart;
+}
+

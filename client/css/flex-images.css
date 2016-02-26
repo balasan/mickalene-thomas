@@ -19,6 +19,7 @@
 }
 #flex-container2{
   position:relative;
+  min-height: 100%;
 }
 
 .flex-images .item {

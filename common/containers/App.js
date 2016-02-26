@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import * as MenuActions from '../actions/menu';
 import Splash from './Splash';
 import Cart from '../components/Cart';
+import Loader from '../components/Loader';
+
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 if (process.env.BROWSER) {
@@ -50,6 +52,7 @@ class App extends Component {
       <Menu { ...this.props }></Menu>
       {main}
       <Cart { ...this.props }/>
+      <Loader { ...this.props }></Loader>
     </div>
     );
   }

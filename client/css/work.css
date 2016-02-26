@@ -1,6 +1,24 @@
 @import "customMedia.css";
 @import "colors.css";
 
+#loadingWorks{
+    position:absolute;
+    top:0;
+    left:0;
+    height:0%;
+    width: 0%;
+/*    .loader{
+        top:50%;
+        left:50%;
+        transform: translateX(-50%) translateY(-50%);
+        position:fixed;
+    }*/
+    /*transfrom: translateX(-50%) translateY(-50%);*/
+    img{
+        display:none;
+    }
+}
+
 .worksContainer {
     transition: all .5s easeOutQuart;
     transform: scale(1) translateZ(0);
