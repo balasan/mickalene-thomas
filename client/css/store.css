@@ -16,7 +16,7 @@
     }
   }
   a {
-    padding: 1em;
+    padding: 2em;
     position: relative;
 
     @media (--mobile) {

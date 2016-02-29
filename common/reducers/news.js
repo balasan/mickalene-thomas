@@ -1,7 +1,7 @@
 import { GET_NEWS} from '../actions/work'
 import { UPDATE_PATH } from 'redux-simple-router'
 
-export default function news(state = null, action) {
+export default function news(state = [], action) {
   switch (action.type) {
 
     case GET_NEWS:

@@ -17,7 +17,7 @@ export default class NewsParent extends Component {
     ])
   }
 
-    static fetchInstaDataOnClient(dispatch) {
+  static fetchInstaDataOnClient(dispatch) {
     var { loadInsta } = bindActionCreators(WorkActions, dispatch)
     return Promise.all([
       loadInsta()
@@ -25,14 +25,39 @@ export default class NewsParent extends Component {
   }
 
   componentDidMount() {
-      this.constructor.fetchNewsDataOnClient(this.props.dispatch);
-      this.constructor.fetchInstaDataOnClient(this.props.dispatch);
+    var self = this;
+    this.constructor.fetchInstaDataOnClient(this.props.dispatch);
+        self.constructor.fetchNewsDataOnClient(this.props.dispatch);
+      this.news = [];
+      this.insta = [];
   }
+
+  componentWillUpdate(nextProps) {
+    var self = this;
+    const { state, params } = nextProps;
+    this.filterNews(state, params);
+  }
+
+  componentWillReceiveProps() {
+  }
+
+  filterNews(state, params) {
+    var self = this;
+
+      self.news = state.news.filter(function(item) {
+        if (params.filter && item.tags.indexOf(params.filter) === -1) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+  }
+
 
   render () {
     return (
-      <div>
-        <News { ...this.props }/>
+      <div className="container3d">
+        <News { ...this.props } filteredNews={this.news} />
       </div>
       )
   }
