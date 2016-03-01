@@ -24,9 +24,14 @@
             padding: 1.5em;
         }
         img {
-            height: 55vh;
+            min-height: 55vh;
+            max-height: 55vh;
             max-width: 100%;
-            object-fit: contain;
+            opacity: 1;
+            transition: opacity 150ms ease-out;
+            &.mask {
+              opacity: 0;
+            }
         }
     }
     .info {
@@ -129,6 +134,17 @@
                         margin: 0 0 1em 0;
                         display: block;
                         text-align: right;
+                    }
+                    p {
+                      color: red;
+                      font-family: 'Avenir Next', sans-serif;
+                      font-size: 12px;
+                      margin: 0 0 1em 0;
+                      display: block;
+                      text-align: right;
+                      &.hidden {
+                        display: none;
+                      }
                     }
                 }
                 .price {
@@ -247,31 +263,32 @@
     position: absolute;
     top: 0;
     text-align: right;
-    width: 50%;
-     right: 0;
-
-    @media (--desktop) {
-        width: 35%;
-    }
+    width: 35%;
+    right: 0;
     padding: 2em;
+
+    @media (--mobile) {
+      width: 100%;
+      padding: 1em;
+    }
 
     div {
         display: inline-block;
-        height: 100px;
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
         cursor: pointer;
-        width: 100px;
         border: 2px solid black;
         opacity: 0.5;
-        margin: 0 0 1em 1em;
-        transition: opacity 250ms ease-out;
+        width: 75px;
+        height: 75px;
+        margin: 0 0 0.5em 0.5em;
         @media (--mobile) {
-            width: 50px;
-            height: 50px;
-            margin: 0 0 0.5em 0.5em;
+          width: 50px;
+          height: 50px;
+          margin: 0 0 0.25em 0.25em;
         }
+        transition: opacity 250ms ease-out;
 
         &.selected {
             opacity: 1;

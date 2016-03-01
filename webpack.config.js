@@ -1,6 +1,5 @@
 var path = require('path')
 var webpack = require('webpack')
-
 var precss = require('precss');
 var customMedia = require("postcss-custom-media");
 var easings = require('postcss-easings');
@@ -80,4 +79,3 @@ module.exports = {
     ],
   }
 }
-

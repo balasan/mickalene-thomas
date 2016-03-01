@@ -97,4 +97,3 @@ export default class WorkItem extends Component {
     )
   }
 }
-

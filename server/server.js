@@ -67,30 +67,41 @@ app.post('/stripe', jsonParser, function(req, res) {
         var size = null;
         var style = null;
         var description = null;
+
         var titleSplit = item.title.split(' ').join('_');
+        var titleSimple = titleSplit.replace(/\W/g, '');
+
         var prodId = null;
         var sizeSplit = null;
         var styleSplit = null;
+        var styleSimple = null;
+        var sizeSimple = null;
 
         if (item.variation) {
             if (item.variation.description) style = item.variation.description;
             if (item.variation.size) size = item.variation.size;
-            if (size) sizeSplit = size.split(' ').join('_');
-            if (style) styleSplit = style.split(' ').join('_');
+            if (size) {
+              sizeSplit = size.split(' ').join('_');
+              sizeSimple = sizeSplit.replace(/\W/g, '');
+            }
+            if (style) {
+              styleSplit = style.split(' ').join('_');
+              styleSimple = styleSplit.replace(/\W/g, '');
+            }
 
             if (item.variation.description && item.variation.size) {
                 description = item.title+' style: '+style+' size: '+size;
-                prodId = titleSplit+styleSplit+sizeSplit;
+                prodId = titleSimple+styleSimple+sizeSimple;
             } else if (item.variation.description) {
                  description = item.title+' style: '+style;
-                 prodId = titleSplit+styleSplit;
+                 prodId = titleSimple+styleSimple;
             } else if (item.variation.size) {
                  description = item.title+' size: '+size;
-                 prodId = titleSplit+sizeSplit;
+                 prodId = titleSimple+sizeSimple;
             }
         } else {
             description = item.title;
-            prodId = titleSplit;
+            prodId = titleSimple;
         }
 
 
@@ -121,7 +132,11 @@ app.post('/stripe', jsonParser, function(req, res) {
               // description: item.description+' style: '+style+' size: '+size,
               // attributes: ['size', 'style']
             }, function(err, product) {
+              if (err) {
+                console.log(err);
+              } else {
                 newSkus(product, item, i, prodId);
+              }
             });
         } else {
             items.push({
@@ -174,6 +189,7 @@ app.post('/stripe', jsonParser, function(req, res) {
                 name: stripeToken.card.name,
                 address: {
                     line1: stripeToken.card.address_line1,
+                    line2: stripeToken.card.address_line2 ? stripeToken.card.address_line2 : '',
                     city: stripeToken.card.address_city,
                     country: stripeToken.card.country,
                     postal_code: stripeToken.card.address_zip

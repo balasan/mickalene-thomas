@@ -24,7 +24,6 @@ if (process.env.BROWSER) {
   require('./../../client/css/navbar.css');
   require('./../../client/css/animation.css');
   require('./../../client/css/mag.css');
-
 }
 
 class App extends Component {

@@ -92,7 +92,7 @@ class Nav extends Component {
 
       filters = (
         <section className='filterLinks'>
-          <Link className={!filterType ? 'selected' : null} to='/works'>back</Link>
+          <Link className={!filterType ? 'selected' : null} to='/works'>back to works</Link>
         </section>);
 
       mobileFilters = (
@@ -149,7 +149,7 @@ class Nav extends Component {
 
     if (showHeader) {
         if (path == 'works/filter/:filter') {
-          location = (<p>works</p>);
+          location = (<p>{filterType}</p>);
         } else if (path == 'news/filter/:filter') {
           location = (<p>news</p>);
         } else if (path == 'store/:itemId') {
@@ -161,7 +161,8 @@ class Nav extends Component {
 
     var navClass = classNames({
       'transparent': itemPage,
-      'expand': expand
+      'expand': expand,
+      'border-bottom': path == 'store'
     });
     var bottomClass = classNames({
       'expand bottom': expand,

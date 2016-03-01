@@ -191,9 +191,12 @@
                      // obj.image.large.dimensions = {};
 
                 if (item.data["product-v.image"]) {
-                      item.data["product-v.image"].value.forEach(function(image) {
+                  // var imagesArr = [];
+                  var reversed = item.data["product-v.image"].value.reverse();
+                      reversed.forEach(function(image, i) {
                             obj.images.unshift(image.image.value.main.url);
-                        })
+                        });
+
                      // obj.image.main.dimensions.height = item.data["product-v.image"].value.main.dimensions.height;
                      // obj.image.main.dimensions.width = item.data["product-v.image"].value.main.dimensions.width;
 
@@ -234,8 +237,3 @@
              })
      });
  }
-
-
-
-
-

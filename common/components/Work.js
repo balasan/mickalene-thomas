@@ -58,9 +58,6 @@ export default class Work extends Component {
     else if(!this.newWorks.length || (this.oldWorksLimit != this.worksLimit)){
       this.updateNewWorks(nextProps);
     }
-
-    // var preShuffle = this.works;
-    // this.shuffled = this.shuffle(preShuffle);
     this.selectWork(filteredWorks);
     self.params = params;
   }
@@ -89,14 +86,6 @@ export default class Work extends Component {
     if( params.itemId ) return false;
     if(this.props.params.itemId && this.works && this.works.length) return false;
     return true;
-
-    // if (this.works
-    //   && (this.props.filteredWorks.length === this.works.length)
-    //   && (params.filter == this.props.params.filter)
-    //   // && this.worksLimit == this.oldWorksLimit
-    //   ) {
-    //    return false;
-    // } else {return true};
   }
 
   componentDidUpdate() {
@@ -230,6 +219,7 @@ export default class Work extends Component {
 
     function worksEl(worksArray, action, selected) {
       var imgSize = 'small';
+      console.log(worksArray, 'worksArray')
 
       return worksArray.map(function(item, i) {
         return (
@@ -263,7 +253,8 @@ export default class Work extends Component {
         )
     })
 
-
+    // console.log(oldWorks, 'oldWorks')
+    // console.log(newWorks, 'newWorks')
     var all = (
         <div>
           <div id="flex-container1">

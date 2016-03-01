@@ -77,6 +77,7 @@ export function loadNews() {
 }
 
 export function setInsta(value) {
+  console.log(value, 'setInsta value')
   return {
     type: GET_INSTA,
     payload: {

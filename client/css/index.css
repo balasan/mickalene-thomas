@@ -1,8 +1,14 @@
+@import "customMedia.css";
+@import "fonts.css";
+
 * {
     box-sizing: border-box;
 }
 $pink: red;
-html {height:100%};
+
+html {
+  height:100%;
+}
 
 html, body {
     width: 100%;
@@ -14,10 +20,8 @@ html, body {
     min-height: 100%;
     overflow-x:hidden;
     overflow-y:auto;
-    /*height:1px;*/
 }
-body {
-}
+
 button:focus, input[type="button"]:focus {
     outline: none;
 }
@@ -161,13 +165,3 @@ main {
 .no-events {
   pointer-events: none;
 }
-
-@import "customMedia.css";
-@import "fonts.css";
-
-
-
-
-
-
-

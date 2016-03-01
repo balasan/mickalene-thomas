@@ -22,8 +22,9 @@ var flexImages = (function() {
                     o.rowHeight += 3;
                     return makeGrid(grid, items, o)
                 }
-                if (o.maxRows && rows > o.maxRows || o.truncate && lastRow && rows > 1 || (o.hideSingle && row.length == 1))
+                if (o.maxRows && rows > o.maxRows || o.truncate && lastRow && rows > 1 || (o.hideSingle && row.length == 1)){
                     row[x].container.style.display = 'none';
+                }
                 else if (!lastRow) {
                     // if (row[x][4]) {
                     //     row[x][3].setAttribute('src', row[x][4]);

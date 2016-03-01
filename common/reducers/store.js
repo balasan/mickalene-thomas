@@ -17,6 +17,7 @@ export default function news(state = initialState, action) {
       })
 
     case ADD_PRODUCT:
+    console.log(action.payload.results, 'results')
       if (action.payload.results.variation) {
         var variation = action.payload.results.variation;
         var description = action.payload.results.variation.description;
@@ -50,16 +51,19 @@ export default function news(state = initialState, action) {
           state.cart.push(action.payload.results);
         }
       } else {
-        var exists = state.cart.indexOf(action.payload.results);
-        if (exists >= 0) {
-            state.cart.forEach(function(item, i) {
-              if (item.id === action.payload.results.id) {
-                item.quantity += 1;
-              }
-            })
-        } else {
-          state.cart.push(action.payload.results)
-        }
+            var exists = 0;
+            if (state.cart.length > 0) {
+              state.cart.forEach(function(item, i) {
+                if (item.id === action.payload.results.id) {
+                  item.quantity += 1;
+                  exists += 1;
+                } else {
+                  if (i == state.cart.length - 1 && exists == 0) state.cart.push(action.payload.results)
+                }
+              })
+            } else {
+              state.cart.push(action.payload.results)
+            }
       }
 
 

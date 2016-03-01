@@ -7,6 +7,7 @@ import Cart from '../components/Cart';
 
 if(process.env.BROWSER){
   require('./../../client/css/store.css');
+  require('./../../client/css/index.css');
 }
 
 export default class StoreParent extends Component {
