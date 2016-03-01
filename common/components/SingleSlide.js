@@ -67,7 +67,9 @@ export default class SingleSlide extends Component {
 
     var image = (
         <div className="image noselect" id="singleImage">
-          <img className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={url}/>
+          <span className={tag == 'paintings' ? 'no-events painting  imageContainer' : 'no-events imageContainer'}>
+           <img className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={url}/>
+          </span>
         </div>
     )
     console.log(this.props.workItem)

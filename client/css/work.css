@@ -105,13 +105,36 @@
             padding: 0;
             height: 85%;
         }
+        .imageContainer{
+/*            width: 100%;
+            height: 100%;
+            background-position: center;
+            background-size: contain;
+            margin: 0 auto;
+            display:inline-block;
+            background-repeat: none;*/
+            margin:auto;
+            /*max-height:100%;*/
+            overflow: hidden;
+            /*display: inline-flex;*/
+            position:static;
+            max-height: 100%;
+
+
+
+
+
+            &.painting {
+                border-radius: 50px;
+            }
+        }
         img {
             max-height: 100%;
             max-width: 100%;
             margin: 0 auto;
 
             &.painting {
-                border-radius: 15%;
+                /*border-radius: 50px;*/
             }
         }
     }
