@@ -106,21 +106,27 @@
             height: 85%;
         }
         .imageContainer{
-          margin: auto;
-          overflow: hidden;
-           max-height: 100%;
-          display: flex;
+            margin: auto;
+            overflow: hidden;
+            max-height: 100%;
+            display:inline;
+
+/*            transform: translateZ(0);
+            backface-visibility: hidden;*/
+
+            float:left;
             &.painting {
                 border-radius: 50px;
             }
         }
         img {
-          max-height: 100%;
-        max-width: 100%;
-        margin: 0 auto;
-        object-fit: contain;
+            max-height: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            /*object-fit: contain;*/
 
             &.painting {
+                transform: scale(1.2);
                 /*border-radius: 50px;*/
             }
         }

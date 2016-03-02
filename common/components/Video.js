@@ -37,7 +37,7 @@ export default class Video extends Component {
     this.video.setAttribute('ready','true')
     window.addEventListener('resize', this.resize.bind(this));
     this.video.play();
-    this.video.className="";
+    this.video.className="video";
   }
 
   resize() {

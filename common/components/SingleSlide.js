@@ -5,15 +5,57 @@ var Hammer = require('react-hammerjs');
 import { updatePath } from 'redux-simple-router';
 
 export default class SingleSlide extends Component {
-   componentDidMount() {
+  componentDidMount() {
+    this.imageContainer = document.getElementsByClassName('imageContainer');
+    // this.image = this.imageContainer.getElementsByTagName('img')[0];
+    window.addEventListener('resize', this.resize.bind(this));
   }
 
-  componentDidUpdate() {
+  componentWillUpdate() {
+
+    // this.w = this.props.workItem.image.small.dimensions.w
+    // this.h = this.props.workItem.image.small.dimensions.h
+
+    // slideW = 
+    // this.resize();
+    // var imgCs = document.getElementsByClassName('imageContainer');
+    // for(var i = 0; i < imgCs.length; i++){
+    //   var imgC = imgCs[i];
+
+    //   // imgC.style.display = 'none';
+    //   setTimeout(function(){
+    //     forceRedraw(imgC)
+    //   // imgC.style.display = 'inline';
+    //   },20)
+    // }
+
   }
 
+  resize(e){
+    var image;
+    if(e)
+      image = e.target || e.srcElement;
+    var imageContainer = image.parentNode
+
+    imageContainer.style.height = "auto";
+    if( image.clientHeight > imageContainer.clientHeight){
+      imageContainer.style.height = "100%";
+    }
+
+    setTimeout(function(){
+      forceRedraw(imageContainer)
+    },0)
+    // imageContainer.style.display = 'none';
+
+    // setTimeout(function(){
+    //   imageContainer.style.display = 'inline';
+    // },20)
+
+  }
 
 
   render () {
+
     var url = this.props.workItem.image.small.url;
     var hiRes = this.props.workItem.image.medium.url;
     var title = this.props.workItem.title;
@@ -67,12 +109,12 @@ export default class SingleSlide extends Component {
 
     var image = (
         <div className="image noselect" id="singleImage">
-          <span className={tag == 'paintings' ? 'no-events painting  imageContainer' : 'no-events imageContainer'}>
-           <img className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={url}/>
-          </span>
+          <div className={tag == 'paintings' ? 'no-events painting  imageContainer' : 'no-events imageContainer'}>
+           <img onLoad={self.resize.bind(self)} className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={url}/>
+          </div>
         </div>
     )
-    console.log(this.props.workItem);
+    // console.log(this.props.workItem);
     var date = this.props.workItem.date;
     var formattedDate = '';
     if (typeof date == 'string') {
@@ -112,3 +154,19 @@ export default class SingleSlide extends Component {
     );
   }
 };
+
+var forceRedraw = function(element){
+
+    if (!element) { return; }
+
+    var n = document.createTextNode(' ');
+    var disp = element.style.display;  // don't worry about previous display style
+
+    element.appendChild(n);
+    element.style.display = 'none';
+
+    setTimeout(function(){
+        element.style.display = disp;
+        n.parentNode.removeChild(n);
+    },20); // you can play with this timeout to make it as short as possible
+}

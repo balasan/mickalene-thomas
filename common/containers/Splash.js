@@ -32,7 +32,7 @@ class Splash extends Component {
       // }
     }
 
-    this.bgVid = "vidBg"
+    this.bgVid = "vidPattern"
     if(window && window.location.hash == '#alt'){
       this.bgVid = 'vidPattern'
     }
@@ -59,11 +59,12 @@ class Splash extends Component {
   }
 
   render () {
-    var bgVid = this.bgVid ? this.bgVid : "vidBg"
+    // var bgVid = this.bgVid ? this.bgVid : "vidBg"
+    var bgVid = "vidPattern";
     return (
       <div>
         <Video videoid={bgVid} key={bgVid}></Video>
-        <Video videoid="vidPattern"></Video>
+        <Video videoid="vidBg"></Video>
       </div>
     )
   }

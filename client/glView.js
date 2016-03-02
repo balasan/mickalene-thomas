@@ -149,7 +149,10 @@ function GLView(_corner) {
     }
 
 
-    video = document.getElementById("vidPattern");
+    if (window.location.hash=="#alt")
+      video = document.getElementById("vidPattern");
+    else
+      video = document.getElementById("vidBg");
     videoTexture = new THREE.Texture( video );
 
     videoTexture.minFilter = THREE.LinearFilter;
