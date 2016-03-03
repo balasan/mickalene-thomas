@@ -224,7 +224,7 @@ setTimeout(function () {
         var link = item.link ? <div></div> : null;
 
         return (
-            <a id={item.id} href={item.link ? item.link : 'javascript:'} className={item.link ? 'link news-item '+action : 'news-item '+action} style={{"transitionDelay" : delay}} key={item.id+self.params.filter+i}>
+            <a id={item.id} target="blank" href={item.link ? item.link : 'javascript:'} className={item.link ? 'link news-item '+action : 'news-item '+action} style={{"transitionDelay" : delay}} key={item.id+self.params.filter+i}>
 
             {img}
             <section style={sectionStyle} className='left' >
@@ -263,7 +263,7 @@ setTimeout(function () {
     function instaEl(instaArray, action, selected) {
       return instaArray.map(function (item, i) {
        return (
-         <a target='_blank' className={'noselect '+action} href={item.link} key={item.id+self.params.filter+i}>
+         <a target='_blank' className={'noselect '+action} href={item.link} key={item.id}>
            <img src={item.images.standard_resolution.url} />
          </a>
        )

@@ -56,17 +56,27 @@
     }
     &.special-selected {
         img {
-      /*      opacity: 0.5;*/
+            opacity: 1;
+            transition: all .8s easeOutQuart;
         }
         .text {
             opacity: 1;
+            text-shadow: 1px 1px 4px black;
             p {
                 font-size: 20px;
+                transition: all .4s easeOutQuart;
             }
         }
         &:hover {
             img {
-                opacity: 0.75;
+                opacity: 0.5;
+                transform: scale(1.2);
+                &.zoom{
+                    transform: scale(1.6);
+                }
+            }
+            p {
+                transform: scale(1.2);
             }
         }
     }

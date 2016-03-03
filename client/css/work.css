@@ -105,14 +105,21 @@
             padding: 0;
             height: 85%;
         }
-        .imageContainer {
+
+        .imageContainer{
             margin: auto;
             overflow: hidden;
             max-height: 100%;
-            display: flex;
+            display:flex;
+            /*height: 100%;*/
+
+/*            transform: translateZ(0);
+            backface-visibility: hidden;*/
+
+            /*float:left;*/
 
             &.painting {
-                border-radius: 50px;
+                /*border-radius: 50px;*/
             }
         }
         img {
@@ -122,7 +129,6 @@
             object-fit: contain;
 
             &.painting {
-
                 /*border-radius: 50px;*/
             }
         }

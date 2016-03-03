@@ -4,7 +4,9 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as MenuActions from '../actions/menu'
-import Splash from '../containers/Splash';
+// import Splash from '../containers/Splash';
+import Video from './Video';
+
 import { fetchContact } from '../api/contact';
 
 class Menu extends Component {
@@ -96,10 +98,16 @@ class Menu extends Component {
       null
     }
 
+    var video = null;
+    if(showMenu){
+       video = (<Video videoid="vidBg"></Video>)
+    }
+
     return (
       <div>
         {links}
 {/*          <Splash></Splash> */}
+       {video}
       </div>
     )
   }

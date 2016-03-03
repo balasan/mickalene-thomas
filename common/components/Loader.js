@@ -17,7 +17,7 @@ class Loader extends Component {
             transitionAppearTimeout = {500}
             transitionEnterTimeout = {500}
             transitionLeaveTimeout = {500}>
-        <div className="sk-cube-grid">
+{/*          <div className="sk-cube-grid">
           <div className="sk-cube sk-cube1"></div>
           <div className="sk-cube sk-cube2"></div>
           <div className="sk-cube sk-cube3"></div>
@@ -27,6 +27,12 @@ class Loader extends Component {
           <div className="sk-cube sk-cube7"></div>
           <div className="sk-cube sk-cube8"></div>
           <div className="sk-cube sk-cube9"></div>
+        </div>  */}
+        <div className="loader">
+          <div className="flipper">
+            <div className="front-loader"></div>
+            <div className="back-loader"></div>
+          </div>
         </div>
       </ReactCSSTransitionGroup>
     )

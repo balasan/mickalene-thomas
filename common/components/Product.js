@@ -217,7 +217,7 @@ export default class Product extends Component {
           <section className='productShowcase' key={product.id}>
 
             <div className="image noselect">
-              <img id="main-product-image" src={product.images[0]} />
+              <img id="main-product-image" className="imageContainer" src={product.images[0]} />
             </div>
 
             <div className="images-select noselect">

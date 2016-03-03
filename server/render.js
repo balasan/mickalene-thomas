@@ -20,12 +20,13 @@ function renderFullPage(html, initialState) {
       </head>
       <body>
         <div class="bg"></div>
-        <video id="vidPattern" preload="auto" class="hidden video" loop="true">
-          <source src="/video/bg-vid.mp4" type="video/mp4"/>
-        </video>
         <video id="vidBg" preload="auto" class="hidden video" loop="true">
           <source src="/video/studio.mp4" type="video/mp4"/>
         </video>
+        <video id="vidPattern" preload="auto" class="hidden video" loop="true">
+          <source src="/video/bg-vid.mp4" type="video/mp4"/>
+        </video>
+
         <div class='tint'></div>
 
         <!--
