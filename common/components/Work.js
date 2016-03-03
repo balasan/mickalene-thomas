@@ -84,6 +84,7 @@ export default class Work extends Component {
   shouldComponentUpdate(nextProps) {
     const { params, state } = nextProps;
     if( params.itemId ) return false;
+    if( nextProps.state && nextProps.state.menu.showMenu == true) return false;
     if(this.props.params.itemId && this.works && this.works.length) return false;
     return true;
   }
@@ -159,10 +160,14 @@ export default class Work extends Component {
   }
 
   handleScroll(e) {
+
     //basic debounce
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
+
+    if(!this.params || !this.params.filter) return;
+
     this.timeout = setTimeout(function() {
       //run, but wait again
       this.setPerspective();
@@ -214,7 +219,7 @@ export default class Work extends Component {
     if( !self.ready ) newWorks = [];
     else newWorks = worksEl(this.newWorks, 'work-enter', selected);
 
-    oldWorks = worksEl(this.oldWorks, 'work-leave', selected);
+    oldWorks = worksEl(this.oldWorks, 'work-leave', !selected);
 
 
     function worksEl(worksArray, action, selected) {

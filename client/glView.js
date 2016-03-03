@@ -216,7 +216,11 @@ function GLView(_corner) {
     transMaterial.map = videoTexture;
 
     var tabletAspect = 1;
-    var videoAspect = 16/9;
+    var videoAspect = 9/9;
+
+    if (window.location.hash=="#alt")
+      videoAspect = 16/9;
+
     // var videoAspect = 2.39
 
     // child.material.map.offset.x = -tabletAspect/videoAspect * 1/2
@@ -429,9 +433,12 @@ function GLView(_corner) {
     //   logo.rotation.x += (.7 * mouse.y / HEIGHT - logo.rotation.x) * .05;
     // }
     // else {
-      camera.position.x -= (mouse.x / 30 + camera.position.x) * .05;
-      camera.position.y += (- mouse.y / 30 - camera.position.y) * .05;
+
+    if (window.location.hash == "#alt") {
+      camera.position.x -= (mouse.x / 10 + camera.position.x) * .05;
+      camera.position.y += (- mouse.y / 10 - camera.position.y) * .05;
       camera.lookAt(scene.position);
+    }
     // }
 
 

@@ -110,7 +110,9 @@ export default class SingleSlide extends Component {
     var image = (
         <div className="image noselect" id="singleImage">
           <div className={tag == 'paintings' ? 'no-events painting  imageContainer' : 'no-events imageContainer'}>
-           <img onLoad={self.resize.bind(self)} className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={url}/>
+           <img 
+              // onLoad={self.resize.bind(self)} 
+              className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={url}/>
           </div>
         </div>
     )

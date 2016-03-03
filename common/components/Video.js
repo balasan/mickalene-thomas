@@ -16,10 +16,18 @@ export default class Video extends Component {
     }
   }
 
-  // componentWillUpdate(){
-  //   this.video.play();
-  //   this.video.className="";
-  // }
+  componentWillUpdate(newProps){
+    if(newProps.menu && this.props.videoid == "vidBg"){
+      if(newProps.menu.showMenu == true){
+        this.video.play();
+        this.video.className="video";
+      }
+      else{
+        this.video.pause();
+        this.video.className="hide video";
+      }
+    }
+  }
 
   componentWillUnmount(){
     this.video.pause();

@@ -100,9 +100,9 @@ class WorkParent extends Component {
         }
       });
 
-      if (!params.filter) {
-        self.works.sort(numberSort)
-      }
+      // if (!params.filter) {
+        // self.works.sort(numberSort)
+      // }
 
     this.worksOnly = self.works.slice();
   }
