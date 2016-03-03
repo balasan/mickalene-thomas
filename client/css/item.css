@@ -56,7 +56,7 @@
     }
     &.special-selected {
         img {
-            opacity: 0.5;
+      /*      opacity: 0.5;*/
         }
         .text {
             opacity: 1;

@@ -28,6 +28,7 @@
             max-height: 55vh;
             max-width: 100%;
             opacity: 1;
+            backface-visibility: hidden;
             transition: opacity 150ms ease-out;
             &.mask {
               opacity: 0;
@@ -87,6 +88,9 @@
                 .bottom {
                     display: flex;
                     justify-content: flex-end;
+                    @media (--mobile) {
+                        flex-direction: column;
+                    }
                 }
                 .top {
                     text-align: right;
@@ -101,7 +105,7 @@
                         select {
                             width: 173px;
                             @media (--mobile) {
-                                width: 50%;
+                                width: 100%;
                             }
                             margin: 0 0 1em 0;
                             option {
@@ -279,6 +283,7 @@
         background-position: center;
         cursor: pointer;
         border: 2px solid black;
+        backface-visibility: hidden;
         opacity: 0.5;
         width: 75px;
         height: 75px;

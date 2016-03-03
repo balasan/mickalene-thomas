@@ -1,24 +1,25 @@
 @import "customMedia.css";
 @import "colors.css";
 
-#loadingWorks{
-    position:absolute;
-    top:0;
-    left:0;
-    height:0%;
+#loadingWorks {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0%;
     width: 0%;
-/*    .loader{
-        top:50%;
-        left:50%;
-        transform: translateX(-50%) translateY(-50%);
-        position:fixed;
-    }*/
+
+    /*    .loader{
+            top:50%;
+            left:50%;
+            transform: translateX(-50%) translateY(-50%);
+            position:fixed;
+        }*/
+
     /*transfrom: translateX(-50%) translateY(-50%);*/
-    img{
-        display:none;
+    img {
+        display: none;
     }
 }
-
 .worksContainer {
     transition: all .5s easeOutQuart;
     transform: scale(1) translateZ(0);
@@ -89,8 +90,7 @@
         transform-origin: 50% 0%;
         perspective: 600px;
         transform-style: preserve-3d;
-        backface-visibility: hidden;
-        /*padding: 0 1.5em 0 1.5em;*/
+        backface-visibility: hidden;        /*padding: 0 1.5em 0 1.5em;*/
         max-width: 70%;
         margin: auto;
         text-align: center;
@@ -105,22 +105,24 @@
             padding: 0;
             height: 85%;
         }
-        .imageContainer{
-          margin: auto;
-          overflow: hidden;
-           max-height: 100%;
-          display: flex;
+        .imageContainer {
+            margin: auto;
+            overflow: hidden;
+            max-height: 100%;
+            display: flex;
+
             &.painting {
                 border-radius: 50px;
             }
         }
         img {
-          max-height: 100%;
-        max-width: 100%;
-        margin: 0 auto;
-        object-fit: contain;
+            max-height: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            object-fit: contain;
 
             &.painting {
+
                 /*border-radius: 50px;*/
             }
         }
@@ -173,16 +175,18 @@
         &.left, &.right {
             width: 7%;
             pointer-events: auto;
+            background-image: url('/images/right_arrow.svg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 45%;
 
-            /*            background-image: url('/images/right_arrow.svg');
-                        background-repeat: no-repeat;
-                        background-position: center center;
-                        background-size: 45%;
-            */
+            @media (--desktop) {
+                opacity: 0;
+            }
             @media (--mobile) {
+                background-size: 80%;
+                background-position: bottom left;
 
-                /*                background-size: 80%;
-                                background-position: bottom left;*/
             }
 
             /*            opacity: 0;
@@ -195,7 +199,7 @@
         }
         &.left {
 
-            /* transform: scaleX(-1);*/
+            transform: scaleX(-1);
             cursor: w-resize;
         }
         &.right {
