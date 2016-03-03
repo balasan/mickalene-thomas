@@ -435,8 +435,8 @@ function GLView(_corner) {
     // else {
 
     if (window.location.hash == "#alt") {
-      camera.position.x -= (mouse.x / 10 + camera.position.x) * .05;
-      camera.position.y += (- mouse.y / 10 - camera.position.y) * .05;
+      camera.position.x -= (mouse.x / 15 + camera.position.x) * .05;
+      camera.position.y += (- mouse.y / 15 - camera.position.y) * .05;
       camera.lookAt(scene.position);
     }
     // }

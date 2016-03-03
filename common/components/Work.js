@@ -144,7 +144,7 @@ export default class Work extends Component {
     var minCol = 2;
     var maxCol = 3;
     if(this.params.filter){
-      hideSingle = true;
+      // hideSingle = false;
       // minCol = 2;
       maxCol = null;
     }

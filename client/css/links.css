@@ -17,9 +17,13 @@
                 font-size: 45px;
 
             }
+            transition: all .4s easeOutQuart !important;
 
             &:hover {
-                color: $offWhiteHalf;
+                /*color: $offWhiteHalf;*/
+                color: white;
+                text-shadow: 0px 0px 5px hsla(0,0%,0%,.6);
+                transform: scale(1.1);
             }
         }
 
@@ -35,6 +39,9 @@
 
             &:hover {
                 color: $offWhiteHalf;
+                color: white;
+                text-shadow: 0px 0px 5px 5px black;
+                opacity:1;
             }
         }
     }
@@ -77,12 +84,12 @@
                 pointer-events: auto;
                 height: 25px;
                 width: 25px;
-                opacity: 1;
+                opacity: .7;
                 transition: opacity 250ms easeOutQuart;
                 box-sizing: content-box;
 
                 &:hover {
-                    opacity: 0.5;
+                    opacity: 1.0;
                 }
             }
         }
@@ -121,12 +128,12 @@
                 pointer-events: auto;
                 height: 30px;
                 width: 30px;
-                opacity: 1;
+                opacity: .7;;
                 cursor: pointer;
                 transition: opacity 250ms easeOutQuart;
 
                 &:hover {
-                    opacity: 0.5;
+                    opacity: 1.0;
                 }
             }
         }
