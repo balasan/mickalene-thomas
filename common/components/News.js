@@ -282,10 +282,10 @@ setTimeout(function () {
 
       var allInsta = (
         <div className="right parent">
-          <div id="insta1">
+          <div id="insta1" className="insta-parent">
           {oldInsta}
           </div>
-          <div id="insta2">
+          <div id="insta2" className="insta-parent">
           {newInsta}
           </div>
         </div>
