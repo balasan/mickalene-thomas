@@ -114,6 +114,10 @@ export default class Work extends Component {
     this.setPerspective();
   }
 
+  componentWillUnmount() {
+    this.props.showLoader(false)
+  }
+
   // newsColor() {
   //   var newsEls = document.getElementsByClassName('newsItem');
   //   var i = 0;
