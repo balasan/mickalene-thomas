@@ -36,13 +36,13 @@ app.use(morgan('dev'));
 
 
 //Instagram
-Instagram.set('client_id', 'b7ed061ff5ca4f7288c2833dc509dc44');
-Instagram.set('client_secret', 'b38cc163d4f44e80aa23cf5f513088c8');
-Instagram.set('access_token', '2460658527.1677ed0.ce2225bfbd194a6f939bca44d02c3017');
+Instagram.set('client_id', '82098af553fe41e5adb08d0afd87c75d');
+Instagram.set('client_secret', '27ba4182cec5473f96b0185141e6a123');
+Instagram.set('access_token', '291145514.1677ed0.4180185b272d45569ebc889f3f815a1b');
 
 app.get('/api/instagram', function(req, res) {
     Instagram.users.recent({
-        user_id: 2460658527,
+        user_id: 291145514,
         complete: function(data) {
             res.json(data);
         }
