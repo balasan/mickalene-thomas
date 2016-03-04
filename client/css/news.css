@@ -46,6 +46,7 @@
                 background-color: white;
                 margin: 1px 0 1px 0;
                 padding: 2em;
+                transition: opacity .6s easeOutQuart, transform .6s easeOutQuart;
 
                 &.link {
                     cursor: pointer;
@@ -61,12 +62,7 @@
                     display: block;
                 }
                 &:first-of-type {
-
-                    /*@media (--desktop) {
-                      margin: 2px 0 1px 0;
-                    }
-                    @media (--mobile) {*/
-                    margin: 1px 0 1px 0;                  /*}*/
+                    margin: 1px 0 1px 0;
                 }
                 .mobile-image {
                     @media (--desktop) {

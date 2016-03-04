@@ -147,8 +147,8 @@ function fetchWork(callback) {
                     obj.type = item.type;
                     obj.title = item.data["work.title"].value[0].text;
                     obj.date = item.data["work.date"] ? item.data["work.date"].value : new Date('2014');
-                    var time = new Date(obj.date);
-                    obj.time = time.getTime();
+                    // var time = new Date(obj.date);
+                    // obj.time = time.getTime();
                     obj.medium = item.data["work.medium"] ? item.data["work.medium"].value[0].text : null;
 
                     obj.image = {};
@@ -274,7 +274,6 @@ function fetchNewsTags(callback) {
                     }
                 })
 
-                console.log(uniqueTags, 'newstags')
                 callback(null, uniqueTags)
             })
     });

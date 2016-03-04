@@ -85,9 +85,6 @@ class WorkParent extends Component {
 
 
   filterWorks(state, params) {
-    var numberSort = function(a, b) {
-     return parseFloat(a.time) - parseFloat(b.time);
-    }
     var self = this;
     var preShuffle = state.works;
     var shuffled = this.shuffle(preShuffle);
@@ -99,10 +96,6 @@ class WorkParent extends Component {
           return true;
         }
       });
-
-      // if (!params.filter) {
-      //   self.works.sort(numberSort)
-      // }
 
     this.worksOnly = self.works.slice();
   }
