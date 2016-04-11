@@ -31,13 +31,13 @@ export default class News extends Component {
     // this.lastContainer = document.getElementById("newsList1")
     // this.c1 = document.getElementById("newsList1");
     // this.c2 = document.getElementById("newsList2");
-    this.container = document.getElementById("newsList2");
-    this.containerOut = document.getElementById("newsList1");
+    // this.container = document.getElementById("newsList2");
+    // this.containerOut = document.getElementById("newsList1");
 
-    this.instaContainer = document.getElementById("insta2");
-    this.instaContainerOut = document.getElementById("insta1");
+    // this.instaContainer = document.getElementById("insta2");
+    // this.instaContainerOut = document.getElementById("insta1");
 
-    this.container3d = document.getElementById("newsList1");
+    // this.container3d = document.getElementById("newsList1");
 
       window.addEventListener('scroll', this.handleScroll.bind(this));
     // this.animateIn();
@@ -81,8 +81,8 @@ export default class News extends Component {
 
     if(!params || this.props.params.filter != params.filter){
       window.scrollTo(0,0);
-      this.oldNews = this.newNews.slice();
-      this.oldInsta = this.newInsta.slice();
+      // this.oldNews = this.newNews.slice();
+      // this.oldInsta = this.newInsta.slice();
       this.updateNewNews(nextProps);
       this.updateNewInsta(nextProps);
     }
@@ -125,44 +125,46 @@ export default class News extends Component {
   componentDidUpdate() {
     var self = this;
 
-setTimeout(function () {
+// setTimeout(function () {
 
-  var els = self.container.getElementsByTagName('a');
-  var instaEls = self.instaContainer.getElementsByTagName('a');
+//   var els = self.container.getElementsByTagName('a');
+//   var instaEls = self.instaContainer.getElementsByTagName('a');
 
-  for(var i = 0; i < els.length; i++) {
-    if (!els[i].classList.contains('news-enter-active')) {
-      els[i].classList.add('news-enter-active');
-    }
-  }
-  for(var i = 0; i < instaEls.length; i++) {
-    if (!instaEls[i].classList.contains('news-enter-active')) {
-      instaEls[i].classList.add('news-enter-active');
-    }
-  }
+//   for(var i = 0; i < els.length; i++) {
+//     if (!els[i].classList.contains('news-enter-active')) {
+//       els[i].classList.add('news-enter-active');
+//     }
+//   }
 
-}, 250);
+//   for(var i = 0; i < instaEls.length; i++) {
+//     if (!instaEls[i].classList.contains('news-enter-active')) {
+//       instaEls[i].classList.add('news-enter-active');
+//     }
+//   }
+
+// }, 250);
 
 
-setTimeout(function () {
-  var els = self.containerOut.getElementsByTagName('a');
-    var instaEls = self.instaContainerOut.getElementsByTagName('a');
+// setTimeout(function () {
+//   var els = self.containerOut.getElementsByTagName('a');
+//   var instaEls = self.instaContainerOut.getElementsByTagName('a');
 
-  for(var i = 0; i < els.length; i++) {
-    if (!els[i].classList.contains('news-leave-active')) {
-      els[i].classList.add('news-leave-active');
-    }
-  }
-  for(var i = 0; i < instaEls.length; i++) {
-    if (!instaEls[i].classList.contains('news-leave-active')) {
-      instaEls[i].classList.add('news-leave-active');
-    }
-  }
-}, 250);
+//   for(var i = 0; i < els.length; i++) {
+//     if (!els[i].classList.contains('news-leave-active')) {
+//       els[i].classList.add('news-leave-active');
+//     }
+//   }
+
+//   for(var i = 0; i < instaEls.length; i++) {
+//     if (!instaEls[i].classList.contains('news-leave-active')) {
+//       instaEls[i].classList.add('news-leave-active');
+//     }
+//   }
+// }, 250);
 
     if(self.oldNews.length) {
       setTimeout(function(){
-        self.oldNews = [];
+        // self.oldNews = [];
         self.setState({})
       },500)
     }
@@ -196,7 +198,7 @@ setTimeout(function () {
 
   render () {
     var instaList = null;
-    var self = this, newNews, oldNews, newInsta, oldInsta;
+    var self = this, newNews, newInsta, oldInsta;
 
     var filterBool = true;
     if (self.params) {
@@ -209,7 +211,7 @@ setTimeout(function () {
 
     if( !self.props.state.news )  newNews = [];
     else newNews = newsEl(this.newNews, 'news-enter', selected);
-    oldNews = newsEl(this.oldNews, 'news-leave', selected);
+    // oldNews = newsEl(this.oldNews, 'news-leave', selected);
 
     function newsEl(newsArray, action, selected) {
       return newsArray.map(function(item, i){
@@ -224,8 +226,7 @@ setTimeout(function () {
         var link = item.link ? <div></div> : null;
 
         return (
-            <a id={item.id} target="blank" href={item.link ? item.link : 'javascript:'} className={item.link ? 'link news-item '+action : 'news-item '+action} style={{"transitionDelay" : delay}} key={item.id+self.params.filter+i}>
-
+            <a id={item.id} target="blank" href={item.link ? item.link : 'javascript:'} className={item.link ? 'link news-item' : 'news-item'} style={{"transitionDelay" : delay}} key={item.id+self.params.filter+i}>
             {img}
             <section style={sectionStyle} className='left' >
               <article>
@@ -258,12 +259,10 @@ setTimeout(function () {
         }
     }
 
-    oldInsta = instaEl(this.oldInsta, 'news-leave', selected);
-
     function instaEl(instaArray, action, selected) {
       return instaArray.map(function (item, i) {
        return (
-         <a target='_blank' className={'noselect '+action} href={item.link} key={item.id}>
+         <a target='_blank' className='noselect' href={item.link} key={item.id}>
            <img src={item.images.standard_resolution.url} />
          </a>
        )
@@ -272,21 +271,32 @@ setTimeout(function () {
 
     var all = (
       <div className='left parent'>
-          <div id='newsList1'>
-              {oldNews}
-          </div>
-          <div id='newsList2'>
+
+          <div>
+              <ReactCSSTransitionGroup
+            transitionName="news"
+            transitionAppear={true}
+            transitionAppearTimeout={700}
+            transitionEnterTimeout={700}
+            transitionLeave={false}
+          >
               {newNews}
+                  </ReactCSSTransitionGroup>
           </div>
       </div>)
 
       var allInsta = (
         <div className="right parent">
-          <div id="insta1" className="insta-parent">
-          {oldInsta}
-          </div>
-          <div id="insta2" className="insta-parent">
+          <div className="insta-parent">
+             <ReactCSSTransitionGroup
+            transitionName="news"
+            transitionAppear={true}
+            transitionAppearTimeout={700}
+            transitionEnterTimeout={700}
+            transitionLeave={false}
+          >
           {newInsta}
+           </ReactCSSTransitionGroup>
           </div>
         </div>
       )

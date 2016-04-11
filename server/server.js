@@ -45,6 +45,7 @@ app.get('/api/instagram', function(req, res) {
         user_id: 291145514,
         complete: function(data) {
             res.json(data);
+            console.log(data, 'data')
         }
     });
 });
