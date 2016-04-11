@@ -149,10 +149,10 @@ function GLView(_corner) {
     }
 
 
-    if (window.location.hash=="#alt")
+    // if (window.location.hash=="#alt")
       video = document.getElementById("vidPattern");
-    else
-      video = document.getElementById("vidBg");
+    // else
+      // video = document.getElementById("vidBg");
     videoTexture = new THREE.Texture( video );
 
     videoTexture.minFilter = THREE.LinearFilter;
@@ -218,8 +218,8 @@ function GLView(_corner) {
     var tabletAspect = 1;
     var videoAspect = 9/9;
 
-    if (window.location.hash=="#alt")
-      videoAspect = 16/9;
+    // if (window.location.hash=="#alt")
+    videoAspect = 16/9;
 
     // var videoAspect = 2.39
 
@@ -319,10 +319,10 @@ function GLView(_corner) {
     //   logo.add(object);
     // })
 
-    var mObj = "/3d/M-flat.obj";
-    if(window && window.location.hash == '#alt'){
+    // var mObj = "/3d/M-flat.obj";
+    // if(window && window.location.hash == '#alt'){
       var mObj = "/3d/M.obj";
-    }
+    // }
 
     loader.load(mObj, function(object) {
       object.traverse(function(child) {

@@ -33,9 +33,9 @@ class Splash extends Component {
     }
 
     this.bgVid = "vidPattern"
-    if(window && window.location.hash == '#alt'){
-      this.bgVid = 'vidPattern'
-    }
+    // if(window && window.location.hash == '#alt'){
+      // this.bgVid = 'vidPattern'
+    // }
 
     // if(!window.glViewCorner) {
     //   var corner = true;
