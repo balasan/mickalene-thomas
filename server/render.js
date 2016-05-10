@@ -26,10 +26,10 @@ function renderFullPage(html, initialState) {
       </head>
       <body>
         <div class="bg"></div>
-        <video id="vidBg" preload="auto" class="hidden video" loop="true">
+        <video id="vidBg" preload="none" class="hidden video" loop="true">
           <source src="/video/studio.mp4" type="video/mp4"/>
         </video>
-        <video id="vidPattern" preload="auto" class="hidden video" loop="true">
+        <video id="vidPattern" preload="none" class="hidden video" loop="true">
           <source src="/video/bg-vid.mp4" type="video/mp4"/>
         </video>
 
@@ -60,9 +60,10 @@ function renderFullPage(html, initialState) {
           </div>
         </div> -->
 
-
+        <div id="nowebgl" class="hidden bg">
+          <img src="/images/nowebgl.jpg">
+        </div>
         <canvas id="webGL"></canvas>
-        <!--<canvas id="webGLCorner"></canvas>-->
 
         <div id="app">${html}</div>
          <script>

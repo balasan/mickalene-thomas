@@ -1,10 +1,7 @@
 'user strict';
 window.THREE = require('three/three.min.js')
 require('./OBJLoader');
-require('./ColladaLoader');
-
-// require('three-json-loader');
-// var collada = require('three-loaders-collada')(THREE);
+// require('./ColladaLoader');
 
 
 function GLView(_corner) {
@@ -15,7 +12,7 @@ function GLView(_corner) {
   var cameraTarget = new THREE.Vector3(0, 0, -100);
   var cameraExtra = new THREE.Vector2(0, 0);
   var wall;
-  var videoTexture;
+  var videoTexture, imgTexture;
   var WIDTH = window.innerWidth;
   var HEIGHT = window.innerHeight;
   if (corner) {
@@ -37,6 +34,7 @@ function GLView(_corner) {
   var text;
   var logo;
   var oldTime;
+  var M;
 
   var loadedItems = 0;
 
@@ -90,23 +88,10 @@ function GLView(_corner) {
     scene.add(camera);
 
 
-    var loader = new THREE.JSONLoader();
+    // var loader = new THREE.JSONLoader();
 
-    // var aLight = new THREE.AmbientLight(new THREE.Color("hsl(0, 0%, 30%)"));
     var aLight = new THREE.AmbientLight(new THREE.Color("hsl(0, 0%, 100%)"));
     scene.add(aLight);
-
-    var pLight = new THREE.PointLight(new THREE.Color(1, 1, 1), .7, 2000);
-    pLight.position.set(-100, -10, 800);
-    // scene.add(pLight);
-
-    var bottomLight = new THREE.PointLight(new THREE.Color(1, 1, 1), 0.7, 100);
-    bottomLight.position.set(10, 60, 10);
-    // scene.add(bottomLight);
-
-    var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
-    directionalLight.position.set( 1, 1, -1 ).normalize();
-    // scene.add( directionalLight );
 
     try {
       // renderer
@@ -132,54 +117,40 @@ function GLView(_corner) {
       // renderer.setClearColor(scene.fog.color);
 
       renderer.sortObjects = false;
-      // renderer.domElement.id = 'webGLView'
 
-      // container.appendChild(renderer.domElement);
       has_gl = true;
 
       document.addEventListener('mousemove', onMouseMove, false);
       // document.addEventListener('touchmove', onTouchMove, false);
       window.addEventListener('resize', onWindowResize, false);
+      window.addEventListener('DOMContentLoaded', onWindowResize, false);
+      window.addEventListener('load', onWindowResize, false);
 
     } catch (e) {
       // need webgl
-      document.getElementById('info').innerHTML = "<P><BR><B>Note.</B> You need a modern browser that supports WebGL for this to run the way it is intended.<BR>For example. <a href='http://www.google.com/landing/chrome/beta/' target='_blank'>Google Chrome 9+</a> or <a href='http://www.mozilla.com/firefox/beta/' target='_blank'>Firefox 4+</a>.<BR><BR>If you are already using one of those browsers and still see this message, it's possible that you<BR>have old blacklisted GPU drivers. Try updating the drivers for your graphic card.<BR>Or try to set a '--ignore-gpu-blacklist' switch for the browser.</P><CENTER><BR><img src='../general/WebGL_logo.png' border='0'></CENTER>";
-      document.getElementById('info').style.display = 'block';
+      // handle no webgl
+      // document.getElementById('info').innerHTML = "<P><BR><B>Note.</B> You need a modern browser that supports WebGL for this to run the way it is intended.<BR>For example. <a href='http://www.google.com/landing/chrome/beta/' target='_blank'>Google Chrome 9+</a> or <a href='http://www.mozilla.com/firefox/beta/' target='_blank'>Firefox 4+</a>.<BR><BR>If you are already using one of those browsers and still see this message, it's possible that you<BR>have old blacklisted GPU drivers. Try updating the drivers for your graphic card.<BR>Or try to set a '--ignore-gpu-blacklist' switch for the browser.</P><CENTER><BR><img src='../general/WebGL_logo.png' border='0'></CENTER>";
+      // document.getElementById('info').style.display = 'block';
+      document.getElementById('nowebgl').className='bg';
+      document.getElementById('webGL').className='hidden';
       return;
     }
 
 
-    // if (window.location.hash=="#alt")
-      video = document.getElementById("vidPattern");
-    // else
-      // video = document.getElementById("vidBg");
+    video = document.getElementById("vidPattern");
     videoTexture = new THREE.Texture( video );
 
     videoTexture.minFilter = THREE.LinearFilter;
     videoTexture.minFilter = THREE.LinearFilter;
 
-    // var bg2 = THREE.ImageUtils.loadTexture("/images/t4.jpg",null, render);
-    // bg2.wrapS = bg2.wrapT = THREE.RepeatWrapping;
-    // bg2.repeat.set(5, 5);
-    // var bg2N = THREE.ImageUtils.loadTexture("/images/bg2_NRM.jpg",null,render);
-    // bg2N.wrapS = bg2N.wrapT = THREE.RepeatWrapping;
-    // bg2N.repeat.set(5, 5);
+    // var img = new Image();
+    // img.src = "/images/collage.jpg";
 
-    var bg2 = THREE.ImageUtils.loadTexture("/images/collage.jpg",null, render);
-    bg2.wrapS = bg2.wrapT = THREE.RepeatWrapping;
-    bg2.repeat.set(5, 5);
-    var bg2N = THREE.ImageUtils.loadTexture("/images/collage.jpg",null,render);
-    bg2N.wrapS = bg2N.wrapT = THREE.RepeatWrapping;
-    bg2N.repeat.set(5, 5);
-
-
-    var trans = THREE.ImageUtils.loadTexture("/images/collage.jpg",render);
-    trans.wrapS = trans.wrapT = THREE.RepeatWrapping;
-    var transN = THREE.ImageUtils.loadTexture("/images/transparent_NRM.png",render);
-    transN.wrapS = transN.wrapT = THREE.RepeatWrapping;
-    trans.repeat.set(1, 1);
-
-
+    // imgTexture = THREE.ImageUtils.loadTexture("/images/collage.jpg",null,render);
+    // imgTexture = THREE.ImageUtils.loadTexture("/images/sparkle.jpg",null,render);
+    imgTexture = THREE.ImageUtils.loadTexture("/images/glitter-sq.jpg",null,render);
+    imgTexture.wrapS = THREE.RepeatWrapping;
+    imgTexture.wrapT = THREE.RepeatWrapping;
 
     var shininess = 30,
       // diffuse = new THREE.Color(.6, .6, .6),
@@ -189,8 +160,8 @@ function GLView(_corner) {
 
     var planeGeometry = new THREE.PlaneGeometry(400, 400);
     var greyMaterial = new THREE.MeshPhongMaterial({
-      map: bg2,
-      normalMap: bg2N,
+      // map: bg2,
+      // normalMap: bg2N,
       normalScale: normalScale,
       color: new THREE.Color("hsl(0, 0%, 100%)"),
       specular: specular,
@@ -201,33 +172,10 @@ function GLView(_corner) {
     });
 
 
-
-
-    var texture3 = greyMaterial.clone()
-    texture3.map = bg2;
-    texture3.normalMap = bg2N;
-    texture3.shininess = 20;
-    texture3.normalScale = new THREE.Vector2(0, 1);
-
-
     transMaterial = greyMaterial.clone()
-    transMaterial.map = trans;
-
-    transMaterial.map = videoTexture;
-
-    var tabletAspect = 1;
-    var videoAspect = 9/9;
-
-    // if (window.location.hash=="#alt")
-    videoAspect = 16/9;
-
-    // var videoAspect = 2.39
-
-    // child.material.map.offset.x = -tabletAspect/videoAspect * 1/2
-    transMaterial.map.repeat.x = tabletAspect/videoAspect
-    transMaterial.map.offset.x = (1-tabletAspect/videoAspect) * 1/2
-
-    transMaterial.normalMap = transN;
+    transMaterial.map = imgTexture;
+    // updateTextureAspect();
+    transMaterial.normalMap = imgTexture;
 
     transMaterial.normalMap = null;
 
@@ -251,86 +199,26 @@ function GLView(_corner) {
     }
 
     textMaterial.shininess = 40;
-    // GOLD TEXT
-    // textMaterial.color = new THREE.Color("rgb(215,195,0)");
-    // textMaterial.specular = new THREE.Color("rgb(165,125,100)");
-
-    // SILVER TEXT
-    // textMaterial.color = new THREE.Color("hsl(0, 0%, 50%)");
     textMaterial.color = new THREE.Color("hsl(0, 0%, 100%)");
     textMaterial.specular = new THREE.Color("hsl(0, 0%, 100%)");
 
-    var sideMaterial = greyMaterial.clone()
-    sideMaterial.map = null;
-    sideMaterial.normalMap = null;
-    sideMaterial.metal = true;
-    sideMaterial.transparent = false;
-    // GOLD
-    // sideMaterial.color = new THREE.Color("rgb(215,195,0)");
-    // sideMaterial.specular = new THREE.Color("rgb(225,185,0)");
-    // SILVER
-    sideMaterial.color = new THREE.Color("hsl(0, 0%, 90%)");
-    sideMaterial.specular = new THREE.Color("hsl(0, 0%, 100%)");
-    sideMaterial.shininess = 70;
-
-
-    var plane = new THREE.Mesh(planeGeometry, greyMaterial);
-    plane.position.y = -100;
-    plane.rotation.x = -Math.PI / 2;
-    // scene.add(plane);
-
-    wall = new THREE.Mesh(planeGeometry, texture3);
-    // plane.position.y = -100;
-    wall.position.z = -1000;
-    // plane.rotation.y = -Math.PI / 7;
-    wall.scale.set(20, 20, 20);
-    // if (!corner)
-      // scene.add(wall);
 
 
     logo = new THREE.Object3D();
-    // scene.add(logo)
+    M = new THREE.Object3D();
     logo.position.y = 10;
-    var s = .4;
-    // var s = .1;
-    logo.scale.set(s, s, s);
-
-    var cLoader = new THREE.ColladaLoader();
-
-    // cLoader.load( '/3d/m_03.dae', function ( collada ) {
-
-    //   var mesh = collada.scene;
-
-    //   mesh.traverse( function ( child ) {
-
-    //     if(child.material){
-    //       console.log(child.material.name)
-    //     }
-
-    //   })
-    // })
-
 
     var loader = new THREE.OBJLoader();
-    var jLoader = new THREE.JSONLoader();
-    // jLoader.load('/3d/MfaceOnly.js', function (geometry) {
-    //   var material = new THREE.MeshFaceMaterial([sideMaterial, transMaterial, sideMaterial]);
-    //   var object = new THREE.Mesh(geometry, material);
-    //   logo.add(object);
-    // })
 
-    // var mObj = "/3d/M-flat.obj";
-    // if(window && window.location.hash == '#alt'){
-      var mObj = "/3d/M.obj";
-    // }
+    var mObj = "/3d/M.obj";
 
     loader.load(mObj, function(object) {
       object.traverse(function(child) {
         if (child instanceof THREE.Mesh) {
           child.material = transMaterial;
-          console.log(child)
         }
       });
+      M = object;
       logo.add(object);
     });
 
@@ -338,32 +226,37 @@ function GLView(_corner) {
       object.traverse(function(child) {
         if (child instanceof THREE.Mesh) {
           child.material = textMaterial;
-          console.log(child)
         }
       });
-      // console.log(object, 'object')
       text = object;
       logo.add(text);
     });
 
-    // loader.load('/3d/09_m-n.obj', function(object) {
-    //   object.traverse(function(child) {
-    //     if (child instanceof THREE.Mesh) {
-    //       child.material = transMaterial;
-    //       // child.material = new THREE.MultiMaterial(transMaterial,textMaterial,transMaterial,transMaterial);
-    //     }
-    //   });
-    //   text = object;
-    //   logo.add(text);
-    // });
-    //
 
-    render();
+    onWindowResize()
+    if(has_gl)
+      render();
+  }
+
+  function updateTextureAspect(video){
+
+    if(video){
+      var tabletAspect = 1;
+      var videoAspect = 16/9;
+
+      transMaterial.map.repeat.x = tabletAspect/videoAspect
+      transMaterial.map.offset.x = (1-tabletAspect/videoAspect) * 1/2
+    }
+    else{
+      var tabletAspect = 1;
+      var videoAspect =  1743/1629;
+
+      transMaterial.map.repeat.x = tabletAspect/videoAspect
+      transMaterial.map.offset.x = (1-tabletAspect/videoAspect) * 1/2
+    }
   }
 
   function onWindowResize(event) {
-
-    if (corner) return;
 
     var w = window.innerWidth;
     var h = window.innerHeight;
@@ -375,24 +268,26 @@ function GLView(_corner) {
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
 
+    var s = .4;
+
+    if (w < 900){
+      s= .25;
+    }
+    if(h < 700){
+      s = .25;
+    }
+
+    logo.scale.set(s, s, s);
   }
 
 
 
   function onMouseMove(event) {
-
-    // event.preventDefault();
-    // mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    // mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     mouse.x = (event.clientX - window.innerWidth/2);
     mouse.y = -(event.clientY - window.innerHeight/2);
-
-
   }
 
   function onTouchMove(event) {
-
-    // event.preventDefault();
 
     for (var i = 0; i < event.changedTouches.length; i++) {
 
@@ -426,26 +321,25 @@ function GLView(_corner) {
       delta = 1000 / 60;
     }
 
-    // if (corner) {
-    //   // wall.rotation.y += (.5 * mouse.x / WIDTH - wall.rotation.y) * .05;
-    //   // wall.rotation.x += (.5 * mouse.y / HEIGHT - wall.rotation.x) * .05;
-    //   logo.rotation.y += (.7 * mouse.x / WIDTH - logo.rotation.y) * .05;
-    //   logo.rotation.x += (.7 * mouse.y / HEIGHT - logo.rotation.x) * .05;
-    // }
-    // else {
+    if(transMaterial.map != videoTexture){
+      transMaterial.map.offset.x += delta * .00002;
+      transMaterial.map.offset.y -= delta * .00001;
+    }
 
     if (window.location.hash == "#alt") {
       camera.position.x -= (mouse.x / 15 + camera.position.x) * .05;
       camera.position.y += (- mouse.y / 15 - camera.position.y) * .05;
       camera.lookAt(scene.position);
     }
-    // }
 
 
     if ( video.readyState === video.HAVE_ENOUGH_DATA ) {
       if ( videoTexture ) videoTexture.needsUpdate = true;
+      if (transMaterial.map != videoTexture) {
+        transMaterial.map = videoTexture;
+        updateTextureAspect(true);
+      }
     }
-    // controls.update();
     var optimalDivider = delta / 16;
     var smoothing = Math.max(5, (30 / optimalDivider));
 
@@ -456,10 +350,14 @@ function GLView(_corner) {
 
   this.start = function() {
     stop = false;
-    animate();
+    if(has_gl) animate();
   }
   this.add = function() {
-    scene.add(logo);
+    if(has_gl)
+      scene.add(logo);
+    else{
+      document.getElementById('nowebgl').className='bg';
+    }
   }
   this.stop = function() {
     camera.position.x = 0;
@@ -467,25 +365,13 @@ function GLView(_corner) {
     stop = true;
   }
   this.remove = function() {
-    console.log(scene, 'scene')
-    scene.remove(logo)
+    if(has_gl)
+      scene.remove(logo)
+    else{
+       document.getElementById('nowebgl').className='bg hidden';
+    }
   }
 
-  this.cornerState = function(_corner) {
-    // corner = _corner;
-    // if (corner) {
-    //   var position = unproject(110, 70, 0);
-    //   console.log(position);
-    //   var s = .1;
-    //   logo.scale.set(s, s, s);
-    //   logo.position.copy(position);
-    // }
-    // else {
-    //   var s = .4;
-    //   logo.scale.set(s, s, s);
-    //   logo.position.set(0, 10, 0);
-    // }
-  };
 
   function unproject(x, y, z) {
     var vector = new THREE.Vector3();
@@ -501,8 +387,12 @@ function GLView(_corner) {
     return pos;
   }
 
-  this.dom = renderer.domElement
+  if(renderer)
+    this.dom = renderer.domElement
+  else
+    this.dom = null;
 
+  this.has_gl = has_gl;
 }
 
 module.exports = GLView;
