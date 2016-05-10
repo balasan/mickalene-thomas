@@ -8,88 +8,96 @@ import { updatePath } from 'redux-simple-router';
 // import SizeChart from '../components/SizeChart';
 
 export default class Product extends Component {
+  constructor (props, context) {
+    super(props, context)
+    this.state = {
+      currentSize: null,
+      currentStyle: null,
+      currentVariation: null
+    }
+  }
 
   componentDidMount() {
     window.scrollTo(0,0);
-    this.currentSize = null;
-    this.currentStyle = null;
   }
 
   componentDidUpdate() {
   }
 
-  render () {
-    var productEl = null;
-    var product = this.props.state.store.product;
-    var showChart = this.props.state.store.showChart;
-    const { add, toggleChart } = this.props;
-    var self = this;
-
-
-    const openCart = function() {
+   openCart() {
         window.location.hash = '#cart';
     }
 
-    const doubleCart = function() {
+    doubleCart() {
+      var self = this;
+      var product = self.props.state.store.product;
       var warning = document.getElementById('warning');
       var regularProduct = JSON.parse(JSON.stringify(product));
       var productVariant = JSON.parse(JSON.stringify(product));
       productVariant.variation = {};
 
       if (product.vars.length > 0 && product.sizes.length > 0) {
-        if (self.currentSize && self.currentVariation) {
-            productVariant.variation.size = self.currentSize;
-            productVariant.variation.description = self.currentVariation.description;
-            productVariant.variation.image = self.currentVariation.image;
-            productVariant.variation.quanitity = self.currentVariation.quanitity;
-            productVariant.variation.sku = self.currentVariation.sku;
-            add(productVariant);
-            openCart();
+        if (self.state.currentSize && self.state.currentVariation) {
+            productVariant.variation.size = self.state.currentSize;
+            productVariant.variation.description = self.state.currentVariation.description;
+            productVariant.variation.image = self.state.currentVariation.image;
+            productVariant.variation.quanitity = self.state.currentVariation.quanitity;
+            productVariant.variation.sku = self.state.currentVariation.sku;
+            self.props.add(productVariant);
+            self.openCart();
         } else {
-          // alert('must have size and style');
           warning.innerHTML = 'must select size and style';
           warning.classList.remove('hidden');
         }
       } else if (product.vars.length > 0 && product.sizes.length == 0) {
-        if (self.currentVariation) {
-            productVariant.variation.description = self.currentVariation.description;
-            productVariant.variation.image = self.currentVariation.image;
-            productVariant.variation.quanitity = self.currentVariation.quanitity;
-            productVariant.variation.sku = self.currentVariation.sku;
-            add(productVariant);
-            openCart();
+        if (self.state.currentVariation) {
+            productVariant.variation.description = self.state.currentVariation.description;
+            productVariant.variation.image = self.state.currentVariation.image;
+            productVariant.variation.quanitity = self.state.currentVariation.quanitity;
+            productVariant.variation.sku = self.state.currentVariation.sku;
+             self.props.add(productVariant);
+            self.openCart();
         } else {
           warning.innerHTML = 'must select a style';
           warning.classList.remove('hidden');
         }
       } else if (product.vars.length == 0 && product.sizes.length > 0) {
-          if (self.currentSize) {
-            productVariant.variation.size = self.currentSize;
-            add(productVariant);
-            openCart();
+          if (self.state.currentSize) {
+            productVariant.variation.size = self.state.currentSize;
+             self.props.add(productVariant);
+            self.openCart();
         } else {
           warning.innerHTML = 'must select a size';
           warning.classList.remove('hidden');
         }
       }
       else {
-        add(regularProduct);
-        openCart();
+         self.props.add(regularProduct);
+        self.openCart();
       }
     }
 
+    switchImg(selected) {
+      var self = this;
+      var url;
+      if (typeof selected == 'object') {
+        self.setState({currentVariation: selected})
+        url = selected.image;
+      } else {
+        url = selected;
+        self.setState({currentVariation: null})
+      }
 
-    const switchImg = function(img) {
       var mainImg = document.getElementById('main-product-image');
       mainImg.classList.add('mask');
       setTimeout(function () {
-        mainImg.src=img;
+        mainImg.src=url;
         mainImg.classList.remove('mask');
       }, 200);
       var single = document.getElementsByClassName('single-prod-image');
       var i = 0;
       for (i = 0; i < single.length; i++) {
-        if (single[i].getAttribute('data-src') == img) {
+        if (single[i].getAttribute('data-src') == url) {
           single[i].classList.add('selected')
         } else {
           if (single[i].classList.contains('selected')) {
@@ -99,7 +107,9 @@ export default class Product extends Component {
       }
     }
 
-    const optionSelect = function(e) {
+   optionSelect(e) {
+    var self = this;
+       var product = self.props.state.store.product;
       var warning = document.getElementById('warning');
       var selected = e.target.value;
       if (selected) {
@@ -108,24 +118,31 @@ export default class Product extends Component {
         }
         product.vars.forEach(function(vari) {
           if (vari.description == selected) {
-            switchImg(vari.image);
-            self.currentVariation = vari;
+            self.switchImg(vari.image);
+            self.setState({currentVariation: vari});
           }
         })
       }
     }
 
-    const sizeSelect = function(e) {
+    sizeSelect(e) {
+      var self = this;
       var warning = document.getElementById('warning');
       var size = e.target.value;
       if (size) {
         if (!warning.classList.contains('hidden')) {
           warning.classList.add('hidden')
         }
-        self.currentSize = size;
+        self.setState({currentSize: size});
       }
     }
 
+  render () {
+    var productEl = null;
+    var product = this.props.state.store.product;
+    var showChart = this.props.state.store.showChart;
+    const { add, toggleChart } = this.props;
+    var self = this;
     var images = null;
     var dropDowns = null;
     var sizes = null;
@@ -150,13 +167,15 @@ export default class Product extends Component {
 
       if (product.images.length > 1) {
           var images = product.images.map(function(vari, i) {
+            var url;
+            typeof vari == 'object' ? url = vari.image : url = vari;
             var divStyle = {
-              backgroundImage: 'url(' + vari + ')'
+              backgroundImage: 'url(' + url + ')'
             };
             if (i == 0) {
-              return (<div className='single-prod-image selected' onClick={switchImg.bind(this, vari)} data-src={vari} style={divStyle}></div>)
+              return (<div className='single-prod-image selected' onClick={self.switchImg.bind(self, vari)} data-src={url} style={divStyle}></div>)
             } else {
-              return (<div className='single-prod-image' onClick={switchImg.bind(this, vari)} data-src={vari} style={divStyle}></div>)
+              return (<div className='single-prod-image' onClick={self.switchImg.bind(self, vari)} data-src={url} style={divStyle}></div>)
             }
         });
       }
@@ -180,11 +199,11 @@ export default class Product extends Component {
       if (product.vars.length > 1 && product.sizes.length > 1) {
         var dropDowns = (
           <div className='dropdowns-parent'>
-            <select id="descriptions" onChange={optionSelect.bind(this)}>
+            <select id="descriptions" onChange={self.optionSelect.bind(this)}>
               <option value="null">Select a style</option>
               {descriptions}
             </select>
-            <select onChange={sizeSelect.bind(this)}>
+            <select onChange={self.sizeSelect.bind(this)}>
               <option value="null">Select a size</option>
               {sizes}
             </select>
@@ -194,7 +213,7 @@ export default class Product extends Component {
       } else if (product.vars.length > 1) {
         var dropDowns = (
           <div className='dropdowns-parent'>
-            <select id="descriptions" onChange={optionSelect.bind(this)}>
+            <select id="descriptions" onChange={self.optionSelect.bind(this)}>
               <option value="null">Select a style</option>
               {descriptions}
             </select>
@@ -203,7 +222,7 @@ export default class Product extends Component {
       } else if (product.sizes.length > 1) {
         var dropDowns = (
           <div className='dropdowns-parent'>
-            <select onChange={sizeSelect.bind(this)}>
+            <select onChange={self.sizeSelect.bind(this)}>
             <option value="null">Select a size</option>
               {sizes}
             </select>
@@ -228,7 +247,10 @@ export default class Product extends Component {
 
               <section className='left'>
                 <h1>{product.title}</h1>
-                <div className='description'><p>{product.description}</p></div>
+                <div className='description'>
+                  <p>{product.description}</p>
+                  {self.state.currentVariation ? <p>{self.state.currentVariation.description}</p> : null}
+                </div>
 
               </section>
 
@@ -246,7 +268,7 @@ export default class Product extends Component {
                     <p>{product.price ? '$' : null}{product.price ? product.price.toFixed(2) : 'price available upon request'}</p>
                   </div>
                   <div className='button-parent'>
-                    {product.price ? <button className="noselect" onClick={doubleCart}>Add to Shopping Bag</button> : <a href="mailto:hello@mickalenethomas.com" target="_blank" className="no-price noselect">Contact Us</a>}
+                    {product.price ? <button className="noselect" onClick={self.doubleCart.bind(self)}>Add to Shopping Bag</button> : <a href="mailto:hello@mickalenethomas.com" target="_blank" className="no-price noselect">Contact Us</a>}
                   </div>
                 </div>
 

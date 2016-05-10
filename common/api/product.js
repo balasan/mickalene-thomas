@@ -171,7 +171,7 @@
                             varObj.image = vari.variationImage.value.views.small.url;
                             varObj.description = vari.vartiationDescription ? vari.vartiationDescription.value : null;
                             obj.vars.push(varObj);
-                            obj.images.push(varObj.image);
+                            obj.images.push(varObj);
                         });
                      } else {
                         // var singleSku = item.data["product-v.sku"] ? item.data["product-v.sku"].value : null;
