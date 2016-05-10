@@ -99,7 +99,7 @@ class Menu extends Component {
     }
 
     var video = null;
-    if(showMenu){
+    if(showMenu && !window.mobilecheck()){
        video = (<Video videoid="vidBg"></Video>)
     }
 
