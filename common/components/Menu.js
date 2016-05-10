@@ -4,13 +4,10 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as MenuActions from '../actions/menu'
-// import Splash from '../containers/Splash';
 import Video from './Video';
-
 import { fetchContact } from '../api/contact';
 
 class Menu extends Component {
-
 
   componentDidMount() {
     var self = this;
@@ -19,6 +16,7 @@ class Menu extends Component {
       self.render();
     });
     this.socialEl = false;
+    console.log(screen.width, 'width');
   }
 
   componentDidUpdate() {
@@ -29,7 +27,6 @@ class Menu extends Component {
     });
   }
 
-
   render () {
     var filterType = this.props.params.filter;
     var path = this.props.children.props.route.path;
@@ -38,11 +35,9 @@ class Menu extends Component {
     const { toggleMenu } = this.props;
     var showMenu = this.props.state.menu.showMenu;
     var location = this.props.state.routing.path;
-
     var showHeader = true;
     if(location == '/' || showMenu)
       showHeader = false
-
     var links = null;
 
     var socialEl = null;
@@ -92,22 +87,20 @@ class Menu extends Component {
             </section>
           </footer>
 
-        </section>
-          )
+        </section>)
     } else {
       null
     }
 
     var video = null;
-    if(showMenu){
+    if(showMenu && screen.width > 500){
        video = (<Video videoid="vidBg"></Video>)
     }
 
     return (
       <div>
         {links}
-{/*          <Splash></Splash> */}
-       {video}
+        {video}
       </div>
     )
   }

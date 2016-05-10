@@ -39,24 +39,10 @@ class Nav extends Component {
     var showMenu = this.props.state.menu.showMenu;
     var location = this.props.children.props.route.path;
     var self = this;
-    // console.log(this.props, 'nav ')
-
 
     const closeItem = function() {
        self.props.dispatch(updatePath('/works'))
     }
-
-
-    // const multi = function() {
-    //   toggleMenu();
-    //   // var main = document.getElementById('main');
-    //   // if (main.classList.contains('hide')) {
-    //   // main.classList.remove('hide');
-    //   // } else {
-    //   //   main.classList.add('hide');
-    //   // }
-
-    // }
 
     const toggleCart = function() {
       var cartHash = window.location.hash == '#cart';
@@ -203,7 +189,7 @@ class Nav extends Component {
             <div className='top'>
             <section className='left'>
               {path == 'works/i/:itemId' ? null : <Link className='logo' to="/">mickalene thomas</Link>}
-              {path == 'works' || path == 'works/' || path == 'works/filter/:filter' || path == 'news/' || path == 'news' || path == 'news/filter/:filter' ? <Link to='/works' className='back'></Link> : null}
+              {path == 'works/filter/:filter' || path == 'news/' || path == 'news' || path == 'news/filter/:filter' ? <Link to='/works' className='back'></Link> : null}
               {path == 'store/:itemId' ? <Link to='/store' className='back'></Link> : null}
             </section>
             <section className='middle'>
@@ -212,14 +198,10 @@ class Nav extends Component {
             </section>
             <section className='right'>
             {cart}
-
             <img className={'hamburger noselect'} onClick={toggleMenu} src={'../../images/menu.svg'} />
 
             </section>
             </div>
-            {/*<div className={bottomClass}>
-            {mobileFilters}
-            </div> */}
           </nav>
         )
     }

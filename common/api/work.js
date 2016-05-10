@@ -21,9 +21,7 @@ var configuration = {
 
 prismic.init(configuration);
 
-export
-
-function fetchItem(id, callback) {
+export function fetchItem(id, callback) {
     prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
 
         Api.form('everything')
@@ -36,12 +34,15 @@ function fetchItem(id, callback) {
                 var simple;
 
                 response.results.forEach(function(item) {
+                    console.log(item, 'fetchItem')
                     var obj = {}
                     obj.id = item.id;
                     obj.tags = item.tags;
                     obj.title = item.data["work.title"].value[0].text;
                     obj.date = item.data["work.date"] ? item.data["work.date"].value : '';
                     obj.medium = item.data["work.medium"] ? item.data["work.medium"].value[0].text : null;
+                    console.log(item, 'fetchItem');
+                    obj.video = item.data["work.video"] ? item.data['work.video'].value : null;
 
                     obj.image = {};
 
@@ -143,6 +144,7 @@ function fetchWork(callback) {
                 response.results.forEach(function(item, i) {
                     var obj = {}
                     obj.id = item.id;
+                    //console.log(item, 'fetchWork')
                     obj.tags = item.tags;
                     obj.type = item.type;
                     obj.title = item.data["work.title"].value[0].text;
@@ -150,6 +152,7 @@ function fetchWork(callback) {
                     // var time = new Date(obj.date);
                     // obj.time = time.getTime();
                     obj.medium = item.data["work.medium"] ? item.data["work.medium"].value[0].text : null;
+                     obj.video = item.data["work.video"] ? item.data['work.video'].value : null;
 
                     obj.image = {};
 

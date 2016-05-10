@@ -6,6 +6,7 @@ export default class Video extends Component {
   componentDidMount() {
 
     this.video = document.getElementById(this.props.videoid);
+
     if(this.video.getAttribute('ready') != 'true'){
       this.initVideo();
       this.resize();

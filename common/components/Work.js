@@ -228,7 +228,7 @@ export default class Work extends Component {
 
     function worksEl(worksArray, action, selected) {
       var imgSize = 'small';
-      console.log(worksArray, 'worksArray')
+      //console.log(worksArray, 'worksArray')
 
       return worksArray.map(function(item, i) {
         return (

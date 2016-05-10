@@ -72,20 +72,41 @@ export default class Product extends Component {
         }
       }
       else {
-         self.props.add(regularProduct);
+        self.props.add(regularProduct);
         self.openCart();
+      }
+    }
+
+    changeDropdown(value) {
+      var ddl = document.getElementById('descriptions');
+      var opts = ddl.options.length;
+      if (value) {
+        for (var i = 0; i < opts; i++) {
+          if (ddl.options[i].value == value){
+            ddl.options[i].selected = true;
+            break;
+          }
+        }
+      } else {
+        for (var i = 0; i < opts; i++) {
+          ddl.options[i].selected = false;
+        }
       }
     }
 
     switchImg(selected) {
       var self = this;
       var url;
+      console.log(selected, 'selected')
+
       if (typeof selected == 'object') {
         self.setState({currentVariation: selected})
         url = selected.image;
+        self.changeDropdown(selected.description);
       } else {
         url = selected;
-        self.setState({currentVariation: null})
+        self.setState({currentVariation: null});
+        self.changeDropdown(null);
       }
 
       var mainImg = document.getElementById('main-product-image');
@@ -108,8 +129,8 @@ export default class Product extends Component {
     }
 
    optionSelect(e) {
-    var self = this;
-       var product = self.props.state.store.product;
+      var self = this;
+      var product = self.props.state.store.product;
       var warning = document.getElementById('warning');
       var selected = e.target.value;
       if (selected) {

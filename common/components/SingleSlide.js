@@ -16,7 +16,7 @@ export default class SingleSlide extends Component {
     // this.w = this.props.workItem.image.small.dimensions.w
     // this.h = this.props.workItem.image.small.dimensions.h
 
-    // slideW = 
+    // slideW =
     // this.resize();
     // var imgCs = document.getElementsByClassName('imageContainer');
     // for(var i = 0; i < imgCs.length; i++){
@@ -53,13 +53,22 @@ export default class SingleSlide extends Component {
 
   }
 
+  createMarkup() {
+    var self = this;
+    return {__html: self.props.workItem.video};
+  }
+
 
   render () {
-
+    var self = this;
     var url = this.props.workItem.image.small.url;
     var hiRes = this.props.workItem.image.medium.url;
     var title = this.props.workItem.title;
-    var self = this;
+    var videoEl = null;
+
+    if (self.props.workItem.video) {
+      videoEl = (<div className="vimeoFrame" dangerouslySetInnerHTML={self.createMarkup()} />)
+    }
 
     const nextItem = function() {
       self.props.props.dispatch(updatePath('/works/i/' + self.props.nextItem.id))
@@ -110,13 +119,13 @@ export default class SingleSlide extends Component {
     var image = (
         <div className="image noselect" id="singleImage">
           <div className={tag == 'paintings' ? 'no-events painting  imageContainer' : 'no-events imageContainer'}>
-           <img 
-              // onLoad={self.resize.bind(self)} 
+           <img
+              // onLoad={self.resize.bind(self)}
               className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={url}/>
           </div>
         </div>
     )
-    // console.log(this.props.workItem);
+
     var date = this.props.workItem.date;
     var formattedDate = '';
     if (typeof date == 'string') {
@@ -146,7 +155,8 @@ export default class SingleSlide extends Component {
           transitionLeaveTimeout={450}
           >
           <div className="slide" key={url}>
-            {image}
+            {!self.props.workItem.video ? image : null}
+            {videoEl}
             {mag}
             {description}
             <Hammer onSwipe={swipe.bind(this)}><div className="swipe-field"></div></Hammer>

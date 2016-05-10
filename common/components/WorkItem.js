@@ -19,9 +19,9 @@ export default class WorkItem extends Component {
     if (newProps.state.workItem) {
       workItemNew = newProps.state.workItem;
     } else {
-      var idX = newProps.params.itemId;
+      var newId = newProps.params.itemId;
       newProps.filteredWorks.forEach(function(item, i) {
-        if (item.id == idX) {
+        if (item.id == newId) {
           workItemNew = item;
         }
       })
