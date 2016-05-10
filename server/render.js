@@ -10,13 +10,19 @@ import App from '../common/containers/App';
 // import { fetchCounter } from '../common/api/counter';
 
 function renderFullPage(html, initialState) {
+
+  var styles;
+  //load extracted styles in head when in production
+  if(process.env.NODE_ENV == 'development') styles = "";
+  else styles = '<link rel="stylesheet" href="/styles.css" />';
+
   return `
     <!doctype html>
     <html>
       <head>
         <title>Mickalene Thomas</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <link rel="stylesheet" href="/styles.css" />
+        ${styles}
       </head>
       <body>
         <div class="bg"></div>
