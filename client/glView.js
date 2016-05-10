@@ -1,10 +1,7 @@
 'user strict';
 window.THREE = require('three/three.min.js')
 require('./OBJLoader');
-require('./ColladaLoader');
-
-// require('three-json-loader');
-// var collada = require('three-loaders-collada')(THREE);
+// require('./ColladaLoader');
 
 
 function GLView(_corner) {
@@ -91,7 +88,7 @@ function GLView(_corner) {
     scene.add(camera);
 
 
-    var loader = new THREE.JSONLoader();
+    // var loader = new THREE.JSONLoader();
 
     var aLight = new THREE.AmbientLight(new THREE.Color("hsl(0, 0%, 100%)"));
     scene.add(aLight);
@@ -134,6 +131,8 @@ function GLView(_corner) {
       // handle no webgl
       // document.getElementById('info').innerHTML = "<P><BR><B>Note.</B> You need a modern browser that supports WebGL for this to run the way it is intended.<BR>For example. <a href='http://www.google.com/landing/chrome/beta/' target='_blank'>Google Chrome 9+</a> or <a href='http://www.mozilla.com/firefox/beta/' target='_blank'>Firefox 4+</a>.<BR><BR>If you are already using one of those browsers and still see this message, it's possible that you<BR>have old blacklisted GPU drivers. Try updating the drivers for your graphic card.<BR>Or try to set a '--ignore-gpu-blacklist' switch for the browser.</P><CENTER><BR><img src='../general/WebGL_logo.png' border='0'></CENTER>";
       // document.getElementById('info').style.display = 'block';
+      document.getElementById('nowebgl').className='bg';
+      document.getElementById('webGL').className='hidden';
       return;
     }
 
@@ -144,11 +143,11 @@ function GLView(_corner) {
     videoTexture.minFilter = THREE.LinearFilter;
     videoTexture.minFilter = THREE.LinearFilter;
 
-    var img = new Image();
-    img.src = "/images/collage.jpg";
+    // var img = new Image();
+    // img.src = "/images/collage.jpg";
 
     // imgTexture = THREE.ImageUtils.loadTexture("/images/collage.jpg",null,render);
-    imgTexture = THREE.ImageUtils.loadTexture("/images/sparkle.jpg",null,render);
+    // imgTexture = THREE.ImageUtils.loadTexture("/images/sparkle.jpg",null,render);
     imgTexture = THREE.ImageUtils.loadTexture("/images/glitter-sq.jpg",null,render);
     imgTexture.wrapS = THREE.RepeatWrapping;
     imgTexture.wrapT = THREE.RepeatWrapping;
@@ -217,7 +216,6 @@ function GLView(_corner) {
       object.traverse(function(child) {
         if (child instanceof THREE.Mesh) {
           child.material = transMaterial;
-          console.log(child)
         }
       });
       M = object;
@@ -228,7 +226,6 @@ function GLView(_corner) {
       object.traverse(function(child) {
         if (child instanceof THREE.Mesh) {
           child.material = textMaterial;
-          console.log(child)
         }
       });
       text = object;
@@ -237,8 +234,8 @@ function GLView(_corner) {
 
 
     onWindowResize()
-    // setTimeout(onWindowResize,1000);
-    render();
+    if(has_gl)
+      render();
   }
 
   function updateTextureAspect(video){
@@ -261,8 +258,6 @@ function GLView(_corner) {
 
   function onWindowResize(event) {
 
-    // if (corner) return;
-
     var w = window.innerWidth;
     var h = window.innerHeight;
 
@@ -283,28 +278,16 @@ function GLView(_corner) {
     }
 
     logo.scale.set(s, s, s);
-
-    console.log("W", w);
-    console.log("H", w);
-
   }
 
 
 
   function onMouseMove(event) {
-
-    // event.preventDefault();
-    // mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    // mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     mouse.x = (event.clientX - window.innerWidth/2);
     mouse.y = -(event.clientY - window.innerHeight/2);
-
-
   }
 
   function onTouchMove(event) {
-
-    // event.preventDefault();
 
     for (var i = 0; i < event.changedTouches.length; i++) {
 
@@ -338,40 +321,25 @@ function GLView(_corner) {
       delta = 1000 / 60;
     }
 
-    // if (corner) {
-    //   // wall.rotation.y += (.5 * mouse.x / WIDTH - wall.rotation.y) * .05;
-    //   // wall.rotation.x += (.5 * mouse.y / HEIGHT - wall.rotation.x) * .05;
-    //   logo.rotation.y += (.7 * mouse.x / WIDTH - logo.rotation.y) * .05;
-    //   logo.rotation.x += (.7 * mouse.y / HEIGHT - logo.rotation.x) * .05;
-    // }
-    // else {
-
     if(transMaterial.map != videoTexture){
       transMaterial.map.offset.x += delta * .00002;
       transMaterial.map.offset.y -= delta * .00001;
-
-    //   M.rotation.y = Math.sin(time/1000);
     }
-    // else{
-    //   M.rotation.y = 0;
-    // }
 
     if (window.location.hash == "#alt") {
       camera.position.x -= (mouse.x / 15 + camera.position.x) * .05;
       camera.position.y += (- mouse.y / 15 - camera.position.y) * .05;
       camera.lookAt(scene.position);
     }
-    // }
 
 
     if ( video.readyState === video.HAVE_ENOUGH_DATA ) {
       if ( videoTexture ) videoTexture.needsUpdate = true;
       if (transMaterial.map != videoTexture) {
-        // transMaterial.map = videoTexture;
-        // updateTextureAspect(true);
+        transMaterial.map = videoTexture;
+        updateTextureAspect(true);
       }
     }
-    // controls.update();
     var optimalDivider = delta / 16;
     var smoothing = Math.max(5, (30 / optimalDivider));
 
@@ -382,10 +350,14 @@ function GLView(_corner) {
 
   this.start = function() {
     stop = false;
-    animate();
+    if(has_gl) animate();
   }
   this.add = function() {
-    scene.add(logo);
+    if(has_gl)
+      scene.add(logo);
+    else{
+      document.getElementById('nowebgl').className='bg';
+    }
   }
   this.stop = function() {
     camera.position.x = 0;
@@ -393,25 +365,13 @@ function GLView(_corner) {
     stop = true;
   }
   this.remove = function() {
-    console.log(scene, 'scene')
-    scene.remove(logo)
+    if(has_gl)
+      scene.remove(logo)
+    else{
+       document.getElementById('nowebgl').className='bg hidden';
+    }
   }
 
-  this.cornerState = function(_corner) {
-    // corner = _corner;
-    // if (corner) {
-    //   var position = unproject(110, 70, 0);
-    //   console.log(position);
-    //   var s = .1;
-    //   logo.scale.set(s, s, s);
-    //   logo.position.copy(position);
-    // }
-    // else {
-    //   var s = .4;
-    //   logo.scale.set(s, s, s);
-    //   logo.position.set(0, 10, 0);
-    // }
-  };
 
   function unproject(x, y, z) {
     var vector = new THREE.Vector3();
@@ -427,8 +387,12 @@ function GLView(_corner) {
     return pos;
   }
 
-  this.dom = renderer.domElement
+  if(renderer)
+    this.dom = renderer.domElement
+  else
+    this.dom = null;
 
+  this.has_gl = has_gl;
 }
 
 module.exports = GLView;
