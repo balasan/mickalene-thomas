@@ -66,7 +66,7 @@ class Splash extends Component {
       </div>
     )
     if( mobilecheck && mobilecheck()) vids = null;
-    if(self.noVid) vids = null;
+    if(this.noVid) vids = null;
 
     return (
       <span>
