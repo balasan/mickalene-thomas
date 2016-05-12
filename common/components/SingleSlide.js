@@ -7,28 +7,10 @@ import { updatePath } from 'redux-simple-router';
 export default class SingleSlide extends Component {
   componentDidMount() {
     this.imageContainer = document.getElementsByClassName('imageContainer');
-    // this.image = this.imageContainer.getElementsByTagName('img')[0];
     window.addEventListener('resize', this.resize.bind(this));
   }
 
   componentWillUpdate() {
-
-    // this.w = this.props.workItem.image.small.dimensions.w
-    // this.h = this.props.workItem.image.small.dimensions.h
-
-    // slideW =
-    // this.resize();
-    // var imgCs = document.getElementsByClassName('imageContainer');
-    // for(var i = 0; i < imgCs.length; i++){
-    //   var imgC = imgCs[i];
-
-    //   // imgC.style.display = 'none';
-    //   setTimeout(function(){
-    //     forceRedraw(imgC)
-    //   // imgC.style.display = 'inline';
-    //   },20)
-    // }
-
   }
 
   resize(e){
@@ -45,12 +27,6 @@ export default class SingleSlide extends Component {
     setTimeout(function(){
       forceRedraw(imageContainer)
     },0)
-    // imageContainer.style.display = 'none';
-
-    // setTimeout(function(){
-    //   imageContainer.style.display = 'inline';
-    // },20)
-
   }
 
   createMarkup() {
@@ -67,7 +43,14 @@ export default class SingleSlide extends Component {
     var videoEl = null;
 
     if (self.props.workItem.video) {
-      videoEl = (<div className="vimeoFrame" dangerouslySetInnerHTML={self.createMarkup()} />)
+      videoEl = (<div className="vimeoFrame" dangerouslySetInnerHTML={self.createMarkup()} />);
+      // var iframeEl = document.getElementsByTagName("iframe")[0];
+      // console.log(iframeEl)
+      // if (iframeEl) {
+      //   var src = iframeEl.src;
+      //   console.log(src, 'src')
+      // }
+
     }
 
     const nextItem = function() {
@@ -119,9 +102,7 @@ export default class SingleSlide extends Component {
     var image = (
         <div className="image noselect" id="singleImage">
           <div className={tag == 'paintings' ? 'no-events painting  imageContainer' : 'no-events imageContainer'}>
-           <img
-              // onLoad={self.resize.bind(self)}
-              className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={url}/>
+           <img className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={url}/>
           </div>
         </div>
     )

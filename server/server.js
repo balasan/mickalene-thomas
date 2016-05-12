@@ -59,17 +59,6 @@ app.get('/api/instagram', function(req, res) {
             }
         });
     }
-
-    function handleData(body) {
-        array.push.apply(array, body.data);
-        console.log(array.length, 'array now');
-        if (body.pagination.next_url) {
-            getData(body.pagination.next_url);
-        } else {
-            res.json(array);
-        }
-    }
-
 });
 
 
