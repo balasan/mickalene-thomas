@@ -20,16 +20,16 @@ export default class NewsParent extends Component {
   static fetchInstaDataOnClient(dispatch) {
     var { loadInsta } = bindActionCreators(WorkActions, dispatch)
     return Promise.all([
-      loadInsta()
+      loadInsta(null)
     ])
   }
 
   componentDidMount() {
     var self = this;
     this.constructor.fetchInstaDataOnClient(this.props.dispatch);
-        self.constructor.fetchNewsDataOnClient(this.props.dispatch);
-      this.news = [];
-      this.insta = [];
+    self.constructor.fetchNewsDataOnClient(this.props.dispatch);
+    this.news = [];
+    this.insta = [];
   }
 
   componentWillUpdate(nextProps) {

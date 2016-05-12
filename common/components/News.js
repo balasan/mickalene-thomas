@@ -18,36 +18,28 @@ export default class News extends Component {
     this.newInsta = [];
     this.instaLimit = 2;
     this.insta = [];
-    // this.shuffled = [];
-    // this.selectedNews = [];
     this.loaded = 0;
+    this.disableLoad = false;
   }
+
+  static fetchMoreInstaData(url, dispatch) {
+    var { loadInsta } = bindActionCreators(WorkActions, dispatch)
+    return Promise.all([
+      loadInsta(url)
+    ])
+  }
+
 
   componentDidMount() {
     var self = this;
-
-    // this.filterNews(this.props);
-    // this.container = document.getElementById("newsList2")
-    // this.lastContainer = document.getElementById("newsList1")
-    // this.c1 = document.getElementById("newsList1");
-    // this.c2 = document.getElementById("newsList2");
-    // this.container = document.getElementById("newsList2");
-    // this.containerOut = document.getElementById("newsList1");
-
-    // this.instaContainer = document.getElementById("insta2");
-    // this.instaContainerOut = document.getElementById("insta1");
-
-    // this.container3d = document.getElementById("newsList1");
-
-      window.addEventListener('scroll', this.handleScroll.bind(this));
-    // this.animateIn();
+    window.addEventListener('scroll', this.handleScroll.bind(this));
 
     if(this.props.filteredNews){
       this.news = this.props.filteredNews.slice(0, this.newsLimit);;
       this.newNews = this.news;
     }
-    if (this.props.state.insta) {
-      this.insta = this.props.state.insta.slice(0, this.instaLimit);;
+    if (this.props.state.insta.data) {
+      this.insta = this.props.state.insta.data.slice(0, this.instaLimit);
       this.newInsta = this.insta;
     }
   }
@@ -75,14 +67,16 @@ export default class News extends Component {
     var self = this;
     const { state, params, filteredNews, showLoader, instaData } = nextProps;
 
-    if (this.props.state.insta && this.insta.length < 1) {
-      this.insta = this.props.state.insta.slice(0, this.instaLimit);;
+    if (this.props.state.insta.data && this.insta.length < 1) {
+      this.insta = this.props.state.insta.data.slice(0, this.instaLimit);
+    }
+
+    if (self.props.state.insta.data.length != nextProps.state.insta.data.length) {
+      self.setState({});
     }
 
     if(!params || this.props.params.filter != params.filter){
       window.scrollTo(0,0);
-      // this.oldNews = this.newNews.slice();
-      // this.oldInsta = this.newInsta.slice();
       this.updateNewNews(nextProps);
       this.updateNewInsta(nextProps);
     }
@@ -92,7 +86,21 @@ export default class News extends Component {
     if(!this.newInsta.length || (this.oldInstaLimit != this.instaLimit)){
       this.updateNewInsta(nextProps);
     }
+
     self.params = params;
+
+    if (this.props.state.insta.data) {
+        if (this.insta.length > 0 && this.insta.length == this.props.state.insta.data.length) {
+          if (!self.disableLoad) {
+            console.log('load more insta');
+            self.constructor.fetchMoreInstaData(self.props.state.insta.next, self.props.dispatch);
+          }
+          self.disableLoad = true;
+          setTimeout(function() {
+            self.disableLoad = false;
+          }, 10000);
+        }
+    }
 
     setTimeout(function() {
       if(self.news.length) self.scroll();
@@ -109,8 +117,8 @@ export default class News extends Component {
 
   updateNewInsta(nextProps) {
     const { params, filteredNews, instaData } = nextProps;
-    if (this.props.state.insta) {
-      this.insta = this.props.state.insta.slice(0, this.instaLimit);
+    if (this.props.state.insta.data) {
+         this.insta = this.props.state.insta.data.slice(0, this.instaLimit);
     } else {
       this.insta = [];
     }
@@ -125,46 +133,11 @@ export default class News extends Component {
   componentDidUpdate() {
     var self = this;
 
-// setTimeout(function () {
-
-//   var els = self.container.getElementsByTagName('a');
-//   var instaEls = self.instaContainer.getElementsByTagName('a');
-
-//   for(var i = 0; i < els.length; i++) {
-//     if (!els[i].classList.contains('news-enter-active')) {
-//       els[i].classList.add('news-enter-active');
-//     }
-//   }
-
-//   for(var i = 0; i < instaEls.length; i++) {
-//     if (!instaEls[i].classList.contains('news-enter-active')) {
-//       instaEls[i].classList.add('news-enter-active');
-//     }
-//   }
-
-// }, 250);
 
 
-// setTimeout(function () {
-//   var els = self.containerOut.getElementsByTagName('a');
-//   var instaEls = self.instaContainerOut.getElementsByTagName('a');
-
-//   for(var i = 0; i < els.length; i++) {
-//     if (!els[i].classList.contains('news-leave-active')) {
-//       els[i].classList.add('news-leave-active');
-//     }
-//   }
-
-//   for(var i = 0; i < instaEls.length; i++) {
-//     if (!instaEls[i].classList.contains('news-leave-active')) {
-//       instaEls[i].classList.add('news-leave-active');
-//     }
-//   }
-// }, 250);
 
     if(self.oldNews.length) {
       setTimeout(function(){
-        // self.oldNews = [];
         self.setState({})
       },500)
     }
@@ -179,7 +152,6 @@ export default class News extends Component {
       var scrollTop = document.body.scrollTop;
       var scrollHeight = document.body.scrollHeight;
       var clientHeight = document.body.clientHeight;
-      console.log((scrollTop+clientHeight) / scrollHeight);
 
       if (((scrollTop+clientHeight) / scrollHeight) > 0.7) {
         if (this.newsLimit) {
@@ -211,7 +183,6 @@ export default class News extends Component {
 
     if( !self.props.state.news )  newNews = [];
     else newNews = newsEl(this.newNews, 'news-enter', selected);
-    // oldNews = newsEl(this.oldNews, 'news-leave', selected);
 
     function newsEl(newsArray, action, selected) {
       return newsArray.map(function(item, i){
@@ -251,8 +222,8 @@ export default class News extends Component {
     if (this.newInsta.length > 0) {
       newInsta = instaEl(this.newInsta, 'news-enter', selected);
     } else {
-        if (this.props.state.insta) {
-            var sliced = this.props.state.insta.slice(0,2);
+        if (this.props.state.insta.data) {
+            var sliced = this.props.state.insta.data.slice(0,2);
             newInsta = instaEl(sliced, 'news-enter', selected);
         } else {
           newInsta = instaEl([], 'news-enter', selected);
@@ -262,7 +233,7 @@ export default class News extends Component {
     function instaEl(instaArray, action, selected) {
       return instaArray.map(function (item, i) {
        return (
-         <a target='_blank' className='noselect' href={item.link} key={item.id}>
+         <a target='_blank' className='noselect' href={item.link} key={item.id+i}>
            <img src={item.images.standard_resolution.url} />
          </a>
        )

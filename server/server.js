@@ -3,12 +3,11 @@ import path from 'path'
 import Express from 'express'
 import qs from 'qs'
 import morgan from 'morgan'
-var Instagram = require('instagram-node-lib');
 import handleRender from './render';
 var router = Express.Router();
 var bodyParser = require('body-parser')
 var stripe = require('stripe')('sk_test_4y83aHU2CwVFqFvE8jK1xNMB');
-
+var request = require('request');
 const app = new Express()
 
 require('dotenv').config({
@@ -32,23 +31,47 @@ if (isDevelopment) {
     }))
     app.use(webpackHotMiddleware(compiler))
 }
+
 app.use(morgan('dev'));
 
-
-//Instagram
-Instagram.set('client_id', '82098af553fe41e5adb08d0afd87c75d');
-Instagram.set('client_secret', '27ba4182cec5473f96b0185141e6a123');
-Instagram.set('access_token', '291145514.1677ed0.4180185b272d45569ebc889f3f815a1b');
-
 app.get('/api/instagram', function(req, res) {
-    Instagram.users.recent({
-        user_id: 291145514,
-        complete: function(data) {
-            res.json(data);
-            console.log(data, 'data')
+    var array = [];
+    var url = null;
+
+    if (req.query.url != 'blank') {
+        url = req.query.url;
+    }
+
+    getData(url);
+
+    function getData(supplyUrl) {
+
+        var urlToUse = 'https://api.instagram.com/v1/users/291145514/media/recent/?access_token=291145514.1677ed0.4180185b272d45569ebc889f3f815a1b&count=20';
+
+        if (supplyUrl) urlToUse = supplyUrl;
+
+         request(urlToUse, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                var jsonBody = JSON.parse(body);
+                var next = null;
+                if (jsonBody.pagination.next_url) next = jsonBody.pagination.next_url;
+                res.json({data: jsonBody, 'next': next})
+            }
+        });
+    }
+
+    function handleData(body) {
+        array.push.apply(array, body.data);
+        console.log(array.length, 'array now');
+        if (body.pagination.next_url) {
+            getData(body.pagination.next_url);
+        } else {
+            res.json(array);
         }
-    });
+    }
+
 });
+
 
 //Stripe
 app.get('/stripe', function(req, res) {

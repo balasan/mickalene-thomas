@@ -77,19 +77,21 @@ export function loadNews() {
 }
 
 export function setInsta(value) {
-  console.log(value, 'setInsta value')
+  //console.log(value, 'setInsta value')
   return {
     type: GET_INSTA,
     payload: {
-      results: value
+      results: value.body.data.data,
+      next: value.body.next
     }
   };
 }
 
-export function loadInsta() {
+export function loadInsta(nextUrl) {
+  var url = nextUrl || null;
   return dispatch => {
     return new Promise(function(resolve, reject) {
-      fetchInsta( (err, value) => {
+      fetchInsta(url, (err, value) => {
         if (err) return reject
         dispatch(setInsta(value))
         resolve(value)
