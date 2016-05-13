@@ -22,6 +22,7 @@ var configuration = {
 prismic.init(configuration);
 
 export function fetchItem(id, callback) {
+    console.log('wtf')
     prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
 
         Api.form('everything')
@@ -43,6 +44,15 @@ export function fetchItem(id, callback) {
                     obj.medium = item.data["work.medium"] ? item.data["work.medium"].value[0].text : null;
                     console.log(item, 'fetchItem');
                     obj.video = item.data["work.video"] ? item.data['work.video'].value : null;
+
+                    if (obj.video) {
+                        console.log(obj.video);
+                        var specificIndex = obj.video.indexOf('player.vimeo.com/video/');
+                        var startSlice = specificIndex + 'player.vimeo.com/video/'.length;
+                        var videoId = obj.video.slice(startSlice, startSlice+9);
+                        var embedString = "<iframe  src='//player.vimeo.com/video/"+videoId+"?autoplay=1&amp;byline=0&amp;title=0&amp;badge=0&amp;portrait=0&amp;api=1&amp;player_id=iframe_pop_video' width='100%' height='100%' frameborder='0' webkitallowfullscreen='' mozallowfullscreen='' allowfullscreen=''></iframe>";
+                        obj.video = embedString;
+                    }
 
                     obj.image = {};
 
@@ -144,15 +154,20 @@ function fetchWork(callback) {
                 response.results.forEach(function(item, i) {
                     var obj = {}
                     obj.id = item.id;
-                    //console.log(item, 'fetchWork')
                     obj.tags = item.tags;
                     obj.type = item.type;
                     obj.title = item.data["work.title"].value[0].text;
                     obj.date = item.data["work.date"] ? item.data["work.date"].value : new Date('2014');
-                    // var time = new Date(obj.date);
-                    // obj.time = time.getTime();
                     obj.medium = item.data["work.medium"] ? item.data["work.medium"].value[0].text : null;
-                     obj.video = item.data["work.video"] ? item.data['work.video'].value : null;
+                    obj.video = item.data["work.video"] ? item.data['work.video'].value : null;
+                    if (obj.video) {
+                        console.log(obj.video);
+                        var specificIndex = obj.video.indexOf('player.vimeo.com/video/');
+                        var startSlice = specificIndex + 'player.vimeo.com/video/'.length;
+                        var videoId = obj.video.slice(startSlice, startSlice+9);
+                        var embedString = "<iframe  src='//player.vimeo.com/video/"+videoId+"?autoplay=1&amp;byline=0&amp;title=0&amp;badge=0&amp;portrait=0&amp;api=1&amp;player_id=iframe_pop_video' width='100%' height='100%' frameborder='0' webkitallowfullscreen='' mozallowfullscreen='' allowfullscreen=''></iframe>";
+                        obj.video = embedString;
+                    }
 
                     obj.image = {};
 

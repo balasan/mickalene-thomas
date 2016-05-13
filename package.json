@@ -30,6 +30,7 @@
     "express": "^4.13.3",
     "express-prismic": "^0.3.3",
     "history": "^2.0.0-rc3",
+    "instagram-node": "^0.5.8",
     "instagram-node-lib": "^0.1.1",
     "jquery": "^2.2.0",
     "json-loader": "^0.5.4",
