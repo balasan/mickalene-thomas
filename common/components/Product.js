@@ -13,7 +13,7 @@ export default class Product extends Component {
     this.state = {
       currentSize: null,
       currentStyle: null,
-      currentVariation: null
+      currentVariation: null,
     }
   }
 
@@ -34,6 +34,7 @@ export default class Product extends Component {
       var warning = document.getElementById('warning');
       var regularProduct = JSON.parse(JSON.stringify(product));
       var productVariant = JSON.parse(JSON.stringify(product));
+      var available = true;
       productVariant.variation = {};
 
       if (product.vars.length > 0 && product.sizes.length > 0) {
@@ -170,6 +171,11 @@ export default class Product extends Component {
     var descriptions = null;
     var chartImgLink = null;
     var sizeChart = null;
+    var available = true;
+    console.log(product)
+    if (product) {
+      if (!self.props.state.store.product.available) available = false;
+    }
 
     if ( product && product.id == this.props.params.itemId ) {
 
@@ -252,6 +258,30 @@ export default class Product extends Component {
         );
       }
 
+      var buttonEl = null;
+
+      if (product.price && product.available) {
+        buttonEl = (<button className="noselect" onClick={self.doubleCart.bind(self)}>Add to Shopping Bag</button>)
+      }
+
+      if (product.price && !product.available) {
+        buttonEl = (<button className="noselect">Sold Out</button>);
+      }
+
+      if (!product.price) {
+        buttonEl = (<a href="mailto:hello@mickalenethomas.com" target="_blank" className="no-price noselect">Contact Us</a>);
+      }
+
+      if (product.externalURL) {
+        buttonEl = (<a href={product.externalURL} className="no-price noselect" target="_blank">Go to purchase</a>);
+      }
+
+      if (self.state.currentVariation) {
+        if (self.state.currentVariation.externalURL) {
+          buttonEl = (<a href={self.state.currentVariation.externalURL} className="no-price noselect" target="_blank">Go to purchase</a>);
+        }
+      }
+
       productEl = (
 
           <section className='productShowcase' key={product.id}>
@@ -289,7 +319,7 @@ export default class Product extends Component {
                     <p>{product.price ? '$' : null}{product.price ? product.price.toFixed(2) : 'price available upon request'}</p>
                   </div>
                   <div className='button-parent'>
-                    {product.price ? <button className="noselect" onClick={self.doubleCart.bind(self)}>Add to Shopping Bag</button> : <a href="mailto:hello@mickalenethomas.com" target="_blank" className="no-price noselect">Contact Us</a>}
+                    {buttonEl}
                   </div>
                 </div>
 
