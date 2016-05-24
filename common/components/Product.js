@@ -172,7 +172,6 @@ export default class Product extends Component {
     var chartImgLink = null;
     var sizeChart = null;
     var available = true;
-    console.log(product)
     if (product) {
       if (!self.props.state.store.product.available) available = false;
     }
