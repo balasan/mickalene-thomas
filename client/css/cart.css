@@ -193,7 +193,7 @@
                 cursor: pointer;
                 color: white;
                 border: none;
-                background-image: url("/images/t4.jpg");
+            /*    background-image: url("/images/t4.jpg");*/
                 background-position: center center;
                 background-size: cover;
                 background-repeat: no-repeat;
