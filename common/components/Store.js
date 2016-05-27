@@ -6,21 +6,14 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { updatePath } from 'redux-simple-router';
 
 export default class Store extends Component {
-
   componentDidMount() {
-
   }
 
   componentDidUpdate() {
-
   }
 
-
-
   render () {
-
     const { add } = this.props;
-
     var products = null;
 
     if (this.props.state.store.products) {

@@ -192,7 +192,7 @@
                         background-color: black;
                         padding: 1em 2.5em;
                         cursor: pointer;
-                        background-image: url("/images/t4.jpg");
+                 /*       background-image: url("/images/t4.jpg");*/
                         background-position: center center;
                         background-size: cover;
                         background-repeat: no-repeat;

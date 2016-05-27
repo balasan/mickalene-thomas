@@ -314,9 +314,9 @@ export default class Product extends Component {
                 </div>
 
                 <div className='bottom'>
-                  <div className={product.price ? 'price' : 'price no-price'}>
+                  {product.available ? <div className={product.price ? 'price' : 'price no-price'}>
                     <p>{product.price ? '$' : null}{product.price ? product.price.toFixed(2) : 'price available upon request'}</p>
-                  </div>
+                  </div> : null}
                   <div className='button-parent'>
                     {buttonEl}
                   </div>
