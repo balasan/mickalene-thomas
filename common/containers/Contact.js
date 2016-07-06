@@ -15,7 +15,6 @@ export default class Contact extends Component {
   }
 
   componentDidUpdate() {
-    console.log('component update')
     var self = this;
     fetchContact(function(i, data) {
       self.contactData = data;
@@ -27,8 +26,12 @@ export default class Contact extends Component {
     var self = this;
     var galleries = null;
     var studioInfo = null;
+    var imageEl = null;
 
     if (this.contactData) {
+      if (self.contactData.image) {
+        imageEl = (<div style={{backgroundImage: 'url(' + self.contactData.image + ')'}} className='contactImg'></div>)
+      }
       if (this.contactData.galleries && !this.galleriesEl) {
         galleries = this.contactData.galleries;
         galleries.forEach(function(gallery, i){
@@ -89,8 +92,7 @@ export default class Contact extends Component {
 
     return (
     <div className='contactParent'>
-      <div className='contactImg'>
-      </div>
+      {imageEl}
       <div className='mobileHeader'>
       </div>
       <div className="contactTxt">

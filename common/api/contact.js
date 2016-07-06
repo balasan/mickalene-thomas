@@ -33,9 +33,9 @@
                  }
 
                  var data = response.results[0].data;
-
                  var obj = {};
                  obj.studio = {};
+                 obj.image = data['contact.image'] ? data['contact.image'].value.main.url : null;
                  obj.studio.name = data['contact.name'] ?  data['contact.name'].value : null;
                  obj.studio.address = data['contact.address'] ? data['contact.address'].value : null;
                  obj.studio.address2 = data['contact.address2'] ? data['contact.address2'].value : null;
