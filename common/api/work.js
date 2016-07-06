@@ -161,7 +161,6 @@ function fetchWork(callback) {
                     obj.medium = item.data["work.medium"] ? item.data["work.medium"].value[0].text : null;
                     obj.video = item.data["work.video"] ? item.data['work.video'].value : null;
                     if (obj.video) {
-                        console.log(obj.video);
                         var specificIndex = obj.video.indexOf('player.vimeo.com/video/');
                         var startSlice = specificIndex + 'player.vimeo.com/video/'.length;
                         var videoId = obj.video.slice(startSlice, startSlice+9);

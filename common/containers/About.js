@@ -23,6 +23,7 @@ export default class About extends Component {
     render () {
       var self = this;
       var data = this.aboutData;
+      var imageEl = null;
       if (data) {
         if (data.header) {
           var headerEl = document.getElementById('about-header');
@@ -36,13 +37,16 @@ export default class About extends Component {
               textParent.appendChild(self.textEl);
           })
         }
+        if (data.image) {
+          imageEl = (<section style={{backgroundImage: 'url(' + data.image + ')'}} className='aboutImg noselect'>
+            <img src='/images/down_arrow.png' />
+          </section>);
+        }
       }
 
       return (
         <div>
-        <section className='aboutImg noselect'>
-          <img src='/images/down_arrow.png' />
-        </section>
+        {imageEl}
         <section className='aboutTxt'>
         <h1 id="about-header"></h1>
         <div id="about-body">

@@ -10,7 +10,6 @@
 .contactImg {
   height: calc(100vh - 75px);
   background-color: white;
-  background-image: url("/images/contact.jpg");
   background-size: cover;
   background-position: center center;
 
