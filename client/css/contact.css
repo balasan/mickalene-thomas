@@ -2,7 +2,6 @@
 
 .contactParent {
   @media (--mobile) {
-    height: calc(100vh - 60px);
     display: flex;
     flex-direction: column;
   }
@@ -142,6 +141,7 @@
       height: 30px;
       width: 30px;
       display: inline-block;
+      margin: 0 5px 0 0;
 
       &.fb {
         background-image: url('/images/fb.svg');

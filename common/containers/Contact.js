@@ -1,25 +1,23 @@
 import React, { Component, PropTypes } from 'react';
 import { fetchContact } from '../api/contact';
 
-export default class Contact extends Component {
+class Contact extends Component {
+  constructor (props, context) {
+    super(props, context)
+    this.state = {
+      contactData: null,
+    }
+  }
 
   componentDidMount() {
     var self = this;
     fetchContact(function(i, data) {
-      self.contactData = data;
-      self.render();
+      self.setState({contactData: data});
     });
-    this.studioEl = false;
-    this.galleriesEl = false;
-    this.mobileHeaderEl = false;
   }
 
   componentDidUpdate() {
     var self = this;
-    fetchContact(function(i, data) {
-      self.contactData = data;
-      self.render();
-    });
   }
 
   render () {
@@ -27,85 +25,81 @@ export default class Contact extends Component {
     var galleries = null;
     var studioInfo = null;
     var imageEl = null;
+    var studioEl = null;
+    var galleriesEl = [];
+    var mobileHeaderEl = (<div className='mobileHeader'></div>);
 
-    if (this.contactData) {
-      if (self.contactData.image) {
-        imageEl = (<div style={{backgroundImage: 'url(' + self.contactData.image + ')'}} className='contactImg'></div>)
+    if (this.state.contactData) {
+      if (self.state.contactData.image) {
+        imageEl = (<div style={{backgroundImage: 'url(' + self.state.contactData.image + ')'}} className='contactImg'></div>)
       }
-      if (this.contactData.galleries && !this.galleriesEl) {
-        galleries = this.contactData.galleries;
-        galleries.forEach(function(gallery, i){
-          self.galleriesEl = `<div>
-            <h2>${gallery.name}</h2>
-            <p>${gallery.address}</p>
-            ${gallery.address2 ? '<p>' + gallery.address2 + '</p>' : ''}
-            <p>${gallery.city}, ${gallery.state} ${gallery.zipcode}</p>
-          </div>
-          <div>
-            <a href=${'tel:' + gallery.phone.replace(/\D/g,'')}>tel: ${gallery.phone}</a>
-            <p>fax: ${gallery.fax}</p>
-          </div>
-          <div>
-            <a target="_blank" href=${'mailto:' + gallery.email}>${gallery.email}</a>
-            <a target="_blank" href=${gallery.website}>${gallery.website}</a>
-          </div>`;
-          var article = document.createElement("article");
-          article.innerHTML = self.galleriesEl;
-          var container = document.getElementsByClassName('galleries')[0];
-          container.appendChild(article);
-        })
-      }
-      if (this.contactData.studio && !this.studioEl) {
-        studioInfo = this.contactData.studio;
-        self.studioEl = `<article>
+      if (this.state.contactData.galleries) {
+        galleries = this.state.contactData.galleries;
+        for (var x in galleries) {
+          galleriesEl.push(<div>
             <div>
-              <h2>${studioInfo.name}</h2>
-              <a href=${'mailto:' + studioInfo.email}>${studioInfo.email}</a>
+              <h2>{galleries[x].name}</h2>
+              <p>{galleries[x].address}</p>
+              {galleries[x].address2 ? '<p>' + galleries[x].address2 + '</p>' : ''}
+              <p>{galleries[x].city}, {galleries[x].state} {galleries[x].zipcode}</p>
             </div>
             <div>
-              <p>${studioInfo.address}</p>
-              ${studioInfo.address2 ? '<p>' + studioInfo.address2 + '</p>' : ''}
-              <p>${studioInfo.city}, ${studioInfo.state} ${studioInfo.zipcode}</p>
+              <a href={'tel:' + galleries[x].phone.replace(/\D/g,'')}>tel: {galleries[x].phone}</a>
+              <p>fax: {galleries[x].fax}</p>
             </div>
-          </article>
-          <article class="newsletter noselect">
-            <input class="noselect" placeholder="Subscribe to Newsletter" />
-            <button>Submit</button>
-          </article>
-          <article class="social noselect">
-            <a class="fb" href=${studioInfo.fb}></a>
-            <a class="twitter" href=${studioInfo.twitter}></a>
-            <a class="insta" href=${studioInfo.insta}></a>
-          </article>`;
-          var div = document.createElement("main");
-          div.innerHTML = self.studioEl;
-          var container = document.getElementsByClassName('studio')[0];
-          container.appendChild(div);
+            <div>
+              <a target="_blank" href={'mailto:' + galleries[x].email}>{galleries[x].email}</a>
+              <a target="_blank" href={galleries[x].website}>{galleries[x].website}</a>
+            </div>
+          </div>)
+        }
+      }
+      if (this.state.contactData.studio) {
+        studioInfo = this.state.contactData.studio;
+        studioEl = (<section className="studio">
+          <main>
+            <article>
+              <div>
+                <h2>{studioInfo.name}</h2>
+                <a href={'mailto:' + studioInfo.email}>{studioInfo.email}</a>
+              </div>
+              {studioInfo.address ? <div>
+                <p>{studioInfo.address}</p>
+                {studioInfo.address2 ? '<p>' + studioInfo.address2 + '</p>' : ''}
+                <p>{studioInfo.city}, {studioInfo.state} {studioInfo.zipcode}</p>
+              </div> : null}
+            </article>
+            <article className="newsletter noselect">
+              <input className="noselect" placeholder="Subscribe to Newsletter" />
+              <button>Submit</button>
+            </article>
+            <article className="social noselect">
+              <a className="fb" href={studioInfo.fb}></a>
+              <a className="twitter" href={studioInfo.twitter}></a>
+              <a className="insta" href={studioInfo.insta}></a>
+            </article>
+            </main>
+          </section>);
 
-          self.mobileHeaderEl = `<p>${studioInfo.name}</p><a href=${'mailto:' + studioInfo.email}>${studioInfo.email}</a>`;
-          var mobileParent = document.createElement("div");
-          mobileParent.innerHTML = self.mobileHeaderEl;
-          var mobileContainer = document.getElementsByClassName('mobileHeader')[0];
-          mobileContainer.appendChild(mobileParent);
+          mobileHeaderEl = (<div className='mobileHeader'><p>{studioInfo.name}</p><a href={'mailto:' + studioInfo.email}>{studioInfo.email}</a></div>);
       }
     }
-
     return (
     <div className='contactParent'>
       {imageEl}
-      <div className='mobileHeader'>
-      </div>
+      {mobileHeaderEl}
       <div className="contactTxt">
         <section className="galleries">
+          <article>{galleriesEl}</article>
         </section>
-        <section className="studio">
-        </section>
-
+        {studioEl}
       </div>
     </div>
   );
   }
 }
+
+export default Contact
 
 
 

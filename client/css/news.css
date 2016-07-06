@@ -1,5 +1,24 @@
 @import "customMedia.css";
 
+.year {
+    font-family: 'Avenir Next', sans-serif;
+    font-style: italic;
+    text-transform: uppercase;
+    font-size: 16px;
+    margin-left: 10%;
+}
+
+.desktopNewsImg {
+    @media (--desktop) {
+        width: 14vw;
+        height: 14vw;
+        object-fit: cover;
+    }
+    @media (--mobile) {
+        display: none;
+    }
+}
+
 .newsParent {
     display: flex;
 

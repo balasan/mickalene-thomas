@@ -3,38 +3,36 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import { fetchAbout } from '../api/about';
 
 export default class About extends Component {
-    componentDidMount() {
-    var self = this;
-    fetchAbout(function(i, data) {
-      self.aboutData = data;
-      self.render();
-    });
-    this.textEl = false;
+  constructor (props, context) {
+    super(props, context)
+    this.state = {
+      aboutData: null,
+    }
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
     var self = this;
     fetchAbout(function(i, data) {
-      self.aboutData = data;
-      self.render();
+      self.setState({aboutData: data})
     });
   }
 
-    render () {
+  render () {
       var self = this;
-      var data = this.aboutData;
+      var data = self.state.aboutData;
       var imageEl = null;
+      var header = null;
+      var textEl = null;
+      var headerEl = null;
+
       if (data) {
         if (data.header) {
-          var headerEl = document.getElementById('about-header');
-          headerEl.innerHTML = data.header;
+          headerEl = (<h1 id="about-header">{data.header}</h1>)
         }
         if (data.body && !this.textEl) {
-          var textParent = document.getElementById('about-body');
+          textEl = [];
           data.body.forEach(function(text, i){
-              self.textEl = document.createElement("p");
-              self.textEl.innerHTML = text;
-              textParent.appendChild(self.textEl);
+              textEl.push(<p>{text}</p>);
           })
         }
         if (data.image) {
@@ -48,9 +46,10 @@ export default class About extends Component {
         <div>
         {imageEl}
         <section className='aboutTxt'>
-        <h1 id="about-header"></h1>
-        <div id="about-body">
-        </div>
+          {headerEl}
+          <div id="about-body">
+            {textEl}
+          </div>
         </section>
         </div>
     );
