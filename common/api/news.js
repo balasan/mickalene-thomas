@@ -29,19 +29,20 @@
       callback(null, allNews);
     }
 
-     prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
-         Api.form('everything').ref(Api.master())
-             .query(
-                 prismic.Predicates.at("document.type", "news")
-         ).pageSize(20).submit(function(err, response) {
-             if (err) {
-                 console.log(err);
-                 callback();
-             }
-             var totalPages = response.total_pages;
-             pageLoop(totalPages)
-         });
-     });
+    prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
+      Api.form('everything').ref(Api.master())
+      .query(prismic.Predicates.at("document.type", "news"))
+      .orderings('[news.date desc]')
+      .pageSize(20)
+      .submit(function(err, response) {
+        if (err) {
+          console.log(err);
+          callback();
+        }
+        var totalPages = response.total_pages;
+        pageLoop(totalPages)
+       });
+    });
 
      function pageLoop(totalPages) {
          var currentPage = 0;
@@ -55,14 +56,16 @@
          prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
              Api.form('everything')
                  .ref(Api.master())
-                 .query(
-                     prismic.Predicates.at("document.type", "news")
-             ).page(currentPage).pageSize(20).submit(function(err, response) {
-                 if (err) {
-                     console.log(err);
-                     callback();
-                 }
-                 response.results.forEach(function(item, i) {
+                 .query(prismic.Predicates.at("document.type", "news"))
+                 .orderings('[my.news.date desc]')
+                 .page(currentPage)
+                 .pageSize(20)
+                 .submit(function(err, response) {
+                  if (err) {
+                    console.log(err);
+                    callback();
+                  }
+                  response.results.forEach(function(item, i) {
                    var obj = {}
                    obj.id = item.id;
                    obj.tags = item.tags;
