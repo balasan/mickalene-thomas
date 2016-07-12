@@ -10,8 +10,8 @@
 
 .desktopNewsImg {
     @media (--desktop) {
-        width: 14vw;
-        height: 14vw;
+        width: 11vw;
+        height: 11vw;
         object-fit: cover;
     }
     @media (--mobile) {
