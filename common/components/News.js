@@ -36,7 +36,7 @@ export default class News extends Component {
     window.addEventListener('scroll', this.handleScroll.bind(this));
 
     if(this.props.filteredNews){
-      this.news = this.props.filteredNews.slice(0, this.newsLimit);;
+      this.news = this.props.filteredNews.slice(0, this.newsLimit);
       this.newNews = this.news;
     }
     if (this.props.state.insta.data) {
@@ -231,21 +231,19 @@ export default class News extends Component {
           }
         }
 
-        arr.push(<div key={x}><a id={newsArray[x].id} target="blank" href={newsArray[x].link ? newsArray[x].link : 'javascript:'} className={newsArray[x].link ? 'link news-item' : 'news-item'} style={{"transitionDelay" : delay}} key={newsArray[x].id+self.params.filter+x}>
+        arr.push(<div style={{"transitionDelay" : delay}} key={newsArray[x].id+self.params.filter+x}><a id={newsArray[x].id} target="blank" href={newsArray[x].link ? newsArray[x].link : 'javascript:'} className={newsArray[x].link ? 'link news-item' : 'news-item'}>
             {img}
             <section style={sectionStyle} className='left' >
               <img className="desktopNewsImg" src={newsArray[x].image.main.url} />
               <article>
                 <h1>{newsArray[x].title}</h1>
                 <p>{newsArray[x].location}</p>
-                {/*newsArray[x].date ? <p>newsArray[x].date</p> : null*/}
               </article>
             </section>
 
             <section className={newsArray[x].description ? "middle" : "middle mobile-hide"}>
               <h1 className='desktop'>{newsArray[x].title}</h1>
               <p className='location desktop'>{newsArray[x].location}</p>
-              {/*newsArray[x].date ? <p>{newsArray[x].date}</p> : null*/}
               {description}
             </section>
 
