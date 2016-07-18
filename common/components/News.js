@@ -10,17 +10,12 @@ export default class News extends Component {
 
   constructor() {
     super();
-    this.newsLimit = 5;
-    this.news = [];
-    this.oldNews= [];
-    this.newNews = [];
-    this.oldInsta = [];
-    this.newInsta = [];
-    this.instaLimit = 2;
-    this.insta = [];
-    this.loaded = 0;
-    this.disableLoad = false;
-    this.limited = false;
+    this.state = {
+      newsLimit: 5,
+      instaLimit: 3,
+      disableLoad: false,
+      limited: false
+    }
   }
 
   static fetchMoreInstaData(url, dispatch) {
@@ -34,15 +29,6 @@ export default class News extends Component {
   componentDidMount() {
     var self = this;
     window.addEventListener('scroll', this.handleScroll.bind(this));
-
-    if(this.props.filteredNews){
-      this.news = this.props.filteredNews.slice(0, this.newsLimit);
-      this.newNews = this.news;
-    }
-    if (this.props.state.insta.data) {
-      this.insta = this.props.state.insta.data.slice(0, this.instaLimit);
-      this.newInsta = this.insta;
-    }
   }
 
 
@@ -72,88 +58,19 @@ export default class News extends Component {
         instaEls[x].style.display = "none";
       }
     }
-    self.limited = true;
+    self.setState({limited: true});
   }
 
-  componentWillUpdate(nextProps) {
+  componentWillReceiveProps(next) {
     var self = this;
-
-    const { state, params, filteredNews, showLoader, instaData } = nextProps;
-
-    if (this.props.state.insta.data && this.insta.length < 1) {
-      this.insta = this.props.state.insta.data.slice(0, this.instaLimit);
-    }
-
-    if (self.props.state.insta.data.length != nextProps.state.insta.data.length) {
-      self.setState({});
-    }
-
-    if (!params || this.props.params.filter != params.filter){
+    if (!next.params || self.props.params.filter != next.params.filter){
       window.scrollTo(0,0);
-      this.updateNewNews(nextProps);
-      this.updateNewInsta(nextProps);
-      this.newsLimit = 5;
-      this.instaLimit = 2;
-      this.limited = false;
+      self.setState({newsLimit: 5, instaLimit: 3, limited: false})
     }
-
-    else if(!this.newNews.length || (this.oldNewsLimit != this.newsLimit)){
-      this.updateNewNews(nextProps);
-    }
-    if(!this.newInsta.length || (this.oldInstaLimit != this.instaLimit) && !self.limited){
-      this.updateNewInsta(nextProps);
-    }
-
-    self.params = params;
-
-    if (this.props.state.insta.data) {
-        if (this.insta.length > 0 && this.insta.length == this.props.state.insta.data.length) {
-          if (!self.disableLoad || !self.limited) {
-            console.log('load more insta');
-            self.constructor.fetchMoreInstaData(self.props.state.insta.next, self.props.dispatch);
-          }
-          self.disableLoad = true;
-          setTimeout(function() {
-            self.disableLoad = false;
-          }, 10000);
-        }
-    }
-
-    setTimeout(function() {
-      if(self.news.length) self.scroll();
-    }, 100);
-  }
-
-  updateNewNews(nextProps) {
-    const { params, filteredNews, instaData } = nextProps;
-    if (filteredNews) this.news = filteredNews.slice(0, this.newsLimit);
-    if(!params.filter)
-      this.newNews = this.news;
-    else this.newNews = filteredNews;
-  }
-
-  updateNewInsta(nextProps) {
-    const { params, filteredNews, instaData } = nextProps;
-    if (this.props.state.insta.data) {
-         this.insta = this.props.state.insta.data.slice(0, this.instaLimit);
-    } else {
-      this.insta = [];
-    }
-    this.newInsta = this.insta;
-  }
-
-  shouldComponentUpdate(nextProps) {
-    const { params, state } = nextProps;
-    return true;
   }
 
   componentDidUpdate() {
     var self = this;
-    if(self.oldNews.length) {
-      setTimeout(function(){
-        self.setState({})
-      },500)
-    }
   }
 
   handleScroll(e) {
@@ -161,11 +78,6 @@ export default class News extends Component {
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
-
-    if (self.props.state.news.length <= self.newsLimit || self.props.filteredNews.length <= self.newsLimit && self.props.params.filter) {
-      self.limitInsta();
-    }
-
     this.timeout = setTimeout(function() {
 
       var scrollTop = document.body.scrollTop;
@@ -173,48 +85,56 @@ export default class News extends Component {
       var clientHeight = document.body.clientHeight;
 
       if (((scrollTop+clientHeight) / scrollHeight) > 0.7) {
-        if (this.newsLimit) {
-
-          this.oldNewsLimit = this.newsLimit;
-          this.oldInstaLimit = this.instaLimit;
-
-          this.newsLimit = this.newsLimit + 5;
-          this.instaLimit = this.instaLimit + 5;
-          this.setState({});
+        if (self.state.newsLimit) {
+          self.setState({
+            oldNewsLimit: self.state.newsLimit,
+            oldInstaLimit: self.state.instaLimit,
+            newsLimit: self.state.newsLimit + 5
+          });
+          if (!self.state.limited) {
+            self.setState({instaLimit: self.state.instaLimit + 4})
+          }
+          if (!self.state.disableLoad && !self.state.limited) {
+            self.setState({disableLoad: true})
+            self.constructor.fetchMoreInstaData(self.props.state.insta.next, self.props.dispatch);
+            setTimeout(function() {
+              self.setState({disableLoad: false});
+            }, 1000);
+          }
         }
       }
+      if (self.props.filteredNews.length <= self.state.newsLimit) {
+        self.limitInsta();
+      }
+
     }.bind(this), 100);
   };
 
 
   render () {
     var instaList = null;
-    var self = this, newNews, newInsta, oldInsta;
+    var self = this;
+    var newNews = null;
+    var newInsta = null;
 
     var filterBool = true;
     if (self.params) {
       var filterBool = self.params.filter;
     }
 
-    var selected = true;
-    if(self.params && self.params.filter)
-      selected = false;
+    if( !self.props.filteredNews) {
+      newNews = null;
+    } else {
+      newNews = newsEl(self.props.filteredNews.slice(0, self.state.newsLimit), 'news-enter');
+    }
 
-    if( !self.props.state.news ) newNews = [];
-    else newNews = newsEl(this.newNews, 'news-enter', selected);
-
-    function newsEl(newsArray, action, selected) {
+    function newsEl(newsArray, action) {
       var arr = [];
       for (var x = 0; x < newsArray.length; x++) {
         var yearEl = null;
         var delay = (x % 20) * .05 + "s";
         var img = newsArray[x].image.main.url ? <img src={newsArray[x].image.main.url } className='mobile-image' /> : ''
-        var sectionStyle = {};
-        if( newsArray[x].image.main.url ) {
-          sectionStyle =  {
-            // 'backgroundImage': "url("+newsArray[x].image.main.url+")"
-          }
-        }
+
         var description = newsArray[x].description ? <p className='description'>{newsArray[x].description}</p> : "";
         var link = newsArray[x].link ? <div></div> : null;
         var dateEl = null;
@@ -231,9 +151,9 @@ export default class News extends Component {
           }
         }
 
-        arr.push(<div style={{"transitionDelay" : delay}} key={newsArray[x].id+self.params.filter+x}><a id={newsArray[x].id} target="blank" href={newsArray[x].link ? newsArray[x].link : 'javascript:'} className={newsArray[x].link ? 'link news-item' : 'news-item'}>
+        arr.push(<div style={{"transitionDelay" : delay}} key={newsArray[x].id+self.props.params.filter+x}><a id={newsArray[x].id} target="blank" href={newsArray[x].link ? newsArray[x].link : 'javascript:'} className={newsArray[x].link ? 'link news-item' : 'news-item'}>
             {img}
-            <section style={sectionStyle} className='left' >
+            <section className='left' >
               <img className="desktopNewsImg" src={newsArray[x].image.main.url} />
               <article>
                 <h1>{newsArray[x].title}</h1>
@@ -255,21 +175,17 @@ export default class News extends Component {
         if (x == newsArray.length - 1) return arr;
       }
     }
-    if (this.newInsta.length > 0) {
-      newInsta = instaEl(this.newInsta, 'news-enter', selected);
-    } else {
-        if (this.props.state.insta.data) {
-            var sliced = this.props.state.insta.data.slice(0,2);
-            newInsta = instaEl(sliced, 'news-enter', selected);
-        } else {
-          newInsta = instaEl([], 'news-enter', selected);
-        }
+
+    if (self.props.state.insta.data) {
+      var sliced = this.props.state.insta.data.slice(0, self.state.instaLimit);
+      newInsta = instaEl(sliced, 'news-enter');
     }
 
-    function instaEl(instaArray, action, selected) {
+    function instaEl(instaArray, action) {
       return instaArray.map(function (item, i) {
+        var delay = (i % 20) * .05 + "s";
        return (
-         <a target='_blank' className='noselect insta' href={item.link} key={item.id+i}>
+         <a target='_blank' style={{"transitionDelay" : delay}} className='noselect insta' href={item.link} key={item.id+i}>
            <img src={item.images.standard_resolution.url} />
          </a>
        )

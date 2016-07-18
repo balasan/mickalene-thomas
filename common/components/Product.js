@@ -80,6 +80,7 @@ export default class Product extends Component {
 
     changeDropdown(value) {
       var ddl = document.getElementById('descriptions');
+      if (!ddl) return;
       var opts = ddl.options.length;
       if (value) {
         for (var i = 0; i < opts; i++) {
@@ -196,7 +197,7 @@ export default class Product extends Component {
             var url;
             typeof vari == 'object' ? url = vari.image : url = vari;
             var divStyle = {
-              backgroundImage: 'url(' + url + ')'
+              background: 'white url(' + url + ') center center / contain no-repeat'
             };
             if (i == 0) {
               return (<div className='single-prod-image selected' onClick={self.switchImg.bind(self, vari)} data-src={url} style={divStyle}></div>)
@@ -281,12 +282,19 @@ export default class Product extends Component {
         }
       }
 
+      var firstImg = null;
+      if (typeof product.images[0] == 'string') {
+        firstImg = product.images[0];
+      } else {
+        firstImg = product.images[0].image;
+      }
+
       productEl = (
 
           <section className='productShowcase' key={product.id}>
 
             <div className="image noselect">
-              <img id="main-product-image" className="imageContainer" src={product.images[0]} />
+              <img id="main-product-image" className="imageContainer" src={firstImg} />
             </div>
 
             <div className="images-select noselect">

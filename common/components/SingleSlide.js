@@ -38,19 +38,13 @@ export default class SingleSlide extends Component {
   render () {
     var self = this;
     var url = this.props.workItem.image.small.url;
-    var hiRes = this.props.workItem.image.medium.url;
+    var hiRes = this.props.workItem.image.main.url;
+    var medium = this.props.workItem.image.medium.url;
     var title = this.props.workItem.title;
     var videoEl = null;
 
     if (self.props.workItem.video) {
       videoEl = (<div className="vimeoFrame" dangerouslySetInnerHTML={self.createMarkup()} />);
-      // var iframeEl = document.getElementsByTagName("iframe")[0];
-      // console.log(iframeEl)
-      // if (iframeEl) {
-      //   var src = iframeEl.src;
-      //   console.log(src, 'src')
-      // }
-
     }
 
     const nextItem = function() {
@@ -102,7 +96,7 @@ export default class SingleSlide extends Component {
     var image = (
         <div className="image noselect" id="singleImage">
           <div className={tag == 'paintings' ? 'no-events painting  imageContainer' : 'no-events imageContainer'}>
-           <img className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={url}/>
+           <img className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={hiRes}/>
           </div>
         </div>
     )
