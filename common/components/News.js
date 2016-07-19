@@ -14,7 +14,8 @@ export default class News extends Component {
       newsLimit: 5,
       instaLimit: 3,
       disableLoad: false,
-      limited: false
+      limited: false,
+      insta: []
     }
   }
 
@@ -49,12 +50,14 @@ export default class News extends Component {
 
   limitInsta() {
     var self = this;
-    var newsEl = document.getElementById('news-inner');
+    var newsEls = document.getElementsByClassName('news-item');
+    var lastNews = newsEls[newsEls.length - 1];
+    var newsDistance = lastNews.offsetTop + lastNews.offsetHeight;
     var instaEls = document.getElementsByClassName('insta');
-    var newsHeight = newsEl.offsetHeight;
-    if (newsHeight == 0) return;
+    if (newsDistance == 0) return;
     for (var x in instaEls) {
-      if (instaEls[x].offsetTop > newsHeight) {
+      var instaDistance = instaEls[x].offsetTop + instaEls[x].offsetHeight;
+      if (instaDistance > newsDistance) {
         instaEls[x].style.display = "none";
       }
     }
@@ -63,13 +66,14 @@ export default class News extends Component {
 
   componentWillReceiveProps(next) {
     var self = this;
+    if (next.state.insta.data && next.state.insta.data != self.state.insta) self.setState({insta: next.state.insta.data})
     if (!next.params || self.props.params.filter != next.params.filter){
       window.scrollTo(0,0);
       self.setState({newsLimit: 5, instaLimit: 3, limited: false})
     }
   }
 
-  componentDidUpdate() {
+  componentWillUpdate(nextProps, nextState) {
     var self = this;
   }
 
@@ -112,23 +116,21 @@ export default class News extends Component {
 
 
   render () {
-    var instaList = null;
     var self = this;
-    var newNews = null;
-    var newInsta = null;
+    var instaList = null;
+    var newsEl = null;
+    var instaEl = null;
 
     var filterBool = true;
     if (self.params) {
       var filterBool = self.params.filter;
     }
 
-    if( !self.props.filteredNews) {
-      newNews = null;
-    } else {
-      newNews = newsEl(self.props.filteredNews.slice(0, self.state.newsLimit), 'news-enter');
+    if (self.props.filteredNews) {
+      newsEl = createNewsEl(self.props.filteredNews.slice(0, self.state.newsLimit), 'news-enter');
     }
 
-    function newsEl(newsArray, action) {
+    function createNewsEl(newsArray, action) {
       var arr = [];
       for (var x = 0; x < newsArray.length; x++) {
         var yearEl = null;
@@ -151,7 +153,7 @@ export default class News extends Component {
           }
         }
 
-        arr.push(<div style={{"transitionDelay" : delay}} key={newsArray[x].id+self.props.params.filter+x}><a id={newsArray[x].id} target="blank" href={newsArray[x].link ? newsArray[x].link : 'javascript:'} className={newsArray[x].link ? 'link news-item' : 'news-item'}>
+        arr.push(<div style={{"transitionDelay" : delay}} className={newsArray[x].link ? 'link news-item' : 'news-item'} key={newsArray[x].id+self.props.params.filter+x}><a id={newsArray[x].id} target="blank" href={newsArray[x].link ? newsArray[x].link : 'javascript:'} >
             {img}
             <section className='left' >
               <img className="desktopNewsImg" src={newsArray[x].image.main.url} />
@@ -176,23 +178,38 @@ export default class News extends Component {
       }
     }
 
-    if (self.props.state.insta.data) {
-      var sliced = this.props.state.insta.data.slice(0, self.state.instaLimit);
-      newInsta = instaEl(sliced, 'news-enter');
+    if (self.state.insta) {
+      var finalArr = null;
+      var sliced = self.state.insta.slice(0, self.state.instaLimit);
+      if (self.state.limited) {
+        finalArr = sliced;
+        finalArr.push({special: true})
+      } else {
+        finalArr = sliced;
+      }
+      instaEl = createInstaEl(finalArr, 'news-enter');
     }
 
-    function instaEl(instaArray, action) {
+    function createInstaEl(instaArray, action) {
       return instaArray.map(function (item, i) {
         var delay = (i % 20) * .05 + "s";
-       return (
-         <a target='_blank' style={{"transitionDelay" : delay}} className='noselect insta' href={item.link} key={item.id+i}>
-           <img src={item.images.standard_resolution.url} />
-         </a>
-       )
-     }, this)
+        if (!item.special) {
+          return (
+            <a target='_blank' style={{"transitionDelay" : delay}} data-id={item.id} className='noselect insta' href={item.link} key={i}>
+              <img src={item.images.standard_resolution.url} />
+            </a>
+          )
+        } else {
+          return (
+            <a target='_blank' style={{"transitionDelay" : delay}} className='noselect special' key={i}>
+              <p>Mickalene Thomas</p>
+            </a>
+          )
+        }
+      }, this)
     }
 
-    var all = (
+    var newsTransition = (
       <div className='left parent'>
         <div id="news-inner">
           <ReactCSSTransitionGroup
@@ -202,12 +219,12 @@ export default class News extends Component {
             transitionEnterTimeout={700}
             transitionLeave={false}
           >
-            {newNews}
+            {newsEl}
           </ReactCSSTransitionGroup>
         </div>
       </div>)
 
-      var allInsta = (
+      var instaTransition = (
         <div className="right parent">
           <div className="insta-parent">
             <ReactCSSTransitionGroup
@@ -217,7 +234,7 @@ export default class News extends Component {
               transitionEnterTimeout={700}
               transitionLeave={false}
             >
-              {newInsta}
+              {instaEl}
             </ReactCSSTransitionGroup>
           </div>
         </div>
@@ -225,8 +242,8 @@ export default class News extends Component {
 
     return (
       <div className='newsParent'>
-        {all}
-        {allInsta}
+        {newsTransition}
+        {instaTransition}
       </div>
     )
   }

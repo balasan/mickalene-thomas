@@ -130,13 +130,14 @@ export default class SingleSlide extends Component {
           transitionLeaveTimeout={450}
           >
           <div className="slide" key={url}>
+            <a className="pin" target="_blank" data-pin-do="buttonPin" href={'https://www.pinterest.com/pin/create/button/?url=http://mickalene.herokuapp.com/works/i/'+self.props.workItem.id+'&media='+hiRes+'&description='+self.props.workItem.title} data-pin-shape="round"></a>
             {!self.props.workItem.video ? image : null}
             {videoEl}
             {mag}
             {description}
             <Hammer onSwipe={swipe.bind(this)}><div className="swipe-field"></div></Hammer>
           </div>
-          <img onClick={toggleZoom} src="../../images/close.svg" className="zoom-close noselect" />
+          {/*<img onClick={toggleZoom} src="../../images/close.svg" className="zoom-close noselect" />*/}
         </ReactCSSTransitionGroup>
     );
   }

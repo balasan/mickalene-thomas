@@ -74,6 +74,19 @@
     }
 }
 
+.pin {
+    height: 20px;
+    width: 20px;
+    position: fixed;
+    top: -60px;
+    right: 60px;
+    z-index: 9999;
+    background-image: url('/images/pin.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+}
+
 .showcase {
     display: flex;
     width: 100vw;
