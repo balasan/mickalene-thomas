@@ -10,6 +10,7 @@
     perspective: 600px;
     transform-style: preserve-3d;
     background-color: transparent;
+    overflow: hidden;
 
     img {
         backface-visibility: hidden;
@@ -80,85 +81,4 @@
             }
         }
     }
-
-/*    &.newsItem {
-        cursor: pointer;
-        background-image: url(/images/transparent1.jpg);
-        background-blend-mode: darken;
-        background-size: cover;
-
-        &.red {
-            background-color: rgba(197, 2, 11, 1);
-
-            &:hover {
-                .textNews {
-                    background-color: rgba(197, 2, 11, 0.75);
-                }
-            }
-        }
-        &.blue {
-            background-color: rgba(149, 217, 240, 1);
-
-            &:hover {
-                .textNews {
-                    background-color: rgba(149, 217, 240, 0.75);
-                }
-            }
-        }
-        &.brown {
-            background-color: rgba(215, 184, 140, 1);
-
-            &:hover {
-                .textNews {
-                    background-color: rgba(215, 184, 140, 0.75);
-                }
-            }
-        }
-        .textNews {
-            transition: background-color .5s easeOutQuart, filter .5s easeOutQuart;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100%;
-            width: 100%;
-            padding: 15px;
-
-            p {
-                font-style: italic;
-                text-transform: uppercase;
-                color: rgba(255, 255, 255, 1);
-                margin: 0;
-                padding: 0;
-                transition: color .5s easeOutQuart;
-                text-align: center;
-
-                &:first-of-type {
-                    line-height: 24px;
-                    font-size: 20px;
-
-                    @media (--mobile) {
-                        font-size: 14px;
-                        line-height: 14px;
-                    }
-                    font-family: 'Minion Pro', sans-serif;
-                }
-                &:nth-of-type(2) {
-                    font-family: 'Avenir Next', sans-serif;
-                    font-size: 12px;
-
-                    @media (--mobile) {
-                        font-size: 10px;
-                    }
-                }
-            }
-        }
-        &:hover {
-            .textNews {
-                p {
-                    color: rgba(255, 255, 255, 1)
-                }
-            }
-        }
-    }*/
 }
