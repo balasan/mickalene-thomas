@@ -1,28 +1,43 @@
 @import "customMedia.css";
 @import "colors.css";
 
+.mediaEls {
+    position: relative;
+}
+
 .aboutImg {
-    height: calc(100vh - 75px);
+    height: 56.25vw;
+    width: 100vw;
+    top: 0;
+    position: absolute;
     background-color: white;
     background-size: cover;
     background-position: center center;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
 
-    @media (--mobile) {
-        height: 50vh;
+    &.hideImg {
+        display: none;
     }
-    img {
-        height: 25px;
-        opacity: 0.75;
-        margin: 1em;
 
-        @media (--mobile) {
-            display: none;
-        }
+    @media (--desktop) {
+        display: none;
+    }
+
+    img {
+        height: 25%;
+        opacity: 0.75;
     }
 }
+
+.aboutVideo {
+    height: 56.25vw;
+    width: 100vw;
+    display: flex;
+}
+
+
 .aboutTxt {
     width: 100%;
     display: flex;

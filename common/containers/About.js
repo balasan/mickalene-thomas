@@ -7,6 +7,7 @@ export default class About extends Component {
     super(props, context)
     this.state = {
       aboutData: null,
+      hideVideo: true,
     }
   }
 
@@ -17,6 +18,16 @@ export default class About extends Component {
     });
   }
 
+  toggleVideo() {
+    var self = this;
+    console.log('dafuq')
+    var newState = self.state.hideVideo = !self.state.hideVideo;
+    self.setState({hideVideo: newState});
+    var vid = self.refs.okay;
+    console.log(self, 'check refs')
+    vid.play();
+  }
+
   render () {
       var self = this;
       var data = self.state.aboutData;
@@ -24,6 +35,8 @@ export default class About extends Component {
       var header = null;
       var textEl = null;
       var headerEl = null;
+      var videoUrl = null;
+      var videoEl = null;
 
       if (data) {
         if (data.header) {
@@ -36,17 +49,23 @@ export default class About extends Component {
           })
         }
         if (data.image) {
-          imageEl = (<section style={{backgroundImage: 'url(' + data.image + ')'}} className='aboutImg noselect'>
-            <img src='/images/down_arrow.png' />
+          imageEl = (<section style={{backgroundImage: 'url(' + data.image + ')'}} onClick={self.toggleVideo.bind(self)} className={self.state.hideVideo ? 'aboutImg' : 'aboutImg hideImg'}>
+            <img src='/images/play.png' />
           </section>);
         }
       }
 
+      videoUrl = '/video/about.mp4';
+      videoEl = (<video ref="okay" className="aboutVideo" muted autoPlay loop><source src={videoUrl} type="video/mp4" /></video>)
+
       return (
         <div>
-        {imageEl}
         <section className='aboutTxt'>
           {headerEl}
+          <div className="mediaEls">
+            {videoUrl ? videoEl : null}
+            {imageEl}
+          </div>
           <div id="about-body">
             {textEl}
           </div>

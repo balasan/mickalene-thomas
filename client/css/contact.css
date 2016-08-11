@@ -114,22 +114,24 @@
       border: solid 2px #ccc;
     }
     input {
-      color: #ccc;
-      width: calc(100% - 95px);
+      color: black;
+      width: 100%;
       margin: 0 5px 0 0;
+      -webkit-appearance: none;
 
       @media (--mobile) {
-        width: calc(100% - 90px);
         margin: 0;
       }
     }
-    button {
+    button, input.button {
       background-color: #ccc;
       color: white;
-      width: 90px;
+      margin-top: 10px;
       cursor: pointer;
       transition: background-color 150ms ease-out, color 250ms ease-out;
-
+      @media (--mobile) {
+        font-weight: bold;
+      }
       &:hover {
         background-color: white;
         color: #ccc;
@@ -157,4 +159,19 @@
       }
     }
   }
+}
+
+form.validate {
+    width: 100%;
+}
+
+
+label {
+  p {
+    color: 'black';
+  }
+}
+
+.indicates-required {
+  p { color: 'black'; }
 }

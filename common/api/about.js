@@ -33,9 +33,10 @@
                  }
 
                  var data = response.results[0].data;
-                 // console.log(data, 'about data')
+                  // console.log(data, 'about data')
 
                  var obj = {};
+                 obj.video = data['about.video'] ? data['about.video'].value.file.url : null;
                  obj.header = data['about.header'].value[0].text;
                  obj.body = [];
                  obj.image = data['about.image'] ? data['about.image'].value.main.url : null;

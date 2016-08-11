@@ -432,11 +432,18 @@ body {
     }
 }
 
+.single-leave {
+    .related {
+        opacity: 0;
+    }
+}
+
 .related {
     cursor: pointer;
-    opacity: 0.75;
     transition: opacity 250ms ease-out;
+    opacity: 0.75;
     margin: 0 5px 0 0;
+    backface-visibility: hidden;
     display: inline-block;
 
     &:hover {

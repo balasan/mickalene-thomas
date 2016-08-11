@@ -54,8 +54,6 @@ class ExhibitionParent extends Component {
   }
 }
 
-// export default ExhibitionParent
-
 export default connect(
   state => {
     return {state: state}
