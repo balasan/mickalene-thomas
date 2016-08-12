@@ -36,7 +36,7 @@ class Contact extends Component {
       if (this.state.contactData.galleries) {
         galleries = this.state.contactData.galleries;
         for (var x in galleries) {
-          galleriesEl.push(<div className='gallery-parent'>
+          galleriesEl.push(<div key={x} className='gallery-parent'>
             <div>
               <h2>{galleries[x].name}</h2>
               <p>{galleries[x].address}</p>

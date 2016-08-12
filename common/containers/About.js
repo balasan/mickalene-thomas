@@ -20,11 +20,9 @@ export default class About extends Component {
 
   toggleVideo() {
     var self = this;
-    console.log('dafuq')
     var newState = self.state.hideVideo = !self.state.hideVideo;
     self.setState({hideVideo: newState});
     var vid = self.refs.okay;
-    console.log(self, 'check refs')
     vid.play();
   }
 
@@ -45,11 +43,11 @@ export default class About extends Component {
         if (data.body && !this.textEl) {
           textEl = [];
           data.body.forEach(function(text, i){
-              textEl.push(<p>{text}</p>);
+              textEl.push(<p key={i}>{text}</p>);
           })
         }
         if (data.image) {
-          imageEl = (<section style={{backgroundImage: 'url(' + data.image + ')'}} onClick={self.toggleVideo.bind(self)} className={self.state.hideVideo ? 'aboutImg' : 'aboutImg hideImg'}>
+          imageEl = (<section onClick={self.toggleVideo.bind(self)} className={self.state.hideVideo ? 'aboutImg' : 'aboutImg hideImg'}>
             <img src='/images/play.png' />
           </section>);
         }
