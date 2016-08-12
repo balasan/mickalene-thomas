@@ -3,25 +3,34 @@
 
 .mediaEls {
     position: relative;
+
+    &:hover {
+        .muteToggle {
+            opacity: 1;
+        }
+    }
+
+    .muteToggle {
+        opacity: 0;
+        transition: opacity 250ms ease-out;
+        position: absolute;
+        color: red;
+        bottom: 0;
+        right: 0;
+        margin: 20px;
+        background-size: contain;
+        height: 25px;
+        width: 25px;
+        cursor: pointer;
+        &.muted {
+            background-image: url('/images/volume-off.png');
+        }
+        &.unmuted {
+            background-image: url('/images/volume-on.png');
+        }
+    }
 }
 
-.muteToggle {
-    position: absolute;
-    color: red;
-    bottom: 0;
-    right: 0;
-    margin: 20px;
-    background-size: contain;
-    height: 25px;
-    width: 25px;
-    cursor: pointer;
-    &.muted {
-        background-image: url('/images/volume-off.png');
-    }
-    &.unmuted {
-        background-image: url('/images/volume-on.png');
-    }
-}
 
 .aboutImg {
     height: 56.25vw;
