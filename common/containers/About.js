@@ -8,6 +8,7 @@ export default class About extends Component {
     this.state = {
       aboutData: null,
       hideVideo: true,
+      muted: true,
     }
   }
 
@@ -22,8 +23,30 @@ export default class About extends Component {
     var self = this;
     var newState = self.state.hideVideo = !self.state.hideVideo;
     self.setState({hideVideo: newState});
-    var vid = self.refs.okay;
+    var vid = self.refs.video;
     vid.play();
+  }
+
+  playToggle() {
+    var self = this;
+    var vid = self.refs.video;
+    if (vid.paused) {
+      vid.play();
+    } else {
+      vid.pause();
+    }
+  }
+
+  toggleMute() {
+    var self = this;
+    var vid = self.refs.video;
+    if (vid.muted) {
+      vid.muted = false;
+      self.setState({muted: false})
+    } else {
+      vid.muted = true;
+      self.setState({muted: true})
+    }
   }
 
   render () {
@@ -54,7 +77,7 @@ export default class About extends Component {
       }
 
       videoUrl = '/video/about.mp4';
-      videoEl = (<video ref="okay" className="aboutVideo" muted autoPlay loop><source src={videoUrl} type="video/mp4" /></video>)
+      videoEl = (<div><video onClick={self.playToggle.bind(self)} ref="video" className="aboutVideo" muted autoPlay loop><source src={videoUrl} type="video/mp4" /></video><div className={self.state.muted ? "muteToggle muted" : "muteToggle unmuted"} onClick={self.toggleMute.bind(self)}></div></div>)
 
       return (
         <div>

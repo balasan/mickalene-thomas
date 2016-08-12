@@ -5,6 +5,24 @@
     position: relative;
 }
 
+.muteToggle {
+    position: absolute;
+    color: red;
+    bottom: 0;
+    right: 0;
+    margin: 20px;
+    background-size: contain;
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+    &.muted {
+        background-image: url('/images/volume-off.png');
+    }
+    &.unmuted {
+        background-image: url('/images/volume-on.png');
+    }
+}
+
 .aboutImg {
     height: 56.25vw;
     width: 100vw;
@@ -37,6 +55,7 @@
     height: 56.25vw;
     width: 100vw;
     display: flex;
+    cursor: pointer;
 }
 
 
