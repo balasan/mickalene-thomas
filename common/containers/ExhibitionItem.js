@@ -45,27 +45,19 @@ class ExhibitionItem extends Component {
     }
   }
 
-  componentWillUnmount() {
-    var self = this;
-    self.props.actions.clearExhibition();
-  }
-
   createIndex(nextProps) {
     var self = this;
     var item = null;
     var parentItem = null;
-    parentItem = nextProps.state.works.exhibition.arr;
-    item = nextProps.state.works.exhibition.obj[nextProps.params.imageId];
-
     var nextIndex = null;
     var prevIndex = null;
+    var index = null;
+    parentItem = nextProps.state.works.exhibition.arr;
+    item = nextProps.state.works.exhibition.arr[nextProps.params.imageId];
+    index = Number(nextProps.params.imageId);
 
-    parentItem.forEach(function(item, i) {
-      if (item.id == nextProps.params.imageId) {
-        nextIndex = i+1;
-        prevIndex = i-1
-      }
-    })
+    nextIndex = index+1;
+    prevIndex = index-1;
 
     nextIndex = nextIndex.mod(parentItem.length);
     prevIndex = prevIndex.mod(parentItem.length);
@@ -88,10 +80,10 @@ class ExhibitionItem extends Component {
     }
 
     const nextItem = function() {
-      self.props.dispatch(updatePath('/works/exhibitions/'+self.props.params.itemId+'/' + self.state.nextItem.id))
+      self.props.dispatch(updatePath('/works/exhibitions/'+self.props.params.itemId+'/' + self.state.nextIndex))
     }
     const prevItem = function() {
-      self.props.dispatch(updatePath('/works/exhibitions/'+self.props.params.itemId+'/' + self.state.prevItem.id))
+      self.props.dispatch(updatePath('/works/exhibitions/'+self.props.params.itemId+'/' + self.state.prevIndex))
     }
     const closeItem = function() {
       self.props.dispatch(updatePath('/works/exhibitions/'+self.props.params.itemId))

@@ -37,6 +37,14 @@ export default class ExhibitionImages extends Component {
   }
 
   componentWillUnmount() {
+    this.worksLimit = 20;
+    this.works = [];
+    this.oldWorks = [];
+    this.newWorks = [];
+    this.shuffled = [];
+    this.works = [];
+    this.selectedWorks = [];
+    this.loaded = 0;
     window.removeEventListener('scroll', this.handleScroll.bind(this));
   }
 
@@ -168,7 +176,7 @@ export default class ExhibitionImages extends Component {
 
     function worksEl(worksArray, action) {
       return worksArray.map(function(item, i) {
-        var url = '/works/exhibitions/'+self.props.params.itemId+'/'+item.id;
+        var url = '/works/exhibitions/'+self.props.params.itemId+'/'+i;
         return (
           <Link
             className={'item '+ action}
