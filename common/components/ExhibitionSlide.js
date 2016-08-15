@@ -4,7 +4,7 @@ var $ = require('jquery');
 var Hammer = require('react-hammerjs');
 import { updatePath } from 'redux-simple-router';
 
-export default class SingleSlide extends Component {
+export default class ExhibitionSlide extends Component {
   componentDidMount() {
     var self = this;
     this.imageContainer = document.getElementsByClassName('imageContainer');
@@ -36,45 +36,25 @@ export default class SingleSlide extends Component {
     var self = this;
     var url = null;
     var videoEl = null;
-    var relatedEl = null;
     var related = null;
     var description = null;
-    var workObj = self.props.state.works.obj;
+    var item = null;
 
     if (self.props.workItem) {
-      url = self.props.workItem.url;
-    }
-
-
-    if (workObj) {
-      if (workObj[self.props.params.itemId].related.length) {
-        related = workObj[self.props.params.itemId].related;
-        relatedEl = related.map(function(id) {
-          var item = workObj[id];
-          var relatedUrl = null;
-          if (item.tags[0] == 'exhibitions') {
-            relatedUrl = '/works/exhibitions/'+id;
-          } else {
-            relatedUrl = '/works/i/'+id;
-          }
-          return (<a href={relatedUrl} className="related"><img src={workObj[id].image.small.url} /></a>);
-        })
+      item = self.props.workItem;
+      url = item.image.main.url;
+      var date = item.date;
+      var formattedDate = '';
+      if (typeof date == 'string') {
+        formattedDate = date.substr(0, 4);
       }
-      if (workObj[self.props.params.itemId]) {
-        var parentItem = workObj[self.props.params.itemId];
-        var date = parentItem.date;
-        var formattedDate = '';
-        if (typeof date == 'string') {
-          formattedDate = date.substr(0, 4);
-        }
 
-        var description = (
-          <div className="description">
-            <p>{parentItem.title}</p>
-            <p>{formattedDate}{parentItem.medium ? ', ' + parentItem.medium : null}</p>
-          </div>
-        )
-      }
+      var description = (
+        <div className="description">
+          <p>{item.title}</p>
+          <p>{formattedDate}{item.medium ? ', ' + item.medium : null}</p>
+        </div>
+      )
     }
 
     const nextItem = function() {
@@ -111,9 +91,6 @@ export default class SingleSlide extends Component {
           <div className={related ? 'slide' : 'exhibSlide'} key={url}>
             {image}
             {description}
-            <div className="relatedParent">
-              {relatedEl}
-            </div>
             <Hammer onSwipe={swipe.bind(this)}><div className="swipe-field"></div></Hammer>
           </div>
         </ReactCSSTransitionGroup>

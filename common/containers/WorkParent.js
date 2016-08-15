@@ -35,7 +35,7 @@ class WorkParent extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.works) {
+    if (!this.props.state.works.arr.length) {
       this.constructor.fetchWorkOnClient(this.props.dispatch, this.props.params.filter);
     }
     if (!this.props.news) {

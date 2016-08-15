@@ -37,6 +37,14 @@ export default class ExhibitionImages extends Component {
   }
 
   componentWillUnmount() {
+    this.worksLimit = 20;
+    this.works = [];
+    this.oldWorks = [];
+    this.newWorks = [];
+    this.shuffled = [];
+    this.works = [];
+    this.selectedWorks = [];
+    this.loaded = 0;
     window.removeEventListener('scroll', this.handleScroll.bind(this));
   }
 
@@ -61,8 +69,10 @@ export default class ExhibitionImages extends Component {
   updateNewWorks(nextProps) {
     var self = this;
     const { params, filteredWorks } = nextProps;
-    this.works = filteredWorks.slice(0, this.worksLimit);
-    this.newWorks = this.works;
+    if (filteredWorks) {
+      this.works = filteredWorks.slice(0, this.worksLimit);
+      this.newWorks = this.works;
+    }
   }
 
   componentDidUpdate() {
@@ -170,14 +180,18 @@ export default class ExhibitionImages extends Component {
         return (
           <Link
             className={'item '+ action}
-            data-w={item.dimensions.width}
-            data-h={item.dimensions.height}
+            data-w={item.image.small.dimensions.width}
+            data-h={item.image.small.dimensions.height}
             key={i+action}
             to={url}
             >
             <div className="worksContainer">
-              <img src={item.url} />
+              <img src={item.image.small.url} />
+              <div className="text">
+                <p>{item.title}</p>
+              </div>
             </div>
+
           </Link>
         );
       });
@@ -186,7 +200,7 @@ export default class ExhibitionImages extends Component {
     var images = self.newWorks.map(function(item, i){
       if (self.ready) return null;
       return (
-        <img key={i+'whatev'} src={item.url}  onLoad={self.loadImages.bind(self)}/>
+        <img key={i+'whatev'} src={item.image.small.url}  onLoad={self.loadImages.bind(self)}/>
         )
     })
     var all = (

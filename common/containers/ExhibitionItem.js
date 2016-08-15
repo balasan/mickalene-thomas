@@ -8,6 +8,8 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import { updatePath } from 'redux-simple-router';
 import ExhibitionSlide from '../components/ExhibitionSlide';
 
+Number.prototype.mod = function(n) { return ((this % n) + n) % n; };
+
 class ExhibitionItem extends Component {
   constructor (props, context) {
     super(props, context)
@@ -19,27 +21,27 @@ class ExhibitionItem extends Component {
     }
   }
 
-  static fetchWorkOnClient(dispatch, filter) {
-    var { loadWork } = bindActionCreators(WorkActions, dispatch, filter)
+  static fetchExhibitionOnClient(dispatch, id) {
+    var { loadExhibition } = bindActionCreators(WorkActions, dispatch, id)
     return Promise.all([
-      loadWork(filter)
+      loadExhibition(id)
     ])
   }
 
   componentDidMount() {
     var self = this;
-    if (!this.props.state.works.obj) {
-      this.constructor.fetchWorkOnClient(this.props.dispatch, this.props.params.filter);
-    }
-    if (self.props.state.works.obj) {
-      self.createIndex(self.props);
+    this.constructor.fetchExhibitionOnClient(this.props.dispatch, this.props.params.itemId);
+    if (self.props.state.works.exhibition) {
+      if (self.props.state.works.exhibition.obj) self.createIndex(self.props);
     }
   }
 
   componentWillUpdate(nextProps, nextState) {
     var self = this;
-    if (nextProps.state.works.obj && nextState.prevIndex == null || self.props.params.imageId != nextProps.params.imageId) {
-      self.createIndex(nextProps)
+    if (nextProps.state.works.exhibition) {
+      if (nextProps.state.works.exhibition.arr && nextState.prevIndex == null || self.props.params.imageId != nextProps.params.imageId) {
+        self.createIndex(nextProps)
+      }
     }
   }
 
@@ -47,33 +49,27 @@ class ExhibitionItem extends Component {
     var self = this;
     var item = null;
     var parentItem = null;
-    parentItem = nextProps.state.works.obj[nextProps.params.itemId];
-    item = parentItem.exhibitionImages[nextProps.params.imageId];
-    var imageId = Number(nextProps.params.imageId);
-    var length = parentItem.exhibitionImages.length;
     var nextIndex = null;
     var prevIndex = null;
+    var index = null;
+    parentItem = nextProps.state.works.exhibition.arr;
+    item = nextProps.state.works.exhibition.arr[nextProps.params.imageId];
+    index = Number(nextProps.params.imageId);
 
-    if (imageId == length - 1) {
-      nextIndex = 0;
-    } else {
-      nextIndex = imageId + 1;
-    }
+    nextIndex = index+1;
+    prevIndex = index-1;
 
-    if (imageId == 0) {
-      prevIndex = length - 1;
-    } else {
-      prevIndex = imageId - 1;
-    }
+    nextIndex = nextIndex.mod(parentItem.length);
+    prevIndex = prevIndex.mod(parentItem.length);
 
-    var nextItem = parentItem.exhibitionImages[nextIndex];
-    var prevItem = parentItem.exhibitionImages[prevIndex];
+    var nextItem = parentItem[nextIndex];
+    var prevItem = parentItem[prevIndex];
 
     var imgN = new Image()
-    imgN.src = nextItem.url;
+    imgN.src = nextItem.image.main.url;
     var imgP = new Image()
-    imgP.src = prevItem.url;
-    self.setState({nextIndex: nextIndex, prevIndex: prevIndex, item: item, parentItem: parentItem});
+    imgP.src = nextItem.image.main.url;
+    self.setState({nextIndex: nextIndex, prevIndex: prevIndex, item: item, parentItem: parentItem, nextItem: nextItem, prevItem: prevItem});
   }
 
   render () {
@@ -106,8 +102,7 @@ class ExhibitionItem extends Component {
     return (
       <div className='selectedWork'>
         <section className='showcase'>
-          <ExhibitionSlide workItem={self.state.item} nextIndex={self.state.nextIndex} prevIndex={self.state.prevIndex} {...this.props} >
-          </ExhibitionSlide>
+          <ExhibitionSlide workItem={self.state.item} nextIndex={self.state.nextIndex} prevIndex={self.state.prevIndex} {...this.props} />
           {arrows}
         </section>
         <img className={'closeItem noselect'} onClick={closeItem} src={'/images/close.svg'} />

@@ -45,18 +45,11 @@ export default class SingleSlide extends Component {
     var related = null;
     var workObj = self.props.state.works.obj;
 
-    if (self.props.workItem.related.length) {
+    console.log(self.props.workItem, 'item')
+    if (self.props.workItem.related) {
       related = self.props.workItem.related;
-      relatedEl = related.map(function(id) {
-        var item = workObj[id];
-        var relatedUrl = null;
-        if (item.tags[0] == 'exhibitions') {
-          relatedUrl = '/works/exhibitions/'+id;
-        } else {
-          relatedUrl = '/works/i/'+id;
-        }
-        return (<a href={relatedUrl} className="related"><img src={workObj[id].image.small.url} /></a>);
-      })
+      var relatedUrl = '/works/exhibitions/'+related;
+      relatedEl = (<a className="related" href={relatedUrl}>Go to exhibition</a>);
     }
 
     if (self.props.workItem.video) {

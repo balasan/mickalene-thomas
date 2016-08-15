@@ -148,7 +148,7 @@ main {
 #app {
     position: relative;
 }
-.bg{
+.bg {
   position:fixed;
   width:100%;
   height:100%;

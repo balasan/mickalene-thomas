@@ -12,6 +12,12 @@ class ExhibitionParent extends Component {
     this.state = {
     }
   }
+  static fetchExhibitionOnClient(dispatch, id) {
+    var { loadExhibition } = bindActionCreators(WorkActions, dispatch, id)
+    return Promise.all([
+      loadExhibition(id)
+    ])
+  }
 
   static fetchWorkOnClient(dispatch, filter) {
     var { loadWork } = bindActionCreators(WorkActions, dispatch, filter)
@@ -22,7 +28,8 @@ class ExhibitionParent extends Component {
 
   componentDidMount() {
     var self = this;
-    if (!this.props.state.works.obj) {
+    this.constructor.fetchExhibitionOnClient(this.props.dispatch, this.props.params.itemId);
+    if (!this.props.state.works.arr.length) {
       this.constructor.fetchWorkOnClient(this.props.dispatch, this.props.params.filter);
     }
   }
@@ -36,19 +43,18 @@ class ExhibitionParent extends Component {
     var item = null;
     var workObj = null;
     var itemId = null;
-    var images = null;
+    var items = null;
     if (self.props.state.works) {
-      if (self.props.state.works.obj) {
-        workObj = self.props.state.works.obj;
-        if (self.props.params.itemId) itemId = self.props.params.itemId;
-        if (itemId) item = workObj[itemId];
-        if (item) images = item.exhibitionImages
+      if (self.props.state.works.exhibition) {
+        if (self.props.state.works.exhibition.arr) {
+          items = self.props.state.works.exhibition.arr;
+        }
       }
     }
 
     return (
     <div>
-      <ExhibitionImages {...self.props} filteredWorks={images} />
+      <ExhibitionImages {...self.props} filteredWorks={items} />
     </div>
   );
   }
