@@ -15,14 +15,24 @@ export default class Store extends Component {
   render () {
     const { add } = this.props;
     var products = null;
+    var firstImg = null;
 
     if (this.props.state.store.products) {
       products = this.props.state.store.products.map(function(product, i) {
+
+        console.log(product)
+      if (typeof product.images[0] == 'string') {
+        firstImg = product.images[0];
+      } else {
+        firstImg = product.images[0].image;
+      }
+
+
         var divStyle = {
-          backgroundImage: 'url(' + product.images[0] + ')'
+          backgroundImage: 'url(' + firstImg + ')'
         };
         return (
-          <Link to={'/store/' + product.id} key={product.images[0]}>
+          <Link to={'/store/' + product.id} key={i}>
             <div style={divStyle}></div>
             <p>{product.title}</p>
           </Link>

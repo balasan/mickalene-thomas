@@ -27,7 +27,7 @@ function renderFullPage(html, initialState) {
       <body>
         <div class="bg"></div>
         <video id="vidBg" preload="none" class="hidden video" loop="true">
-          <source src="/video/studio.mp4" type="video/mp4"/>
+          <source src="/video/menu.mp4" type="video/mp4"/>
         </video>
         <video id="vidPattern" preload="none" class="hidden video" loop="true">
           <source src="/video/bg-vid.mp4" type="video/mp4"/>

@@ -16,7 +16,6 @@
      linkResolver: function(doc, ctx) {
          return '/';
      }
-
  };
 
  prismic.init(configuration);
@@ -37,6 +36,7 @@
                      obj.id = item.id;
                      obj.externalURL = item.data["product-v.externalURL"] ? item.data["product-v.externalURL"].value: null;
                      obj.available = true;
+                     obj.vars = [];
 
                      if (item.data["product-v.available"]) {
                         if (item.data["product-v.available"].value == 'No') {
@@ -53,12 +53,30 @@
                      obj.images = [];
                      obj.quantity = 1;
 
-                     if (item.data["product-v.image"]) {
+                    if (item.data["product-v.variation"]) {
+                         var mainVar = {};
+                        if (item.data["product-v.variation"].value.length > 0) obj.vars.push(mainVar);
+                        item.data["product-v.variation"].value.forEach(function(vari) {
+                            var varObj = {};
+                            varObj.available = null;
+                            if (vari.available) {
+                                vari.available.value == 'Available' ? varObj.available = true : varObj.available = false;
+                            }
+                            varObj.image = vari.variationImage.value.views.small.url;
+                            varObj.description = vari.vartiationDescription ? vari.vartiationDescription.value : null;
+                            varObj.externalURL = vari.externalURL ? vari.externalURL.value : null;
+                            obj.vars.push(varObj);
+                            obj.images.push(varObj);
+                        });
+                     }
+                       if (item.data["product-v.image"]) {
                         item.data["product-v.image"].value.forEach(function(image) {
-                            obj.images.push(image.image.value.main.url);
+                            if (image.image) {
+                                 obj.images.unshift(image.image.value.main.url);
+                            }
                         })
-                 }
-                     simple.push(obj)
+                    }
+                    simple.push(obj)
                  });
                 callback(null, simple)
              })
@@ -77,7 +95,6 @@
                      callback();
                  }
                  var simple;
-                 // console.log(response.results[0], 'single product response')
                  response.results.forEach(function(item) {
 
                      var obj = {}
@@ -100,7 +117,6 @@
                      obj.vars = [];
                      obj.sizes = [];
                      obj.availSizes = [];
-                     // obj.sku = [];
                      obj.sizeChart = null;
                     obj.images = [];
                      obj.quantity = 1;
@@ -115,16 +131,9 @@
                         }
                      }
 
+
                      if (item.data["product-v.variation"]) {
                          var mainVar = {};
-                        // item.data["product-v.image"].value.forEach(function(image) {
-                        //     // console.log(image)
-                        //     obj.images.push(image.image.value.main.url);
-                        // })
-                        // if (item.data["product-v.variation"].value.length > 0) {
-
-                        // }
-                        // console.log(item.data["product-v.variation"])
                         if (item.data["product-v.variation"].value.length > 0) obj.vars.push(mainVar);
 
 
@@ -140,63 +149,15 @@
                             obj.vars.push(varObj);
                             obj.images.push(varObj);
                         });
-                     } else {
-                        // var singleSku = item.data["product-v.sku"] ? item.data["product-v.sku"].value : null;
-                        // obj.sku.push(singleSku);
-                        // var image = item.data["product-v.image"] ? item.data["product-v.image"].value.main.url : null;
                      }
 
-
-
-                     // obj.image.main = {};
-                     // obj.image.main.dimensions = {}
-                     // obj.image.small = {};
-                     // obj.image.small.dimensions = {};
-                     // obj.image.medium = {};
-                     // obj.image.medium.dimensions = {};
-                     // obj.image.large = {};
-                     // obj.image.large.dimensions = {};
-
                 if (item.data["product-v.image"]) {
-                  // var imagesArr = [];
                   var reversed = item.data["product-v.image"].value.reverse();
                       reversed.forEach(function(image, i) {
-                            obj.images.unshift(image.image.value.main.url);
+                            if (image.image) {
+                                obj.images.unshift(image.image.value.main.url);
+                            }
                         });
-
-                     // obj.image.main.dimensions.height = item.data["product-v.image"].value.main.dimensions.height;
-                     // obj.image.main.dimensions.width = item.data["product-v.image"].value.main.dimensions.width;
-
-
-                     // if (item.data["product-v.image"].value.main.dimensions.width < 1000) {
-                     //     obj.image.small.url = item.data["product-v.image"].value.main.url;
-                     //    obj.image.small.dimensions.height = item.data["product-v.image"].value.main.dimensions.height;
-                     //    obj.image.small.dimensions.width = item.data["product-v.image"].value.main.dimensions.width;
-                     // } else {
-                     //     obj.image.small.url = item.data["product-v.image"].value.views.small.url;
-                     //    obj.image.small.dimensions.height = item.data["product-v.image"].value.views.small.dimensions.height;
-                     //    obj.image.small.dimensions.width = item.data["product-v.image"].value.views.small.dimensions.width;
-                     // }
-
-                     // if (item.data["product-v.image"].value.main.dimensions.width < 1920) {
-                     //    obj.image.medium.url = item.data["product-v.image"].value.main.url;
-                     //    obj.image.medium.dimensions.height = item.data["product-v.image"].value.main.dimensions.height;
-                     //    obj.image.medium.dimensions.width = item.data["product-v.image"].value.main.dimensions.width;
-                     // } else {
-                     //    obj.image.medium.url = item.data["product-v.image"].value.views.medium.url;
-                     //    obj.image.medium.dimensions.height = item.data["product-v.image"].value.views.medium.dimensions.height;
-                     //    obj.image.medium.dimensions.width = item.data["product-v.image"].value.views.medium.dimensions.width;
-                     // }
-
-                     // if (item.data["product-v.image"].value.main.dimensions.width < 3840) {
-                     //    obj.image.large.url = item.data["product-v.image"].value.main.url;
-                     //    obj.image.large.dimensions.height = item.data["product-v.image"].value.main.dimensions.height;
-                     //    obj.image.large.dimensions.width = item.data["product-v.image"].value.main.dimensions.width;
-                     // } else {
-                     //     obj.image.large.url = item.data["product-v.image"].value.views.large.url;
-                     //    obj.image.large.dimensions.height = item.data["product-v.image"].value.views.large.dimensions.height;
-                     //    obj.image.large.dimensions.width = item.data["product-v.image"].value.views.large.dimensions.width;
-                     // }
                 }
                      simple=obj
                  });

@@ -12,26 +12,21 @@ Number.prototype.mod = function(n) { return ((this % n) + n) % n; };
 export default class WorkItem extends Component {
 
   componentWillUpdate(newProps) {
-
+    var self = this;
     if(!newProps.params.itemId) return this.workItem = null;
-    var workItemNew = null;
-
-    if (newProps.state.workItem) {
-      workItemNew = newProps.state.workItem;
-    } else {
-      var newId = newProps.params.itemId;
-      newProps.filteredWorks.forEach(function(item, i) {
-        if (item.id == newId) {
-          workItemNew = item;
-        }
-      })
+    var newId = newProps.params.itemId;
+    if (newProps.state.works.obj) {
+      var workObj = newProps.state.works.obj;
+      if (workObj[newId]) {
+        self.workItem = workObj[newId];
+      }
     }
-    this.workItem = workItemNew;
-    if(newProps.filteredWorks.length) this.getNextPrevItems(newProps);
+    if (newProps.filteredWorks.length) self.getNextPrevItems(newProps);
   }
 
 
   getNextPrevItems(newProps) {
+    var self = this;
     const { state, params, filteredWorks } = newProps;
     var nextIndex;
     var prevIndex;
@@ -47,17 +42,13 @@ export default class WorkItem extends Component {
     this.nextItem = filteredWorks[nextIndex];
     this.prevItem = filteredWorks[prevIndex];
 
-    //preload image
     var imgN = new Image()
     imgN.src = this.nextItem.image.medium.url
     var imgP = new Image()
     imgP.src = this.prevItem.image.medium.url
   }
 
-
-
   render () {
-
     var self = this;
 
     const nextItem = function() {
@@ -87,12 +78,11 @@ export default class WorkItem extends Component {
     return (
       <div className='selectedWork'>
         <section className='showcase'>
-          <SingleSlide workItem={workItem} {...this} >
+          <SingleSlide workItem={workItem} {...this.props} >
           </SingleSlide>
           {arrows}
         </section>
-        <img className={'close noselect'} onClick={closeItem} src={'../../images/close.svg'} />
-
+        <img className={'closeItem noselect'} onClick={closeItem} src={'../../images/close.svg'} />
       </div>
     )
   }

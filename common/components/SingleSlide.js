@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes, Link } from 'react';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var $ = require('jquery');
 var Hammer = require('react-hammerjs');
@@ -6,11 +6,9 @@ import { updatePath } from 'redux-simple-router';
 
 export default class SingleSlide extends Component {
   componentDidMount() {
+    var self = this;
     this.imageContainer = document.getElementsByClassName('imageContainer');
     window.addEventListener('resize', this.resize.bind(this));
-  }
-
-  componentWillUpdate() {
   }
 
   resize(e){
@@ -19,14 +17,16 @@ export default class SingleSlide extends Component {
       image = e.target || e.srcElement;
     var imageContainer = image.parentNode
 
-    imageContainer.style.height = "auto";
-    if( image.clientHeight > imageContainer.clientHeight){
-      imageContainer.style.height = "100%";
-    }
+    if (imageContainer) {
+      imageContainer.style.height = "auto";
+      if (image.clientHeight > imageContainer.clientHeight){
+        imageContainer.style.height = "100%";
+      }
 
-    setTimeout(function(){
-      forceRedraw(imageContainer)
-    },0)
+      setTimeout(function(){
+        forceRedraw(imageContainer)
+      },0)
+    }
   }
 
   createMarkup() {
@@ -34,23 +34,33 @@ export default class SingleSlide extends Component {
     return {__html: self.props.workItem.video};
   }
 
-
   render () {
     var self = this;
     var url = this.props.workItem.image.small.url;
-    var hiRes = this.props.workItem.image.medium.url;
+    var hiRes = this.props.workItem.image.main.url;
+    var medium = this.props.workItem.image.medium.url;
     var title = this.props.workItem.title;
     var videoEl = null;
+    var relatedEl = null;
+    var related = null;
+    var workObj = self.props.state.works.obj;
+
+    if (self.props.workItem.related.length) {
+      related = self.props.workItem.related;
+      relatedEl = related.map(function(id) {
+        var item = workObj[id];
+        var relatedUrl = null;
+        if (item.tags[0] == 'exhibitions') {
+          relatedUrl = '/works/exhibitions/'+id;
+        } else {
+          relatedUrl = '/works/i/'+id;
+        }
+        return (<a href={relatedUrl} className="related"><img src={workObj[id].image.small.url} /></a>);
+      })
+    }
 
     if (self.props.workItem.video) {
       videoEl = (<div className="vimeoFrame" dangerouslySetInnerHTML={self.createMarkup()} />);
-      // var iframeEl = document.getElementsByTagName("iframe")[0];
-      // console.log(iframeEl)
-      // if (iframeEl) {
-      //   var src = iframeEl.src;
-      //   console.log(src, 'src')
-      // }
-
     }
 
     const nextItem = function() {
@@ -68,41 +78,12 @@ export default class SingleSlide extends Component {
       }
     }
 
-    const toggleZoom = function() {
-
-      var elem = document.getElementsByClassName('image')[0].childNodes[0];
-      var app = document.getElementById('app');
-      var body = document.getElementsByTagName("body")[0];
-      var mag = document.getElementsByClassName('mag');
-
-      if (body.classList.contains('zoom'))
-        body.classList.remove('zoom');
-      else
-        body.classList.add('zoom');
-
-      $('.tile')
-        .on('mouseover', function(){
-          $(this).children('.photo').css({'transform': 'scale('+ $(this).attr('data-scale') +')'});
-        })
-        .on('mouseout', function(){
-          $(this).children('.photo').css({'transform': 'scale(1)'});
-        })
-        .on('mousemove', function(e){
-          $(this).children('.photo').css({'transform-origin': ((e.pageX - $(this).offset().left) / $(this).width()) * 100 + '% ' + ((e.pageY - $(this).offset().top) / $(this).height()) * 100 +'%'});
-        })
-        .each(function(){
-          $(this)
-            .append('<div class="photo"></div>')
-            .children('.photo').css({'background-image': 'url('+ $(this).attr('data-image') +')'});
-        })
-    }
-
     var tag = this.props.workItem.tags[0];
 
     var image = (
         <div className="image noselect" id="singleImage">
           <div className={tag == 'paintings' ? 'no-events painting  imageContainer' : 'no-events imageContainer'}>
-           <img className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={url}/>
+           <img className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={hiRes}/>
           </div>
         </div>
     )
@@ -140,9 +121,11 @@ export default class SingleSlide extends Component {
             {videoEl}
             {mag}
             {description}
+            <div className="relatedParent">
+              {relatedEl}
+            </div>
             <Hammer onSwipe={swipe.bind(this)}><div className="swipe-field"></div></Hammer>
           </div>
-          <img onClick={toggleZoom} src="../../images/close.svg" className="zoom-close noselect" />
         </ReactCSSTransitionGroup>
     );
   }

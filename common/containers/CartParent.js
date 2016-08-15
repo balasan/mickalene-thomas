@@ -19,7 +19,6 @@ export default class CartParent extends Component {
     return (
       <div>
        <Cart { ...this.props }/>
-
       </div>
       )
   }

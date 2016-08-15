@@ -109,8 +109,6 @@ export default class Work extends Component {
         self.setState({})
       },500)
     }
-
-    // this.newsColor();
     this.setPerspective();
   }
 
@@ -118,22 +116,6 @@ export default class Work extends Component {
     this.props.showLoader(false)
   }
 
-  // newsColor() {
-  //   var newsEls = document.getElementsByClassName('newsItem');
-  //   var i = 0;
-  //   for (i = 0; i < newsEls.length; i+=3) {
-  //     newsEls[i].classList.add('red');
-  //   }
-  //   for (i = 1; i < newsEls.length; i+=3) {
-  //     newsEls[i].classList.add('blue');
-  //   }
-  //   for (i = 2; i < newsEls.length; i+=3) {
-  //     newsEls[i].classList.add('brown');
-  //   }
-  // }
-
-
-  // - INF SCROLLING -
   flexGridLayout(container) {
     var rowHeight = 400;
 
@@ -148,8 +130,6 @@ export default class Work extends Component {
     var minCol = 2;
     var maxCol = 3;
     if(this.params.filter){
-      // hideSingle = false;
-      // minCol = 2;
       maxCol = null;
     }
     this.flex = new flexImages({
@@ -158,14 +138,11 @@ export default class Work extends Component {
       rowHeight: rowHeight,
       truncate: false,
       hideSingle: hideSingle,
-      // minCol: minCol,
       maxCol: maxCol
     })
   }
 
   handleScroll(e) {
-
-    //basic debounce
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
@@ -173,7 +150,6 @@ export default class Work extends Component {
     if(!this.params || !this.params.filter) return;
 
     this.timeout = setTimeout(function() {
-      //run, but wait again
       this.setPerspective();
       if(this.props.filteredWorks.length === this.works.length) return;
 
@@ -228,16 +204,27 @@ export default class Work extends Component {
 
     function worksEl(worksArray, action, selected) {
       var imgSize = 'small';
-      //console.log(worksArray, 'worksArray')
 
       return worksArray.map(function(item, i) {
+        var url = null;
+
+        if (selected) {
+          url = '/works/filter/'+item.tags[0];
+        } else  {
+          if (item.tags[0] == 'exhibitions') {
+            url = '/works/exhibitions/' + item.id;
+          } else {
+            url = '/works/i/' + item.id;
+          }
+        }
+
         return (
           <Link
             className={selected ? 'item special-selected '+action : 'item '+ action}
             data-w={item.image[imgSize].dimensions.width}
             data-h={item.image[imgSize].dimensions.height}
             key={item.id+self.params.filter+i}
-            to={selected ? '/works/filter/'+item.tags[0] : '/works/i/' + item.id}
+            to={url}
             >
             <div className="imageContainer">
               <img
@@ -261,9 +248,6 @@ export default class Work extends Component {
         <img  src={item.image[imgSize].url}  onLoad={self.loadImages.bind(self)}/>
         )
     })
-
-    // console.log(oldWorks, 'oldWorks')
-    // console.log(newWorks, 'newWorks')
     var all = (
         <div>
           <div id="flex-container1">

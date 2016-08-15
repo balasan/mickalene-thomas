@@ -27,7 +27,6 @@ export default class StoreParent extends Component {
     return (
       <div>
         <Store { ...this.props }/>
-
       </div>
       )
   }

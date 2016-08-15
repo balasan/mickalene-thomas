@@ -128,6 +128,9 @@ nav {
                 transition: opacity 250ms easeOutQuart;
 
                 &.hamburger {
+   /*                 background-image: url('../../public/images/menu.png');
+                    background-size: contain;
+                    background-position: center center;*/
                     @media (--desktop) {
                         height: 20px;
                     }
@@ -228,6 +231,7 @@ nav {
             }
             span, p, a {
                 display: inline-block;
+                white-space: pre;
             }
             a {
                 text-transform: uppercase;

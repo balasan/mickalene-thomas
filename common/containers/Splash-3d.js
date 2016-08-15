@@ -31,18 +31,6 @@ class Splash extends Component {
         window.glView.add()
       }
     }
-
-    // if(!window.glViewCorner) {
-    //   var corner = true;
-    //   window.glViewCorner = new GLView(corner);
-    //   window.glViewCorner.add();
-    //   window.glViewCorner.start();
-    //   window.glViewCorner.dom.addEventListener('click', () => {
-    //     self.props.dispatch(updatePath('/'))
-    //   })
-    //   document.getElementsByTagName('nav')[0].appendChild(window.glViewCorner.dom)
-    // }
-
   }
 
   componentWillUpdate(nextProps){

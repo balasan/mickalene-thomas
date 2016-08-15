@@ -1,28 +1,73 @@
 @import "customMedia.css";
 @import "colors.css";
 
+.mediaEls {
+    position: relative;
+
+    &:hover {
+        .muteToggle {
+            opacity: 1;
+        }
+    }
+
+    .muteToggle {
+        opacity: 0;
+        transition: opacity 250ms ease-out;
+        position: absolute;
+        color: red;
+        bottom: 0;
+        right: 0;
+        margin: 20px;
+        background-size: contain;
+        height: 25px;
+        width: 25px;
+        cursor: pointer;
+        &.muted {
+            background-image: url('/images/volume-off.png');
+        }
+        &.unmuted {
+            background-image: url('/images/volume-on.png');
+        }
+    }
+}
+
+
 .aboutImg {
-    height: calc(100vh - 75px);
+    height: 56.25vw;
+    width: 100vw;
+    top: 0;
+    position: absolute;
     background-color: white;
     background-size: cover;
     background-position: center center;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
+    background-image: url('/images/about.jpg');
+    cursor: pointer;
 
-    @media (--mobile) {
-        height: 50vh;
+    &.hideImg {
+        display: none;
     }
-    img {
-        height: 25px;
-        opacity: 0.75;
-        margin: 1em;
 
-        @media (--mobile) {
-            display: none;
-        }
+    @media (--desktop) {
+        display: none;
+    }
+
+    img {
+        height: 25%;
+        opacity: 0.75;
     }
 }
+
+.aboutVideo {
+    height: 56.25vw;
+    width: 100vw;
+    display: flex;
+    cursor: pointer;
+}
+
+
 .aboutTxt {
     width: 100%;
     display: flex;

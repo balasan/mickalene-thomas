@@ -38,9 +38,6 @@ export default class NewsParent extends Component {
     this.filterNews(state, params);
   }
 
-  componentWillReceiveProps() {
-  }
-
   filterNews(state, params) {
     var self = this;
 

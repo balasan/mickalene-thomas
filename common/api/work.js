@@ -22,7 +22,7 @@ var configuration = {
 prismic.init(configuration);
 
 export function fetchItem(id, callback) {
-    console.log('wtf')
+
     prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
 
         Api.form('everything')
@@ -38,6 +38,7 @@ export function fetchItem(id, callback) {
                     console.log(item, 'fetchItem')
                     var obj = {}
                     obj.id = item.id;
+                    obj.related = [];
                     obj.tags = item.tags;
                     obj.title = item.data["work.title"].value[0].text;
                     obj.date = item.data["work.date"] ? item.data["work.date"].value : '';
@@ -54,8 +55,14 @@ export function fetchItem(id, callback) {
                         obj.video = embedString;
                     }
 
-                    obj.image = {};
+                    if (item.data['work.related_documents']) {
+                        item.data['work.related_documents'].value.forEach(function(related) {
+                            obj.related.push(related.document.value.document.id);
+                        })
+                    }
 
+
+                    obj.image = {};
                     obj.image.main = {};
                     obj.image.main.dimensions = {};
                     obj.image.small = {};
@@ -109,13 +116,12 @@ export function fetchItem(id, callback) {
     });
 }
 
-export
-
-function fetchWork(callback) {
+export function fetchWork(callback) {
    var allWork = [];
+   var workObj = {};
 
    function callbackFunc() {
-     callback(null, allWork);
+     callback(null, [allWork, workObj]);
    }
 
     prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
@@ -152,7 +158,9 @@ function fetchWork(callback) {
                     callback();
                 }
                 response.results.forEach(function(item, i) {
-                    var obj = {}
+                    var obj = {};
+                    obj.related = [];
+                    obj.exhibitionImages = [];
                     obj.id = item.id;
                     obj.tags = item.tags;
                     obj.type = item.type;
@@ -168,8 +176,19 @@ function fetchWork(callback) {
                         obj.video = embedString;
                     }
 
-                    obj.image = {};
+                    if (item.data['work.related_documents']) {
+                        item.data['work.related_documents'].value.forEach(function(related) {
+                            obj.related.push(related.document.value.document.id);
+                        })
+                    }
 
+                    if (item.data['work.exhibition_images']) {
+                        item.data['work.exhibition_images'].value.forEach(function(item) {
+                            obj.exhibitionImages.push(item.document.value.main);
+                        })
+                    }
+
+                    obj.image = {};
                     obj.image.main = {};
                     obj.image.main.dimensions = {};
                     obj.image.small = {};
@@ -220,12 +239,16 @@ function fetchWork(callback) {
                       allWork.forEach(function(work, v) {
                         allIds.push(work.id);
                         if (v == allWork.length - 1) {
-                           if (allIds.indexOf(obj.id) < 0) allWork.push(obj);
+                           if (allIds.indexOf(obj.id) < 0) {
+                                allWork.push(obj);
+                                workObj[obj.id] = obj;
+                            }
                            if (currentPage == totalPages && i == response.results.length - 1) callbackFunc();
                         }
                       });
                     } else {
                       allWork.push(obj);
+                      workObj[obj.id] = obj;
                       if (currentPage == totalPages && i == response.results.length - 1) callbackFunc();
                     }
                 });

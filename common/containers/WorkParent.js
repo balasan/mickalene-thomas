@@ -34,7 +34,6 @@ class WorkParent extends Component {
     ])
   }
 
-
   componentDidMount() {
     if (!this.props.works) {
       this.constructor.fetchWorkOnClient(this.props.dispatch, this.props.params.filter);
@@ -58,22 +57,15 @@ class WorkParent extends Component {
     else if (!this.worksOnly.length) this.filterWorks(state, params);
   }
 
-  componentWillUnmount() {
-    //whats going on here?
-    // this.constructor.clearItemOnClient(this.props.dispatch)
-  }
+
 
   shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
-    // While there remain elements to shuffle...
     while (0 !== currentIndex) {
-
-      // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
 
-      // And swap it with the current element.
       temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;
@@ -82,11 +74,9 @@ class WorkParent extends Component {
     return array;
   }
 
-
-
   filterWorks(state, params) {
     var self = this;
-    var preShuffle = state.works;
+    var preShuffle = state.works.arr;
     var shuffled = this.shuffle(preShuffle);
 
       self.works = shuffled.filter(function(item) {
@@ -102,13 +92,23 @@ class WorkParent extends Component {
 
 
   render() {
-    var showWorkItem = this.props.params.itemId ? '' : 'hidden';
-    var showWorkGrid = this.props.params.itemId ? 'hidden' : '';
+    var self = this;
+    var itemId = self.props.params.itemId;
+    var showWorkItem = null;
+    var showWorkGrid = null;
+
+    if (itemId) {
+      showWorkItem = '';
+      showWorkGrid = 'hidden';
+    } else {
+      showWorkItem = 'hidden';
+      showWorkGrid = '';
+    }
 
     return (
       <div className="container3d">
         <div className={'worksContainer ' + showWorkGrid}>
-          <Work { ...this.props } filteredWorks={this.works} className={showWorkGrid}/>
+          <Work { ...this.props } filteredWorks={self.works} className={showWorkGrid}/>
         </div>
         <div className={'workItemContainer ' + showWorkItem} >
           <WorkItem { ...this.props } filteredWorks={this.worksOnly} closeUrl={this.closeUrl}/>
