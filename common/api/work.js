@@ -38,7 +38,7 @@ export function fetchItem(id, callback) {
                     console.log(item, 'fetchItem')
                     var obj = {}
                     obj.id = item.id;
-                    obj.related = [];
+                     obj.related = item.data['work.related_exhibition'] ? item.data['work.related_exhibition'].value.document.id : null;
                     obj.tags = item.tags;
                     obj.title = item.data["work.title"].value[0].text;
                     obj.date = item.data["work.date"] ? item.data["work.date"].value : '';
@@ -54,13 +54,6 @@ export function fetchItem(id, callback) {
                         var embedString = "<iframe  src='//player.vimeo.com/video/"+videoId+"?autoplay=1&amp;byline=0&amp;title=0&amp;badge=0&amp;portrait=0&amp;api=1&amp;player_id=iframe_pop_video' width='100%' height='100%' frameborder='0' webkitallowfullscreen='' mozallowfullscreen='' allowfullscreen=''></iframe>";
                         obj.video = embedString;
                     }
-
-                    if (item.data['work.related_documents']) {
-                        item.data['work.related_documents'].value.forEach(function(related) {
-                            obj.related.push(related.document.value.document.id);
-                        })
-                    }
-
 
                     obj.image = {};
                     obj.image.main = {};
@@ -159,8 +152,7 @@ export function fetchWork(callback) {
                 }
                 response.results.forEach(function(item, i) {
                     var obj = {};
-                    obj.related = [];
-                    obj.exhibitionImages = [];
+                    obj.related = item.data['work.related_exhibition'] ? item.data['work.related_exhibition'].value.document.id : null;
                     obj.id = item.id;
                     obj.tags = item.tags;
                     obj.type = item.type;
@@ -174,18 +166,6 @@ export function fetchWork(callback) {
                         var videoId = obj.video.slice(startSlice, startSlice+9);
                         var embedString = "<iframe  src='//player.vimeo.com/video/"+videoId+"?autoplay=1&amp;byline=0&amp;title=0&amp;badge=0&amp;portrait=0&amp;api=1&amp;player_id=iframe_pop_video' width='100%' height='100%' frameborder='0' webkitallowfullscreen='' mozallowfullscreen='' allowfullscreen=''></iframe>";
                         obj.video = embedString;
-                    }
-
-                    if (item.data['work.related_documents']) {
-                        item.data['work.related_documents'].value.forEach(function(related) {
-                            obj.related.push(related.document.value.document.id);
-                        })
-                    }
-
-                    if (item.data['work.exhibition_images']) {
-                        item.data['work.exhibition_images'].value.forEach(function(item) {
-                            obj.exhibitionImages.push(item.document.value.main);
-                        })
                     }
 
                     obj.image = {};
@@ -288,9 +268,7 @@ function fetchWorkTags(callback) {
     });
 }
 
-export
-
-function fetchNewsTags(callback) {
+export function fetchNewsTags(callback) {
     prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
         Api.form('everything')
             .ref(Api.master())
@@ -317,4 +295,132 @@ function fetchNewsTags(callback) {
                 callback(null, uniqueTags)
             })
     });
+}
+
+export function fetchExhibition(id, callback) {
+   var allWork = [];
+   var workObj = {};
+
+   function callbackFunc() {
+     callback(null, [allWork, workObj]);
+   }
+
+    prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
+        Api.form('everything').ref(Api.master())
+            .query(
+                prismic.Predicates.at("my.work.related_exhibition", id)
+        ).pageSize(20).submit(function(err, response) {
+            if (err) {
+                console.log(err);
+                callback();
+            }
+            var totalPages = response.total_pages;
+            pageLoop(totalPages)
+        });
+    });
+
+    function pageLoop(totalPages) {
+        var currentPage = 0;
+
+        for (currentPage = 1; currentPage <= totalPages; currentPage++) {
+            pageQuery(currentPage, totalPages);
+        }
+    }
+
+    function pageQuery(currentPage, totalPages) {
+        prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
+            Api.form('everything')
+                .ref(Api.master())
+                .query(
+                   prismic.Predicates.at("my.work.related_exhibition", id)
+            ).page(currentPage).pageSize(20).submit(function(err, response) {
+                if (err) {
+                    console.log(err);
+                    callback();
+                }
+                response.results.forEach(function(item, i) {
+                    var obj = {};
+                     obj.related = item.data['work.related_exhibition'] ? item.data['work.related_exhibition'].value.document.id : null;
+                    obj.id = item.id;
+                    obj.tags = item.tags;
+                    obj.type = item.type;
+                    obj.title = item.data["work.title"].value[0].text;
+                    obj.date = item.data["work.date"] ? item.data["work.date"].value : new Date('2014');
+                    obj.medium = item.data["work.medium"] ? item.data["work.medium"].value[0].text : null;
+                    obj.video = item.data["work.video"] ? item.data['work.video'].value : null;
+                    if (obj.video) {
+                        var specificIndex = obj.video.indexOf('player.vimeo.com/video/');
+                        var startSlice = specificIndex + 'player.vimeo.com/video/'.length;
+                        var videoId = obj.video.slice(startSlice, startSlice+9);
+                        var embedString = "<iframe  src='//player.vimeo.com/video/"+videoId+"?autoplay=1&amp;byline=0&amp;title=0&amp;badge=0&amp;portrait=0&amp;api=1&amp;player_id=iframe_pop_video' width='100%' height='100%' frameborder='0' webkitallowfullscreen='' mozallowfullscreen='' allowfullscreen=''></iframe>";
+                        obj.video = embedString;
+                    }
+
+                    obj.image = {};
+                    obj.image.main = {};
+                    obj.image.main.dimensions = {};
+                    obj.image.small = {};
+                    obj.image.small.dimensions = {};
+                    obj.image.medium = {};
+                    obj.image.medium.dimensions = {};
+                    obj.image.smaller = {};
+                    obj.image.smaller.dimensions = {};
+
+                    obj.image.main.url = item.data["work.image"].value.main.url;
+                    obj.image.main.dimensions.height = item.data["work.image"].value.main.dimensions.height;
+                    obj.image.main.dimensions.width = item.data["work.image"].value.main.dimensions.width;
+
+
+                    if (item.data["work.image"].value.main.dimensions.width < 500) {
+                        obj.image.smaller.url = item.data["work.image"].value.main.url;
+                        obj.image.smaller.dimensions.height = item.data["work.image"].value.main.dimensions.height;
+                        obj.image.smaller.dimensions.width = item.data["work.image"].value.main.dimensions.width;
+                    } else {
+                        obj.image.smaller.url = item.data["work.image"].value.views.smaller.url;
+                        obj.image.smaller.dimensions.height = item.data["work.image"].value.views.smaller.dimensions.height;
+                        obj.image.smaller.dimensions.width = item.data["work.image"].value.views.smaller.dimensions.width;
+                    }
+
+
+                    if (item.data["work.image"].value.main.dimensions.width < 1000) {
+                        obj.image.small.url = item.data["work.image"].value.main.url;
+                        obj.image.small.dimensions.height = item.data["work.image"].value.main.dimensions.height;
+                        obj.image.small.dimensions.width = item.data["work.image"].value.main.dimensions.width;
+                    } else {
+                        obj.image.small.url = item.data["work.image"].value.views.small.url;
+                        obj.image.small.dimensions.height = item.data["work.image"].value.views.small.dimensions.height;
+                        obj.image.small.dimensions.width = item.data["work.image"].value.views.small.dimensions.width;
+                    }
+
+                    if (item.data["work.image"].value.main.dimensions.width < 1920) {
+                        obj.image.medium.url = item.data["work.image"].value.main.url;
+                        obj.image.medium.dimensions.height = item.data["work.image"].value.main.dimensions.height;
+                        obj.image.medium.dimensions.width = item.data["work.image"].value.main.dimensions.width;
+                    } else {
+                        obj.image.medium.url = item.data["work.image"].value.views.medium.url;
+                        obj.image.medium.dimensions.height = item.data["work.image"].value.views.medium.dimensions.height;
+                        obj.image.medium.dimensions.width = item.data["work.image"].value.views.medium.dimensions.width;
+                    }
+
+                    if (allWork.length > 0) {
+                      var allIds = [];
+                      allWork.forEach(function(work, v) {
+                        allIds.push(work.id);
+                        if (v == allWork.length - 1) {
+                           if (allIds.indexOf(obj.id) < 0) {
+                                allWork.push(obj);
+                                workObj[obj.id] = obj;
+                            }
+                           if (currentPage == totalPages && i == response.results.length - 1) callbackFunc();
+                        }
+                      });
+                    } else {
+                      allWork.push(obj);
+                      workObj[obj.id] = obj;
+                      if (currentPage == totalPages && i == response.results.length - 1) callbackFunc();
+                    }
+                });
+            })
+        });
+    }
 }

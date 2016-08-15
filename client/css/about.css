@@ -3,6 +3,7 @@
 
 .mediaEls {
     position: relative;
+    cursor: pointer;
 
     &:hover {
         .muteToggle {

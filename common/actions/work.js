@@ -2,7 +2,7 @@ export const GET_WORK = 'GET_WORK';
 export const GET_WORK_ITEM = 'GET_WORK_ITEM';
 export const GET_NEWS = 'GET_NEWS';
 export const GET_INSTA = 'GET_INSTA';
-import { fetchWork, fetchItem } from '../api/work'
+import { fetchWork, fetchItem, fetchExhibition } from '../api/work'
 import { fetchNews } from '../api/news'
 import { fetchInsta } from '../api/insta'
 
@@ -31,6 +31,12 @@ export function clearItem() {
   }
 }
 
+export function clearExhibition() {
+  return {
+    type:'CLEAR_EXHIBITION'
+  }
+}
+
 export function loadWorkItem(id) {
   return dispatch => {
     return new Promise(function(resolve, reject) {
@@ -55,9 +61,30 @@ export function loadWork(filter) {
   }
 }
 
+export function loadExhibition(id) {
+  return dispatch => {
+    return new Promise(function(resolve, reject) {
+      fetchExhibition(id, (err, value) => {
+        if (err) return reject
+        dispatch(setExhibition(value))
+        resolve(value)
+      })
+    });
+  }
+}
+
 export function setNews(value) {
   return {
     type: GET_NEWS,
+    payload: {
+      results: value
+    }
+  };
+}
+
+export function setExhibition(value) {
+  return {
+    type: 'SET_EXHIBITION',
     payload: {
       results: value
     }

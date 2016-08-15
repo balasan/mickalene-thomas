@@ -61,8 +61,10 @@ export default class ExhibitionImages extends Component {
   updateNewWorks(nextProps) {
     var self = this;
     const { params, filteredWorks } = nextProps;
-    this.works = filteredWorks.slice(0, this.worksLimit);
-    this.newWorks = this.works;
+    if (filteredWorks) {
+      this.works = filteredWorks.slice(0, this.worksLimit);
+      this.newWorks = this.works;
+    }
   }
 
   componentDidUpdate() {
@@ -166,18 +168,22 @@ export default class ExhibitionImages extends Component {
 
     function worksEl(worksArray, action) {
       return worksArray.map(function(item, i) {
-        var url = '/works/exhibitions/'+self.props.params.itemId+'/'+i;
+        var url = '/works/exhibitions/'+self.props.params.itemId+'/'+item.id;
         return (
           <Link
             className={'item '+ action}
-            data-w={item.dimensions.width}
-            data-h={item.dimensions.height}
+            data-w={item.image.small.dimensions.width}
+            data-h={item.image.small.dimensions.height}
             key={i+action}
             to={url}
             >
             <div className="worksContainer">
-              <img src={item.url} />
+              <img src={item.image.small.url} />
+              <div className="text">
+                <p>{item.title}</p>
+              </div>
             </div>
+
           </Link>
         );
       });
@@ -186,7 +192,7 @@ export default class ExhibitionImages extends Component {
     var images = self.newWorks.map(function(item, i){
       if (self.ready) return null;
       return (
-        <img key={i+'whatev'} src={item.url}  onLoad={self.loadImages.bind(self)}/>
+        <img key={i+'whatev'} src={item.image.small.url}  onLoad={self.loadImages.bind(self)}/>
         )
     })
     var all = (

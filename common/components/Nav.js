@@ -46,11 +46,15 @@ class Nav extends Component {
     var cartHash = null;
     var itemPage = this.props.location.pathname.substr(0,8) == '/works/i' ? true : false;
     var itemId = self.props.params.itemId;
-    var worksObj = self.props.state.works.obj;
+    var worksObj = null;
     var exhibitionTitle = '';
     var exhib = false;
     var currentItem = null;
     var itemTitle = null;
+
+    if (self.props.state.works.obj) {
+      if (self.props.state.works.obj) worksObj = self.props.state.works.obj;
+    }
 
     if (itemId) {
       if (worksObj) {
