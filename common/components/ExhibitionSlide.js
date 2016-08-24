@@ -49,6 +49,10 @@ export default class ExhibitionSlide extends Component {
         formattedDate = date.substr(0, 4);
       }
 
+      if (self.props.workItem.video) {
+        videoEl = (<div className="vimeoFrame" dangerouslySetInnerHTML={self.createMarkup()} />);
+      }
+
       var description = (
         <div className="description">
           <p>{item.title}</p>
@@ -89,7 +93,8 @@ export default class ExhibitionSlide extends Component {
           transitionLeaveTimeout={450}
           >
           <div className={related ? 'slide' : 'exhibSlide'} key={url}>
-            {image}
+            {!videoEl ? image : null}
+            {videoEl}
             {description}
             <Hammer onSwipe={swipe.bind(this)}><div className="swipe-field"></div></Hammer>
           </div>

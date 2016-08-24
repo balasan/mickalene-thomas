@@ -37,6 +37,7 @@ export default class ExhibitionImages extends Component {
   }
 
   componentWillUnmount() {
+    var self = this;
     this.worksLimit = 20;
     this.works = [];
     this.oldWorks = [];
@@ -46,6 +47,7 @@ export default class ExhibitionImages extends Component {
     this.selectedWorks = [];
     this.loaded = 0;
     window.removeEventListener('scroll', this.handleScroll.bind(this));
+    self.setState({});
   }
 
   componentWillUpdate(nextProps) {
@@ -200,7 +202,7 @@ export default class ExhibitionImages extends Component {
     var images = self.newWorks.map(function(item, i){
       if (self.ready) return null;
       return (
-        <img key={i+'whatev'} src={item.image.small.url}  onLoad={self.loadImages.bind(self)}/>
+        <img key={i} src={item.image.small.url}  onLoad={self.loadImages.bind(self)}/>
         )
     })
     var all = (

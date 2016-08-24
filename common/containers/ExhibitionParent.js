@@ -34,6 +34,22 @@ class ExhibitionParent extends Component {
     }
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    var self = this;
+    if (nextProps.state.works) {
+      if (nextProps.state.works.exhibition) {
+        if (nextProps.state.works.exhibition.arr != self.state.items) {
+          self.setState({items: nextProps.state.works.exhibition.arr})
+        }
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    var self = this;
+    //self.setState({items: []});
+  }
+
   componentDidUpdate() {
     var self = this;
   }
@@ -44,17 +60,11 @@ class ExhibitionParent extends Component {
     var workObj = null;
     var itemId = null;
     var items = null;
-    if (self.props.state.works) {
-      if (self.props.state.works.exhibition) {
-        if (self.props.state.works.exhibition.arr) {
-          items = self.props.state.works.exhibition.arr;
-        }
-      }
-    }
+
 
     return (
     <div>
-      <ExhibitionImages {...self.props} filteredWorks={items} />
+      <ExhibitionImages {...self.props} filteredWorks={self.state.items} />
     </div>
   );
   }

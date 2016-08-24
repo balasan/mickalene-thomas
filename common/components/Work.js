@@ -75,9 +75,11 @@ export default class Work extends Component {
     work.forEach(function(item, i) {
       var currentTags = [];
       self.selectedWorks.forEach(function(selectedItem, i) {
-        currentTags.push(selectedItem.tags[0]);
+        if (selectedItem.tags[0]) currentTags.push(selectedItem.tags[0]);
       });
-      if (currentTags.indexOf(item.tags[0]) == -1) self.selectedWorks.push(item);
+      if (item.tags[0]) {
+        if (currentTags.indexOf(item.tags[0]) == -1) self.selectedWorks.push(item);
+      }
     });
   }
 
