@@ -55,7 +55,7 @@ class Nav extends Component {
     var exhibitionItemId = self.props.params.exhibitionItemId ? self.props.params.exhibitionItemId : null;
 
     if (self.props.state.works.obj) if (self.props.state.works.obj) worksObj = self.props.state.works.obj;
-    if (itemId || exhibitionItemId) showHeader = false;
+    if (itemId && self.props.location.pathname.indexOf('store') < 0 || exhibitionItemId) showHeader = false;
     if (worksObj && exhibitionId) {
       exhibitionTitle = worksObj[exhibitionId].title;
     }
