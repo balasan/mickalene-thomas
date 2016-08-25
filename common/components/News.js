@@ -142,6 +142,7 @@ export default class News extends Component {
         var dateEl = null;
 
         if (newsArray[x+1]) {
+
           if (newsArray[x+1].date && newsArray[x].date) {
             var firstDate = new Date(newsArray[x].date);
             var secondDate = new Date(newsArray[x+1].date);
@@ -153,7 +154,8 @@ export default class News extends Component {
           }
         }
 
-        arr.push(<div style={{"transitionDelay" : delay}} className={newsArray[x].link ? 'link news-item' : 'news-item'} key={newsArray[x].id+self.props.params.filter+x}><a id={newsArray[x].id} target="blank" href={newsArray[x].link ? newsArray[x].link : 'javascript:'} >
+        arr.push(<div key={newsArray[x].id+self.props.params.filter+x} className='news-item-parent'>
+          <a style={{"transitionDelay" : delay}} className={newsArray[x].link ? 'link news-item' : 'news-item'} id={newsArray[x].id} target="blank" key={newsArray[x].id+self.props.params.filter+x+'child'} href={newsArray[x].link ? newsArray[x].link : 'javascript:'} >
             {img}
             <section className='left' >
               <img className="desktopNewsImg" src={newsArray[x].image.main.url} />
