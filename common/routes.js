@@ -8,8 +8,6 @@ import NewsParent from './containers/NewsParent';
 import WorkParent from './containers/WorkParent';
 import StoreParent from './containers/StoreParent';
 import ProductParent from './containers/ProductParent';
-import ExhibitionParent from './containers/ExhibitionParent';
-import ExhibitionItem from './containers/ExhibitionItem';
 import CartParent from './containers/CartParent';
 import NotFound from './containers/NotFound';
 
