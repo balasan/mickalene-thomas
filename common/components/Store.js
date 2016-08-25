@@ -19,8 +19,7 @@ export default class Store extends Component {
 
     if (this.props.state.store.products) {
       products = this.props.state.store.products.map(function(product, i) {
-
-        console.log(product)
+        
       if (typeof product.images[0] == 'string') {
         firstImg = product.images[0];
       } else {

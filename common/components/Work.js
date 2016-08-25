@@ -10,6 +10,9 @@ import { updatePath } from 'redux-simple-router';
 export default class Work extends Component {
   constructor() {
     super();
+    this.state = {
+      selected:  false
+    };
     this.worksLimit = 20;
     this.works = [];
     this.oldWorks = [];
@@ -22,7 +25,7 @@ export default class Work extends Component {
 
   componentDidMount() {
     var self = this;
-    console.log(self, 'mount work component')
+    if (self.props.location.pathname == '/works') self.setState({selected: true});
     this.container = document.getElementById("flex-container2");
     this.containerOut = document.getElementById("flex-container1");
     this.container3d = document.getElementById("flex-images");
@@ -44,6 +47,14 @@ export default class Work extends Component {
   componentWillUpdate(nextProps) {
     var self = this;
     const { state, params, filteredWorks, showLoader } = nextProps;
+
+    if (nextProps.location.pathname != self.props.location.pathname) {
+      if (nextProps.location.pathname != '/works') {
+        if (self.state.selected) {
+          self.setState({selected: false});
+        } 
+      }
+    }
 
     if(!params || this.props.params.filter != params.filter){
       window.scrollTo(0,0);
@@ -82,10 +93,18 @@ export default class Work extends Component {
     });
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     var self = this;
     this.flexGridLayout(this.container);
     this.flexGridLayout(this.containerOut);
+
+    if (prevProps.location.pathname != self.props.location.pathname) {
+      if (self.props.location.pathname == '/works') {
+        if (!self.state.selected) {
+            self.setState({selected: true});
+        }
+      }
+    }
 
     var els = self.container.getElementsByTagName('a');
     for(var i = 0; i < els.length; i++) {
@@ -179,30 +198,27 @@ export default class Work extends Component {
 
   render() {
     var self = this, newWorks, oldWorks, selectedWorks;
-
+    var selectedState = this.state.selected;
     var filterBool = true;
     if (self.params) var filterBool = self.params.filter;
-
-    var selected = true;
-    if (self.props.params && self.props.params.filter || self.props.params.exhibitionId) selected = false;
-      
     if (!self.ready) {
       newWorks = [];
     } else {
-      newWorks = worksEl(this.newWorks, 'work-enter', selected);
+      newWorks = worksEl(this.newWorks, 'work-enter');
     }
 
-    oldWorks = worksEl(this.oldWorks, 'work-leave', !selected);
+    oldWorks = worksEl(this.oldWorks, 'work-leave');
 
-    function worksEl(worksArray, action, selected) {
+    function worksEl(worksArray, action) {
       var imgSize = 'small';
 
       return worksArray.map(function(item, i) {
         var url = null;
+        var specialStyle = '';
 
-
-        if (selected) {
+        if (selectedState) {
           url = '/works/filter/'+item.tags[0];
+          specialStyle='special-selected';
         } else  {
           if (self.props.params.filter == 'exhibitions') {
              url = '/works/exhibitions/'+ item.id;
@@ -217,7 +233,7 @@ export default class Work extends Component {
 
         return (
           <Link
-            className={selected ? 'item special-selected '+action : 'item '+ action}
+            className={specialStyle + ' item ' + action}
             data-w={item.image[imgSize].dimensions.width}
             data-h={item.image[imgSize].dimensions.height}
             key={item.id+'_'+i}
@@ -230,7 +246,7 @@ export default class Work extends Component {
                 src={item.image[imgSize].url}
               />
               <div className="text">
-                <p>{selected ? item.tags[0] : item.title}</p>
+                <p>{selectedState ? item.tags[0] : item.title}</p>
               </div>
             </div>
           </Link>

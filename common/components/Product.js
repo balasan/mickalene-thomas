@@ -65,7 +65,7 @@ export default class Product extends Component {
       } else if (product.vars.length == 0 && product.sizes.length > 0) {
           if (self.state.currentSize) {
             productVariant.variation.size = self.state.currentSize;
-             self.props.add(productVariant);
+            self.props.add(productVariant);
             self.openCart();
         } else {
           warning.innerHTML = 'must select a size';
@@ -82,6 +82,7 @@ export default class Product extends Component {
       var ddl = document.getElementById('descriptions');
       if (!ddl) return;
       var opts = ddl.options.length;
+      console.log(value, 'value')
       if (value) {
         for (var i = 0; i < opts; i++) {
           if (ddl.options[i].value == value){
@@ -99,7 +100,7 @@ export default class Product extends Component {
     switchImg(selected) {
       var self = this;
       var url;
-      console.log(selected, 'selected')
+      console.log(selected, 'switchimg selected')
 
       if (typeof selected == 'object') {
         self.setState({currentVariation: selected})
@@ -136,12 +137,13 @@ export default class Product extends Component {
       var warning = document.getElementById('warning');
       var selected = e.target.value;
       if (selected) {
+        self.changeDropdown(selected);
         if (!warning.classList.contains('hidden')) {
           warning.classList.add('hidden')
         }
         product.vars.forEach(function(vari) {
           if (vari.description == selected) {
-            self.switchImg(vari.image);
+            self.switchImg(vari);
             self.setState({currentVariation: vari});
           }
         })
