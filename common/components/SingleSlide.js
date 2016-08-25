@@ -45,11 +45,10 @@ export default class SingleSlide extends Component {
     var related = null;
     var workObj = self.props.state.works.obj;
 
-    console.log(self.props.workItem, 'item')
     if (self.props.workItem.related) {
       related = self.props.workItem.related;
       var relatedUrl = '/works/exhibitions/'+related;
-      relatedEl = (<a className="related" href={relatedUrl}>Go to exhibition</a>);
+      if (!self.props.params.exhibitionId) relatedEl = (<a className="related" href={relatedUrl}>Go to exhibition</a>);
     }
 
     if (self.props.workItem.video) {
@@ -88,10 +87,10 @@ export default class SingleSlide extends Component {
     }
 
     var description = (
-        <div className="description">
-            <p>{title}</p>
-            <p>{formattedDate}{this.props.workItem.medium ? ', ' + this.props.workItem.medium : null}</p>
-        </div>
+      <div className="description">
+          <p>{title}</p>
+          <p>{formattedDate}{this.props.workItem.medium ? ', ' + this.props.workItem.medium : null}</p>
+      </div>
     )
 
     var mag = (
@@ -99,7 +98,7 @@ export default class SingleSlide extends Component {
         <div className="tile" data-scale="2.4" data-image={hiRes}>
         </div>
       </div>
-      )
+    )
 
     return (
         <ReactCSSTransitionGroup
