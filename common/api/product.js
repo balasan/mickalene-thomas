@@ -72,7 +72,7 @@
                        if (item.data["product-v.image"]) {
                         item.data["product-v.image"].value.forEach(function(image) {
                             if (image.image) {
-                                 obj.images.unshift(image.image.value.main.url);
+                                 obj.images.push(image.image.value.main.url);
                             }
                         })
                     }

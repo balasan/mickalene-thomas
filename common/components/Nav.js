@@ -51,29 +51,17 @@ class Nav extends Component {
     var exhib = false;
     var currentItem = null;
     var itemTitle = null;
+    var exhibitionId = self.props.params.exhibitionId ? self.props.params.exhibitionId : null;
+    var exhibitionItemId = self.props.params.exhibitionItemId ? self.props.params.exhibitionItemId : null;
 
-    if (self.props.state.works.obj) {
-      if (self.props.state.works.obj) worksObj = self.props.state.works.obj;
+    if (self.props.state.works.obj) if (self.props.state.works.obj) worksObj = self.props.state.works.obj;
+    if (itemId || exhibitionItemId) showHeader = false;
+    if (worksObj && exhibitionId) {
+      exhibitionTitle = worksObj[exhibitionId].title;
     }
-
-    if (itemId) {
-      if (worksObj) {
-        if (worksObj[itemId]) {
-          if (worksObj[itemId].tags[0] == 'exhibitions') {
-            showHeader = true;
-            exhibitionTitle = worksObj[itemId].title;
-            exhib = true;
-          } else {
-            showHeader = false;
-          }
-        }
-      }
-    }
-
     const closeItem = function() {
        self.props.dispatch(updatePath('/works'))
     }
-
     const toggleCart = function() {
       cartHash = window.location.hash == '#cart';
       if (!cartHash)
@@ -122,7 +110,7 @@ class Nav extends Component {
         )
     }
 
-    if (path == 'works/exhibitions/:itemId') {
+    if (path == 'works/exhibitions/:exhibitionId') {
       filters = (
         <section className='filterLinks'>
           <Link  to='/works/filter/exhibitions'>back to exhibitions</Link>
@@ -169,7 +157,7 @@ class Nav extends Component {
         location = (<p>news</p>);
       } else if (path == 'store/:itemId') {
         location = (<Link to='/store'>store</Link>);
-      } else if (path == 'works/exhibitions/:itemId' || path == 'works/exhibitions/:itemId/:imageId') {
+      } else if (path == 'works/exhibitions/:exhibitionId') {
         location = (<p>{exhibitionTitle}</p>);
       } else {
         location = (<p>{path}</p>);

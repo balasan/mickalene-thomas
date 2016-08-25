@@ -8,7 +8,6 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { updatePath } from 'redux-simple-router';
 
 export default class Work extends Component {
-
   constructor() {
     super();
     this.worksLimit = 20;
@@ -23,23 +22,23 @@ export default class Work extends Component {
 
   componentDidMount() {
     var self = this;
-
+    console.log(self, 'mount work component')
     this.container = document.getElementById("flex-container2");
     this.containerOut = document.getElementById("flex-container1");
     this.container3d = document.getElementById("flex-images");
 
     window.addEventListener('scroll', this.handleScroll.bind(this));
 
-    if(this.props.filteredWorks){
-      this.works = this.props.filteredWorks.slice(0, this.worksLimit);;
+    if (this.props.filteredWorks) {
+      this.works = this.props.filteredWorks.slice(0, this.worksLimit);
       this.newWorks = this.works;
     }
+
     this.props.showLoader(true)
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll.bind(this));
-
   }
 
   componentWillUpdate(nextProps) {
@@ -52,10 +51,8 @@ export default class Work extends Component {
       this.updateNewWorks(nextProps);
       this.loaded = 0;
       this.ready = false;
-      if(!nextProps.state.menu.showLoader)
-        showLoader(true)
-    }
-    else if(!this.newWorks.length || (this.oldWorksLimit != this.worksLimit)){
+      if (!nextProps.state.menu.showLoader) showLoader(true)
+    } else if (!this.newWorks.length || (this.oldWorksLimit != this.worksLimit)) {
       this.updateNewWorks(nextProps);
     }
     this.selectWork(filteredWorks);
@@ -65,9 +62,11 @@ export default class Work extends Component {
   updateNewWorks(nextProps) {
     const { params, filteredWorks } = nextProps;
     this.works = filteredWorks.slice(0, this.worksLimit);
-    if(params.filter)
+    if (params.filter || params.exhibitionId) {
       this.newWorks = this.works;
-    else this.newWorks = this.selectedWorks;
+    } else {
+      this.newWorks = this.selectedWorks;
+    }
   }
 
   selectWork(work) {
@@ -75,18 +74,12 @@ export default class Work extends Component {
     work.forEach(function(item, i) {
       var currentTags = [];
       self.selectedWorks.forEach(function(selectedItem, i) {
-        currentTags.push(selectedItem.tags[0]);
+        if (selectedItem.tags[0]) currentTags.push(selectedItem.tags[0]);
       });
-      if (currentTags.indexOf(item.tags[0]) == -1) self.selectedWorks.push(item);
+      if (item.tags[0]) {
+        if (currentTags.indexOf(item.tags[0]) == -1) self.selectedWorks.push(item);
+      }
     });
-  }
-
-  shouldComponentUpdate(nextProps) {
-    const { params, state } = nextProps;
-    if( params.itemId ) return false;
-    if( nextProps.state && nextProps.state.menu.showMenu == true) return false;
-    if(this.props.params.itemId && this.works && this.works.length) return false;
-    return true;
   }
 
   componentDidUpdate() {
@@ -188,19 +181,18 @@ export default class Work extends Component {
     var self = this, newWorks, oldWorks, selectedWorks;
 
     var filterBool = true;
-    if (self.params) {
-      var filterBool = self.params.filter;
-    }
+    if (self.params) var filterBool = self.params.filter;
 
     var selected = true;
-    if(self.params && self.params.filter)
-      selected = false;
-
-    if( !self.ready ) newWorks = [];
-    else newWorks = worksEl(this.newWorks, 'work-enter', selected);
+    if (self.props.params && self.props.params.filter || self.props.params.exhibitionId) selected = false;
+      
+    if (!self.ready) {
+      newWorks = [];
+    } else {
+      newWorks = worksEl(this.newWorks, 'work-enter', selected);
+    }
 
     oldWorks = worksEl(this.oldWorks, 'work-leave', !selected);
-
 
     function worksEl(worksArray, action, selected) {
       var imgSize = 'small';
@@ -208,13 +200,18 @@ export default class Work extends Component {
       return worksArray.map(function(item, i) {
         var url = null;
 
+
         if (selected) {
           url = '/works/filter/'+item.tags[0];
         } else  {
-          if (item.tags[0] == 'exhibitions') {
-            url = '/works/exhibitions/' + item.id;
+          if (self.props.params.filter == 'exhibitions') {
+             url = '/works/exhibitions/'+ item.id;
           } else {
-            url = '/works/i/' + item.id;
+            if (self.props.params.exhibitionId) {
+              url = '/works/exhibitions/'+ self.props.params.exhibitionId + '/' + item.id;
+            } else {
+              url = '/works/i/' + item.id;
+            }
           }
         }
 
@@ -223,7 +220,7 @@ export default class Work extends Component {
             className={selected ? 'item special-selected '+action : 'item '+ action}
             data-w={item.image[imgSize].dimensions.width}
             data-h={item.image[imgSize].dimensions.height}
-            key={item.id+self.params.filter+i}
+            key={item.id+'_'+i}
             to={url}
             >
             <div className="imageContainer">
@@ -242,24 +239,26 @@ export default class Work extends Component {
     }
 
     var imgSize = 'small';
+
     var images = this.newWorks.map(function(item, i){
       if(self.ready) return null;
       return (
-        <img  src={item.image[imgSize].url}  onLoad={self.loadImages.bind(self)}/>
+        <img key={i} src={item.image[imgSize].url}  onLoad={self.loadImages.bind(self)}/>
         )
     })
+
     var all = (
-        <div>
-          <div id="flex-container1">
-              {oldWorks}
-          </div>
-          <div id="flex-container2">
-              {newWorks}
-          </div>
-          <div id="loadingWorks">
-            {images}
-          </div>
-        </div>)
+      <div>
+        <div id="flex-container1">
+            {oldWorks}
+        </div>
+        <div id="flex-container2">
+            {newWorks}
+        </div>
+        <div id="loadingWorks">
+          {images}
+        </div>
+      </div>)
 
 
     return (

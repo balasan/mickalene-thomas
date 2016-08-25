@@ -12,6 +12,9 @@
         display: none;
     }
 }
+.hidden {
+    display: none;
+}
 .worksContainer {
     transition: all .5s easeOutQuart;
     transform: scale(1) translateZ(0);
