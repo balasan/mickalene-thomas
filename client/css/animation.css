@@ -50,16 +50,15 @@
         transform: translate3d(0%, 0%, 0px) scale(.3, .3) !important;
     }
     .description{
-        p{
-            opacity:0;
-            transform:translateY(15px);
+        p, a {
+            opacity: 0;
+            transform: translateY(15px);
         }
     }
 
 }
 
 .single-enter-active, .single-appear-active {
-
     transition: all .5s easeOutQuart;
     opacity:1;
     .imageContainer{
@@ -77,6 +76,11 @@
             opacity:1;
             transform:translateY(0px);
             transition: all .8s .1s easeOutQuart;
+        }
+        a {
+            opacity:1;
+            transform:translateY(0px);
+            transition: all .8s .2s easeOutQuart;
         }
     }
 }
@@ -102,11 +106,6 @@
         opacity:0;
     }
 }
-
-/*.nav-leave:not(.nav-leave-active) {
-    transition-delay: 0s !important;
-    transition-duration: 0s !important;
-}*/
 
 .nav-enter {
     opacity: 0;

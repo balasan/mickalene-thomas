@@ -14,10 +14,16 @@ const works = (state = initialState, action) => {
       break;
 
     case 'SET_EXHIBITION':
+      var arr = state.arr;
+      var obj = state.obj;
+      if (action.payload.results) {
+        if (action.payload.results[0]) arr = action.payload.results[0];
+        if (action.payload.results[1]) obj = action.payload.results[1];
+      }
       return Object.assign({}, state, {
         exhibition: {
-          arr: action.payload.results[0],
-          obj: action.payload.results[1]
+          arr: arr,
+          obj: obj
         }
       })
       break;

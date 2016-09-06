@@ -82,11 +82,11 @@ export default class About extends Component {
       return (
         <div>
         <section className='aboutTxt'>
-          {headerEl}
           <div className="mediaEls">
             {videoUrl ? videoEl : null}
             {imageEl}
           </div>
+          {headerEl}
           <div id="about-body">
             {textEl}
           </div>
