@@ -98,10 +98,24 @@ class WorkParent extends Component {
       var preShuffle = props.state.works.arr;
     }
     
-    var shuffled = this.shuffle(preShuffle);
+    if (props.params.itemId || props.params.exhibitionItemId) {
+      var shuffled = preShuffle;
+    } else {
+      var shuffled = this.shuffle(preShuffle);
+    }
+
+    var filter = null;
+
+    if (params.filter) filter = params.filter;
+
+    if (params.itemId) {
+      if (props.state.works.obj) {
+        filter = props.state.works.obj[params.itemId].tags[0];
+      }
+    }
 
     self.works = shuffled.filter(function(item) {
-      if (params.filter && item.tags.indexOf(params.filter) === -1) {
+      if (filter && item.tags.indexOf(filter) === -1) {
         return false;
       } else {
         return true;
@@ -110,7 +124,6 @@ class WorkParent extends Component {
 
     this.worksOnly = self.works.slice();
   }
-
 
   render() {
     var self = this;
@@ -121,7 +134,6 @@ class WorkParent extends Component {
     var workObj = null;
     var exhibition = exhibitionId ? true : false;
     var exhibitionItemId = self.props.params.exhibitionItemId ? true : false;
-
 
     if (itemId && !exhibition) {
       showWorkItem = '';
@@ -134,17 +146,13 @@ class WorkParent extends Component {
       showWorkGrid = '';
     }
 
-    // console.log('show work item?', showWorkItem == '');
-    // console.log(self.works, 'works');
-    // console.log(exhibitionItemId);
-
     return (
       <div className="container3d">
         <div className={'worksContainer ' + showWorkGrid}>
           <Work { ...this.props } filteredWorks={self.works} className={showWorkGrid}/>
         </div>
         <div className={'workItemContainer ' + showWorkItem} >
-          <WorkItem { ...this.props } filteredWorks={exhibitionItemId ? self.works : self.worksOnly} closeUrl={this.closeUrl}/>
+          <WorkItem { ...this.props } filteredWorks={exhibitionItemId ? self.works : self.works} closeUrl={this.closeUrl}/>
         </div>
       </div>
     )

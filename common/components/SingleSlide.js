@@ -42,13 +42,14 @@ export default class SingleSlide extends Component {
     var title = this.props.workItem.title;
     var videoEl = null;
     var relatedEl = null;
+    var external = null;
     var related = null;
     var workObj = self.props.state.works.obj;
 
     if (self.props.workItem.related) {
       related = self.props.workItem.related;
       var relatedUrl = '/works/exhibitions/'+related;
-      if (!self.props.params.exhibitionId) relatedEl = (<a className="related" href={relatedUrl}>Go to exhibition</a>);
+      if (!self.props.params.exhibitionId) relatedEl = (<div className="related"><a href={relatedUrl}>Go to exhibition</a></div>);
     }
 
     if (self.props.workItem.video) {
@@ -75,16 +76,14 @@ export default class SingleSlide extends Component {
     var image = (
         <div className="image noselect" id="singleImage">
           <div className={tag == 'paintings' ? 'no-events painting  imageContainer' : 'no-events imageContainer'}>
-           <img className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={hiRes}/>
+            <img className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={hiRes}/>
           </div>
         </div>
     )
 
     var date = this.props.workItem.date;
     var formattedDate = '';
-    if (typeof date == 'string') {
-      formattedDate = date.substr(0, 4);
-    }
+    if (typeof date == 'string') formattedDate = date.substr(0, 4);
 
     var description = (
       <div className="description">
@@ -92,6 +91,16 @@ export default class SingleSlide extends Component {
           <p>{formattedDate}{this.props.workItem.medium ? ', ' + this.props.workItem.medium : null}</p>
       </div>
     )
+
+    if (this.props.workItem.external) {
+      description = (
+        <div className="description">
+            <p>{title}</p>
+            <p>{formattedDate}{this.props.workItem.medium ? ', ' + this.props.workItem.medium : null}</p>
+            <a href={this.props.workItem.external} className="external" target="_blank">Click for more info</a>
+        </div>
+      )
+    }
 
     var mag = (
       <div className="tiles">
@@ -113,6 +122,7 @@ export default class SingleSlide extends Component {
             {videoEl}
             {mag}
             {description}
+            {external}
             <div className="relatedParent">
               {relatedEl}
             </div>

@@ -35,9 +35,9 @@ export function fetchItem(id, callback) {
                 var simple;
 
                 response.results.forEach(function(item) {
-                    console.log(item, 'fetchItem')
                     var obj = {}
                     obj.id = item.id;
+                    obj.external = item.data['work.external_link'] ? item.data['work.external_link'].value.url : null;
                      obj.related = item.data['work.related_exhibition'] ? item.data['work.related_exhibition'].value.document.id : null;
                     obj.tags = item.tags;
                     obj.title = item.data["work.title"].value[0].text;
@@ -100,12 +100,10 @@ export function fetchItem(id, callback) {
                         obj.image.medium.dimensions.height = item.data["work.image"].value.views.medium.dimensions.height;
                         obj.image.medium.dimensions.width = item.data["work.image"].value.views.medium.dimensions.width;
                     }
-
-
                     simple = obj
                 });
-                callback(null, simple)
-            })
+            callback(null, simple)
+        })
     });
 }
 
@@ -133,7 +131,6 @@ export function fetchWork(callback) {
 
     function pageLoop(totalPages) {
         var currentPage = 0;
-
         for (currentPage = 1; currentPage <= totalPages; currentPage++) {
             pageQuery(currentPage, totalPages);
         }
@@ -145,13 +142,14 @@ export function fetchWork(callback) {
                 .ref(Api.master())
                 .query(
                     prismic.Predicates.at("document.type", "work")
-            ).page(currentPage).pageSize(20).submit(function(err, response) {
+                ).page(currentPage).pageSize(20).submit(function(err, response) {
                 if (err) {
                     console.log(err);
                     callback();
                 }
                 response.results.forEach(function(item, i) {
                     var obj = {};
+                    obj.external = item.data['work.external_link'] ? item.data['work.external_link'].value.url : null;
                     obj.related = item.data['work.related_exhibition'] ? item.data['work.related_exhibition'].value.document.id : null;
                     obj.id = item.id;
                     obj.tags = item.tags;
@@ -333,14 +331,14 @@ export function fetchExhibition(id, callback) {
                 .ref(Api.master())
                 .query(
                    prismic.Predicates.at("my.work.related_exhibition", id)
-            ).page(currentPage).pageSize(20).submit(function(err, response) {
+                ).page(currentPage).pageSize(20).submit(function(err, response) {
                 if (err) {
                     console.log(err);
                     callback();
                 }
                 response.results.forEach(function(item, i) {
                     var obj = {};
-                     obj.related = item.data['work.related_exhibition'] ? item.data['work.related_exhibition'].value.document.id : null;
+                    obj.related = item.data['work.related_exhibition'] ? item.data['work.related_exhibition'].value.document.id : null;
                     obj.id = item.id;
                     obj.tags = item.tags;
                     obj.type = item.type;
@@ -352,7 +350,7 @@ export function fetchExhibition(id, callback) {
                         var specificIndex = obj.video.indexOf('player.vimeo.com/video/');
                         var startSlice = specificIndex + 'player.vimeo.com/video/'.length;
                         var videoId = obj.video.slice(startSlice, startSlice+9);
-                        var embedString = "<iframe  src='//player.vimeo.com/video/"+videoId+"?autoplay=1&amp;byline=0&amp;title=0&amp;badge=0&amp;portrait=0&amp;api=1&amp;player_id=iframe_pop_video' width='100%' height='100%' frameborder='0' webkitallowfullscreen='' mozallowfullscreen='' allowfullscreen=''></iframe>";
+                        var embedString = "<iframe src='//player.vimeo.com/video/"+videoId+"?autoplay=1&amp;byline=0&amp;title=0&amp;badge=0&amp;portrait=0&amp;api=1&amp;player_id=iframe_pop_video' width='100%' height='100%' frameborder='0' webkitallowfullscreen='' mozallowfullscreen='' allowfullscreen=''></iframe>";
                         obj.video = embedString;
                     }
 

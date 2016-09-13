@@ -54,7 +54,7 @@
                      obj.quantity = 1;
 
                     if (item.data["product-v.variation"]) {
-                         var mainVar = {};
+                        var mainVar = {};
                         if (item.data["product-v.variation"].value.length > 0) obj.vars.push(mainVar);
                         item.data["product-v.variation"].value.forEach(function(vari) {
                             var varObj = {};
@@ -68,20 +68,23 @@
                             obj.vars.push(varObj);
                             obj.images.push(varObj);
                         });
-                     }
-                       if (item.data["product-v.image"]) {
-                        item.data["product-v.image"].value.forEach(function(image) {
-                            if (image.image) {
-                                 obj.images.push(image.image.value.main.url);
-                            }
-                        })
+                    }
+                    if (item.data["product-v.image"]) {
+                        var images = item.data["product-v.image"].value;
+                        var tempArr = [];
+                        images.forEach(function(image, i) {
+                            if (image.image) tempArr.push(image.image.value.main.url);
+                        });
+                 
+                        var finalArr = tempArr.concat(obj.images);
+                        obj.images = finalArr;
                     }
                     simple.push(obj)
-                 });
-                callback(null, simple)
-             })
-     });
- }
+                });
+            callback(null, simple)
+        })
+    });
+}
 
  export
  function fetchProduct(id, callback) {
@@ -96,28 +99,23 @@
                  }
                  var simple;
                  response.results.forEach(function(item) {
-
-                     var obj = {}
-                     obj.id = item.id;
-                     obj.tags = item.tags;
+                    var obj = {}
+                    obj.id = item.id;
+                    obj.tags = item.tags;
                     obj.externalURL = item.data["product-v.externalURL"] ? item.data["product-v.externalURL"].value: null;
-                     obj.available = true;
+                    obj.available = true;
 
-                     if (item.data["product-v.available"]) {
-                        if (item.data["product-v.available"].value == 'No') {
-                            obj.available = false;
-                        }
-                     }
+                    if (item.data["product-v.available"]) if (item.data["product-v.available"].value == 'No')  obj.available = false;
 
-                     obj.title = item.data["product-v.title"].value[0].text;
-                     obj.date = item.data["product-v.date"] ? item.data["product-v.date"].value : '';
-                     obj.medium = item.data["product-v.medium"] ? item.data["product-v.medium"].value[0].text : null;
-                     obj.price = item.data["product-v.price"] ? item.data["product-v.price"].value : null;
-                     obj.description = item.data["product-v.description"] ? item.data["product-v.description"].value[0].text : null;
-                     obj.vars = [];
-                     obj.sizes = [];
-                     obj.availSizes = [];
-                     obj.sizeChart = null;
+                    obj.title = item.data["product-v.title"].value[0].text;
+                    obj.date = item.data["product-v.date"] ? item.data["product-v.date"].value : '';
+                    obj.medium = item.data["product-v.medium"] ? item.data["product-v.medium"].value[0].text : null;
+                    obj.price = item.data["product-v.price"] ? item.data["product-v.price"].value : null;
+                    obj.description = item.data["product-v.description"] ? item.data["product-v.description"].value[0].text : null;
+                    obj.vars = [];
+                    obj.sizes = [];
+                    obj.availSizes = [];
+                    obj.sizeChart = null;
                     obj.images = [];
                      obj.quantity = 1;
 
@@ -132,36 +130,34 @@
                      }
 
 
-                     if (item.data["product-v.variation"]) {
-                         var mainVar = {};
+                    if (item.data["product-v.variation"]) {
+                        var mainVar = {};
                         if (item.data["product-v.variation"].value.length > 0) obj.vars.push(mainVar);
-
-
                         item.data["product-v.variation"].value.forEach(function(vari) {
                             var varObj = {};
                             varObj.available = null;
-                            if (vari.available) {
-                                vari.available.value == 'Available' ? varObj.available = true : varObj.available = false;
-                            }
+                            if (vari.available) vari.available.value == 'Available' ? varObj.available = true : varObj.available = false;
                             varObj.image = vari.variationImage.value.views.small.url;
                             varObj.description = vari.vartiationDescription ? vari.vartiationDescription.value : null;
                             varObj.externalURL = vari.externalURL ? vari.externalURL.value : null;
                             obj.vars.push(varObj);
                             obj.images.push(varObj);
                         });
-                     }
+                    }
 
                 if (item.data["product-v.image"]) {
-                  var reversed = item.data["product-v.image"].value.reverse();
-                      reversed.forEach(function(image, i) {
-                            if (image.image) {
-                                obj.images.unshift(image.image.value.main.url);
-                            }
-                        });
+                    var images = item.data["product-v.image"].value;
+                    var tempArr = [];
+                    images.forEach(function(image, i) {
+                        if (image.image) tempArr.push(image.image.value.main.url);
+                    });
+
+                    var finalArr = tempArr.concat(obj.images);
+                    obj.images = finalArr;
                 }
-                     simple=obj
-                 });
-                 callback(null, simple)
-             })
-     });
- }
+                simple = obj
+            });
+            callback(null, simple)
+        })
+    });
+}
