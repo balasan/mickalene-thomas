@@ -21,6 +21,10 @@ function renderFullPage(html, initialState) {
     <html>
       <head>
         <title>Mickalene Thomas</title>
+        <meta property="og:url"                content="http://www.mickalenethomas.com/" />
+        <meta property="og:type"               content="website" />
+        <meta property="og:title"              content="Mickalene Thomas" />
+        <meta property="og:image"              content="images/fb.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         ${styles}
       </head>

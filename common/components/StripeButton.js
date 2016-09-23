@@ -10,7 +10,7 @@ var reactMixin = require('react-mixin');
 export default class StripeButton extends Component {
 
     getScriptURL() {
-        return 'https://checkout.stripe.com/checkout.js';
+      return 'https://checkout.stripe.com/checkout.js';
     }
 
     componentDidMount() {
@@ -18,7 +18,6 @@ export default class StripeButton extends Component {
     }
 
     componentDidUpdate() {
-
       this.cartData();
     }
 
@@ -28,7 +27,6 @@ export default class StripeButton extends Component {
       var cart = this.props.state.store.cart;
       cart.forEach(function(item, i) {
         self.total += (item.price * item.quantity);
-        // self.skus.push({'sku': item.sku, 'quantity': item.quantity});
       });
       if (StripeButton.stripeHandler) {
         this.configureStripe();
@@ -106,6 +104,7 @@ export default class StripeButton extends Component {
         name: 'Mickalene Thomas',
         description: cart.length > 1 ? cart.length + ' items ($' + self.total.toFixed(2) + ')' : cart.length + ' item ($' + self.total.toFixed(2) + ')',
         amount: self.total*100
+
       });
     }
 

@@ -285,14 +285,14 @@
     pointer-events: none;
     width: 100%;
     height: calc(100% - 75px);
-
-    @media (--mobile) {
-        height: calc(100% - 10px);
-    }
     top: 0;
     left: 0;
     transition: opacity 250ms ease-out;
     opacity: 1;
+
+    @media (--mobile) {
+        height: calc(100% - 10px);
+    }
 
     section {
         display: inline-flex;

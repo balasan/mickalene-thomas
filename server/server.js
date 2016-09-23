@@ -211,6 +211,7 @@ app.post('/stripe', jsonParser, function(req, res) {
             email: stripeToken.email
         }, function(err, order) {
             if (err) console.log(err, 'order create error');
+             console.log(order, 'order');
         });
     }
 

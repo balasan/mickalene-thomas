@@ -103,9 +103,14 @@ export default class Product extends Component {
       console.log(selected, 'switchimg selected')
 
       if (typeof selected == 'object') {
-        self.setState({currentVariation: selected})
         url = selected.image;
         self.changeDropdown(selected.description);
+        if (selected.available) {
+          self.setState({currentVariation: selected})
+        } else {
+          self.setState({currentVariation: null});
+        }
+
       } else {
         url = selected;
         self.setState({currentVariation: null});
@@ -188,7 +193,7 @@ export default class Product extends Component {
             if (vari.available) {
               return (<option key={i} value={vari.description}>{vari.description}</option>);
             } else {
-              return (<option key={i} value={vari.description} disabled>{vari.description}</option>);
+              return (<option key={i} value={vari.description} disabled>{vari.description} (Sold out)</option>);
             }
           }
         });
