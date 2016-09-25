@@ -15,6 +15,12 @@ export function set(value) {
   };
 }
 
+export function togglePayment() {
+  return {
+    type: 'TOGGLE_PAYMENT'
+  };
+}
+
 export function changeQuantity(item, value) {
   console.log('quantity action', item, value)
   return {

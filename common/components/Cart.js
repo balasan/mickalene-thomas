@@ -3,12 +3,30 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+var ReactScriptLoaderMixin = require('react-script-loader').ReactScriptLoaderMixin;
 import { updatePath } from 'redux-simple-router';
 import StripeButton from '../components/StripeButton';
+import Checkout from '../components/Checkout';
 import * as ProductActions from '../actions/product';
 
 
 class Cart extends Component {
+  constructor (props, context) {
+    super(props, context)
+    this.state = {
+      payment: false,
+      stripeLoading: true,
+      stripeLoadingError: false,
+      submitDisabled: false,
+      paymentError: null,
+      paymentComplete: false,
+      token: null
+    }
+  }
+
+  getScriptURL() {
+    return 'https://checkout.stripe.com/checkout.js';
+  }
 
   componentDidMount() {
   }
@@ -16,15 +34,17 @@ class Cart extends Component {
   componentDidUpdate() {
   }
 
-  render () {
+  togglePayment() {
+    var self = this;
+    self.setState({payment: !self.state.payment});
+  }
 
+  render () {
+    var self = this;
     const { changeQuantity, removeItem } = this.props;
 
     var cart = [];
-    if (this.props.state) {
-      var cart = this.props.state.store.cart;
-    }
-
+    if (this.props.state) var cart = this.props.state.store.cart;
     var cartHash = this.props.location.hash == '#cart';
 
     const toggleCart = function() {
@@ -95,21 +115,28 @@ class Cart extends Component {
 
     }
 
-
-    return (
-      <div className={cartHash ? 'cart' : 'cart hidden'}>
-        <a onClick={toggleCart} className="close-cart">
-        </a>
-        <div className={cart.length > 0 ? 'cart-items' : 'cart-items max-height'}>
+    var cartSection = (<div><div className={cart.length > 0 ? 'cart-items' : 'cart-items max-height'}>
         {cartEl}
         </div>
         <div className={cart.length > 0 ? 'total' : 'total hidden'}>
           <h1>total</h1>
           <p>{'$' + total.toFixed(2)}</p>
           <div className='holdButton'>
-          {cart.length > 0 ? <StripeButton { ...this.props }/> : null}
+            {cart.length > 0 ? <p onClick={self.togglePayment.bind(self)}>proceed to payment</p> : null}
           </div>
-        </div>
+        </div></div>)
+
+    // var paymentSection = (<div>
+    //   <h1 style={{color: 'black'}} onClick={self.togglePayment.bind(self)}>payment</h1>
+
+    //   </div>);
+
+
+    return (
+      <div className={cartHash ? 'cart' : 'cart hidden'}>
+        <a onClick={toggleCart} className="close-cart"></a>
+        {cartSection}
+        {self.state.payment ? <Checkout {...self.props }/> : null}
       </div>
     )
   }
@@ -122,4 +149,5 @@ export default connect(
   dispatch => {
     return Object.assign({}, { dispatch },  bindActionCreators(ProductActions, dispatch))
   })(Cart)
+
 

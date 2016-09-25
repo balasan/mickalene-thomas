@@ -2,12 +2,10 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Router, RoutingContext, match } from 'react-router';
 import { Provider } from 'react-redux';
-// import createHistory from 'history/lib/createMemoryHistory';
 import qs from 'qs';
 import routes from '../common/routes';
 import configureStore from '../common/store/configureStore';
 import App from '../common/containers/App';
-// import { fetchCounter } from '../common/api/counter';
 
 function renderFullPage(html, initialState) {
 
@@ -21,10 +19,10 @@ function renderFullPage(html, initialState) {
     <html>
       <head>
         <title>Mickalene Thomas</title>
+        <meta property="og:image"              content="images/fb.png" />
         <meta property="og:url"                content="http://www.mickalenethomas.com/" />
         <meta property="og:type"               content="website" />
         <meta property="og:title"              content="Mickalene Thomas" />
-        <meta property="og:image"              content="images/fb.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         ${styles}
       </head>

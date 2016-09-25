@@ -67,11 +67,12 @@ app.get('/stripe', function(req, res) {
     res.send("😇 😇 😇");
 });
 
-var jsonParser = bodyParser.json()
+var jsonParser = bodyParser.json();
+var customer = null;
+var order = null;
 
-app.post('/stripe', jsonParser, function(req, res) {
-
-    var stripeToken = req.body.stripeToken;
+app.post('/createOrder', jsonParser,function(req, res) {
+    var stripeToken = req.body.token;
     var total = 0;
     var items = [];
 
@@ -157,9 +158,9 @@ app.post('/stripe', jsonParser, function(req, res) {
                 parent: 'sku_'+prodId,
                 quantity: item.quantity
             })
-            if (i == req.body.cart.length - 1) chargeThem();
         }
 
+        if (i == req.body.cart.length - 1) ordersCreate();
     }
 
     function newSkus(product, item, i, prodId) {
@@ -176,58 +177,74 @@ app.post('/stripe', jsonParser, function(req, res) {
                     parent: sku.id,
                     quantity: item.quantity
                 })
-                if (i == req.body.cart.length - 1) chargeThem();
             });
     }
 
-
-    //working customer create and charge create
-    function chargesCreate(customer) {
-        stripe.charges.create({
-            amount: total * 100,
-            currency: "usd",
-            customer: customer.id,
-            receipt_email: stripeToken.email,
-            description: 'Mickalene Thomas store item',
-            statement_descriptor: 'Mickalene Thomas store'
-        });
-    }
-
-    function ordersCreate(customer) {
+    function ordersCreate() {
+        console.log(items, 'items')
         stripe.orders.create({
             currency: 'usd',
             items: items,
-            customer: customer.id,
+            customer: req.body.customer,
             shipping: {
-                name: stripeToken.card.name,
+                name: req.body.name,
                 address: {
-                    line1: stripeToken.card.address_line1,
-                    line2: stripeToken.card.address_line2 ? stripeToken.card.address_line2 : '',
-                    city: stripeToken.card.address_city,
-                    country: stripeToken.card.country,
-                    postal_code: stripeToken.card.address_zip
+                    line1: req.body.add1,
+                    line2: req.body.add2 ? req.body.add2 : '',
+                    city: req.body.city,
+                    country: req.body.country,
+                    postal_code: req.body.zip
                 }
             },
-            email: stripeToken.email
         }, function(err, order) {
             if (err) console.log(err, 'order create error');
-             console.log(order, 'order');
+            res.json(200, order);
         });
     }
-
-    function chargeThem() {
-        stripe.customers.create({
-            source: stripeToken.id,
-            description: stripeToken.card.name,
-            email: stripeToken.email
-        }).then(function(customer) {
-            var a = chargesCreate(customer);
-            var b = ordersCreate(customer);
-            return a && b;
-        });
-    }
-
 });
+
+app.post('/createCustomer', jsonParser, function(req, res) {
+    var token = req.body.token;
+    var email = req.body.email;
+    stripe.customers.create({
+        source: token,
+        email: email
+    }).then(function(customer) {
+        customer = customer;
+        console.log(customer, 'created customer')
+        res.json(200, customer);
+    });
+});
+
+// app.post('/charge', jsonParser, function(req, res) {
+//     var token = req.body.token;
+//     var email = req.body.email;
+//     function createCustomer() {
+//         stripe.customers.create({
+//             source: token,
+//             email: email
+//         }).then(function(customer) {
+//             customer = customer;
+//             return chargesCreate(customer);
+//             //onsole.log(customer, 'created customer')
+//         });
+//     }
+
+
+//     function chargesCreate() {
+//         stripe.charges.create({
+//             amount: order.amount,
+//             currency: "usd",
+//             customer: customer.id,
+//             receipt_email: stripeToken.email,
+//             description: 'Mickalene Thomas store item',
+//             statement_descriptor: 'Mickalene Thomas store'
+//         });
+        
+//     }
+
+//     return chargesCreate();
+// });
 
 //public folder
 app.use(Express.static(__dirname + '/../public'));

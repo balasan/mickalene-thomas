@@ -11,7 +11,7 @@
     transform: translateY(0%);
     transition: all 600ms easeOutQuart;
     width: 100%;
-    overflow: hidden;
+    overflow: scroll;
     z-index: 2000;
 
     .empty {
