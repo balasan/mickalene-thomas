@@ -25,6 +25,7 @@ module.exports = {
     new ExtractTextPlugin("styles.css"),
     new webpack.DefinePlugin({
       "process.env":{
+        DEV: JSON.stringify(true),
         BROWSER: JSON.stringify(true)
       }
     })

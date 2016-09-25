@@ -2,7 +2,7 @@ import React, { Component, PropTypes, Link } from 'react';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var $ = require('jquery');
 var Hammer = require('react-hammerjs');
-import { updatePath } from 'redux-simple-router';
+import { push } from 'react-router-redux';
 
 export default class SingleSlide extends Component {
   componentDidMount() {
@@ -57,10 +57,10 @@ export default class SingleSlide extends Component {
     }
 
     const nextItem = function() {
-      self.props.props.dispatch(updatePath('/works/i/' + self.props.nextItem.id))
+      self.props.props.dispatch(push('/works/i/' + self.props.nextItem.id))
     }
     const prevItem = function() {
-      self.props.props.dispatch(updatePath('/works/i/' + self.props.prevItem.id))
+      self.props.props.dispatch(push('/works/i/' + self.props.prevItem.id))
     }
 
     const swipe = function(e) {

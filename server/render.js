@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { Router, RoutingContext, match } from 'react-router';
+import { Router, RouterContext, match } from 'react-router';
 import { Provider } from 'react-redux';
 import qs from 'qs';
 import routes from '../common/routes';
@@ -138,7 +138,7 @@ export default function handleRender(req, res) {
             const component = (
               <Provider store={store}>
                 <div>
-                  <RoutingContext {...renderProps}/>
+                  <RouterContext {...renderProps}/>
                 </div>
               </Provider>
             );

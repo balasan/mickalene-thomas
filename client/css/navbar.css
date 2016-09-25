@@ -27,6 +27,7 @@ nav {
     &.hidden {
         /*display: none;*/
         opacity:0;
+        display:flex !important;
         transform: translateY(-75px);
         transition: height 300ms easeOutQuart, transform .3s easeOutQuart, opacity .3s easeOutQuart;
 

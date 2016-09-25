@@ -1,11 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import * as WorkActions from '../actions/work'
-import flexImages from './flex-full'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as WorkActions from '../actions/work';
+import flexImages from './flex-full';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { updatePath } from 'redux-simple-router';
 
 export default class Work extends Component {
   constructor() {
@@ -52,7 +51,7 @@ export default class Work extends Component {
       if (nextProps.location.pathname != '/works') {
         if (self.state.selected) {
           self.setState({selected: false});
-        } 
+        }
       }
     }
 

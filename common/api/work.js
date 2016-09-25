@@ -120,7 +120,7 @@ export function fetchWork(callback) {
             .query(
                 prismic.Predicates.at("document.type", "work")
         ).pageSize(20).submit(function(err, response) {
-            if (err) {
+            if (err || !response) {
                 console.log(err);
                 callback();
             }
