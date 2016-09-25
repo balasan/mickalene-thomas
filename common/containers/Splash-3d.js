@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux'
-import { updatePath } from 'redux-simple-router'
+import { push } from 'react-router-redux';
 import * as MenuActions from '../actions/menu'
 import { bindActionCreators } from 'redux'
 import Video from './../components/Video'
@@ -22,7 +22,7 @@ class Splash extends Component {
 
       window.glView.dom.addEventListener('click', () => {
         window.glView.remove();
-          self.props.dispatch(updatePath('/works'))
+          self.props.dispatch(push('/works'))
       })
     }
     else {

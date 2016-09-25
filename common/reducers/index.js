@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
-import { routeReducer } from 'redux-simple-router';
+import { routerReducer } from 'react-router-redux';
+
 
 import { works, workItem } from './work'
 import menu from './menu'
@@ -8,7 +9,7 @@ import insta from './insta'
 import store from './store'
 
 const rootReducer = combineReducers({
-  routing: routeReducer,
+  routing: routerReducer,
   works,
   menu,
   news,

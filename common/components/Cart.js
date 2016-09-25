@@ -3,7 +3,6 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { updatePath } from 'redux-simple-router';
 import StripeButton from '../components/StripeButton';
 import * as ProductActions from '../actions/product';
 

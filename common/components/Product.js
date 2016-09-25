@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react'
+'use strict';
+
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import * as ProductActions from '../actions/product'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as ProductActions from '../actions/product';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
-import { updatePath } from 'redux-simple-router';
-// import SizeChart from '../components/SizeChart';
 
 export default class Product extends Component {
   constructor (props, context) {

@@ -4,7 +4,7 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as MenuActions from '../actions/menu'
-import { updatePath } from 'redux-simple-router';
+import { push } from 'react-router-redux';
 var classNames = require('classnames');
 
 class Nav extends Component {
@@ -60,7 +60,7 @@ class Nav extends Component {
       exhibitionTitle = worksObj[exhibitionId].title;
     }
     const closeItem = function() {
-       self.props.dispatch(updatePath('/works'))
+       self.props.dispatch(push('/works'))
     }
     const toggleCart = function() {
       cartHash = window.location.hash == '#cart';

@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import * as WorkActions from '../actions/work'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as WorkActions from '../actions/work';
 import presets from '../presets';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -29,7 +29,8 @@ export default class News extends Component {
 
   componentDidMount() {
     var self = this;
-    window.addEventListener('scroll', this.handleScroll.bind(this));
+    this.scrollHandler = this.handleScroll.bind(this);
+    window.addEventListener('scroll', this.scrollHandler);
   }
 
 
@@ -39,7 +40,7 @@ export default class News extends Component {
     var selectedEl = document.getElementById(hash);
     if (!selectedEl.classList.contains('news-enter-active')) return;
     var scrollSelf = this;
-    var scrollInterval = setInterval(function(){
+    this.scrollInterval = setInterval(function(){
       var offTop = selectedEl.offsetTop + 7;
       var scrollY = window.scrollY;
       var newY = (offTop - scrollY);
@@ -77,6 +78,14 @@ export default class News extends Component {
     var self = this;
   }
 
+  componentWillUnmount () {
+    this.scrollInterval && clearInterval(this.scrollInterval);
+    clearInterval(this.timeout);
+    clearTimeout(self.disableTimeout);
+    this.scrollInterval = false;
+    window.removeEventListener('scroll', this.scrollHandler);
+  }
+
   handleScroll(e) {
     var self = this;
     if (this.timeout) {
@@ -101,7 +110,7 @@ export default class News extends Component {
           if (!self.state.disableLoad && !self.state.limited) {
             self.setState({disableLoad: true})
             self.constructor.fetchMoreInstaData(self.props.state.insta.next, self.props.dispatch);
-            setTimeout(function() {
+            self.disableTimeout = setTimeout(function() {
               self.setState({disableLoad: false});
             }, 1000);
           }

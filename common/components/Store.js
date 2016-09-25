@@ -3,7 +3,6 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { updatePath } from 'redux-simple-router';
 
 export default class Store extends Component {
   componentDidMount() {
@@ -19,7 +18,6 @@ export default class Store extends Component {
 
     if (this.props.state.store.products) {
       products = this.props.state.store.products.map(function(product, i) {
-      console.log(product, 'product')
       if (typeof product.images[0] == 'string') {
         firstImg = product.images[0];
       } else {

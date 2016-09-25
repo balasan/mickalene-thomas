@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as WorkActions from '../actions/work'
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
-import { updatePath } from 'redux-simple-router';
+import { push } from 'react-router-redux';
 import SingleSlide from './SingleSlide';
 
 Number.prototype.mod = function(n) { return ((this % n) + n) % n; };
@@ -73,13 +73,13 @@ export default class WorkItem extends Component {
     }
 
     const nextItem = function() {
-      self.props.dispatch(updatePath(preUrl + self.nextItem.id))
+      self.props.dispatch(push(preUrl + self.nextItem.id))
     }
     const prevItem = function() {
-      self.props.dispatch(updatePath(preUrl + self.prevItem.id))
+      self.props.dispatch(push(preUrl + self.prevItem.id))
     }
     const closeItem = function() {
-      self.props.dispatch(updatePath(self.props.closeUrl))
+      self.props.dispatch(push(self.props.closeUrl))
     }
 
     const { state, clickitem } = this.props

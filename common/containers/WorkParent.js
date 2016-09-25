@@ -1,41 +1,41 @@
 import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import Work from '../components/Work';
 import WorkItem from '../components/WorkItem';
-import * as WorkActions from '../actions/work'
-import * as MenuActions from '../actions/menu'
+import * as WorkActions from '../actions/work';
+import * as MenuActions from '../actions/menu';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 if (process.env.BROWSER) require('./../../client/css/work.css');
 
 class WorkParent extends Component {
   static fetchWorkOnClient(dispatch, filter) {
-    var { loadWork } = bindActionCreators(WorkActions, dispatch, filter)
+    var { loadWork } = bindActionCreators(WorkActions, dispatch, filter);
     return Promise.all([
       loadWork(filter)
-    ])
+    ]);
   }
 
   static fetchNewsOnClient(dispatch) {
-    var { loadNews } = bindActionCreators(WorkActions, dispatch)
+    var { loadNews } = bindActionCreators(WorkActions, dispatch);
     return Promise.all([
       loadNews()
-    ])
+    ]);
   }
 
   static clearItemOnClient(dispatch) {
-    var { clearItem } = bindActionCreators(WorkActions, dispatch)
+    var { clearItem } = bindActionCreators(WorkActions, dispatch);
     return Promise.all([
       clearItem()
-    ])
+    ]);
   }
 
   static fetchExhibitionOnClient(dispatch, id) {
-    var { loadExhibition } = bindActionCreators(WorkActions, dispatch, id)
+    var { loadExhibition } = bindActionCreators(WorkActions, dispatch, id);
     return Promise.all([
       loadExhibition(id)
-    ])
+    ]);
   }
 
   componentDidMount() {
@@ -44,7 +44,7 @@ class WorkParent extends Component {
       this.constructor.fetchWorkOnClient(this.props.dispatch, this.props.params.filter);
     }
     if (!this.props.news) {
-       this.constructor.fetchNewsOnClient(this.props.dispatch);
+      this.constructor.fetchNewsOnClient(this.props.dispatch);
     }
     if (self.props.params.exhibitionId) {
       this.constructor.fetchExhibitionOnClient(self.props.dispatch, self.props.params.exhibitionId);
@@ -67,6 +67,7 @@ class WorkParent extends Component {
     if (params.exhibitionId) {
       this.closeUrl = '/works/exhibitions/' + params.exhibitionId;
     }
+    // if (!this.props.params.itemId && this.works != this.props.state.works)
     this.filterWorks(nextProps, params);
   }
 
@@ -97,7 +98,7 @@ class WorkParent extends Component {
     } else {
       var preShuffle = props.state.works.arr;
     }
-    
+
     if (props.params.itemId || props.params.exhibitionItemId) {
       var shuffled = preShuffle;
     } else {
@@ -161,7 +162,12 @@ class WorkParent extends Component {
 
 export default connect(
   state => {
-    return {state: state}
+    return {
+      state: {
+        works: state.works,
+        menu: state.menu
+      }
+    }
   },
   dispatch => {
     return Object.assign({}, { dispatch },  bindActionCreators(Object.assign({}, MenuActions, WorkActions), dispatch))
