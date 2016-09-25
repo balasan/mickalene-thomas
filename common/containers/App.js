@@ -26,6 +26,9 @@ if (process.env.BROWSER) {
   require('./../../client/css/navbar.css');
   require('./../../client/css/animation.css');
   require('./../../client/css/mag.css');
+  require('./../../client/css/checkout.css');
+  window.jQuery = window.$ = require('jquery');
+  require('jquery.payment');
 }
 
 class App extends Component {

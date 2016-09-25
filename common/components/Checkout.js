@@ -78,9 +78,13 @@ export default class Checkout extends Component {
 
 
   componentDidMount() {
+
   }
 
   componentDidUpdate() {
+    $('.cc-num').payment('formatCardNumber');
+    $('.cc-exp').payment('formatCardExpiry');
+    $('.cc-cvc').payment('formatCardCVC');
     this.cartData();
   }
 
@@ -154,13 +158,12 @@ export default class Checkout extends Component {
 
     if(!this.state.stripeLoading) {
       inputEl = (<form onSubmit={this.onSubmit.bind(self)} >
-        <span style={{color: 'black'}}>{ this.state.paymentError }</span><br />
-        <input style={{color: 'black'}} type="text" data-stripe='email' onChange={(email) => this.setState({email: email.target.value})} value={this.state.email} placeholder="email" /><br/>
-        <input style={{color: 'black'}} type='text' data-stripe='number' placeholder='credit card number' /><br />
-        <input style={{color: 'black'}} type='text' data-stripe='exp-month' placeholder='expiration month' /><br />
-        <input style={{color: 'black'}} type='text' data-stripe='exp-year' placeholder='expiration year' /><br />
-        <input style={{color: 'black'}} type='text' data-stripe='cvc' placeholder='cvc' /><br />
-        <input style={{color: 'black'}} disabled={this.state.submitDisabled} type='submit' value='Purchase' />
+        <span className="error">{ this.state.paymentError }</span><br />
+        <input type="text" data-stripe='email' onChange={(email) => this.setState({email: email.target.value})} value={this.state.email} placeholder="email" /><br/>
+        <input id="cc-num" className="cc-num" type='text' data-stripe='number'  autoComplete="cc-number" placeholder="Credit card number" required /><br />
+        <input id="cc-exp" className="cc-exp" type='text' data-stripe='exp' autoComplete="cc-exp" placeholder="Expiration" required/><br />
+        <input id="cc-cvc" className="cc-cvc" type='text' data-stripe='cvc' autoComplete="off" placeholder="CVC" required/><br />
+        <input disabled={this.state.submitDisabled} type='submit' value='Purchase' />
       </form>);
     }
 

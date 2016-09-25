@@ -1,0 +1,10 @@
+label {
+  color: black;
+  display: block;
+}
+input {
+  color: black;
+}
+.error{
+  color: red;
+}
