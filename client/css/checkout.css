@@ -2,6 +2,7 @@
   background: white;
   position: absolute;
   color: black;
+  width: 350px;
   top:50%;
   left:50%;
   transform: translateX(-50%) translateY(-50%);
@@ -13,6 +14,52 @@
   padding: 20px 30px;
   box-shadow: 1px 1px 5px black;
 
+  form h2{
+    text-align: center;
+  }
+
+  form {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  .totals {
+    font-size: 12px;
+    width: 100%;
+    margin-bottom: 10px;
+    border-bottom: 1px dotted grey;
+  }
+
+  .totalAmount {
+    width: 100%;
+  }
+
+  .desc{
+    width: 70%;
+    display:inline-block;
+    vertical-align: top;
+
+  }
+  .price{
+    width: 30%;
+    display:inline-block;
+    text-align: right;
+    vertical-align: top;
+  }
+
+  .close{
+    background-image: url("/images/close_black_2.svg");
+    background-size: cover;
+    position: absolute;
+    top:15px;
+    right: 15px;
+    width: 15px;
+    height: 15px;
+  }
+
   label {
     color: black;
     display: block;
@@ -20,7 +67,8 @@
   input, select {
     color: black;
     line-height: 30px !important;
-    width: 250px;
+    position: relative;
+    width: 100%;
     margin: 0px 0px 10px 0;
     padding: 0 5px;
     outline:none;

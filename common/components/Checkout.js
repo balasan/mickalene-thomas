@@ -483,9 +483,10 @@ export default class Checkout extends Component {
 
       shippingEl = (
         <form style={{display: 'flex', flexDirection: 'column'}} onSubmit={self.initOrder.bind(self)}>
+          <h2>Shipping info</h2>
           <span className="error">{ this.state.paymentError }</span><br />
-          <input type="text"  onChange={(email) => this.setState({email: email.target.value})} value={this.state.email} placeholder="email" required/>
-          <input type="text"  onChange={(shippingName) => this.setState({shippingName: shippingName.target.value})} value={this.state.shippingName} placeholder="Shipping Name" required/>
+          <input type="text"  onChange={(email) => this.setState({email: email.target.value})} value={this.state.email} placeholder="Email" required/>
+          <input type="text"  onChange={(shippingName) => this.setState({shippingName: shippingName.target.value})} value={this.state.shippingName} placeholder="Name" required/>
           <input type="text"  onChange={(add1) => this.setState({add1: add1.target.value})} value={this.state.add1} placeholder="Address line 1" required/>
           <input type="text"  onChange={(add2) => this.setState({add2: add2.target.value})} value={this.state.add2} placeholder="Address line 2" />
           <input type="text"  onChange={(city) => this.setState({city: city.target.value})} value={this.state.city} placeholder="City" required/>
@@ -495,21 +496,50 @@ export default class Checkout extends Component {
           <button className="noselect" type="submit">Continue</button>
         </form>)
 
+
+      var totalEl =  null;
+      if(self.state.order){
+        totalEl = self.state.order.items.map(function(item, i) {
+            return (
+              <div className="totals" key={i}>
+                <span className="desc">{item.description}</span>
+                <span className="price">${item.amount/100}</span>
+              </div>
+            );
+          })
+      }
+
+      var totalPrice = null
+      if (self.state.order) {
+        totalPrice = (
+          <div className="totalAmount">
+            <span className="desc">Total to be charged to card:</span>
+            <span className="price">${(self.state.order.amount/100)}</span>
+          </div>
+        )
+      }
+
+
       inputEl = (<form onSubmit={this.onSubmit.bind(self)} >
+        <h2>Payment info</h2>
         <span className="error">{ this.state.paymentError }</span><br />
         <input id="cc-num" className="cc-num" type='text' data-stripe='number'  autoComplete="cc-number" placeholder="Credit card number" required /><br />
         <input id="cc-exp" className="cc-exp" type='text' data-stripe='exp' autoComplete="cc-exp" placeholder="Expiration" required/><br />
         <input id="cc-cvc" className="cc-cvc" type='text' data-stripe='cvc' autoComplete="off" placeholder="CVC" required/><br />
         <input id="cc-zip" className="cc-zip" type='text' data-stripe='address_zip' autoComplete="off" placeholder="Billing zipcode" required/><br />
-        <button className="noselect" disabled={this.state.submitDisabled} type='submit' value='Purchase'>Submit</button>
+        {totalEl}
+        {totalPrice}
+        <br />
+        <button className="noselect" type='submit'>Submit</button>
       </form>);
+
+
 
 
     return (
       <div className="checkout">
-        <h2>Payment details</h2>
         {!self.state.order ? shippingEl : inputEl}
-        <h3 onClick={self.cancelOrder.bind(self)}>cancel</h3>
+        <div className="close" onClick={self.cancelOrder.bind(self)}></div>
       </div>
     )
   }

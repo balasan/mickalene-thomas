@@ -107,7 +107,7 @@ class Cart extends Component {
         );
       });
 
-var totalEl = null;
+      var totalEl = null;
 
       if (!self.props.state.store.order) {
         cart.forEach(function(item, i) {
@@ -117,8 +117,13 @@ var totalEl = null;
       } else {
         total = 'modified';
         totalEl = self.props.state.store.order.items.map(function(item, i) {
-          return (<div key={i}><p>{(item.amount/100) + ' -- ' + item.description}</p></div>);
-        })
+            return (
+              <div className="totals" key={i}>
+                <span className="desc">{item.description}</span>
+                <span className="price">${item.amount/100}</span>
+              </div>
+            );
+          })
       }
 
 
