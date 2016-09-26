@@ -193,6 +193,7 @@ app.post('/createOrder', jsonParser,function(req, res) {
                     line2: req.body.add2 ? req.body.add2 : '',
                     city: req.body.city,
                     country: req.body.country,
+                    state: req.body.sate,
                     postal_code: req.body.zip
                 }
             },
