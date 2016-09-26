@@ -207,7 +207,6 @@ app.post('/createCustomer', jsonParser, function(req, res) {
     //var token = req.body.token;
     var email = req.body.email;
     stripe.customers.create({
-        //source: token,
         email: email
     }).then(function(customer) {
         customer = customer;
@@ -222,17 +221,22 @@ app.post('/charge', jsonParser, function(req, res) {
     var email = req.body.email;
     var amount = req.body.amount;
 
-    stripe.charges.create({
-        amount: amount,
+
+    stripe.customers.update(customer, {
+      source: token,
+      description: email
+    }).then(function(customer) {
+      return stripe.charges.create({
+        amount: amount, // Amount in cents
         currency: "usd",
-        receipt_email: email,
-        // customer: customer,
-        source: token,
-        description: 'Mickalene Thomas store item',
-    }, function(err, charge) {
-        console.log(charge, 'charge')
+        customer: customer.id,
+        receipt_email: email
+      });
+    }).then(function(charge) {
+      console.log(charge, 'charge');
       res.json(200, charge);
     });
+
 
         
 });
