@@ -149,7 +149,7 @@ var totalEl = null;
       <div className={cartHash ? 'cart' : 'cart hidden'}>
         <a onClick={toggleCart} className="close-cart"></a>
         {cartSection}
-        {self.state.payment ? <Checkout {...self.props }/> : null}
+        {self.state.payment && !self.props.state.store.finished ? <Checkout {...self.props }/> : null}
       </div>
     )
   }
