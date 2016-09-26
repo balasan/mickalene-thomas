@@ -1,3 +1,5 @@
+@import "customMedia.css";
+
 .checkout{
   background: white;
   position: absolute;
@@ -13,6 +15,13 @@
   z-index: 1000000;
   padding: 20px 30px;
   box-shadow: 1px 1px 5px black;
+
+  @media (--mobile) {
+    width: 100%;
+    min-height: 100%;
+    overflow:scroll;
+    padding: 1.5em 1.5em 1.5em auto;
+  }
 
   form h2{
     text-align: center;
@@ -58,6 +67,11 @@
     right: 15px;
     width: 15px;
     height: 15px;
+    @media (--mobile) {
+      height: 30px;
+      width: 30px;
+      margin: 1.5em 1.5em 1.5em auto;
+    }
   }
 
   label {
@@ -72,6 +86,7 @@
     margin: 0px 0px 10px 0;
     padding: 0 5px;
     outline:none;
+    border: 1px solid lightgrey;
     &:focus{
       border-color: black;
       border-width: 2px;
@@ -87,4 +102,6 @@
   .error{
     color: red;
   }
+
+
 }

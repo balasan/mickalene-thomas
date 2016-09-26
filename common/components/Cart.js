@@ -113,17 +113,22 @@ class Cart extends Component {
         cart.forEach(function(item, i) {
             total += (item.price * item.quantity);
         })
-        var totalEl = (<div><p>{'$' + total.toFixed(2)}</p></div>)
       } else {
-        total = 'modified';
+        total = 0;
         totalEl = self.props.state.store.order.items.map(function(item, i) {
-            return (
-              <div className="totals" key={i}>
-                <span className="desc">{item.description}</span>
-                <span className="price">${item.amount/100}</span>
-              </div>
-            );
-          })
+          //   return (
+          //     <div className="totals" key={i}>
+          //       <span className="desc">{item.description}</span>
+          //       <span className="price">${item.amount/100}</span>
+          //     </div>
+          //   );
+          // })
+          total += (item.amount/100);
+          var priced = (item.amount/100).toFixed(2);
+          return (<div key={i} className="invoice-line">
+            <p>{item.description}</p><p>{priced}</p>
+          </div>);
+        })
       }
 
 
@@ -137,12 +142,16 @@ class Cart extends Component {
         {cartEl}
         </div>
         <div className={cart.length > 0 ? 'total' : 'total hidden'}>
-          <h1>total</h1>
           {totalEl}
-          <div className='holdButton'>
-            {cart.length > 0 ? <p style={{cursor: 'pointer'}} onClick={self.togglePayment.bind(self)}>proceed to payment</p> : null}
+          <div className="last-line">
+            <h1>subtotal</h1>
+            <p>{'$' + total.toFixed(2)}</p>
           </div>
-        </div></div>)
+           {cart.length > 0 && !self.props.state.store.showPayment ?<div className='holdButton'>
+               <button style={{cursor: 'pointer'}} onClick={self.togglePayment.bind(self)}>Proceed to payment</button>
+            </div> : null}
+        </div>
+      </div>)
 
 
     return (

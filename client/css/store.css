@@ -1,5 +1,16 @@
 @import "customMedia.css";
 
+.invoice-line {
+  display: flex;
+  justify-content: flex-end;
+  p {
+    font-size: 1em;
+    &:first-of-type {
+      font-weight: 900;
+    }
+  }
+}
+
 .products {
   width: 100%;
   background-color: white;
