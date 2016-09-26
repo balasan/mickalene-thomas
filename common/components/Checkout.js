@@ -60,7 +60,6 @@ export default class Checkout extends Component {
     var customerData = {
       email: self.state.email,
     }
-    console.log('formData createCustomer', customerData)
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState == XMLHttpRequest.DONE) {
@@ -133,7 +132,6 @@ export default class Checkout extends Component {
     var self = this;
     var amount = self.props.state.store.order.amount;
     var chargeObj = {token: self.state.token, customer: self.state.customer, email: self.state.email, amount: amount};
-    console.log(chargeObj, 'chargeObj')
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState == XMLHttpRequest.DONE) {
@@ -160,16 +158,6 @@ export default class Checkout extends Component {
     var message = null;
     var shippingEl = null;
     var customerEl = null;
-
-    if (this.state.stripeLoading) {
-      message = 'Loading';
-    }
-    else if (this.state.stripeLoadingError) {
-      message = 'Error';
-    }
-
-      customerEl = (<div><h1 onClick={self.createCustomer.bind(self)} style={{color: 'black'}}>submit</h1></div>);
-
       var countryEl = (
         <select value="US" onChange={(country) => this.setState({country: country.target.value})} value={this.state.country} placeholder="Country" required>
           <option value="AF">Afghanistan</option>

@@ -215,3 +215,22 @@
         opacity:0;
     }
 }
+
+.last-line {
+ /*   padding: 1em 0 0 0;*/
+}
+
+.invoice-line {
+  display: flex;
+  justify-content: flex-end;
+  p {
+    &:first-of-type {
+        font-size: 0.8em !important;
+        font-family: 'Avenir Next', sans-serif;
+    }
+    &:last-of-type {
+        font-size: 1em !important;
+        padding-left: 1em;
+    }
+  }
+}
