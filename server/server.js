@@ -68,8 +68,6 @@ app.get('/stripe', function(req, res) {
 });
 
 var jsonParser = bodyParser.json();
-var customer = null;
-var order = null;
 
 app.post('/createOrder', jsonParser,function(req, res) {
     var stripeToken = req.body.token;
@@ -143,8 +141,7 @@ app.post('/createOrder', jsonParser,function(req, res) {
             stripe.products.create({
               name: description,
               id: 'prod_'+prodId
-              // description: item.description+' style: '+style+' size: '+size,
-              // attributes: ['size', 'style']
+
             }, function(err, product) {
               if (err) {
                 console.log(err);
@@ -205,13 +202,10 @@ app.post('/createOrder', jsonParser,function(req, res) {
 });
 
 app.post('/createCustomer', jsonParser, function(req, res) {
-    //var token = req.body.token;
     var email = req.body.email;
     stripe.customers.create({
         email: email
     }).then(function(customer) {
-        customer = customer;
-        console.log(customer, 'created customer')
         res.json(200, customer);
     });
 });

@@ -24,6 +24,13 @@ export function setOrder(value) {
   };
 }
 
+
+export function finalizeOrder() {
+  return {
+    type: 'FINALIZE_ORDER'
+  };
+}
+
 export function togglePayment() {
   return {
     type: 'TOGGLE_PAYMENT'

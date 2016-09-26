@@ -21,7 +21,11 @@ export default class Checkout extends Component {
       token: null,
       customer: null,
       email: null,
+<<<<<<< HEAD
       country: "US"
+=======
+      success: false
+>>>>>>> e33c270c018a4f619682465b7f506e2a663ed0e4
     }
   }
 
@@ -30,13 +34,8 @@ export default class Checkout extends Component {
   }
 
   onScriptLoaded() {
-    console.log('loaded')
-    //if (!PaymentForm.getStripeToken) {
-      // Put your publishable key here
-      Stripe.setPublishableKey('pk_test_CZxc4aQDJvojPMDeQflnWvGe');
-
-      this.setState({ stripeLoading: false, stripeLoadingError: false });
-    // }
+    Stripe.setPublishableKey('pk_test_CZxc4aQDJvojPMDeQflnWvGe');
+    this.setState({ stripeLoading: false, stripeLoadingError: false });
   }
 
   onScriptError() {
@@ -54,7 +53,7 @@ export default class Checkout extends Component {
         console.log(response, 'error')
       } else {
         self.setState({ paymentComplete: true, submitDisabled: false, token: response.id });
-
+        if (response.id) self.chargeMe();
       }
     });
   }
@@ -80,7 +79,6 @@ export default class Checkout extends Component {
   }
 
   componentDidMount() {
-
   }
 
   componentDidUpdate() {
@@ -108,8 +106,6 @@ export default class Checkout extends Component {
   createOrder() {
     var self = this;
     var cart = this.props.state.store.cart;
-
-    // key: 'pk_test_CZxc4aQDJvojPMDeQflnWvGe'
     var formData = {
       cart: cart,
       token: self.state.token,
@@ -125,13 +121,10 @@ export default class Checkout extends Component {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState == XMLHttpRequest.DONE) {
-        //console.log(xmlhttp.responseText, 'response');
         var responseData = xmlhttp.responseText;
         var orderJson = JSON.parse(responseData);
         self.setState({order: orderJson});
-        console.log(ProductActions, 'ProductActions');
         self.props.setOrder(orderJson);
-        console.log(self, 'create order')
       }
     }
     xmlhttp.open('POST', '/createOrder', true);
@@ -148,7 +141,8 @@ export default class Checkout extends Component {
     xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState == XMLHttpRequest.DONE) {
         console.log('charged');
-        console.log(xmlhttp.responseText);
+        self.props.finalizeOrder();
+        // self.setState({success: true})
       }
     }
     xmlhttp.open('POST', '/charge', true);
@@ -172,7 +166,6 @@ export default class Checkout extends Component {
     }
 
       customerEl = (<div><h1 onClick={self.createCustomer.bind(self)} style={{color: 'black'}}>submit</h1></div>);
-
 
       var countryEl = (
         <select value="US" onChange={(country) => this.setState({country: country.target.value})} value={this.state.country} placeholder="Country" required>
@@ -485,7 +478,6 @@ export default class Checkout extends Component {
         </select>
       )
 
-
       shippingEl = (
         <form style={{display: 'flex', flexDirection: 'column'}} onSubmit={self.initOrder.bind(self)}>
           <span className="error">{ this.state.paymentError }</span><br />
@@ -514,7 +506,6 @@ export default class Checkout extends Component {
       <div className="checkout">
         <h2>Payment details</h2>
         {!self.state.order ? shippingEl : inputEl}
-        {self.state.token ? <button onClick={self.chargeMe.bind(self)}>Make payment</button> : null}
       </div>
     )
   }
