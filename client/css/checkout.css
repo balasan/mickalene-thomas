@@ -4,13 +4,14 @@ label {
 }
 input {
   color: black;
-  line-height: 37px;
+  line-height: 30px;
   width: 250px;
   margin: 0px 0px 10px 0;
   padding: 0 5px;
   outline:none;
-  :focus{
-    border: black;
+
+  &:focus{
+    border-color: black;
   }
 }
 .error{
