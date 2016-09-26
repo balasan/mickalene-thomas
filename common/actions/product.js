@@ -24,10 +24,22 @@ export function setOrder(value) {
   };
 }
 
-
 export function togglePayment() {
   return {
     type: 'TOGGLE_PAYMENT'
+  };
+}
+
+export function completeOrder(bool) {
+  return {
+    type: 'COMPLETE_ORDER',
+    payload: bool
+  };
+}
+
+export function emptyCart() {
+  return {
+    type: 'EMPTY_CART'
   };
 }
 

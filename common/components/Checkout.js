@@ -22,7 +22,10 @@ export default class Checkout extends Component {
       customer: null,
       email: null,
       country: "US",
-      success: false
+      success: false,
+      shippingError: null,
+      orderProgress: false,
+      paymentProgress: false
     }
   }
 
@@ -55,27 +58,13 @@ export default class Checkout extends Component {
     });
   }
 
-  createCustomer() {
-    var self = this;
-    var customerData = {
-      email: self.state.email,
-    }
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-      if (xmlhttp.readyState == XMLHttpRequest.DONE) {
-        var responseData = xmlhttp.responseText;
-        var customerJson = JSON.parse(responseData);
-        self.setState({customer: customerJson.id});
-        self.createOrder();
-      }
-    }
-    xmlhttp.open('POST', '/createCustomer', true);
-    xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xmlhttp.send(JSON.stringify(customerData));
-  }
-
-  componentDidMount() {
-  }
+  validateEmail(email) {  
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {  
+      return true; 
+    } else {
+      return false;
+    } 
+  } 
 
   componentDidUpdate() {
     $('.cc-num').payment('formatCardNumber');
@@ -93,16 +82,20 @@ export default class Checkout extends Component {
     });
   }
 
-  initOrder(event) {
+  createOrder(event) {
     event.preventDefault();
     var self = this;
-    self.createCustomer();
-  }
-
-  createOrder() {
-    var self = this;
     var cart = this.props.state.store.cart;
+    self.setState({orderProgress: true})
+    if (!self.validateEmail(self.state.email)) {
+      console.log('invalid email')
+      self.setState({shippingError: 'Invalid email'});
+      return;
+    } else if (self.state.shippingError) {
+      self.setState({shippingError: null});
+    } 
     var formData = {
+      email: self.state.email,
       cart: cart,
       token: self.state.token,
       customer: self.state.customer,
@@ -117,10 +110,22 @@ export default class Checkout extends Component {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState == XMLHttpRequest.DONE) {
-        var responseData = xmlhttp.responseText;
-        var orderJson = JSON.parse(responseData);
-        self.setState({order: orderJson});
-        self.props.setOrder(orderJson);
+        console.log(xmlhttp.status, 'order status return');
+        self.setState({orderProgress: false})
+        if (xmlhttp.status == 200) {
+          var responseData = xmlhttp.responseText;
+          var orderJson = JSON.parse(responseData);
+          if (orderJson.shipping_methods.length) {
+            self.setState({order: orderJson, shippingError: null});
+            self.props.setOrder(orderJson);
+            console.log('order sucess');
+          } else {
+            self.setState({shippingError: 'Invalid address'});
+          }
+        } else {
+          console.log('error');
+          self.setState({shippingError: 'Try again'});
+        }
       }
     }
     xmlhttp.open('POST', '/createOrder', true);
@@ -131,12 +136,23 @@ export default class Checkout extends Component {
   chargeMe() {
     var self = this;
     var amount = self.props.state.store.order.amount;
-    var chargeObj = {token: self.state.token, customer: self.state.customer, email: self.state.email, amount: amount};
+    self.setState({paymentProgress: true})
+    var chargeObj = {token: self.state.token, customer: self.state.order.customer, email: self.state.order.email, amount: amount};
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState == XMLHttpRequest.DONE) {
-        console.log('charged');
-        self.props.togglePayment();
+        console.log(xmlhttp.status, 'charge status');
+        self.setState({paymentProgress: false})
+        if (xmlhttp.status == 200) {
+          console.log('charged');
+          self.props.togglePayment();
+          self.props.emptyCart();
+          self.props.setOrder(null);
+          self.props.completeOrder(true);
+        } else {
+          console.log('charge error');
+          self.setState({paymentError: 'Try again'});
+        }
       }
     }
     xmlhttp.open('POST', '/charge', true);
@@ -148,9 +164,8 @@ export default class Checkout extends Component {
     var self = this;
     self.setState({order: null, token: null, customer: null, email: null});
     self.props.togglePayment();
-     self.props.setOrder(null);
+    self.props.setOrder(null);
   }
-
 
   render () {
     var self = this;
@@ -470,9 +485,9 @@ export default class Checkout extends Component {
       )
 
       shippingEl = (
-        <form style={{display: 'flex', flexDirection: 'column'}} onSubmit={self.initOrder.bind(self)}>
+        <form style={{display: 'flex', flexDirection: 'column'}} onSubmit={self.createOrder.bind(self)}>
           <h2>Shipping info</h2>
-          <span className="error">{ this.state.paymentError }</span><br />
+          <span className="error">{ this.state.shippingError }</span><br />
           <input type="text"  onChange={(email) => this.setState({email: email.target.value})} value={this.state.email} placeholder="Email" required/>
           <input type="text"  onChange={(shippingName) => this.setState({shippingName: shippingName.target.value})} value={this.state.shippingName} placeholder="Name" required/>
           <input type="text"  onChange={(add1) => this.setState({add1: add1.target.value})} value={this.state.add1} placeholder="Address line 1" required/>
@@ -481,7 +496,7 @@ export default class Checkout extends Component {
           {countryEl}
           {stateEl}
           <input type="text"  onChange={(zip) => this.setState({zip: zip.target.value})} value={this.state.zip} placeholder="Zip" required/>
-          <button className="noselect" type="submit">Continue</button>
+          <button className="noselect" type="submit">{self.state.orderProgress ? 'Creating order...' : 'Continue'}</button>
         </form>)
 
 
@@ -518,7 +533,7 @@ export default class Checkout extends Component {
         {totalEl}
         {totalPrice}
         <br />
-        <button className="noselect" type='submit'>Submit</button>
+        <button className="noselect" type='submit'>{self.state.paymentProgress ? 'Submitting payment...' : 'Submit'}</button>
       </form>);
 
 

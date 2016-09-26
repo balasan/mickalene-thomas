@@ -14,18 +14,7 @@ class Cart extends Component {
   constructor (props, context) {
     super(props, context)
     this.state = {
-      payment: false,
-      stripeLoading: true,
-      stripeLoadingError: false,
-      submitDisabled: false,
-      paymentError: null,
-      paymentComplete: false,
-      token: null
     }
-  }
-
-  getScriptURL() {
-    return 'https://checkout.stripe.com/checkout.js';
   }
 
   componentDidMount() {
@@ -53,6 +42,7 @@ class Cart extends Component {
         window.location.hash = '#cart';
       else
         window.location.hash = '';
+        self.props.completeOrder(false);
     }
 
     var cartEl = null;
@@ -133,7 +123,10 @@ class Cart extends Component {
 
 
       } else {
-        var cartEl = (<div className="empty"><h1>cart is empty</h1></div>);
+        var cartEl = (<div className="empty">
+          {self.props.state.store.completeOrder ? <h1>order complete</h1> : null}
+          <h1>cart is empty</h1>
+        </div>);
       }
 
     }

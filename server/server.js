@@ -61,16 +61,11 @@ app.get('/api/instagram', function(req, res) {
     }
 });
 
-
-//Stripe
-app.get('/stripe', function(req, res) {
-    res.send("😇 😇 😇");
-});
-
 var jsonParser = bodyParser.json();
 
 app.post('/createOrder', jsonParser,function(req, res) {
     var stripeToken = req.body.token;
+    var email = req.body.email;
     var total = 0;
     var items = [];
 
@@ -122,6 +117,10 @@ app.post('/createOrder', jsonParser,function(req, res) {
         stripe.products.list(
           { limit: 100 },
           function(err, products) {
+            if (err) {
+                console.log(err, 'product list error');
+                res.json(500, err);
+            }
             if (products.data.length > 0) {
                  products.data.forEach(function(productX, x) {
                     if (productX.id == 'prod_'+prodId) exists += 1;
@@ -144,7 +143,8 @@ app.post('/createOrder', jsonParser,function(req, res) {
 
             }, function(err, product) {
               if (err) {
-                console.log(err);
+                console.log(err, 'product create error');
+                res.json(500, err);
               } else {
                 newSkus(product, item, i, prodId);
               }
@@ -164,11 +164,14 @@ app.post('/createOrder', jsonParser,function(req, res) {
         stripe.skus.create({
               product: product.id,
               id: 'sku_'+prodId,
-              // attributes: {'size': size, 'style': style},
               price: item.price * 100,
               currency: 'usd',
               inventory: {'type': 'infinite'}
             }, function(err, sku) {
+                if (err) {
+                    console.log(err, 'sku create error');
+                    res.json(500, err);
+                }
                 items.push({
                     type: 'sku',
                     parent: sku.id,
@@ -178,36 +181,43 @@ app.post('/createOrder', jsonParser,function(req, res) {
     }
 
     function ordersCreate() {
-        console.log(items, 'items')
-        stripe.orders.create({
-            currency: 'usd',
-            items: items,
-            customer: req.body.customer,
-            shipping: {
-                name: req.body.name,
-                address: {
-                    line1: req.body.add1,
-                    line2: req.body.add2 ? req.body.add2 : '',
-                    city: req.body.city,
-                    country: req.body.country,
-                    state: req.body.sate,
-                    postal_code: req.body.zip
-                }
-            },
-        }, function(err, order) {
-            if (err) console.log(err, 'order create error');
-            res.json(200, order);
-        });
-    }
-});
 
-app.post('/createCustomer', jsonParser, function(req, res) {
-    var email = req.body.email;
-    stripe.customers.create({
-        email: email
-    }).then(function(customer) {
-        res.json(200, customer);
-    });
+        stripe.customers.create({
+            email: email
+        }).then(function(customer) {
+            console.log(customer, 'customer create');
+            // if (customer) {
+                return stripe.orders.create({
+                    currency: 'usd',
+                    items: items,
+                    customer: customer.id,
+                    shipping: {
+                        name: req.body.name,
+                        address: {
+                            line1: req.body.add1,
+                            line2: req.body.add2 ? req.body.add2 : '',
+                            city: req.body.city,
+                            country: req.body.country,
+                            state: req.body.sate,
+                            postal_code: req.body.zip
+                        }
+                    },
+                })
+            // } else {
+            //     throw 'customer creation error';
+            // }
+        }).then(function(order) {
+            console.log(order, 'order');
+            // if (order) {
+               res.json(200, order); 
+            // } else {
+            //     throw 'order creation error';
+            // }
+        }).catch(function(err) {
+            res.json(500, err);
+        });   
+    }
+
 });
 
 app.post('/charge', jsonParser, function(req, res) {
@@ -216,25 +226,33 @@ app.post('/charge', jsonParser, function(req, res) {
     var email = req.body.email;
     var amount = req.body.amount;
 
-
     stripe.customers.update(customer, {
       source: token,
       description: email
     }).then(function(customer) {
-      return stripe.charges.create({
-        amount: amount, // Amount in cents
-        currency: "usd",
-        customer: customer.id,
-        receipt_email: email
-      });
+        console.log(customer, 'customer update');
+        // if (customer) {
+          return stripe.charges.create({
+            amount: amount, // Amount in cents
+            currency: "usd",
+            customer: customer.id,
+            receipt_email: email
+          });
+      // } else {
+      //   throw 'customer update error';
+      // }
     }).then(function(charge) {
-      console.log(charge, 'charge');
-      res.json(200, charge);
-    });
-
-
-        
+        console.log(charge, 'charge');
+        // if (charge) {
+        res.json(200, charge);
+        // } else {
+        //     throw 'charge error';
+        // }
+    }).catch(function(err) {
+        res.json(500, err);
+    });    
 });
+
 
 //public folder
 app.use(Express.static(__dirname + '/../public'));

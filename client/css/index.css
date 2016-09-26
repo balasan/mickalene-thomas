@@ -61,6 +61,10 @@ main {
             padding: 60px 0 0 0;
         }
        transition: opacity 300ms ease;
+
+    }
+    &.hideapp {
+      display: none;
     }
 }
 #webGLCorner{
