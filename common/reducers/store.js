@@ -1,7 +1,7 @@
 import { GET_PRODUCT, ADD_PRODUCT, SET_PRODUCT, QUANTITY, REMOVE, TOGGLE_CHART, SET_ORDER } from '../actions/product'
 import { UPDATE_PATH } from 'redux-simple-router'
 
-const initialState = { cart:[], products:null, product:null, showChart:false, showPayment:false, order: null, finished: false }
+const initialState = { cart:[], products:null, product:null, showChart:false, showPayment:false, order: null}
 
 export default function news(state = initialState, action) {
   switch (action.type) {

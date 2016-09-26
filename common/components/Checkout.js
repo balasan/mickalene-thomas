@@ -136,13 +136,19 @@ export default class Checkout extends Component {
     xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState == XMLHttpRequest.DONE) {
         console.log('charged');
-        self.props.finalizeOrder();
-        // self.setState({success: true})
+        self.props.togglePayment();
       }
     }
     xmlhttp.open('POST', '/charge', true);
     xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xmlhttp.send(JSON.stringify(chargeObj));
+  }
+
+  cancelOrder() {
+    var self = this;
+    self.setState({order: null, token: null, customer: null, email: null});
+    self.props.togglePayment();
+     self.props.setOrder(null);
   }
 
 
@@ -189,6 +195,7 @@ export default class Checkout extends Component {
       <div className="checkout">
         <h2>Payment details</h2>
         {!self.state.order ? shippingEl : inputEl}
+        <h3 onClick={self.cancelOrder.bind(self)}>cancel</h3>
       </div>
     )
   }

@@ -36,7 +36,7 @@ class Cart extends Component {
 
   togglePayment() {
     var self = this;
-    self.setState({payment: !self.state.payment});
+    self.props.togglePayment();
   }
 
   render () {
@@ -135,21 +135,16 @@ var totalEl = null;
           <h1>total</h1>
           {totalEl}
           <div className='holdButton'>
-            {cart.length > 0 ? <p onClick={self.togglePayment.bind(self)}>proceed to payment</p> : null}
+            {cart.length > 0 ? <p style={{cursor: 'pointer'}} onClick={self.togglePayment.bind(self)}>proceed to payment</p> : null}
           </div>
         </div></div>)
-
-    // var paymentSection = (<div>
-    //   <h1 style={{color: 'black'}} onClick={self.togglePayment.bind(self)}>payment</h1>
-
-    //   </div>);
 
 
     return (
       <div className={cartHash ? 'cart' : 'cart hidden'}>
         <a onClick={toggleCart} className="close-cart"></a>
         {cartSection}
-        {self.state.payment && !self.props.state.store.finished ? <Checkout {...self.props }/> : null}
+        {self.props.state.store.showPayment ? <Checkout {...self.props }/> : null}
       </div>
     )
   }
