@@ -22,6 +22,31 @@ html, body {
     overflow-y:auto;
 }
 
+button {
+    background-color: black;
+    padding: 1em 2.5em;
+    cursor: pointer;
+    color:white;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: background-color 250ms ease-out, background-image 250ms ease-out;
+    font-family: 'Avenir Next Bold', sans-serif;
+    border: 2px solid black;
+    color: white;
+    display: block;
+
+    @media (--mobile) {
+        width: 100%;
+        font-size: 10px;
+    }
+    &:hover {
+        background-color: white;
+        background-image: none;
+        color: black;
+    }
+}
+
 button:focus, input[type="button"]:focus {
     outline: none;
 }
