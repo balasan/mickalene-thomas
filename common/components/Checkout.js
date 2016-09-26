@@ -19,9 +19,8 @@ export default class Checkout extends Component {
       paymentError: null,
       paymentComplete: false,
       token: null,
-      email: null,
       customer: null,
-      firstemail: null
+      email: null
     }
   }
 
@@ -46,7 +45,6 @@ export default class Checkout extends Component {
   onSubmit(event) {
     var self = this;
     event.preventDefault();
-    var amount = self.props.state.store.order.amount / 100;
     this.setState({ submitDisabled: true, paymentError: null });
 
     Stripe.createToken(event.target, function(status, response) {
@@ -55,18 +53,7 @@ export default class Checkout extends Component {
         console.log(response, 'error')
       } else {
         self.setState({ paymentComplete: true, submitDisabled: false, token: response.id });
-        console.log(response.id, 'token');
 
-        // var xmlhttp = new XMLHttpRequest();
-        // xmlhttp.onreadystatechange = function() {
-        //   if (xmlhttp.readyState == XMLHttpRequest.DONE) {
-        //     console.log('charged');
-        //     console.log(xmlhttp.responseText);
-        //   }
-        // }
-        // xmlhttp.open('POST', '/charge', true);
-        // xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        // xmlhttp.send(JSON.stringify({token: response.id, customer: self.state.customer, email: self.state.email, amount: amount}));
       }
     });
   }
@@ -74,7 +61,7 @@ export default class Checkout extends Component {
   createCustomer() {
     var self = this;
     var customerData = {
-      email: self.state.firstemail,
+      email: self.state.email,
     }
     console.log('formData createCustomer', customerData)
     var xmlhttp = new XMLHttpRequest();
@@ -83,7 +70,7 @@ export default class Checkout extends Component {
         var responseData = xmlhttp.responseText;
         var customerJson = JSON.parse(responseData);
         self.setState({customer: customerJson.id});
-        console.log(self, )
+        self.createOrder();
       }
     }
     xmlhttp.open('POST', '/createCustomer', true);
@@ -109,6 +96,11 @@ export default class Checkout extends Component {
     cart.forEach(function(item, i) {
       self.total += (item.price * item.quantity);
     });
+  }
+
+  initOrder() {
+    var self = this;
+    self.createCustomer();
   }
 
   createOrder() {
@@ -144,6 +136,24 @@ export default class Checkout extends Component {
     xmlhttp.send(JSON.stringify(formData));
   }
 
+  chargeMe() {
+    var self = this;
+    var amount = self.props.state.store.order.amount;
+    var chargeObj = {token: self.state.token, customer: self.state.customer, email: self.state.email, amount: amount};
+    console.log(chargeObj, 'chargeObj')
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+        console.log('charged');
+        console.log(xmlhttp.responseText);
+      }
+    }
+    
+    xmlhttp.open('POST', '/charge', true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xmlhttp.send(JSON.stringify(chargeObj));
+  }
+
 
   render () {
     var self = this;
@@ -158,26 +168,24 @@ export default class Checkout extends Component {
     else if (this.state.stripeLoadingError) {
       message = 'Error';
     }
-    // else if (this.state.paymentComplete) {
-      customerEl = (<div><input style={{color: 'black'}} type="text"  onChange={(firstemail) => this.setState({firstemail: firstemail.target.value})} value={this.state.firstemail} placeholder="firstemail" /><h1 onClick={self.createCustomer.bind(self)} style={{color: 'black'}}>submit</h1></div>);
-      
-      message = 'customer created';
+      customerEl = (<div><h1 onClick={self.createCustomer.bind(self)} style={{color: 'black'}}>submit</h1></div>);
+
 
       shippingEl = (
         <div style={{display: 'flex', flexDirection: 'column'}}>
+        <input style={{color: 'black'}} type="text"  onChange={(email) => this.setState({email: email.target.value})} value={this.state.email} placeholder="email" />
         <input style={{color: 'black'}} type="text"  onChange={(shippingName) => this.setState({shippingName: shippingName.target.value})} value={this.state.shippingName} placeholder="Shipping Name" />
         <input style={{color: 'black'}} type="text"  onChange={(add1) => this.setState({add1: add1.target.value})} value={this.state.add1} placeholder="Address line 1" />
         <input style={{color: 'black'}} type="text"  onChange={(add2) => this.setState({add2: add2.target.value})} value={this.state.add2} placeholder="Address line 2" />
         <input style={{color: 'black'}} type="text"  onChange={(city) => this.setState({city: city.target.value})} value={this.state.city} placeholder="City" />
         <input style={{color: 'black'}} type="text"  onChange={(country) => this.setState({country: country.target.value})} value={this.state.country} placeholder="Country" />
         <input style={{color: 'black'}} type="text"  onChange={(zip) => this.setState({zip: zip.target.value})} value={this.state.zip} placeholder="Zip" />
-        <h1 style={{color: 'black'}}  onClick={self.createOrder.bind(self)}>submit shipping info</h1>
+        <h1 style={{color: 'black'}}  onClick={self.initOrder.bind(self)}>submit shipping info</h1>
         </div>)
     // }
 
       inputEl = (<form onSubmit={this.onSubmit.bind(self)} >
         <span className="error">{ this.state.paymentError }</span><br />
-        <input type="text" data-stripe='email' onChange={(email) => this.setState({email: email.target.value})} value={this.state.email} placeholder="email" /><br/>
         <input id="cc-num" className="cc-num" type='text' data-stripe='number'  autoComplete="cc-number" placeholder="Credit card number" required /><br />
         <input id="cc-exp" className="cc-exp" type='text' data-stripe='exp' autoComplete="cc-exp" placeholder="Expiration" required/><br />
         <input id="cc-cvc" className="cc-cvc" type='text' data-stripe='cvc' autoComplete="off" placeholder="CVC" required/><br />
@@ -189,10 +197,8 @@ export default class Checkout extends Component {
       <div className="checkout">
         <h1 style={{color: 'black'}}>payment</h1>
         <p style={{color: 'black'}}>{message}</p>
-        {!self.state.customer ? customerEl : null}
-        {self.state.order ? inputEl : null}
-        {self.state.customer && !self.state.order ? shippingEl : null}
-
+        {!self.state.order ? shippingEl : inputEl}
+        {self.state.token ? <h1 onClick={self.chargeMe.bind(self)} style={{color: 'black'}}>charge</h1> : null}
       </div>
     )
   }
