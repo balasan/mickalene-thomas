@@ -222,25 +222,18 @@ app.post('/charge', jsonParser, function(req, res) {
     var email = req.body.email;
     var amount = req.body.amount;
 
-        // stripe.charges.create({
-        //     amount: amount,
-        //     currency: "usd",
-        //     customer: customer,
-        //     receipt_email: email,
-        //     description: 'Mickalene Thomas store item',
-        //     statement_descriptor: 'Mickalene Thomas store'
-        // });
+    stripe.charges.create({
+        amount: amount,
+        currency: "usd",
+        receipt_email: email,
+        // customer: customer,
+        source: token,
+        description: 'Mickalene Thomas store item',
+    }, function(err, charge) {
+        console.log(charge, 'charge')
+      res.json(200, charge);
+    });
 
-        stripe.charges.create({
-  amount: amount,
-  currency: "usd",
-  receipt_email: email,
-  customer: customer,
-  source: token,
-   description: 'Mickalene Thomas store item',
-}, function(err, charge) {
-  res.json(200, charge);
-});
         
 });
 
