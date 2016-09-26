@@ -21,11 +21,8 @@ export default class Checkout extends Component {
       token: null,
       customer: null,
       email: null,
-<<<<<<< HEAD
-      country: "US"
-=======
+      country: "US",
       success: false
->>>>>>> e33c270c018a4f619682465b7f506e2a663ed0e4
     }
   }
 
