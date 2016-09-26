@@ -106,9 +106,22 @@ class Cart extends Component {
           </div>
         );
       });
-      cart.forEach(function(item, i) {
-          total += (item.price * item.quantity);
-      })
+
+var totalEl = null;
+
+      if (!self.props.state.store.order) {
+        cart.forEach(function(item, i) {
+            total += (item.price * item.quantity);
+        })
+        var totalEl = (<div><p>{'$' + total.toFixed(2)}</p></div>)
+      } else {
+        total = 'modified';
+        totalEl = self.props.state.store.order.items.map(function(item, i) {
+          return (<div key={i}><p>{(item.amount/100) + ' -- ' + item.description}</p></div>);
+        })
+      }
+
+
       } else {
         var cartEl = (<div className="empty"><h1>cart is empty</h1></div>);
       }
@@ -120,7 +133,7 @@ class Cart extends Component {
         </div>
         <div className={cart.length > 0 ? 'total' : 'total hidden'}>
           <h1>total</h1>
-          <p>{'$' + total.toFixed(2)}</p>
+          {totalEl}
           <div className='holdButton'>
             {cart.length > 0 ? <p onClick={self.togglePayment.bind(self)}>proceed to payment</p> : null}
           </div>

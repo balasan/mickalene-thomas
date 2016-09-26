@@ -204,10 +204,10 @@ app.post('/createOrder', jsonParser,function(req, res) {
 });
 
 app.post('/createCustomer', jsonParser, function(req, res) {
-    var token = req.body.token;
+    //var token = req.body.token;
     var email = req.body.email;
     stripe.customers.create({
-        source: token,
+        //source: token,
         email: email
     }).then(function(customer) {
         customer = customer;
@@ -216,35 +216,33 @@ app.post('/createCustomer', jsonParser, function(req, res) {
     });
 });
 
-// app.post('/charge', jsonParser, function(req, res) {
-//     var token = req.body.token;
-//     var email = req.body.email;
-//     function createCustomer() {
-//         stripe.customers.create({
-//             source: token,
-//             email: email
-//         }).then(function(customer) {
-//             customer = customer;
-//             return chargesCreate(customer);
-//             //onsole.log(customer, 'created customer')
-//         });
-//     }
+app.post('/charge', jsonParser, function(req, res) {
+    var token = req.body.token;
+    var customer = req.body.customer;
+    var email = req.body.email;
+    var amount = req.body.amount;
 
+        // stripe.charges.create({
+        //     amount: amount,
+        //     currency: "usd",
+        //     customer: customer,
+        //     receipt_email: email,
+        //     description: 'Mickalene Thomas store item',
+        //     statement_descriptor: 'Mickalene Thomas store'
+        // });
 
-//     function chargesCreate() {
-//         stripe.charges.create({
-//             amount: order.amount,
-//             currency: "usd",
-//             customer: customer.id,
-//             receipt_email: stripeToken.email,
-//             description: 'Mickalene Thomas store item',
-//             statement_descriptor: 'Mickalene Thomas store'
-//         });
+        stripe.charges.create({
+  amount: amount,
+  currency: "usd",
+  receipt_email: email,
+  customer: customer,
+  source: token,
+   description: 'Mickalene Thomas store item',
+}, function(err, charge) {
+  res.json(200, charge);
+});
         
-//     }
-
-//     return chargesCreate();
-// });
+});
 
 //public folder
 app.use(Express.static(__dirname + '/../public'));

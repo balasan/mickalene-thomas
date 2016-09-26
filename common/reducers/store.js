@@ -1,7 +1,7 @@
-import { GET_PRODUCT, ADD_PRODUCT, SET_PRODUCT, QUANTITY, REMOVE, TOGGLE_CHART } from '../actions/product'
+import { GET_PRODUCT, ADD_PRODUCT, SET_PRODUCT, QUANTITY, REMOVE, TOGGLE_CHART, SET_ORDER } from '../actions/product'
 import { UPDATE_PATH } from 'redux-simple-router'
 
-const initialState = { cart:[], products:null, product:null, showChart:false, showPayment:false }
+const initialState = { cart:[], products:null, product:null, showChart:false, showPayment:false, order: null }
 
 export default function news(state = initialState, action) {
   switch (action.type) {
@@ -14,6 +14,12 @@ export default function news(state = initialState, action) {
     case SET_PRODUCT:
     return Object.assign({}, state, {
         product: action.payload.results
+      })
+
+    case SET_ORDER: 
+      console.log('set order action', action.payload)
+      return Object.assign({}, state, {
+        order: action.payload
       })
 
     case ADD_PRODUCT:

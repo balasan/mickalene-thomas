@@ -4,6 +4,7 @@ export const SET_PRODUCT = 'SET_PRODUCT';
 export const TOGGLE_CHART = 'TOGGLE_CHART';
 export const QUANTITY = 'QUANTITY';
 export const REMOVE = 'REMOVE';
+export const SET_ORDER = 'SET_ORDER';
 import { fetchProducts, fetchProduct } from '../api/product'
 
 export function set(value) {
@@ -12,6 +13,14 @@ export function set(value) {
     payload: {
       results: value
     }
+  };
+}
+
+export function setOrder(value) {
+  console.log('set order', value);
+  return {
+    type: SET_ORDER,
+    payload: value
   };
 }
 
