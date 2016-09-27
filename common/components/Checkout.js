@@ -67,10 +67,12 @@ export default class Checkout extends Component {
   } 
 
   componentDidUpdate() {
+    var self = this;
     $('.cc-num').payment('formatCardNumber');
     $('.cc-exp').payment('formatCardExpiry');
     $('.cc-cvc').payment('formatCardCVC');
     this.cartData();
+    console.log(self.state.state, 'state')
   }
 
   cartData() {

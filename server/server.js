@@ -181,38 +181,28 @@ app.post('/createOrder', jsonParser,function(req, res) {
     }
 
     function ordersCreate() {
-
         stripe.customers.create({
             email: email
         }).then(function(customer) {
-            console.log(customer, 'customer create');
-            // if (customer) {
-                return stripe.orders.create({
-                    currency: 'usd',
-                    items: items,
-                    customer: customer.id,
-                    shipping: {
-                        name: req.body.name,
-                        address: {
-                            line1: req.body.add1,
-                            line2: req.body.add2 ? req.body.add2 : '',
-                            city: req.body.city,
-                            country: req.body.country,
-                            state: req.body.sate,
-                            postal_code: req.body.zip
-                        }
-                    },
-                })
-            // } else {
-            //     throw 'customer creation error';
-            // }
+            return stripe.orders.create({
+                currency: 'usd',
+                items: items,
+                customer: customer.id,
+                shipping: {
+                    name: req.body.name,
+                    address: {
+                        line1: req.body.add1,
+                        line2: req.body.add2 ? req.body.add2 : '',
+                        city: req.body.city,
+                        country: req.body.country,
+                        state: req.body.state,
+                        postal_code: req.body.zip
+                    }
+                },
+            })
         }).then(function(order) {
             console.log(order, 'order');
-            // if (order) {
-               res.json(200, order); 
-            // } else {
-            //     throw 'order creation error';
-            // }
+            res.json(200, order); 
         }).catch(function(err) {
             res.json(500, err);
         });   
@@ -231,23 +221,15 @@ app.post('/charge', jsonParser, function(req, res) {
       description: email
     }).then(function(customer) {
         console.log(customer, 'customer update');
-        // if (customer) {
-          return stripe.charges.create({
-            amount: amount, // Amount in cents
+        return stripe.charges.create({
+            amount: amount,
             currency: "usd",
             customer: customer.id,
             receipt_email: email
-          });
-      // } else {
-      //   throw 'customer update error';
-      // }
+        });
     }).then(function(charge) {
         console.log(charge, 'charge');
-        // if (charge) {
         res.json(200, charge);
-        // } else {
-        //     throw 'charge error';
-        // }
     }).catch(function(err) {
         res.json(500, err);
     });    
