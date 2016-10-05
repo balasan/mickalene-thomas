@@ -366,7 +366,7 @@ app.get('/update', jsonParser, function(req, res) {
             })
         }
 
-        res.json(200, {'done': true})
+        res.send("success")
     }
 
     function fetchProducts(callback) {
