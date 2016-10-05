@@ -77,7 +77,7 @@ export default class About extends Component {
       }
 
       var autoplay = true;
-      if(typeof window !== 'undefined') {
+      if(typeof window !== 'undefined' && window.mobilecheck()) {
         autoplay = window.playsInline ? true : false;
       }
       videoUrl = '/video/about.mp4';
