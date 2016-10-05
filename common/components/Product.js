@@ -82,7 +82,6 @@ export default class Product extends Component {
       var ddl = document.getElementById('descriptions');
       if (!ddl) return;
       var opts = ddl.options.length;
-      console.log(value, 'value')
       if (value) {
         for (var i = 0; i < opts; i++) {
           if (ddl.options[i].value == value){
@@ -100,7 +99,6 @@ export default class Product extends Component {
     switchImg(selected) {
       var self = this;
       var url;
-      console.log(selected, 'switchimg selected')
 
       if (typeof selected == 'object') {
         url = selected.image;

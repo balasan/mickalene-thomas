@@ -14,6 +14,7 @@ export default class Video extends Component {
     else{
       this.video.play();
       this.video.className="video";
+      this.resize();
     }
   }
 
@@ -22,6 +23,7 @@ export default class Video extends Component {
       if(newProps.menu.showMenu == true){
         this.video.play();
         this.video.className="video";
+        this.resize();
       }
       else{
         this.video.pause();
