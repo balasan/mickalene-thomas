@@ -177,6 +177,15 @@
             font-family: 'Avenir Next', sans-serif;
             font-size: 20px;
             margin: 0 0 0 0.5em;
+            min-width: 120px;
+            max-width: 300px;
+            display: inline-block;
+
+        }
+        .invoice-inner {
+            // border-bottom: 1px dotted black;
+            margin-bottom: 5px;
+
         }
         p, h1, .holdButton {
             display: inline-block;
@@ -185,7 +194,7 @@
         .holdButton {
             text-align: right;
             padding: 0 0 0 1em;
-
+            margin-top: 10px;
             button {
                 background-color: black;
                 padding: 1em 2.5em;
@@ -216,6 +225,7 @@
 }
 
 .last-line {
+    margin-top: 10px;
  /*   padding: 1em 0 0 0;*/
 }
 

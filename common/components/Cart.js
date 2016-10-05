@@ -98,13 +98,16 @@ class Cart extends Component {
       });
 
       var totalEl = null;
+      var totalText;
 
       if (!self.props.state.store.order) {
+        totalText = 'subtotal';
         cart.forEach(function(item, i) {
             total += (item.price * item.quantity);
         })
       } else {
         total = 0;
+        totalText = 'total';
         totalEl = self.props.state.store.order.items.map(function(item, i) {
           //   return (
           //     <div className="totals" key={i}>
@@ -116,7 +119,10 @@ class Cart extends Component {
           total += (item.amount/100);
           var priced = (item.amount/100).toFixed(2);
           return (<div key={i} className="invoice-line">
-            <p>{item.description}</p><p>{priced}</p>
+            <span className="invoice-inner">
+              <p>{item.description}</p>
+              <p>${priced}</p>
+            </span>
           </div>);
         })
       }
@@ -137,7 +143,7 @@ class Cart extends Component {
         <div className={cart.length > 0 ? 'total' : 'total hidden'}>
           {totalEl}
           <div className="last-line">
-            <h1>subtotal</h1>
+            <h1>{totalText}</h1>
             <p>{'$' + total.toFixed(2)}</p>
           </div>
            {cart.length > 0 && !self.props.state.store.showPayment ?<div className='holdButton'>

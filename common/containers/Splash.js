@@ -65,8 +65,15 @@ class Splash extends Component {
         <Video videoid={bgVid} key={bgVid}></Video>
       </div>
     )
-    if( mobilecheck && mobilecheck()) vids = null;
-    if(this.noVid) vids = null;
+
+    var playsInline = false;
+
+    if(typeof window !== 'undefined') {
+      playsInline = window.playsInline;
+    }
+
+    if (mobilecheck && mobilecheck() && !playsInline) vids = null;
+    if (this.noVid) vids = null;
 
     return (
       <span>

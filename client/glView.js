@@ -102,9 +102,10 @@ function GLView(_corner) {
       // renderer
       var options = {
         canvas: document.getElementById("webGL"),
-        antialias: true,
+        antialias: false,
         alpha: true,
       }
+
       if(corner) {
         options = {
           canvas: document.getElementById("webGLCorner"),
@@ -148,8 +149,11 @@ function GLView(_corner) {
     videoTexture.minFilter = THREE.LinearFilter;
     videoTexture.minFilter = THREE.LinearFilter;
 
-    if(mobilecheck()){
-      imgTexture = THREE.ImageUtils.loadTexture("/images/glitter-sq.jpg",null,render);
+    var playsInline = 'playsInline' in document.createElement('video');
+    playsInline = false;
+
+    if(mobilecheck() && !playsInline) {
+      imgTexture = THREE.ImageUtils.loadTexture("/images/collage-sq.jpg",null,render);
       imgTexture.wrapS = THREE.RepeatWrapping;
       imgTexture.wrapT = THREE.RepeatWrapping;
     }
@@ -177,7 +181,7 @@ function GLView(_corner) {
 
     transMaterial = greyMaterial.clone()
 
-    if(mobilecheck())
+    if(mobilecheck() && !playsInline)
       transMaterial.map = imgTexture;
     else
       transMaterial.map = videoTexture;
@@ -253,6 +257,7 @@ function GLView(_corner) {
 
       transMaterial.map.repeat.x = tabletAspect/videoAspect
       transMaterial.map.offset.x = (1-tabletAspect/videoAspect) * 1/2
+
     }
     else{
       var tabletAspect = 1;
@@ -328,7 +333,7 @@ function GLView(_corner) {
       delta = 1000 / 60;
     }
 
-    if(transMaterial.map != videoTexture){
+    if (transMaterial.map != videoTexture){
       transMaterial.map.offset.x += delta * .00002;
       transMaterial.map.offset.y -= delta * .00001;
     }
