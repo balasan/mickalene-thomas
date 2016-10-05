@@ -8,7 +8,9 @@ var router = Express.Router();
 var bodyParser = require('body-parser')
 var stripe = require('stripe')('sk_test_4y83aHU2CwVFqFvE8jK1xNMB');
 var request = require('request');
-const app = new Express()
+const app = new Express();
+var favicon = require('serve-favicon');
+
 
 require('dotenv').config({
     silent: true
@@ -454,8 +456,11 @@ app.get('/update', jsonParser, function(req, res) {
 //public folder
 app.use(Express.static(__dirname + '/../public'));
 
+app.use(favicon(__dirname + '/../public/images/favicon.ico'));
+
 var index = router.get('/*', handleRender)
 app.use('/', index);
+
 
 
 var port = process.env.PORT || 3000
