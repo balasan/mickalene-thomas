@@ -55,8 +55,10 @@ a {
 }
 
 main {
+    min-height: 100vh;
     &.main-container {
         padding: 75px 0 0 0;
+        min-height: 100vh;
         @media (--mobile) {
             padding: 60px 0 0 0;
         }
@@ -91,6 +93,8 @@ main {
     top: 0;
     left: 0;
     cursor:pointer;
+    z-index: 10;
+    display:none;
     &.hidden{
       display:none;
     }

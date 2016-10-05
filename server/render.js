@@ -28,10 +28,10 @@ function renderFullPage(html, initialState) {
       </head>
       <body>
         <div class="bg"></div>
-        <video id="vidBg" preload="none" class="hidden video" loop="true">
+        <video id="vidBg" preload="none" class="hidden video" playsinline webkit-playsinline loop="true">
           <source src="/video/menu.mp4" type="video/mp4"/>
         </video>
-        <video id="vidPattern" preload="none" class="hidden video" loop="true">
+        <video id="vidPattern" preload="none" class="hidden video" playsinline webkit-playsinline loop="true">
           <source src="/video/bg-vid.mp4" type="video/mp4"/>
         </video>
 

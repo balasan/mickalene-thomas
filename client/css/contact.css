@@ -19,6 +19,9 @@
     display: none;
   }
 }
+.contactColumn{
+  text-align: left;
+}
 .mobileHeader {
   display: block;
   background-color: black;
@@ -57,7 +60,7 @@
       width: 50%;
 
       &.studio {
-        text-align: center;
+        text-align: left;
 
         main {
           margin: 0 auto;

@@ -203,6 +203,7 @@ class Nav extends Component {
         <nav className={navClass}>
           <div className='top'>
           <section className='left'>
+            {path == 'works/i/:itemId' || path == 'works/exhibitions/:itemId/:imageId' ? null : <Link className='logoMobile' to="/">m</Link>}
             {path == 'works/i/:itemId' || path == 'works/exhibitions/:itemId/:imageId' ? null : <Link className='logo' to="/">mickalene thomas</Link>}
             {path == 'works/filter/:filter' || path == 'news/' || path == 'news' || path == 'news/filter/:filter' ? <Link to='/works' className='back'></Link> : null}
             {path == 'works/exhibitions/:itemId' ? <Link to='/works/filter/exhibitions' className='back'></Link> : null}

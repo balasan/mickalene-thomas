@@ -20,7 +20,11 @@ class Splash extends Component {
   componentDidMount() {
 
     var self = this;
-    var GLView = require('../../client/glView')
+    var GLView = require('../../client/glView');
+    this.el = document.getElementById("webGL");
+
+    this.el.style.display = 'block';
+
     if (!window.glView) {
       window.glView = new GLView()
       window.glView.start();
@@ -55,7 +59,8 @@ class Splash extends Component {
 
   componentWillUnmount() {
     window.glView.remove();
-    window.glView.stop()
+    window.glView.stop();
+    this.el.style.display = 'none';
   }
 
   render () {
@@ -65,8 +70,15 @@ class Splash extends Component {
         <Video videoid={bgVid} key={bgVid}></Video>
       </div>
     )
-    if( mobilecheck && mobilecheck()) vids = null;
-    if(this.noVid) vids = null;
+
+    var playsInline = false;
+
+    if(typeof window !== 'undefined') {
+      playsInline = window.playsInline;
+    }
+
+    if (mobilecheck && mobilecheck() && !playsInline) vids = null;
+    if (this.noVid) vids = null;
 
     return (
       <span>

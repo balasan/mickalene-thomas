@@ -90,13 +90,20 @@ export default class About extends Component {
         }
       }
 
-      videoUrl = '/video/about.mp4';
-      if (mobile) {
-        videoEl = (<div><video onClick={self.playToggle.bind(self)} ref="video" className="aboutVideo" muted loop><source src={videoUrl} type="video/mp4" /></video><div className={self.state.muted ? "muteToggle muted" : "muteToggle unmuted"} onClick={self.toggleMute.bind(self)}></div></div>)
-      } else {
-        videoEl = (<div><video onClick={self.playToggle.bind(self)} ref="video" className="aboutVideo" muted autoPlay loop><source src={videoUrl} type="video/mp4" /></video><div className={self.state.muted ? "muteToggle muted" : "muteToggle unmuted"} onClick={self.toggleMute.bind(self)}></div></div>)
+      var autoplay = true;
+      if(typeof window !== 'undefined' && window.mobilecheck()) {
+        autoplay = window.playsInline ? true : false;
       }
-
+      videoUrl = '/video/about.mp4';
+      videoEl = (
+        <div>
+          <video onClick={self.playToggle.bind(self)} playsInline autoPlay={autoplay} ref="video" className="aboutVideo" muted loop>
+            <source src={videoUrl} type="video/mp4" />
+          </video>
+          <div className={self.state.muted ? "muteToggle muted" : "muteToggle unmuted"} onClick={self.toggleMute.bind(self)}>
+          </div>
+        </div>
+      )
 
       return (
         <div>

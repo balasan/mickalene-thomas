@@ -103,7 +103,8 @@ class Menu extends Component {
     }
 
     var video = null;
-    if(showMenu && ( mobilecheck && !mobilecheck())){
+    if (showMenu &&
+      ((mobilecheck && !mobilecheck()) || window.playsInline)) {
        video = (<Video videoid="vidBg"></Video>)
     }
 

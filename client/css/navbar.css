@@ -86,6 +86,17 @@ nav {
                         display: none;
                     }
                 }
+                &.logoMobile {
+                    display: none;
+                    font-family: 'Rockwell Bold', serif;
+                    text-transform: uppercase;
+                    color: black;
+                    letter-spacing: 2px;
+                    font-size: 25px;
+                    @media (--mobile) {
+                        // display: block;
+                    }
+                }
                 &.logo {
                     font-family: 'Rockwell Bold', serif;
                     text-transform: uppercase;

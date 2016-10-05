@@ -57,9 +57,9 @@ class Contact extends Component {
       if (this.state.contactData.studio) {
         studioInfo = this.state.contactData.studio;
         studioEl = (<section className="studio">
-          <main>
+          <div>
             <article>
-              <div>
+              <div className="contactColumn">
                 <h2>{studioInfo.name}</h2>
                 <a href={'mailto:' + studioInfo.email}>{studioInfo.email}</a>
               </div>
@@ -73,6 +73,7 @@ class Contact extends Component {
                 <form action="//mickalenethomas.us13.list-manage.com/subscribe/post?u=2d03a31ddfd7885c7c19fb473&amp;id=126398a7f9" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" target="_blank" noValidate>
                   <div id="mc_embed_signup_scroll">
                   <h2>Subscribe to our mailing list</h2>
+                  <br/>
                 <div className="indicates-required"><p className="asterisk">* indicates required</p></div>
                 <div className="mc-field-group">
                   <label htmlFor="mce-EMAIL"><p>Email Address *</p>
@@ -101,7 +102,7 @@ class Contact extends Component {
               <a className="twitter" href={studioInfo.twitter}></a>
               <a className="insta" href={studioInfo.insta}></a>
             </article>
-            </main>
+            </div>
           </section>);
 
           mobileHeaderEl = (<div className='mobileHeader'><p>{studioInfo.name}</p><a href={'mailto:' + studioInfo.email}>{studioInfo.email}</a></div>);
