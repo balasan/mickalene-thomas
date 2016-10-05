@@ -33,7 +33,7 @@
                  }
 
                  var data = response.results[0].data;
-                  // console.log(data, 'about data')
+                    console.log(data, 'about data')
 
                  var obj = {};
                  obj.video = data['about.video'] ? data['about.video'].value.file.url : null;
@@ -41,7 +41,7 @@
                  obj.body = [];
                  obj.image = data['about.image'] ? data['about.image'].value.main.url : null;
                 data['about.body'].value.forEach(function(text) {
-                    obj.body.push(text.text);
+                    obj.body.push({text});
                 })
                 callback(null, obj)
              })
