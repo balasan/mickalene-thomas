@@ -297,8 +297,15 @@ app.get('/update', jsonParser, function(req, res) {
             var prodId = null;
             var sizes = false;
             var variations = false;
+            var pushBool = true;
+
             if (item.sizes) sizes = true;
-            if (item.vars.length) variations = true;
+            if (item.vars.length) {
+                variations = true;
+                item.vars.forEach(function(itemVar, i) {
+                    if (itemVar.externalURL) pushBool = false;
+                })
+            }
 
             description = item.title;
             prodId = titleSimple;
@@ -307,7 +314,7 @@ app.get('/update', jsonParser, function(req, res) {
             singleItem.prodId = prodId;
             singleItem.sizes = sizes;
             singleItem.variations = variations;
-            formattedProducts.push(singleItem);
+            if (!item.externalURL && pushBool) formattedProducts.push(singleItem);
         });
 
 
