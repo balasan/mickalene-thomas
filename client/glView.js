@@ -102,7 +102,7 @@ function GLView(_corner) {
       // renderer
       var options = {
         canvas: document.getElementById("webGL"),
-        antialias: false,
+        antialias: true,
         alpha: true,
       }
 

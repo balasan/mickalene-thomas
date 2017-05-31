@@ -8,7 +8,7 @@ export default class About extends Component {
     this.state = {
       aboutData: null,
       hideVideo: true,
-      muted: true,
+      muted: false,
     }
   }
 
@@ -90,7 +90,7 @@ export default class About extends Component {
       videoUrl = '/video/about.mp4';
       videoEl = (
         <div>
-          <video onClick={self.playToggle.bind(self)} playsInline autoPlay={autoplay} ref="video" className="aboutVideo" muted loop>
+          <video onClick={self.playToggle.bind(self)} playsInline autoPlay={autoplay} ref="video" className="aboutVideo" muted={self.state.muted} loop>
             <source src={videoUrl} type="video/mp4" />
           </video>
           <div className={self.state.muted ? "muteToggle muted" : "muteToggle unmuted"} onClick={self.toggleMute.bind(self)}>

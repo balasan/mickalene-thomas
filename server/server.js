@@ -241,10 +241,10 @@ app.post('/createOrder', jsonParser,function(req, res) {
             })
         }).then(function(order) {
             console.log(order, 'order');
-            res.json(200, order); 
+            res.json(200, order);
         }).catch(function(err) {
             res.json(500, err);
-        });   
+        });
     }
 
 });
@@ -271,7 +271,7 @@ app.post('/charge', jsonParser, function(req, res) {
         res.json(200, charge);
     }).catch(function(err) {
         res.json(500, err);
-    });    
+    });
 });
 
 
@@ -330,7 +330,7 @@ app.get('/update', jsonParser, function(req, res) {
                 checkExisiting(stripeProducts);
             }
           }
-        ); 
+        );
 
         function checkExisiting(stripeProducts) {
 
@@ -439,7 +439,6 @@ app.get('/update', jsonParser, function(req, res) {
                             images.forEach(function(image, i) {
                                 if (image.image) tempArr.push(image.image.value.main.url);
                             });
-                     
                             var finalArr = tempArr.concat(obj.images);
                             obj.images = finalArr;
                         }
@@ -461,10 +460,7 @@ app.use(favicon(__dirname + '/../public/images/favicon.ico'));
 var index = router.get('/*', handleRender)
 app.use('/', index);
 
-
-
 var port = process.env.PORT || 3000
-
 
 app.listen(port, (error) => {
     if (error) {

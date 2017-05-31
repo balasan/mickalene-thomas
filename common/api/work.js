@@ -65,6 +65,11 @@ export function fetchItem(id, callback) {
                     obj.image.smaller = {};
                     obj.image.smaller.dimensions = {};
 
+                    if (!item.data["work.image"]) {
+                        console.log(item.data);
+                        return;
+                    }
+
                     obj.image.main.url = item.data["work.image"].value.main.url;
                     obj.image.main.dimensions.height = item.data["work.image"].value.main.dimensions.height;
                     obj.image.main.dimensions.width = item.data["work.image"].value.main.dimensions.width;
@@ -175,6 +180,11 @@ export function fetchWork(callback) {
                     obj.image.medium.dimensions = {};
                     obj.image.smaller = {};
                     obj.image.smaller.dimensions = {};
+
+                    if (!item.data["work.image"]) {
+                        console.log(item.data);
+                        return;
+                    }
 
                     obj.image.main.url = item.data["work.image"].value.main.url;
                     obj.image.main.dimensions.height = item.data["work.image"].value.main.dimensions.height;
@@ -363,6 +373,11 @@ export function fetchExhibition(id, callback) {
                     obj.image.medium.dimensions = {};
                     obj.image.smaller = {};
                     obj.image.smaller.dimensions = {};
+
+                    if (!item.data["work.image"]) {
+                        console.log(item.data);
+                        return;
+                    }
 
                     obj.image.main.url = item.data["work.image"].value.main.url;
                     obj.image.main.dimensions.height = item.data["work.image"].value.main.dimensions.height;
