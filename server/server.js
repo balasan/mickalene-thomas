@@ -48,7 +48,8 @@ app.get('/api/instagram', function(req, res) {
 
     function getData(supplyUrl) {
 
-        var urlToUse = 'https://api.instagram.com/v1/users/291145514/media/recent/?access_token=291145514.1677ed0.4180185b272d45569ebc889f3f815a1b&count=20';
+        let token = '291145514.82098af.c5624f06f839448c8f729df22dc46281'
+        var urlToUse = `https://api.instagram.com/v1/users/291145514/media/recent/?access_token=${token}&count=20`;
 
         if (supplyUrl) urlToUse = supplyUrl;
 
