@@ -36,6 +36,45 @@ if (isDevelopment) {
 
 app.use(morgan('dev'));
 
+
+app.get('/admin/instagram/callback', function(req, res) {
+    let code = req.query.code;
+    let redirect = req.protocol + '://' + req.get('Host') + '/admin/instagram/callback';
+
+    let body = {
+        "client_id": process.env.CLIENT_ID,
+        "client_secret": process.env.CLIENT_SECRET,
+        "grant_type" : "authorization_code",
+        "code" : code,
+        "redirect_uri" : redirect
+      }
+    console.log(body);
+    request({
+      url: "https://api.instagram.com/oauth/access_token",
+        method: 'POST',
+        form: body,
+        json: true,
+        headers: {
+            "content-type": "application/json",
+        },
+    }, (err, response) => {
+        console.log(err)
+        console.log(response.body);
+        // res.redirect('/');
+        res.end();
+    });
+    // res.redirect('/');
+})
+
+
+app.get('/admin/instagram', function(req, res) {
+    let redirect = req.protocol + '://' + req.get('Host') + '/admin/instagram/callback';
+    console.log(redirect);
+    let url =`https://api.instagram.com/oauth/authorize/?client_id=${process.env.CLIENT_ID}&redirect_uri=${redirect}&response_type=code`;
+    res.redirect(url);
+})
+
+
 app.get('/api/instagram', function(req, res) {
     var array = [];
     var url = null;
@@ -47,8 +86,7 @@ app.get('/api/instagram', function(req, res) {
     getData(url);
 
     function getData(supplyUrl) {
-
-        let token = '291145514.82098af.c5624f06f839448c8f729df22dc46281'
+        let token = process.env.ACCESS_TOKEN;
         var urlToUse = `https://api.instagram.com/v1/users/291145514/media/recent/?access_token=${token}&count=20`;
 
         if (supplyUrl) urlToUse = supplyUrl;
