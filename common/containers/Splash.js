@@ -36,8 +36,9 @@ class Splash extends Component {
       if(!window.glView.has_gl){
         document.getElementById('vidPattern').src="";
         self.noVid = true;
+        document.getElementById('nowebgl').style.zIndex = 100;
+        document.getElementById('nowebgl').addEventListener('click', clickHandler)
       }
-      document.getElementById('nowebgl').addEventListener('click', clickHandler)
 
     }
     else {
@@ -48,7 +49,10 @@ class Splash extends Component {
     this.bgVid = "vidPattern"
 
     function clickHandler(){
-      window.glView.remove();
+      console.log('click')
+      if (window.glView) {
+        window.glView.remove();
+      }
       self.props.dispatch(push('/works'))
     }
 

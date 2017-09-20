@@ -39,7 +39,7 @@ class App extends Component {
     if (this.props.menu) {
         var key = this.props.menu.showMenu;
         if (this.props.location.pathname.match('store')) {
-          key += this.props.location.pathname;
+          // key += this.props.location.pathname;
         }
         var main = (
            <ReactCSSTransitionGroup component='main' className={styles} transitionName="main"

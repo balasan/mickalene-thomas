@@ -36,6 +36,7 @@
             opacity: 1;
             backface-visibility: hidden;
             transition: opacity 150ms ease-out;
+            flex: 0;
 
             &.mask {
                 opacity: 0;
@@ -107,8 +108,13 @@
                         align-items: flex-end;
 
                         select {
+                            -webkit-appearance: none;
+                            -moz-appearance: none;
                             width: 173px;
-
+                            &:-moz-focusring {
+                                color: transparent;
+                                text-shadow: 0 0 0 #000;
+                            }
                             @media (--mobile) {
                                 width: 100%;
                             }
@@ -225,8 +231,9 @@
             padding: 0;
         }
         h1 {
-            font-family: 'Avenir Next Bold', sans-serif;
-            font-weight: bolder;
+            /*font-family: 'Avenir Next Bold', sans-serif;*/
+            font-family: 'Rockwell Bold', serif;
+            font-weight: normal;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-size: 16px;

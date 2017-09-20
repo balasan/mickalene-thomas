@@ -62,7 +62,8 @@
                             if (vari.available) {
                                 vari.available.value == 'Available' ? varObj.available = true : varObj.available = false;
                             }
-                            varObj.image = vari.variationImage.value.views.small.url;
+                            varObj.image = vari.variationImage.value.views.small;
+
                             varObj.description = vari.vartiationDescription ? vari.vartiationDescription.value : null;
                             varObj.externalURL = vari.externalURL ? vari.externalURL.value : null;
                             obj.vars.push(varObj);
@@ -73,9 +74,9 @@
                         var images = item.data["product-v.image"].value;
                         var tempArr = [];
                         images.forEach(function(image, i) {
-                            if (image.image) tempArr.push(image.image.value.main.url);
+                            if (image.image) tempArr.push(image.image.value.main);
                         });
-                 
+
                         var finalArr = tempArr.concat(obj.images);
                         obj.images = finalArr;
                     }

@@ -22,7 +22,7 @@ class Splash extends Component {
 
       window.glView.dom.addEventListener('click', () => {
         window.glView.remove();
-          self.props.dispatch(push('/works'))
+        self.props.dispatch(push('/works'))
       })
     }
     else {

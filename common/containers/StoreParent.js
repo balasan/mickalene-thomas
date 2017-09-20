@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import Store from '../components/Store';
 import * as ProductActions from '../actions/product';
 import Cart from '../components/Cart';
+import Work from '../components/Work';
+import * as MenuActions from '../actions/menu';
 
 if(process.env.BROWSER){
   require('./../../client/css/store.css');
@@ -20,7 +22,7 @@ export default class StoreParent extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.state.product) this.constructor.fetchProductDataOnClient(this.props.dispatch);
+    if (!this.props.state.store.products) this.constructor.fetchProductDataOnClient(this.props.dispatch);
   }
 
   render () {
@@ -28,14 +30,14 @@ export default class StoreParent extends Component {
       <div>
         <Store { ...this.props }/>
       </div>
-      )
+    )
   }
 }
 
 export default connect(
   state => {
-    return {state: state}
+    return {state: state, menu: state.menu}
   },
   dispatch => {
-    return Object.assign({}, { dispatch },  bindActionCreators(ProductActions, dispatch))
+    return Object.assign({}, { dispatch },  bindActionCreators(Object.assign({}, ProductActions, MenuActions), dispatch))
   })(StoreParent)
