@@ -6,7 +6,6 @@ import morgan from 'morgan'
 import handleRender from './render';
 var router = Express.Router();
 var bodyParser = require('body-parser')
-var stripe = require('stripe')('sk_test_4y83aHU2CwVFqFvE8jK1xNMB');
 var request = require('request');
 const app = new Express();
 var favicon = require('serve-favicon');
@@ -15,6 +14,10 @@ var favicon = require('serve-favicon');
 require('dotenv').config({
     silent: true
 });
+
+var stripe = require('stripe')(process.env.STRIPE_KEY);
+
+
 console.log(process.env.NODE_ENV)
 
 //-------------Dev server watch and hot reload---------------
@@ -104,6 +107,20 @@ app.get('/api/instagram', function(req, res) {
 
 var jsonParser = bodyParser.json();
 
+app.get('/inventory', function(req,res) {
+    stripe.products.list(
+      { limit: 100 },
+      function(err, products) {
+        if (err) {
+            console.log(err, 'error');
+        } else {
+            res.status(200).json(products)
+            // addIds(products.data);
+        }
+      }
+    );
+})
+
 app.post('/createOrder', jsonParser,function(req, res) {
     var stripeToken = req.body.token;
     var email = req.body.email;
@@ -162,6 +179,7 @@ app.post('/createOrder', jsonParser,function(req, res) {
             itemObj.price = item.price;
             formattedItems.push(itemObj);
         }
+        console.log(itemObj.description);
     });
 
     stripe.products.list(
@@ -221,7 +239,8 @@ app.post('/createOrder', jsonParser,function(req, res) {
                             items.push({
                                 type: 'sku',
                                 parent: sku.id,
-                                quantity: item.quantity
+                                quantity: item.quantity,
+                                description: item.description,
                             })
                             if (bool) ordersCreate();
                         }
@@ -251,7 +270,7 @@ app.post('/createOrder', jsonParser,function(req, res) {
                 items.push({
                     type: 'sku',
                     parent: sku.id,
-                    quantity: item.quantity
+                    quantity: item.quantity,
                 })
                 if (bool) ordersCreate();
             }
@@ -259,6 +278,9 @@ app.post('/createOrder', jsonParser,function(req, res) {
     }
 
     function ordersCreate() {
+        let metadata = {}
+        formattedItems.forEach((itm, i) => metadata['item' + (i + 1)] = itm.description);
+        console.log(metadata);
         stripe.customers.create({
             email: email
         }).then(function(customer) {
@@ -266,6 +288,7 @@ app.post('/createOrder', jsonParser,function(req, res) {
                 currency: 'usd',
                 items: items,
                 customer: customer.id,
+                metadata: metadata,
                 shipping: {
                     name: req.body.name,
                     address: {
@@ -282,6 +305,7 @@ app.post('/createOrder', jsonParser,function(req, res) {
             console.log(order, 'order');
             res.json(200, order);
         }).catch(function(err) {
+            console.log(err);
             res.json(500, err);
         });
     }

@@ -18,7 +18,7 @@ export default class Product extends Component {
   }
 
   componentDidMount() {
-    // if (!this.props.state.store.inventory) this.props.getInventory();
+    if (!this.props.state.store.inventory) this.props.getInventory();
     window.scrollTo(0,0);
   }
 
@@ -171,12 +171,15 @@ export default class Product extends Component {
     var productEl = null;
     var product = this.props.state.store.product;
 
-    // var stripeProduct;
-    // let inventory = this.props.state.store.inventory;
-    // if (inventory) {
-    //   stripeProduct = inventory.find(p => p.description.toLowerCase() === product.title.toLowerCase());
-    // }
-    // let variations = stripeProduct ? stripeProduct.skus : null;
+    var stripeProduct;
+    let inventory = this.props.state.store.inventory;
+    if (inventory) {
+      stripeProduct = inventory.find(p => p.description.toLowerCase() === product.title.toLowerCase());
+    }
+    let variations = stripeProduct ? stripeProduct.skus.data : null;
+
+    console.log(stripeProduct);
+    console.log(variations);
 
     var showChart = this.props.state.store.showChart;
     const { add, toggleChart } = this.props;

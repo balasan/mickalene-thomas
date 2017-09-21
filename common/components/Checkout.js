@@ -95,7 +95,7 @@ export default class Checkout extends Component {
       return;
     } else if (self.state.shippingError) {
       self.setState({shippingError: null});
-    } 
+    }
     var formData = {
       email: self.state.email,
       cart: cart,

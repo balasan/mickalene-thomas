@@ -10,6 +10,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
   devtool: 'inline-source-map',
   entry: [
+    'whatwg-fetch',
     'webpack-hot-middleware/client?reload=true',
     './client/index.js'
   ],

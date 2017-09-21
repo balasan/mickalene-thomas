@@ -1,11 +1,30 @@
 export const GET_PRODUCT = 'GET_PRODUCT';
 export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const SET_PRODUCT = 'SET_PRODUCT';
+export const SET_INVETORY = 'SET_INVETORY';
 export const TOGGLE_CHART = 'TOGGLE_CHART';
 export const QUANTITY = 'QUANTITY';
 export const REMOVE = 'REMOVE';
 export const SET_ORDER = 'SET_ORDER';
 import { fetchProducts, fetchProduct } from '../api/product'
+
+export function setInventory(invetory) {
+  return {
+    type: SET_INVETORY,
+    payload: invetory
+  }
+}
+
+export function getInventory() {
+  return dispatch => {
+    fetch('/inventory')
+    .then(response => response.json())
+    .then(inventory => {
+      dispatch(setInventory(inventory))
+    })
+    .catch(err => console.log(err))
+  }
+}
 
 export function set(value) {
   return {
