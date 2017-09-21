@@ -100,7 +100,6 @@ export default class Checkout extends Component {
       email: self.state.email,
       cart: cart,
       token: self.state.token,
-      customer: self.state.customer,
       name: self.state.shippingName,
       add1: self.state.add1,
       add2: self.state.add2,
@@ -139,7 +138,12 @@ export default class Checkout extends Component {
     var self = this;
     var amount = self.props.state.store.order.amount;
     self.setState({paymentProgress: true})
-    var chargeObj = {token: self.state.token, customer: self.state.order.customer, email: self.state.order.email, amount: amount};
+    var chargeObj = {
+      token: self.state.token,
+      email: self.state.email,
+      amount: amount,
+      order: self.props.state.store.order,
+    };
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState == XMLHttpRequest.DONE) {

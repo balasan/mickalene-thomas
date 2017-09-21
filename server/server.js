@@ -280,27 +280,22 @@ app.post('/createOrder', jsonParser,function(req, res) {
     function ordersCreate() {
         let metadata = {}
         formattedItems.forEach((itm, i) => metadata['item' + (i + 1)] = itm.description);
-        console.log(metadata);
-        stripe.customers.create({
-            email: email
-        }).then(function(customer) {
-            return stripe.orders.create({
-                currency: 'usd',
-                items: items,
-                customer: customer.id,
-                metadata: metadata,
-                shipping: {
-                    name: req.body.name,
-                    address: {
-                        line1: req.body.add1,
-                        line2: req.body.add2 ? req.body.add2 : '',
-                        city: req.body.city,
-                        country: req.body.country,
-                        state: req.body.state,
-                        postal_code: req.body.zip
-                    }
-                },
-            })
+        return stripe.orders.create({
+            currency: 'usd',
+            items: items,
+            metadata: metadata,
+            email: req.body.email,
+            shipping: {
+                name: req.body.name,
+                address: {
+                    line1: req.body.add1,
+                    line2: req.body.add2 ? req.body.add2 : '',
+                    city: req.body.city,
+                    country: req.body.country,
+                    state: req.body.state,
+                    postal_code: req.body.zip
+                }
+            }
         }).then(function(order) {
             console.log(order, 'order');
             res.json(200, order);
@@ -309,30 +304,60 @@ app.post('/createOrder', jsonParser,function(req, res) {
             res.json(500, err);
         });
     }
-
 });
+
+// app.get('/clearOrders', function(req, res) {
+
+//     stripe.orders.list(
+//       { limit: 100 },
+//       function(err, orders) {
+//         console.log(orders);
+//         // orders.forEach(o => {
+//         //     stripe.orders.update(o.id, {
+//         //       status: 'canceled'
+//         //     })
+//         // })
+//       }
+//     );
+
+// }
 
 app.post('/charge', jsonParser, function(req, res) {
     var token = req.body.token;
-    var customer = req.body.customer;
     var email = req.body.email;
     var amount = req.body.amount;
+    var order = req.body.order;
+    let charge;
 
-    stripe.customers.update(customer, {
-      source: token,
-      description: email
-    }).then(function(customer) {
-        console.log(customer, 'customer update');
-        return stripe.charges.create({
-            amount: amount,
-            currency: "usd",
-            customer: customer.id,
-            receipt_email: email
-        });
-    }).then(function(charge) {
-        console.log(charge, 'charge');
+    // stripe.customers.update(customer, {
+    //   source: token,
+    //   description: email
+    // }).then(function(customer) {
+        // console.log(customer, 'customer update');
+
+    return stripe.orders.pay(order.id, {
+        email: email,
+        source: token // obtained with Stripe.js
+    })
+
+   // return stripe.charges.create({
+   //      amount: amount,
+   //      currency: "usd",
+   //      source: token,
+   //      order: order.id,
+   //      receipt_email: email,
+   //      description: 'Purchase made at mickalenethomas.com'
+   //  })
+   //  .then(function (charge) {
+   //      console.log(charge, 'charge');
+   //      return stripe.orders.update(order.id, {
+   //        status: 'paid'
+   //      })
+   //  })
+    .then(function(charge) {
         res.json(200, charge);
-    }).catch(function(err) {
+    }, function(err) {
+        console.log(err);
         res.json(500, err);
     });
 });
