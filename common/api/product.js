@@ -52,6 +52,7 @@
                      obj.description = item.data["product-v.description"] ? item.data["product-v.description"].value[0].text : null;
                      obj.images = [];
                      obj.quantity = 1;
+                     obj.coverImage = item.data["product-v.cover_image"]  ? item.data["product-v.cover_image"].value.main : null;
 
                     if (item.data["product-v.variation"]) {
                         var mainVar = {};

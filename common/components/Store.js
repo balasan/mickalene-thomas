@@ -154,7 +154,7 @@ export default class Store extends Component {
         var specialStyle = 'storeImg';
         var url = '/store/' + item.id;
         let img = item.images && item.images[0] && item.images[0].image ? item.images[0].image : item.images[0];
-
+        if (item.coverImage) img = item.coverImage;
         return (
           <Link
             className={specialStyle + ' item ' + action}
@@ -179,6 +179,7 @@ export default class Store extends Component {
 
     var images = this.newWorks.map(function(item, i){
       let img = item.images && item.images[0] && item.images[0].image ? item.images[0].image : item.images[0];
+      // if (item.coverImage) img = item.coverImage;
       if(self.ready) return null;
       return (
         <img key={i} src={img.url}  onLoad={self.loadImages.bind(self)}/>
