@@ -151,7 +151,7 @@ export default class Store extends Component {
       var imgSize = 'small';
 
       return worksArray.map(function(item, i) {
-        var specialStyle = '';
+        var specialStyle = 'storeImg';
         var url = '/store/' + item.id;
         let img = item.images && item.images[0] && item.images[0].image ? item.images[0].image : item.images[0];
 

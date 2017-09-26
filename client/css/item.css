@@ -55,6 +55,9 @@
             opacity: 1;
         }
     }
+    &.storeImg img{
+        transform: scale(2);
+    }
     &.special-selected {
         img {
             opacity: 1;

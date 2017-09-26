@@ -64,6 +64,16 @@
                     width: 100%;
                 }
             }
+            &.right {
+                position:absolute;
+                right: 0;
+                bottom: 0;
+                padding: 1em 1em 2em 1em;
+                @media (--mobile) {
+                    position: relative;
+                    padding: 0;
+                }
+            }
             &.left {
                 flex-direction: column;
                 justify-content: flex-end;
