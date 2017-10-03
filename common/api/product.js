@@ -63,6 +63,11 @@
                             if (vari.available) {
                                 vari.available.value == 'Available' ? varObj.available = true : varObj.available = false;
                             }
+                            if (!vari.variationImage) {
+                                // console.log(varObj)
+                                console.log(item)
+                                return;
+                            }
                             varObj.image = vari.variationImage.value.views.small;
 
                             varObj.description = vari.vartiationDescription ? vari.vartiationDescription.value : null;
@@ -122,7 +127,7 @@
                      obj.quantity = 1;
 
                      if (item.data["product-v.sizes"]) {
-                        if (item.data["product-v.sizes"].value[0]) {
+                        if (item.data["product-v.sizes"].value[0] && item.data["product-v.sizes"].value[0].sizes) {
                             var sizes = item.data["product-v.sizes"].value[0].sizes ? item.data["product-v.sizes"].value[0].sizes.value : null;
                             obj.sizes = sizes.split(", ");
                             var availSizes = item.data["product-v.sizes"].value[0].sizesAvailable ? item.data["product-v.sizes"].value[0].sizesAvailable.value : null;
@@ -136,6 +141,7 @@
                         var mainVar = {};
                         if (item.data["product-v.variation"].value.length > 0) obj.vars.push(mainVar);
                         item.data["product-v.variation"].value.forEach(function(vari) {
+                            if(!Object.keys(vari).length) return;
                             var varObj = {};
                             varObj.available = null;
                             if (vari.available) vari.available.value == 'Available' ? varObj.available = true : varObj.available = false;

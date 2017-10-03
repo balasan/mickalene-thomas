@@ -215,9 +215,9 @@ export default class Product extends Component {
               background: 'white url(' + url + ') center center / contain no-repeat'
             };
             if (i == 0) {
-              return (<div className='single-prod-image selected' onClick={self.switchImg.bind(self, vari)} data-src={url} style={divStyle}></div>)
+              return (<div key={'img' + i} className='single-prod-image selected' onClick={self.switchImg.bind(self, vari)} data-src={url} style={divStyle}></div>)
             } else {
-              return (<div className='single-prod-image' onClick={self.switchImg.bind(self, vari)} data-src={url} style={divStyle}></div>)
+              return (<div key={'img' + i} className='single-prod-image' onClick={self.switchImg.bind(self, vari)} data-src={url} style={divStyle}></div>)
             }
         });
       }
