@@ -1,6 +1,10 @@
 @import "customMedia.css";
 @import "colors.css";
 
+body.noScroll::-webkit-scrollbar {
+ display: none;
+}
+
 #loadingWorks {
     position: absolute;
     top: 0;
@@ -19,20 +23,26 @@
     transition: all .5s easeOutQuart;
     transform: scale(1) translateZ(0);
     transform-origin: 50% 50%;
-
     &.hidden {
-        opacity: 0;
-
+        display: block;
+        /*opacity: 0;*/
         .item {
-            transform: translateZ(-200px);
+            opacity: .5;
+            transform: scale(1) translateZ(-200px);
+            transform-origin: 50% 50%;
         }
     }
+}
+.inherit3d {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
 }
 .workItemContainer {
     z-index: 10;
     position: fixed;
     top: 75px;
     width: 100%;
+    /*transform: translateZ(0);*/
 
     .arrowsParent section.left, .arrowsParent section.right {
         transition: all .6s easeOutQuart;
@@ -126,7 +136,7 @@
         height: 90%;
         display: flex;
         align-items: center;
-        transform-origin: 50% 0%;
+        transform-origin: 50% 50%;
         perspective: 600px;
         transform-style: preserve-3d;
         backface-visibility: hidden;
@@ -164,7 +174,7 @@
         height: 100%;
         display: flex;
         align-items: center;
-        transform-origin: 50% 0%;
+        transform-origin: 50% 50%;
         perspective: 600px;
         transform-style: preserve-3d;
         backface-visibility: hidden;

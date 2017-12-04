@@ -7,6 +7,8 @@ import Cart from '../components/Cart';
 import Work from '../components/Work';
 import * as MenuActions from '../actions/menu';
 
+import ProductParent from './ProductParent';
+
 if(process.env.BROWSER){
   require('./../../client/css/store.css');
   require('./../../client/css/index.css');
@@ -22,13 +24,23 @@ export default class StoreParent extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.state.store.products) this.constructor.fetchProductDataOnClient(this.props.dispatch);
+    if (!this.props.storeProp.products) this.constructor.fetchProductDataOnClient(this.props.dispatch);
   }
 
   render () {
+    let product;
+    if (this.props.params.itemId) {
+      product = <div className={'workItemContainer ' + (this.props.params.itemId ? '' : 'hidden')}>
+
+        <ProductParent {...this.props}/>
+      </div>;
+    }
     return (
-      <div>
-        <Store { ...this.props }/>
+      <div className="container3d">
+        <div className={'worksContainer ' + (this.props.params.itemId ? 'hidden' : '') }>
+          <Store { ...this.props }/>
+        </div>
+        {product}
       </div>
     )
   }
@@ -36,7 +48,7 @@ export default class StoreParent extends Component {
 
 export default connect(
   state => {
-    return {state: state, menu: state.menu}
+    return {storeProp: state.store, menu: state.menu}
   },
   dispatch => {
     return Object.assign({}, { dispatch },  bindActionCreators(Object.assign({}, ProductActions, MenuActions), dispatch))

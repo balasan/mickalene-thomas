@@ -188,6 +188,7 @@ app.post('/createOrder', jsonParser,function(req, res) {
         if (err) {
             console.log(err, 'error');
         } else {
+            console.log('adding ids');
             addIds(products.data);
         }
       }
@@ -196,6 +197,7 @@ app.post('/createOrder', jsonParser,function(req, res) {
     function addIds(products) {
         formattedItems.forEach(function(item, i) {
             products.forEach(function(product, x) {
+                // console.log('add id ', product)
                 if (product.name == item.name) {
                     formattedItems[i].stripeId = product.id;
                 }
@@ -255,7 +257,7 @@ app.post('/createOrder', jsonParser,function(req, res) {
         var attributesObj = {};
         if (item.size) attributesObj.size = item.size;
         if (item.variation) attributesObj.variation = item.variation;
-        console.log('create sku')
+        console.log('create sku ', item)
         stripe.skus.create({
           product: item.stripeId,
           attributes: attributesObj,
@@ -404,6 +406,12 @@ app.get('/update', jsonParser, function(req, res) {
             singleItem.prodId = prodId;
             singleItem.sizes = sizes;
             singleItem.variations = variations;
+
+            singleItem.attributes = [];
+            if (singleItem.sizes) singleItem.attributes.push('size');
+            if (singleItem.variations) singleItem.attributes.push('variation')
+
+            if (!singleItem.attributes.length) singleItem.attributes = null;
             if (!item.externalURL && pushBool) formattedProducts.push(singleItem);
         });
 
@@ -441,7 +449,8 @@ app.get('/update', jsonParser, function(req, res) {
             stripe.products.create({
               name: item.prodId,
               description: item.description,
-              attributes: attributesArr
+              attributes: attributesArr,
+              package_dimensions: { height: 6, length: 4, weight: 16, width: 6 },
             }, function(err, product) {
                 if (err) {
                     console.log(err, 'error');
@@ -452,12 +461,20 @@ app.get('/update', jsonParser, function(req, res) {
         }
 
         function updateItem(newItem, oldItem) {
-            stripe.products.update(oldItem.id, {
-              description:  newItem.description
-            }, function(err, updatedProd) {
+            let dimensions = {
+                package_dimensions: oldItem.package_dimensions || { height: 6, length: 4, weight: 16, width: 6 }
+            }
+            let updateFields = {
+              attributes: newItem.attributes,
+              description:  newItem.description,
+              ...dimensions
+            }
+            console.log(updateFields)
+            stripe.products.update(oldItem.id, updateFields,function(err, updatedProd) {
                 if (err) {
                     console.log(err, 'error')
                 } else {
+                    console.log(updatedProd)
                     console.log('successfully updated product')
                 }
             })
@@ -483,8 +500,8 @@ app.get('/update', jsonParser, function(req, res) {
                          obj.available = true;
                          obj.vars = [];
                          obj.sizes = null;
-                         if (item.data["product-v.sizes"]) {
-                            if (item.data["product-v.sizes"].value.length) {
+                         if (item.data["product-v.sizes"] && item.data["product-v.sizes"].value) {
+                            if (item.data["product-v.sizes"].value.length && item.data["product-v.sizes"].value[0].sizes) {
                                 //console.log(item.data["product-v.sizes"].value[0].sizes.value, 'sizes');
                                 obj.sizes = item.data["product-v.sizes"].value[0].sizes.value;
                             }
@@ -505,10 +522,13 @@ app.get('/update', jsonParser, function(req, res) {
                          obj.images = [];
                          obj.quantity = 1;
 
-                        if (item.data["product-v.variation"]) {
+                        if (item.data["product-v.variation"] && item.data["product-v.variation"].value.length) {
                             var mainVar = {};
-                            if (item.data["product-v.variation"].value.length > 0) obj.vars.push(mainVar);
+                            if (item.data["product-v.variation"].value.length) obj.vars.push(mainVar);
+
                             item.data["product-v.variation"].value.forEach(function(vari) {
+                                if(!Object.keys(vari).length) return;
+
                                 var varObj = {};
                                 varObj.available = null;
                                 if (vari.available) {
@@ -521,6 +541,7 @@ app.get('/update', jsonParser, function(req, res) {
                                 obj.images.push(varObj);
                             });
                         }
+
                         if (item.data["product-v.image"]) {
                             var images = item.data["product-v.image"].value;
                             var tempArr = [];

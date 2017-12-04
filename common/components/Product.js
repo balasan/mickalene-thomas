@@ -18,8 +18,7 @@ export default class Product extends Component {
   }
 
   componentDidMount() {
-    // if (!this.props.state.store.inventory) this.props.getInventory();
-    window.scrollTo(0,0);
+
   }
 
   componentDidUpdate() {
@@ -31,7 +30,7 @@ export default class Product extends Component {
 
     doubleCart() {
       var self = this;
-      var product = self.props.state.store.product;
+      var product = self.props.storeProp.product;
       var warning = document.getElementById('warning');
       var regularProduct = JSON.parse(JSON.stringify(product));
       var productVariant = JSON.parse(JSON.stringify(product));
@@ -137,7 +136,7 @@ export default class Product extends Component {
 
    optionSelect(e) {
       var self = this;
-      var product = self.props.state.store.product;
+      var product = self.props.storeProp.product;
       var warning = document.getElementById('warning');
       var selected = e.target.value;
       if (selected) {
@@ -169,16 +168,9 @@ export default class Product extends Component {
   render () {
 
     var productEl = null;
-    var product = this.props.state.store.product;
+    var product = this.props.storeProp.product;
 
-    // var stripeProduct;
-    // let inventory = this.props.state.store.inventory;
-    // if (inventory) {
-    //   stripeProduct = inventory.find(p => p.description.toLowerCase() === product.title.toLowerCase());
-    // }
-    // let variations = stripeProduct ? stripeProduct.skus : null;
-
-    var showChart = this.props.state.store.showChart;
+    var showChart = this.props.storeProp.showChart;
     const { add, toggleChart } = this.props;
     var self = this;
     var images = null;
@@ -189,7 +181,7 @@ export default class Product extends Component {
     var sizeChart = null;
     var available = true;
     if (product) {
-      if (!self.props.state.store.product.available) available = false;
+      if (!self.props.storeProp.product.available) available = false;
     }
 
     if ( product && product.id == this.props.params.itemId ) {

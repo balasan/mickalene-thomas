@@ -25,18 +25,18 @@ export default class ProductParent extends Component {
 
   render () {
     return (
-      <div>
+      <div className={'inherit3d'} >
         <Product { ...this.props } />
         <Cart { ...this.props } />
       </div>
       )
   }
 }
-
-export default connect(
-  state => {
-    return {state: state}
-  },
-  dispatch => {
-    return Object.assign({}, { dispatch },  bindActionCreators(ProductActions, dispatch))
-  })(ProductParent)
+export default ProductParent;
+// export default connect(
+//   state => {
+//     return { store: state.store }
+//   },
+//   dispatch => {
+//     return Object.assign({}, { dispatch },  bindActionCreators(ProductActions, dispatch))
+//   })(ProductParent)

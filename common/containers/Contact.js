@@ -74,7 +74,6 @@ class Contact extends Component {
                   <div id="mc_embed_signup_scroll">
                   <h2>Subscribe to our mailing list</h2>
                   <br/>
-                <div className="indicates-required"><p className="asterisk">* indicates required</p></div>
                 <div className="mc-field-group">
                   <label htmlFor="mce-EMAIL"><p>Email Address *</p>
                 </label>
@@ -92,6 +91,8 @@ class Contact extends Component {
                     <div className="response" id="mce-error-response" style={{display:'none'}}></div>
                     <div className="response" id="mce-success-response" style={{display:'none'}}></div>
                   </div>
+                <div className="indicates-required"><p className="asterisk">* indicates required field</p></div>
+
                     <div style={{position: 'absolute', left: '-5000px'}} aria-hidden="true"><input type="text" name="b_2d03a31ddfd7885c7c19fb473_126398a7f9" tabIndex="-1" /></div>
                     <div className="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" className="button" /></div>
                     </div>

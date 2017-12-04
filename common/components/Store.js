@@ -24,8 +24,8 @@ export default class Store extends Component {
 
     window.addEventListener('scroll', this.handleScroll.bind(this));
 
-    if (this.props.state.store.products) {
-      this.works = this.props.state.store.products.slice(0, this.worksLimit);
+    if (this.props.storeProp.products) {
+      this.works = this.props.storeProp.products.slice(0, this.worksLimit);
       this.newWorks = this.works;
     }
 
@@ -45,11 +45,13 @@ export default class Store extends Component {
 
     var els = self.container.getElementsByTagName('a');
     for(var i = 0; i < els.length; i++) {
-     els[i].className += " work-enter-active";
+      els[i].classList.remove('work-leave-active')
+      els[i].className += " work-enter-active";
     }
 
     var els = self.containerOut.getElementsByTagName('a');
     for(var i = 0; i < els.length; i++) {
+      els[i].classList.remove('work-enter-active')
       els[i].className += " work-leave-active";
     }
 
@@ -64,8 +66,8 @@ export default class Store extends Component {
   }
 
   updateNewWorks(nextProps) {
-    if (!nextProps.state.store.products) return;
-    this.works = nextProps.state.store.products.slice(0, this.worksLimit);
+    if (!nextProps.storeProp.products) return;
+    this.works = nextProps.storeProp.products.slice(0, this.worksLimit);
     this.newWorks = this.works;
   }
 
@@ -84,7 +86,7 @@ export default class Store extends Component {
       this.setPerspective();
       if(this.props.filteredWorks.length === this.works.length) return;
 
-      var scrollTop = document.body.scrollTop;
+      var scrollTop = window.scrollY;
       var scrollHeight = document.body.scrollHeight;
       var clientHeight = document.body.clientHeight;
 
@@ -132,7 +134,7 @@ export default class Store extends Component {
   }
 
   setPerspective(){
-    var scrollTop = document.body.scrollTop;
+    var scrollTop = window.scrollY;
     var windowHeight = window.innerHeight;
     var pOrgin = "50% " + (scrollTop + windowHeight/2) + "px"
     this.container3d.style.perspectiveOrigin = pOrgin
@@ -151,7 +153,7 @@ export default class Store extends Component {
       var imgSize = 'small';
 
       return worksArray.map(function(item, i) {
-        var specialStyle = 'storeImg';
+        var specialStyle = '';
         var url = '/store/' + item.id;
         let img = item.images && item.images[0] && item.images[0].image ? item.images[0].image : item.images[0];
         if (item.coverImage) img = item.coverImage;
@@ -196,11 +198,11 @@ export default class Store extends Component {
 
 
     var all = (
-      <div>
-        <div id="flex-container1">
+      <div className={'inherit3d'}>
+        <div className={'inherit3d'} id="flex-container1">
             {oldWorks}
         </div>
-        <div id="flex-container2">
+        <div className={'inherit3d'} id="flex-container2">
             {newWorks}
         </div>
         <div id="loadingWorks">

@@ -36,9 +36,7 @@ export default class SingleSlide extends Component {
 
   render () {
     var self = this;
-    var url = this.props.workItem.image.small.url;
-    var hiRes = this.props.workItem.image.main.url;
-    var medium = this.props.workItem.image.medium.url;
+    var imgUrl = this.props.image.main.url || this.props.workItem.image.main.url;
     var title = this.props.workItem.title;
     var videoEl = null;
     var relatedEl = null;
@@ -65,9 +63,9 @@ export default class SingleSlide extends Component {
 
     const swipe = function(e) {
       if (e.deltaX < 0) {
-        prevItem()
+        this.props.prevItem() || prevItem()
       } else {
-        nextItem();
+        this.props.nextItem() || nextItem();
       }
     }
 
@@ -76,7 +74,7 @@ export default class SingleSlide extends Component {
     var image = (
         <div className="image noselect" id="singleImage">
           <div className={tag == 'paintings' ? 'no-events painting  imageContainer' : 'no-events imageContainer'}>
-            <img className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={hiRes}/>
+            <img className={tag == 'paintings' ? 'no-events painting' : 'no-events'} src={imgUrl}/>
           </div>
         </div>
     )
@@ -104,7 +102,7 @@ export default class SingleSlide extends Component {
 
     var mag = (
       <div className="tiles">
-        <div className="tile" data-scale="2.4" data-image={hiRes}>
+        <div className="tile" data-scale="2.4" data-image={imgUrl}>
         </div>
       </div>
     )
@@ -117,7 +115,7 @@ export default class SingleSlide extends Component {
           transitionEnterTimeout={1000}
           transitionLeaveTimeout={450}
           >
-          <div className="slide" key={url}>
+          <div className="slide" key={imgUrl}>
             {!self.props.workItem.video ? image : null}
             {videoEl}
             {mag}

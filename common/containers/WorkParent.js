@@ -67,8 +67,12 @@ class WorkParent extends Component {
     if (params.exhibitionId) {
       this.closeUrl = '/works/exhibitions/' + params.exhibitionId;
     }
-    // if (!this.props.params.itemId && this.works != this.props.state.works)
-    this.filterWorks(nextProps, params);
+
+    // if (params.filter !== this.props.params.filter) {
+      // this.filterWorks(nextProps, params);
+    // } else if(params.exhibitionId !== this.props.params.exhibitionId) {
+      this.filterWorks(nextProps, params);
+    // }
   }
 
   shuffle(array) {
@@ -86,7 +90,7 @@ class WorkParent extends Component {
     return array;
   }
 
-  filterWorks(props, params) {
+  filterWorks(props) {
     var self = this;
 
     if (props.params.exhibitionId) {
@@ -99,19 +103,25 @@ class WorkParent extends Component {
       var preShuffle = props.state.works.arr;
     }
 
-    if (props.params.itemId || props.params.exhibitionItemId) {
-      var shuffled = preShuffle;
-    } else {
-      var shuffled = this.shuffle(preShuffle);
+    var shuffled = preShuffle;
+    // if (props.params.itemId || props.params.exhibitionItemId) {
+    //   var shuffled = preShuffle;
+    // } else {
+    //   var shuffled = this.shuffle(preShuffle);
+    // }
+
+    if (props.params.filter !== this.props.params.filter ||
+      props.params.exhibitionId !== this.props.params.exhibitionId) {
+      shuffled = this.shuffle(preShuffle);
     }
 
     var filter = null;
 
-    if (params.filter) filter = params.filter;
+    if (props.params.filter) filter = props.params.filter;
 
-    if (params.itemId) {
+    if (props.params.itemId) {
       if (props.state.works.obj) {
-        filter = props.state.works.obj[params.itemId].tags[0];
+        filter = props.state.works.obj[props.params.itemId] ? props.state.works.obj[props.params.itemId].tags[0] : null;
       }
     }
 
@@ -136,10 +146,7 @@ class WorkParent extends Component {
     var exhibition = exhibitionId ? true : false;
     var exhibitionItemId = self.props.params.exhibitionItemId ? true : false;
 
-    if (itemId && !exhibition) {
-      showWorkItem = '';
-      showWorkGrid = 'hidden';
-    } else if (exhibitionItemId) {
+    if (itemId || exhibitionItemId) {
       showWorkItem = '';
       showWorkGrid = 'hidden';
     } else {
@@ -147,14 +154,34 @@ class WorkParent extends Component {
       showWorkGrid = '';
     }
 
+    let works;
+    let singleWork;
+
+    works = (<div className={'worksContainer ' + showWorkGrid}>
+        <Work { ...this.props } filteredWorks={self.works} />
+      </div>
+    );
+
+    let imgId = self.props.params.imgId
+
+    if (exhibitionItemId || itemId) {
+      singleWork = (
+        <div className={'workItemContainer ' + showWorkItem} >
+          <WorkItem
+            // key={exhibitionItemId || itemId}
+            { ...this.props }
+            filteredWorks={self.works}
+            imgId={imgId}
+            closeUrl={this.closeUrl}
+          />
+        </div>
+      )
+    }
+
     return (
       <div className="container3d">
-        <div className={'worksContainer ' + showWorkGrid}>
-          <Work { ...this.props } filteredWorks={self.works} className={showWorkGrid}/>
-        </div>
-        <div className={'workItemContainer ' + showWorkItem} >
-          <WorkItem { ...this.props } filteredWorks={exhibitionItemId ? self.works : self.works} closeUrl={this.closeUrl}/>
-        </div>
+        {works}
+        {singleWork}
       </div>
     )
   }

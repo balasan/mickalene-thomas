@@ -49,6 +49,7 @@
     "react-redux": "^4.0.0",
     "react-router": "^2.0.0",
     "react-router-redux": "^4.0.6",
+    "react-router-scroll": "^0.4.4",
     "react-script-loader": "0.0.1",
     "react-transform-hmr": "^1.0.0",
     "redux": "^3.0.0",

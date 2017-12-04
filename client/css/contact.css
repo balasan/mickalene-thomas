@@ -10,7 +10,7 @@
   margin: 0 0 1.75em 0 !important;
 }
 .contactImg {
-  height: calc(100vh - 75px);
+  height: calc(40vh);
   background-color: white;
   background-size: cover;
   background-position: center center;

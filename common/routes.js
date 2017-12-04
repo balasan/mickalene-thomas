@@ -20,12 +20,18 @@ var routes = {
     { path: 'about', component: About },
     { path: 'news', component: NewsParent },
     { path: 'works', component: WorkParent },
-    { path: 'works/i/:itemId', component: WorkParent },
     { path: 'works/exhibitions/:exhibitionId', component: WorkParent },
     { path: 'works/exhibitions/:exhibitionId/:exhibitionItemId', component: WorkParent },
+
+
     { path: 'store', component: StoreParent },
-    { path: 'store/:itemId', component: ProductParent },
+    { path: 'store/:itemId', component: StoreParent },
+
     { path: 'works/filter/:filter', component: WorkParent },
+    { path: 'works/:filter/:itemId/:imgId', component: WorkParent },
+    { path: 'works/:filter/:itemId', component: WorkParent },
+
+
     { path: 'news/filter/:filter', component: NewsParent },
     { path: 'cart', component: CartParent },
     { path: 'contact', component: Contact },

@@ -70,6 +70,7 @@ export function fetchItem(id, callback) {
                         return;
                     }
 
+
                     obj.image.main.url = item.data["work.image"].value.main.url;
                     obj.image.main.dimensions.height = item.data["work.image"].value.main.dimensions.height;
                     obj.image.main.dimensions.width = item.data["work.image"].value.main.dimensions.width;
@@ -127,7 +128,7 @@ export function fetchWork(callback) {
         ).pageSize(20).submit(function(err, response) {
             if (err || !response) {
                 console.log(err);
-                callback();
+                return callback();
             }
             var totalPages = response.total_pages;
             pageLoop(totalPages)
@@ -171,6 +172,9 @@ export function fetchWork(callback) {
                         obj.video = embedString;
                     }
 
+
+
+
                     obj.image = {};
                     obj.image.main = {};
                     obj.image.main.dimensions = {};
@@ -182,7 +186,7 @@ export function fetchWork(callback) {
                     obj.image.smaller.dimensions = {};
 
                     if (!item.data["work.image"]) {
-                        console.log(item.data);
+                        // console.log(item.data);
                         return;
                     }
 
@@ -190,6 +194,11 @@ export function fetchWork(callback) {
                     obj.image.main.dimensions.height = item.data["work.image"].value.main.dimensions.height;
                     obj.image.main.dimensions.width = item.data["work.image"].value.main.dimensions.width;
 
+
+                    if(item.data["work.additional_images"]) {
+                        obj.additional_images = item.data["work.additional_images"].value.map(a => a.additional_image.value) || null;
+                        obj.additional_images.unshift({main: obj.image.main})
+                    }
 
                     if (item.data["work.image"].value.main.dimensions.width < 500) {
                         obj.image.smaller.url = item.data["work.image"].value.main.url;
@@ -320,7 +329,7 @@ export function fetchExhibition(id, callback) {
         ).pageSize(20).submit(function(err, response) {
             if (err) {
                 console.log(err);
-                callback();
+                return callback();
             }
             var totalPages = response.total_pages;
             pageLoop(totalPages)

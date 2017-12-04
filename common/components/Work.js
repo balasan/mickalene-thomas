@@ -56,7 +56,7 @@ export default class Work extends Component {
     }
 
     if(!params || this.props.params.filter != params.filter){
-      window.scrollTo(0,0);
+      // window.scrollTo(0,0);
       this.oldWorks = this.newWorks.slice();
       this.updateNewWorks(nextProps);
       this.loaded = 0;
@@ -164,7 +164,7 @@ export default class Work extends Component {
       this.setPerspective();
       if(this.props.filteredWorks.length === this.works.length) return;
 
-      var scrollTop = document.body.scrollTop;
+      var scrollTop = window.scrollY;
       var scrollHeight = document.body.scrollHeight;
       var clientHeight = document.body.clientHeight;
 
@@ -179,7 +179,7 @@ export default class Work extends Component {
   };
 
   setPerspective(){
-    var scrollTop = document.body.scrollTop;
+    var scrollTop = window.scrollY;
     var windowHeight = window.innerHeight;
     var pOrgin = "50% " + (scrollTop + windowHeight/2) + "px"
     this.container3d.style.perspectiveOrigin = pOrgin
@@ -218,16 +218,16 @@ export default class Work extends Component {
         if (selectedState) {
           url = '/works/filter/'+item.tags[0];
           specialStyle='special-selected';
-        } else  {
-          if (self.props.params.filter == 'exhibitions') {
-             url = '/works/exhibitions/'+ item.id;
-          } else {
-            if (self.props.params.exhibitionId) {
-              url = '/works/exhibitions/'+ self.props.params.exhibitionId + '/' + item.id;
-            } else {
-              url = '/works/i/' + item.id;
-            }
-          }
+        } else if(item.additional_images && item.additional_images.length) {
+          console.log('additional_images ', item.additional_images)
+          url = '/works/' + self.props.params.filter + '/' + item.id + '/' + 0;
+        }
+         else if (self.props.params.filter == 'exhibitions') {
+          url = '/works/exhibitions/'+ item.id;
+        } else if (self.props.params.exhibitionId) {
+          url = '/works/exhibitions/'+ self.props.params.exhibitionId + '/' + item.id;
+        } else {
+          url = '/works/' + self.props.params.filter + '/' + item.id;
         }
 
         return (
@@ -263,11 +263,11 @@ export default class Work extends Component {
     })
 
     var all = (
-      <div>
-        <div id="flex-container1">
+      <div className={'inherit3d'}>
+        <div className={'inherit3d'} id="flex-container1">
             {oldWorks}
         </div>
-        <div id="flex-container2">
+        <div className={'inherit3d'} id="flex-container2">
             {newWorks}
         </div>
         <div id="loadingWorks">

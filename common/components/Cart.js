@@ -33,7 +33,7 @@ class Cart extends Component {
     const { changeQuantity, removeItem } = this.props;
 
     var cart = [];
-    if (this.props.state) var cart = this.props.state.store.cart;
+    if (this.props.storeProp) var cart = this.props.storeProp.cart;
     var cartHash = this.props.location.hash == '#cart';
 
     const toggleCart = function() {
@@ -100,7 +100,7 @@ class Cart extends Component {
       var totalEl = null;
       var totalText;
 
-      if (!self.props.state.store.order) {
+      if (!self.props.storeProp.order) {
         totalText = 'subtotal';
         cart.forEach(function(item, i) {
             total += (item.price * item.quantity);
@@ -108,7 +108,7 @@ class Cart extends Component {
       } else {
         total = 0;
         totalText = 'total';
-        totalEl = self.props.state.store.order.items.map(function(item, i) {
+        totalEl = self.props.storeProp.order.items.map(function(item, i) {
           //   return (
           //     <div className="totals" key={i}>
           //       <span className="desc">{item.description}</span>
@@ -130,7 +130,7 @@ class Cart extends Component {
 
       } else {
         var cartEl = (<div className="empty">
-          {self.props.state.store.completeOrder ? <h1>order complete</h1> : null}
+          {self.props.storeProp.completeOrder ? <h1>order complete</h1> : null}
           <h1>cart is empty</h1>
         </div>);
       }
@@ -146,7 +146,7 @@ class Cart extends Component {
             <h1>{totalText}</h1>
             <p>{'$' + total.toFixed(2)}</p>
           </div>
-           {cart.length > 0 && !self.props.state.store.showPayment ?<div className='holdButton'>
+           {cart.length > 0 && !self.props.storeProp.showPayment ?<div className='holdButton'>
                <button style={{cursor: 'pointer'}} onClick={self.togglePayment.bind(self)}>Proceed to payment</button>
             </div> : null}
         </div>
@@ -157,16 +157,15 @@ class Cart extends Component {
       <div className={cartHash ? 'cart' : 'cart hidden'}>
         <a onClick={toggleCart} className="close-cart"></a>
         {cartSection}
-        {self.props.state.store.showPayment ? <Checkout {...self.props }/> : null}
+        {self.props.storeProp.showPayment ? <Checkout {...self.props }/> : null}
       </div>
     )
   }
 }
 
+// export default Cart;
 export default connect(
-  state => {
-    return {state: state}
-  },
+  state => ({storeProp: state.store}),
   dispatch => {
     return Object.assign({}, { dispatch },  bindActionCreators(ProductActions, dispatch))
   })(Cart)
