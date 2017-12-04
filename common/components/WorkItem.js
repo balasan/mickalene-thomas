@@ -13,8 +13,12 @@ Number.prototype.mod = function(n) { return ((this % n) + n) % n; };
 export default class WorkItem extends Component {
   componentWillMount() {
     var self = this;
+  }
+
+  componentDidMount() {
     document.body.classList.add("noScroll");
     this.componentWillUpdate(this.props)
+    this.setState({})
   }
 
   componentWillUnmount() {
@@ -42,7 +46,7 @@ export default class WorkItem extends Component {
         }
       }
     }
-    if (nextProps.filteredWorks.length) self.getNextPrevItems(nextProps);
+    if (nextProps.filteredWorks && nextProps.filteredWorks.length) self.getNextPrevItems(nextProps);
   }
 
 

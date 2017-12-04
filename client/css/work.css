@@ -40,14 +40,24 @@ body.noScroll::-webkit-scrollbar {
 .workItemContainer {
     z-index: 10;
     position: fixed;
-    top: 75px;
+    top: 0px;
     width: 100%;
+    background-color: black;
+    padding-top: 75px;
     /*transform: translateZ(0);*/
+    height: 100vh;
+
+    @media (--mobile) {
+        padding-top: 60px;
+        height: 100vh;
+        overflow: scroll;
+    }
 
     .arrowsParent section.left, .arrowsParent section.right {
         transition: all .6s easeOutQuart;
     }
     &.hidden {
+        background-color: rgba(0,0,0,0);
         .arrowsParent section.left {
             transform: translateX(-100px) scale(-1);
         }
