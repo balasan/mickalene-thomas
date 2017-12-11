@@ -281,7 +281,7 @@ body.noScroll::-webkit-scrollbar {
             background-size: 45%;
 
             @media (--desktop) {
-                opacity: 0;
+                /*opacity: 0;*/
             }
             @media (--mobile) {
                 background-size: 50%;
@@ -323,12 +323,12 @@ body.noScroll::-webkit-scrollbar {
             pointer-events: auto;
             background-image: url('/images/right_arrow.svg');
             background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 45%;
+            background-position: 80% center;
+            background-size: 20%;
 
-            @media (--desktop) {
+/*            @media (--desktop) {
                 opacity: 0;
-            }
+            }*/
             @media (--mobile) {
                 background-size: 50%;
                 background-position: bottom left;
@@ -416,7 +416,7 @@ body {
                 pointer-events: auto !important;
             }
             .arrowsParent {
-                opacity: 0 !important;
+                /*opacity: 0 !important;*/
                 pointer-events: none;
 
                 section {
