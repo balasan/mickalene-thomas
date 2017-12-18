@@ -54,18 +54,18 @@ export default class SingleSlide extends Component {
       videoEl = (<div className="vimeoFrame" dangerouslySetInnerHTML={self.createMarkup()} />);
     }
 
-    const nextItem = function() {
-      self.props.props.dispatch(push('/works/i/' + self.props.nextItem.id))
-    }
-    const prevItem = function() {
-      self.props.props.dispatch(push('/works/i/' + self.props.prevItem.id))
-    }
+    // const nextItem = function() {
+    //   self.props.props.dispatch(push('/works/i/' + self.props.nextItem.id))
+    // }
+    // const prevItem = function() {
+    //   self.props.props.dispatch(push('/works/i/' + self.props.prevItem.id))
+    // }
 
     const swipe = function(e) {
       if (e.deltaX < 0) {
-        this.props.prevItem() || prevItem()
+        this.props.prevItem() //|| prevItem()
       } else {
-        this.props.nextItem() || nextItem();
+        this.props.nextItem() //|| nextItem();
       }
     }
 

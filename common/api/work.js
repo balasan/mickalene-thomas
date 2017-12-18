@@ -201,9 +201,15 @@ export function fetchWork(callback) {
                                 return a.additional_image.value || null
                             } else {
                                 console.log(a)
+                                return null;
                             }
                         });
-                        obj.additional_images.unshift({main: obj.image.main})
+                        obj.additional_images = obj.additional_images.filter(a => a !== null);
+                        if (obj.additional_images.length) {
+                            obj.additional_images.unshift({main: obj.image.main})
+                        } else {
+                            delete obj.additional_images;
+                        }
                     }
 
                     if (item.data["work.image"].value.main.dimensions.width < 500) {

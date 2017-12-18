@@ -82,6 +82,9 @@ export default class WorkItem extends Component {
 
     if(!this.workItem) return null;
 
+    console.log(this.props.params.filter);
+
+
     if (imgId !== undefined) {
       nextId = '/' + ((imgId + 1) % this.workItem.additional_images.length);
       prevId = '/' + ((imgId - 1) % this.workItem.additional_images.length);
@@ -96,10 +99,24 @@ export default class WorkItem extends Component {
       preUrl = '/works/' + this.props.params.filter + '/';
     }
 
+    const filterForSpecialProjectsAndInstallations = () => {
+      if( (this.props.params.filter === 'installation' ||
+        this.props.params.filter === 'Special Projects'
+        ) &&
+        (!this.workItem.additional_images || !this.workItem.additional_images.length)) {
+        return null;
+      }
+      return true;
+    }
+
+    let shouldHaveArrows = filterForSpecialProjectsAndInstallations();
+
     const nextItem = function() {
+      if (!shouldHaveArrows) return null;
       self.props.dispatch(push(preUrl + self.nextItem.id + nextId))
     }
     const prevItem = function() {
+      if (!shouldHaveArrows) return null;
       self.props.dispatch(push(preUrl + self.prevItem.id + prevId))
     }
     const closeItem = function() {
@@ -109,6 +126,8 @@ export default class WorkItem extends Component {
         self.props.dispatch(push(self.props.closeUrl))
       // }
     }
+
+
 
     const { state, clickitem } = this.props
 
@@ -126,6 +145,8 @@ export default class WorkItem extends Component {
         <section onClick={nextItem} className="right"></section>
       </div>
     )
+
+    if (!shouldHaveArrows) arrows = null;
 
     return (
       <div className='selectedWork'>
