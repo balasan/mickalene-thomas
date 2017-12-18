@@ -200,7 +200,7 @@ export function fetchWork(callback) {
                             if (a.additional_image) {
                                 return a.additional_image.value || null
                             } else {
-                                console.log(a)
+                                // console.log(a)
                                 return null;
                             }
                         });

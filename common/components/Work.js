@@ -219,7 +219,7 @@ export default class Work extends Component {
           url = '/works/filter/'+item.tags[0];
           specialStyle='special-selected';
         } else if(item.additional_images && item.additional_images.length) {
-          console.log('additional_images ', item.additional_images)
+          // console.log('additional_images ', item.additional_images)
           url = '/works/' + self.props.params.filter + '/' + item.id + '/' + 0;
         }
          else if (self.props.params.filter == 'exhibitions') {
