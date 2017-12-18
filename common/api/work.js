@@ -196,7 +196,13 @@ export function fetchWork(callback) {
 
 
                     if(item.data["work.additional_images"]) {
-                        obj.additional_images = item.data["work.additional_images"].value.map(a => a.additional_image.value) || null;
+                        obj.additional_images = item.data["work.additional_images"].value.map(a => {
+                            if (a.additional_image) {
+                                return a.additional_image.value || null
+                            } else {
+                                console.log(a)
+                            }
+                        });
                         obj.additional_images.unshift({main: obj.image.main})
                     }
 
