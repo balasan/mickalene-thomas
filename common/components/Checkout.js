@@ -35,8 +35,8 @@ export default class Checkout extends Component {
 
   onScriptLoaded() {
     // if ()
-    Stripe.setPublishableKey('pk_test_CZxc4aQDJvojPMDeQflnWvGe');
-    // Stripe.setPublishableKey('pk_live_qTaJPSzRCV8JfuN0bQWcbqtZ');
+    // Stripe.setPublishableKey('pk_test_CZxc4aQDJvojPMDeQflnWvGe');
+    Stripe.setPublishableKey('pk_live_qTaJPSzRCV8JfuN0bQWcbqtZ');
 
     this.setState({ stripeLoading: false, stripeLoadingError: false });
   }
