@@ -70,6 +70,15 @@ app.get('/admin/instagram/callback', function(req, res) {
 })
 
 
+function requireHTTPS(req, res, next) {
+  if (req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
+    return res.redirect('https://' + req.get('host') + req.url);
+  }
+  return next();
+}
+app.use(requireHTTPS);
+
+
 app.get('/admin/instagram', function(req, res) {
     let redirect = req.protocol + '://' + req.get('Host') + '/admin/instagram/callback';
     console.log(redirect);

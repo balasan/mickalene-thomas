@@ -72,7 +72,7 @@ export default class Checkout extends Component {
     $('.cc-exp').payment('formatCardExpiry');
     $('.cc-cvc').payment('formatCardCVC');
     this.cartData();
-    console.log(self.state.state, 'state')
+    // console.log(self.state.state, 'state')
   }
 
   cartData() {
@@ -117,6 +117,7 @@ export default class Checkout extends Component {
           var responseData = xmlhttp.responseText;
           var orderJson = JSON.parse(responseData);
           if (orderJson.shipping_methods.length) {
+            console.log(orderJson.shipping_methods)
             self.setState({order: orderJson, shippingError: null});
             self.props.setOrder(orderJson);
             console.log('order sucess');
