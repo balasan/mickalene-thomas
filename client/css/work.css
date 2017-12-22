@@ -51,6 +51,7 @@ body.noScroll::-webkit-scrollbar {
         padding-top: 60px;
         height: 100vh;
         overflow: scroll;
+        -webkit-overflow-scrolling: touch;
     }
 
     .arrowsParent section.left, .arrowsParent section.right {

@@ -125,9 +125,7 @@
                                 color: transparent;
                                 text-shadow: 0 0 0 #000;
                             }
-                            @media (--mobile) {
-                                width: 100%;
-                            }
+
                             margin: 0 0 1em 0;
 
                             option {
@@ -144,7 +142,10 @@
                             background-size: contain;
                             background-position: center right;
                             background-repeat: no-repeat;
-
+                            @media (--mobile) {
+                                width: 100%;
+                                padding: 1.2em 0 .8em 0.5em;
+                            }
                             &:focus {
                                 outline: 0;
                             }
@@ -223,7 +224,7 @@
 
                         @media (--mobile) {
                             width: 100%;
-                            font-size: 10px;
+                            font-size: 12px;
                         }
                         &:hover {
                             background-color: white;
