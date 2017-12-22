@@ -35,8 +35,8 @@ export default class Checkout extends Component {
 
   onScriptLoaded() {
     // if ()
-    // Stripe.setPublishableKey('pk_test_CZxc4aQDJvojPMDeQflnWvGe');
-    Stripe.setPublishableKey('pk_live_qTaJPSzRCV8JfuN0bQWcbqtZ');
+    Stripe.setPublishableKey('pk_test_CZxc4aQDJvojPMDeQflnWvGe');
+    // Stripe.setPublishableKey('pk_live_qTaJPSzRCV8JfuN0bQWcbqtZ');
 
     this.setState({ stripeLoading: false, stripeLoadingError: false });
   }
@@ -81,7 +81,7 @@ export default class Checkout extends Component {
   cartData() {
     var self = this;
     this.total = 0;
-    var cart = this.props.state.store.cart;
+    var cart = self.props.storeProp.cart;
     cart.forEach(function(item, i) {
       self.total += (item.price * item.quantity);
     });
@@ -90,7 +90,7 @@ export default class Checkout extends Component {
   createOrder(event) {
     event.preventDefault();
     var self = this;
-    var cart = this.props.state.store.cart;
+    var cart = self.props.storeProp.cart;
     self.setState({orderProgress: true})
     if (!self.validateEmail(self.state.email)) {
       console.log('invalid email')
@@ -140,13 +140,13 @@ export default class Checkout extends Component {
 
   chargeMe() {
     var self = this;
-    var amount = self.props.state.store.order.amount;
+    var amount = self.props.storeProp.order.amount;
     self.setState({paymentProgress: true})
     var chargeObj = {
       token: self.state.token,
       email: self.state.email,
       amount: amount,
-      order: self.props.state.store.order,
+      order: self.props.storeProp.order,
     };
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
@@ -155,8 +155,8 @@ export default class Checkout extends Component {
         self.setState({paymentProgress: false})
         if (xmlhttp.status == 200) {
           console.log('charged');
-          self.props.togglePayment();
           self.props.emptyCart();
+          self.props.togglePayment();
           self.props.setOrder(null);
           self.props.completeOrder(true);
         } else {
