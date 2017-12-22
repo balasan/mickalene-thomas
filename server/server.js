@@ -308,6 +308,15 @@ app.post('/createOrder', jsonParser,function(req, res) {
                 }
             }
         }).then(function(order) {
+            let shippingMethod = order.shipping_methods.find(method => method.description.match('Priority'));
+            console.log(shippingMethod)
+            if (shippingMethod) {
+                return stripe.orders.update(order.id, { selected_shipping_method: shippingMethod.id})
+            }
+            else {
+                return order;
+            }
+        }).then(order => {
             console.log(order, 'order');
             res.json(200, order);
         }).catch(function(err) {
