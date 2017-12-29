@@ -8,6 +8,8 @@ import * as ProductActions from '../actions/product';
 var ReactScriptLoaderMixin = require('react-script-loader').ReactScriptLoaderMixin;
 var reactMixin = require('react-mixin');
 
+
+
 export default class Checkout extends Component {
 
   constructor (props, context) {
@@ -438,7 +440,7 @@ export default class Checkout extends Component {
       )
 
       var stateEl = (
-        <select onChange={(state) => this.setState({state: state.target.value})} required>
+        <select name='locality' onChange={(state) => this.setState({state: state.target.value})} placeholder="State" required>
           <option value="" disabled selected>Select state</option>
           <option value="AL">Alabama</option>
           <option value="AK">Alaska</option>

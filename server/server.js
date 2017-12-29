@@ -17,8 +17,15 @@ require('dotenv').config({
 
 var stripe = require('stripe')(process.env.STRIPE_KEY);
 
+// stripe.charges.list(
+//   { limit: 3 },
+//   function(err, charges) {
+//     console.log(charges)
+//     // asynchronously called
+//   }
+// );
 
-console.log(process.env.NODE_ENV)
+// console.log(process.env.NODE_ENV)
 
 //-------------Dev server watch and hot reload---------------
 var isDevelopment = (process.env.NODE_ENV !== 'production');
@@ -288,25 +295,38 @@ app.post('/createOrder', jsonParser,function(req, res) {
         });
     }
 
+    // function createCustomer() {
+
+    // }
+
     function ordersCreate() {
-        let metadata = {}
-        formattedItems.forEach((itm, i) => metadata['item' + (i + 1)] = itm.description);
-        return stripe.orders.create({
-            currency: 'usd',
-            items: items,
-            metadata: metadata,
-            email: req.body.email,
-            shipping: {
-                name: req.body.name,
-                address: {
-                    line1: req.body.add1,
-                    line2: req.body.add2 ? req.body.add2 : '',
-                    city: req.body.city,
-                    country: req.body.country,
-                    state: req.body.state,
-                    postal_code: req.body.zip
+
+
+        stripe.customers.create({
+          description: 'Customer for ' + req.body.email,
+          email: req.body.email
+        }).then(customer => {
+            // console.log('created customer ', customer)
+            let metadata = {}
+            formattedItems.forEach((itm, i) => metadata['item' + (i + 1)] = itm.description);
+            return stripe.orders.create({
+                currency: 'usd',
+                items: items,
+                metadata: metadata,
+                customer: customer.id,
+                email: req.body.email,
+                shipping: {
+                    name: req.body.name,
+                    address: {
+                        line1: req.body.add1,
+                        line2: req.body.add2 ? req.body.add2 : '',
+                        city: req.body.city,
+                        country: req.body.country,
+                        state: req.body.state,
+                        postal_code: req.body.zip
+                    }
                 }
-            }
+            })
         }).then(function(order) {
             let shippingMethod = order.shipping_methods.find(method => method.description.match('Priority'));
             console.log(shippingMethod)
@@ -348,16 +368,20 @@ app.post('/charge', jsonParser, function(req, res) {
     var amount = req.body.amount;
     var order = req.body.order;
     let charge;
+    let customer;
 
-    // stripe.customers.update(customer, {
-    //   source: token,
-    //   description: email
-    // }).then(function(customer) {
-        // console.log(customer, 'customer update');
+    // console.log(order.customer)
 
-    return stripe.orders.pay(order.id, {
-        email: email,
-        source: token // obtained with Stripe.js
+    stripe.customers.update(order.customer, {
+      source: token,
+    }).then(_customer => {
+        customer = _customer;
+        console.log('updated customer payment ', customer);
+        return stripe.orders.pay(order.id, {
+            customer: order.customer,
+            email: email,
+            // source: token // obtained with Stripe.js
+        })
     })
 
    // return stripe.charges.create({
@@ -374,7 +398,11 @@ app.post('/charge', jsonParser, function(req, res) {
    //        status: 'paid'
    //      })
    //  })
-    .then(function(charge) {
+    .then(function(_charge) {
+        charge = _charge;
+        return stripe.customers.deleteCard(customer.id, customer.default_source);
+    })
+    .then(() => {
         res.json(200, charge);
     }, function(err) {
         console.log(err);
