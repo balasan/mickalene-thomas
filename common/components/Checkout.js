@@ -17,9 +17,7 @@ export default class Checkout extends Component {
     this.state = {
       stripeLoading: true,
       stripeLoadingError: false,
-      submitDisabled: false,
       paymentError: null,
-      paymentComplete: false,
       token: null,
       customer: null,
       email: null,
@@ -50,14 +48,15 @@ export default class Checkout extends Component {
   onSubmit(event) {
     var self = this;
     event.preventDefault();
-    this.setState({ submitDisabled: true, paymentError: null });
+    if (this.state.paymentProgress) return false;
+    this.setState({ paymentProgress: true, paymentError: null });
 
     Stripe.createToken(event.target, function(status, response) {
       if (response.error) {
-        self.setState({ paymentError: response.error.message, submitDisabled: false });
+        self.setState({ paymentError: response.error.message, paymentProgress: false });
         console.log(response, 'error')
       } else {
-        self.setState({ paymentComplete: true, submitDisabled: false, token: response.id });
+        self.setState({ token: response.id });
         if (response.id) self.chargeMe();
       }
     });
@@ -186,7 +185,7 @@ export default class Checkout extends Component {
     var shippingEl = null;
     var customerEl = null;
       var countryEl = (
-        <select value="US" onChange={(country) => this.setState({country: country.target.value})} value={this.state.country} placeholder="Country" required>
+        <select name='country' value="US" onChange={(country) => this.setState({country: country.target.value})} value={this.state.country} placeholder="Country" required>
           <option value="AF">Afghanistan</option>
           <option value="AX">Åland Islands</option>
           <option value="AL">Albania</option>
@@ -500,14 +499,14 @@ export default class Checkout extends Component {
         <form style={{display: 'flex', flexDirection: 'column'}} onSubmit={self.createOrder.bind(self)}>
           <h2>Shipping info</h2>
           <span className="error">{ this.state.shippingError }</span><br />
-          <input type="text"  onChange={(email) => this.setState({email: email.target.value})} value={this.state.email} placeholder="Email" required/>
-          <input type="text"  onChange={(shippingName) => this.setState({shippingName: shippingName.target.value})} value={this.state.shippingName} placeholder="Name" required/>
-          <input type="text"  onChange={(add1) => this.setState({add1: add1.target.value})} value={this.state.add1} placeholder="Address line 1" required/>
-          <input type="text"  onChange={(add2) => this.setState({add2: add2.target.value})} value={this.state.add2} placeholder="Address line 2" />
-          <input type="text"  onChange={(city) => this.setState({city: city.target.value})} value={this.state.city} placeholder="City" required/>
+          <input name='email' type="text"  onChange={(email) => this.setState({email: email.target.value})} value={this.state.email} placeholder="Email" required/>
+          <input name='name' type="text"  onChange={(shippingName) => this.setState({shippingName: shippingName.target.value})} value={this.state.shippingName} placeholder="Name" required/>
+          <input name='address' type="text"  onChange={(add1) => this.setState({add1: add1.target.value})} value={this.state.add1} placeholder="Address line 1" required/>
+          <input name='address2' type="text"  onChange={(add2) => this.setState({add2: add2.target.value})} value={this.state.add2} placeholder="Address line 2" />
+          <input name='city' type="text"  onChange={(city) => this.setState({city: city.target.value})} value={this.state.city} placeholder="City" required/>
           {countryEl}
           {stateEl}
-          <input type="text"  onChange={(zip) => this.setState({zip: zip.target.value})} value={this.state.zip} placeholder="Zip" required/>
+          <input type="text" name='zipcode'  onChange={(zip) => this.setState({zip: zip.target.value})} value={this.state.zip} placeholder="Zip" required/>
           <button className="noselect" type="submit">{self.state.orderProgress ? 'Creating order...' : 'Continue'}</button>
         </form>)
 

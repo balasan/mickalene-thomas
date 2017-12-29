@@ -9,11 +9,13 @@ var bodyParser = require('body-parser')
 var request = require('request');
 const app = new Express();
 var favicon = require('serve-favicon');
-
+const EasyPost = require('@easypost/api');
 
 require('dotenv').config({
     silent: true
 });
+
+const easyPost = new EasyPost(process.env.EASYPOST_KEY);
 
 var stripe = require('stripe')(process.env.STRIPE_KEY);
 
@@ -300,8 +302,6 @@ app.post('/createOrder', jsonParser,function(req, res) {
     // }
 
     function ordersCreate() {
-
-
         stripe.customers.create({
           description: 'Customer for ' + req.body.email,
           email: req.body.email
@@ -369,6 +369,7 @@ app.post('/charge', jsonParser, function(req, res) {
     var order = req.body.order;
     let charge;
     let customer;
+    let shipment;
 
     // console.log(order.customer)
 
@@ -404,9 +405,31 @@ app.post('/charge', jsonParser, function(req, res) {
     })
     .then(() => {
         res.json(200, charge);
+        return easyPost.Shipment.retrieve(order.id)
+    })
+    // .then(_shipment => {
+    //     shipment = _shipment;
+    //     console.log(shipment);
+    //     return shipment.buy(order.selected_shipping_method)
+    // })
+    // .then(_shipment => {
+    //     shipment = _shipment;
+    //     return stripe.orders.update(order.id, {
+    //         status: 'fulfilled',
+    //         shipping: {
+    //             tracking_number: shipment.tracking_code,
+    //             carrier: shipment.selected_rate.carrier,
+    //         }
+    //     })
+    // })
+    .then(_order => {
+    //     console.log('done ', _order)
     }, function(err) {
         console.log(err);
-        res.json(500, err);
+        try {
+            res.json(500, err);
+        } catch (err) {
+        }
     });
 });
 
