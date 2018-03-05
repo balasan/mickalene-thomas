@@ -1,7 +1,7 @@
  var prismic = require('express-prismic').Prismic;
  var configuration = {
 
-     apiEndpoint: 'https://mickalene-thomas.prismic.io/api',
+     apiEndpoint: 'https://mickalene-thomas.cdn.prismic.io/api',
 
      // -- Access token if the Master is not open
      // accessToken: 'xxxxxx',
@@ -22,7 +22,7 @@
 
  export
  function fetchProducts(callback) {
-     prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
+     prismic.Api('https://mickalene-thomas.cdn.prismic.io/api', function(err, Api) {
          Api.form('everything')
              .ref(Api.master())
              .query(prismic.Predicates.at("document.type", "product-v")).pageSize(100).submit(function(err, response) {
@@ -95,7 +95,7 @@
 
  export
  function fetchProduct(id, callback) {
-     prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
+     prismic.Api('https://mickalene-thomas.cdn.prismic.io/api', function(err, Api) {
 
          Api.form('everything')
              .ref(Api.master())

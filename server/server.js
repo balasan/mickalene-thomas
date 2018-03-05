@@ -437,7 +437,7 @@ app.post('/charge', jsonParser, function(req, res) {
 app.get('/update', jsonParser, function(req, res) {
     var prismic = require('express-prismic').Prismic;
     var configuration = {
-        apiEndpoint: 'https://mickalene-thomas.prismic.io/api',
+        apiEndpoint: 'https://mickalene-thomas.cdn.prismic.io/api',
         linkResolver: function(doc, ctx) { return '/'; }
     };
 
@@ -553,7 +553,7 @@ app.get('/update', jsonParser, function(req, res) {
     }
 
     function fetchProducts(callback) {
-         prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
+         prismic.Api('https://mickalene-thomas.cdn.prismic.io/api', function(err, Api) {
              Api.form('everything')
                  .ref(Api.master())
                  .query(prismic.Predicates.at("document.type", "product-v")).pageSize(100).submit(function(err, response) {

@@ -1,7 +1,7 @@
 var prismic = require('express-prismic').Prismic;
 var configuration = {
 
-    apiEndpoint: 'https://mickalene-thomas.prismic.io/api',
+    apiEndpoint: 'https://mickalene-thomas.cdn.prismic.io/api',
 
     // -- Access token if the Master is not open
     // accessToken: 'xxxxxx',
@@ -23,7 +23,7 @@ prismic.init(configuration);
 
 export function fetchItem(id, callback) {
 
-    prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
+    prismic.Api('https://mickalene-thomas.cdn.prismic.io/api', function(err, Api) {
 
         Api.form('everything')
             .ref(Api.master())
@@ -121,7 +121,7 @@ export function fetchWork(callback) {
      callback(null, [allWork, workObj]);
    }
 
-    prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
+    prismic.Api('https://mickalene-thomas.cdn.prismic.io/api', function(err, Api) {
         Api.form('everything').ref(Api.master())
             .query(
                 prismic.Predicates.at("document.type", "work")
@@ -143,7 +143,7 @@ export function fetchWork(callback) {
     }
 
     function pageQuery(currentPage, totalPages) {
-        prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
+        prismic.Api('https://mickalene-thomas.cdn.prismic.io/api', function(err, Api) {
             Api.form('everything')
                 .ref(Api.master())
                 .query(
@@ -269,7 +269,7 @@ export function fetchWork(callback) {
 export
 
 function fetchWorkTags(callback) {
-    prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
+    prismic.Api('https://mickalene-thomas.cdn.prismic.io/api', function(err, Api) {
         Api.form('everything')
             .ref(Api.master())
             .query(prismic.Predicates.at("document.type", "work")).pageSize(200).submit(function(err, response) {
@@ -298,7 +298,7 @@ function fetchWorkTags(callback) {
 }
 
 export function fetchNewsTags(callback) {
-    prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
+    prismic.Api('https://mickalene-thomas.cdn.prismic.io/api', function(err, Api) {
         Api.form('everything')
             .ref(Api.master())
             .query(prismic.Predicates.at("document.type", "news")).pageSize(200).submit(function(err, response) {
@@ -334,7 +334,7 @@ export function fetchExhibition(id, callback) {
      callback(null, [allWork, workObj]);
    }
 
-    prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
+    prismic.Api('https://mickalene-thomas.cdn.prismic.io/api', function(err, Api) {
         Api.form('everything').ref(Api.master())
             .query(
                 prismic.Predicates.at("my.work.related_exhibition", id)
@@ -357,7 +357,7 @@ export function fetchExhibition(id, callback) {
     }
 
     function pageQuery(currentPage, totalPages) {
-        prismic.Api('https://mickalene-thomas.prismic.io/api', function(err, Api) {
+        prismic.Api('https://mickalene-thomas.cdn.prismic.io/api', function(err, Api) {
             Api.form('everything')
                 .ref(Api.master())
                 .query(

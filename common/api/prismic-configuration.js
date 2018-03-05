@@ -1,6 +1,6 @@
 exports.Configuration = {
 
-  apiEndpoint: 'https://mickalene-thomas.prismic.io/api',
+  apiEndpoint: 'https://mickalene-thomas.cdn.prismic.io/api',
 
   // -- Access token if the Master is not open
   // accessToken: 'xxxxxx',
